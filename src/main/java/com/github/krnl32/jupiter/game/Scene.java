@@ -1,7 +1,6 @@
 package com.github.krnl32.jupiter.game;
 
 import com.github.krnl32.jupiter.actors.EmptyActor;
-import org.joml.Vector2f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +9,12 @@ public abstract class Scene {
 	private List<Actor> actors = new ArrayList<>();
 
 	public void onUpdate(float dt) {
-		for(var actor: actors)
+		for (var actor: actors)
 			actor.onUpdate(dt);
 	}
 
 	public void onRender(float dt) {
-		for(var actor: actors)
+		for (var actor: actors)
 			actor.onRender(dt);
 	}
 
@@ -26,6 +25,6 @@ public abstract class Scene {
 	}
 
 	public void spawnActor() {
-		actors.add(new EmptyActor("Empty", new Vector2f(1.0f, 1.0f))); // Swap with Empty Actor
+		actors.add(new EmptyActor());
 	}
 }

@@ -1,24 +1,36 @@
 package com.github.krnl32.jupiter.game;
 
-import org.joml.Vector2f;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class Actor {
-	private String name; // Swap with Components
-	private Vector2f position;
+	private final Map<Class<? extends Component>, Component> components = new HashMap<>();
 
-	public Actor(String name, Vector2f position) {
-		this.name = name;
-		this.position = position;
+	public void onUpdate(float dt) {
+		for (var component: components.values())
+			component.onUpdate(dt);
 	}
 
-	public abstract void onUpdate(float dt);
-	public abstract void onRender(float dt);
-
-	public String getName() {
-		return name;
+	public void onRender(float dt) {
+		for (var component: components.values())
+			component.onRender(dt);
 	}
 
-	public Vector2f getPosition() {
-		return position;
+	public void addComponent(Component component) {
+		components.put(component.getClass(), component);
+		component.setActor(this);
+	}
+
+	public void removeComponent(Class<? extends Component> component) {
+		components.remove(component);
+	}
+
+	public boolean hasComponent(Class<? extends Component> component) {
+		return components.containsKey(component);
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T extends Component> T getComponent(Class<T> component) {
+		return (T) components.get(component);
 	}
 }
