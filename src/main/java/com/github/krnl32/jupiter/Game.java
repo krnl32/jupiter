@@ -1,10 +1,10 @@
 package com.github.krnl32.jupiter;
 
-import com.github.krnl32.jupiter.actors.EmptyActor;
+import com.github.krnl32.jupiter.gameobjects.EmptyGameObject;
 import com.github.krnl32.jupiter.components.MovementComponent;
 import com.github.krnl32.jupiter.components.TransformComponent;
 import com.github.krnl32.jupiter.core.Engine;
-import com.github.krnl32.jupiter.game.Actor;
+import com.github.krnl32.jupiter.game.GameObject;
 import com.github.krnl32.jupiter.game.Level;
 import com.github.krnl32.jupiter.game.Scene;
 import com.github.krnl32.jupiter.game.World;
@@ -25,12 +25,12 @@ public class Game extends Engine {
 		Level level1 = new Level();
 		level1.loadFromFile("level1Data.txt");
 
-		Actor actor = new EmptyActor();
-		actor.addComponent(new TransformComponent(new Vector3f(1.0f, 1.0f, 1.0f),new Vector3f(1.0f, 1.0f, 1.0f),new Vector3f(1.0f, 1.0f, 1.0f)));
-		actor.addComponent(new MovementComponent());
+		GameObject go = new EmptyGameObject();
+		go.addComponent(new TransformComponent(new Vector3f(1.0f, 1.0f, 1.0f),new Vector3f(1.0f, 1.0f, 1.0f),new Vector3f(1.0f, 1.0f, 1.0f)));
+		go.addComponent(new MovementComponent());
 
 		Scene level1Scene = new GamePlayScene(level1);
-		level1Scene.addActor(actor);
+		level1Scene.addGameObject(go);
 
 		world.addScene("level1", level1Scene);
 		world.switchScene("level1");

@@ -3,7 +3,7 @@ package com.github.krnl32.jupiter.game;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Actor {
+public abstract class GameObject {
 	private final Map<Class<? extends Component>, Component> components = new HashMap<>();
 
 	public void onUpdate(float dt) {
@@ -18,7 +18,7 @@ public abstract class Actor {
 
 	public void addComponent(Component component) {
 		components.put(component.getClass(), component);
-		component.setActor(this);
+		component.setGameObject(this);
 	}
 
 	public void removeComponent(Class<? extends Component> component) {

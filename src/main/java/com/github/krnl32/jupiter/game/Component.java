@@ -1,16 +1,16 @@
 package com.github.krnl32.jupiter.game;
 
 public abstract class Component {
-	private Actor actor;
+	private GameObject gameObject;
 
 	public abstract void onUpdate(float dt);
 	public abstract void onRender(float dt);
 
-	public Actor getActor() {
-		return actor;
+	public GameObject getGameObject() {
+		return gameObject;
 	}
 
-	public void setActor(Actor actor) {
-		this.actor = actor;
+	public void setGameObject(GameObject gameObject) {
+		this.gameObject = gameObject;
 	}
 }

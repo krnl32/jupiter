@@ -6,7 +6,7 @@ import com.github.krnl32.jupiter.game.Component;
 public class MovementComponent extends Component {
 	@Override
 	public void onUpdate(float dt) {
-		TransformComponent transform = getActor().getComponent(TransformComponent.class);
+		TransformComponent transform = getGameObject().getComponent(TransformComponent.class);
 		Logger.info("MovementComponent Stalling({})", transform.toString());
 	}
 
