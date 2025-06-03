@@ -3,13 +3,14 @@ package com.github.krnl32.jupiter.components;
 import com.github.krnl32.jupiter.game.Component;
 import com.github.krnl32.jupiter.renderer.RenderSpriteCommand;
 import com.github.krnl32.jupiter.renderer.Renderer;
-import org.joml.Vector4f;
+import com.github.krnl32.jupiter.renderer.Sprite;
 
 public class SpriteRendererComponent extends Component {
-	private Vector4f color;
-	private int width;
-	private int height;
-	private int index;
+	private Sprite sprite;
+
+	public SpriteRendererComponent(Sprite sprite) {
+		this.sprite = sprite;
+	}
 
 	@Override
 	public void onUpdate(float dt) {
@@ -19,6 +20,7 @@ public class SpriteRendererComponent extends Component {
 	@Override
 	public void onRender(float dt, Renderer renderer) {
 		TransformComponent transform = getGameObject().getComponent(TransformComponent.class);
-		renderer.submit(new RenderSpriteCommand(transform.getTranslation().x, transform.getTranslation().y, (int)(transform.getScale().x * width), (int)(transform.getScale().y * height), index, color));
+		Sprite spriteRender = new Sprite((int)(transform.getScale().x * sprite.getWidth()), (int)(transform.getScale().y * sprite.getHeight()), sprite.getIndex(), sprite.getColor());
+		renderer.submit(new RenderSpriteCommand(transform.getTranslation(), spriteRender));
 	}
 }
