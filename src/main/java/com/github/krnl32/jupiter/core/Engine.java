@@ -1,14 +1,17 @@
 package com.github.krnl32.jupiter.core;
 
+import com.github.krnl32.jupiter.renderer.Renderer;
 import com.github.krnl32.jupiter.utility.DateTime;
 
 public abstract class Engine {
 	private boolean running;
 	private Window window;
+	private Renderer renderer;
 
 	public Engine(String name, int width, int height) {
 		running = false;
 		window = new Window(name, width, height);
+		renderer = new Renderer();
 	}
 
 	public void run() {
@@ -27,7 +30,10 @@ public abstract class Engine {
 				//System.out.printf("FPS: %f\n", (1/dt));
 				onInput(dt);
 				onUpdate(dt);
-				onRender(dt);
+
+				renderer.beginFrame();
+				onRender(dt, renderer);
+				renderer.endFrame();
 			}
 
 			window.update();
@@ -39,5 +45,5 @@ public abstract class Engine {
 	public abstract boolean onInit();
 	public abstract void onInput(float dt);
 	public abstract void onUpdate(float dt);
-	public abstract void onRender(float dt);
+	public abstract void onRender(float dt, Renderer renderer);
 }

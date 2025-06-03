@@ -1,6 +1,7 @@
 package com.github.krnl32.jupiter.gameobjects;
 
 import com.github.krnl32.jupiter.game.GameObject;
+import com.github.krnl32.jupiter.renderer.Renderer;
 
 public class EmptyGameObject extends GameObject {
 	@Override
@@ -9,7 +10,7 @@ public class EmptyGameObject extends GameObject {
 	}
 
 	@Override
-	public void onRender(float dt) {
-		super.onRender(dt);
+	public void onRender(float dt, Renderer renderer) {
+		super.onRender(dt, renderer);
 	}
 }

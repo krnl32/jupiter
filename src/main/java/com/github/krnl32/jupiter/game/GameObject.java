@@ -1,5 +1,7 @@
 package com.github.krnl32.jupiter.game;
 
+import com.github.krnl32.jupiter.renderer.Renderer;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,9 +13,9 @@ public abstract class GameObject {
 			component.onUpdate(dt);
 	}
 
-	public void onRender(float dt) {
+	public void onRender(float dt, Renderer renderer) {
 		for (var component: components.values())
-			component.onRender(dt);
+			component.onRender(dt, renderer);
 	}
 
 	public void addComponent(Component component) {

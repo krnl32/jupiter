@@ -8,6 +8,7 @@ import com.github.krnl32.jupiter.game.GameObject;
 import com.github.krnl32.jupiter.game.Level;
 import com.github.krnl32.jupiter.game.Scene;
 import com.github.krnl32.jupiter.game.World;
+import com.github.krnl32.jupiter.renderer.Renderer;
 import com.github.krnl32.jupiter.scenes.GamePlayScene;
 import org.joml.Vector3f;
 
@@ -50,7 +51,7 @@ public class Game extends Engine {
 	}
 
 	@Override
-	public void onRender(float dt) {
-		world.onRender(dt);
+	public void onRender(float dt, Renderer renderer) {
+		world.onRender(dt, renderer);
 	}
 }

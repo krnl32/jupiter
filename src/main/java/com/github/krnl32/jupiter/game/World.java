@@ -1,6 +1,7 @@
 package com.github.krnl32.jupiter.game;
 
 import com.github.krnl32.jupiter.core.Logger;
+import com.github.krnl32.jupiter.renderer.Renderer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,9 +15,9 @@ public class World {
 			currentScene.onUpdate(dt);
 	}
 
-	public void onRender(float dt) {
+	public void onRender(float dt, Renderer renderer) {
 		if (currentScene != null)
-			currentScene.onRender(dt);
+			currentScene.onRender(dt, renderer);
 	}
 
 	public void addScene(String name, Scene scene) {

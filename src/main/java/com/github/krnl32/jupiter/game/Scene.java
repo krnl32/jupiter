@@ -1,6 +1,7 @@
 package com.github.krnl32.jupiter.game;
 
 import com.github.krnl32.jupiter.gameobjects.EmptyGameObject;
+import com.github.krnl32.jupiter.renderer.Renderer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +14,9 @@ public abstract class Scene {
 			gameObject.onUpdate(dt);
 	}
 
-	public void onRender(float dt) {
+	public void onRender(float dt, Renderer renderer) {
 		for (var gameObject: gameObjects)
-			gameObject.onRender(dt);
+			gameObject.onRender(dt, renderer);
 	}
 
 	public abstract void load();
