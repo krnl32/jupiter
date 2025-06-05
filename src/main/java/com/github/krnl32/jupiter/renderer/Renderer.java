@@ -80,13 +80,13 @@ public class Renderer {
 		Matrix4f model = new Matrix4f().identity();
 		model.translate(new Vector3f(2.0f, 0.0f, 0.0f)).rotate((45 * (3.14f/180.0f)), new Vector3f(0.0f, 0.0f, 1.0f)).scale(new Vector3f(5.0f, 5.0f, 1.0f));
 
-		Matrix4f view = new Matrix4f().identity();
+		RendererCamera rendererCamera = new RendererCamera(new Vector3f(0.0f, 0.0f, -1.0f), new Vector3f(0.0f, 1.0f, 0.0f), -90.0f, 0, 4, 1);
 
 		Matrix4f projection = new Matrix4f().identity();
 		projection.ortho(-10, 10, -10, 10, -1, 1);
 
 		shader.setMat4("u_Model", model);
-		shader.setMat4("u_View", view);
+		shader.setMat4("u_View", rendererCamera.getViewMatrix());
 		shader.setMat4("u_Projection", projection);
 
 		setClearColor(new Vector4f(0.07f, 0.13f, 0.17f, 1.0f));
