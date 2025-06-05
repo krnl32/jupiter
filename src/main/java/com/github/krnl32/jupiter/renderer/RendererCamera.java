@@ -1,5 +1,7 @@
 package com.github.krnl32.jupiter.renderer;
 
+import com.github.krnl32.jupiter.input.Input;
+import com.github.krnl32.jupiter.input.KeyCode;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
@@ -23,11 +25,38 @@ public class RendererCamera {
 		this.pitch = pitch;
 		this.moveSpeed = moveSpeed;
 		this.turnSpeed = turnSpeed;
-
-		onUpdate();
+		calculate();
 	}
 
-	public void onUpdate() {
+	public void onUpdate(float dt) {
+
+		// Keyboard
+		float velocity = moveSpeed * dt;
+		if (Input.getInstance().isKeyDown(KeyCode.W))
+			position.add(new Vector3f(direction).mul(velocity));
+		else if(Input.getInstance().isKeyDown(KeyCode.S))
+			position.sub(new Vector3f(direction).mul(velocity));
+		else if(Input.getInstance().isKeyDown(KeyCode.A))
+			position.sub(new Vector3f(right).mul(velocity));
+		else if(Input.getInstance().isKeyDown(KeyCode.D))
+			position.add(new Vector3f(right).mul(velocity));
+
+		// Mouse
+		yaw += (Input.getInstance().getMouseCursorDelta().x * turnSpeed);
+		pitch += (Input.getInstance().getMouseCursorDelta().y * turnSpeed);
+		if (pitch > 89.0f)
+			pitch = 89.0f;
+		else if(pitch < -89.0f)
+			pitch = -89.0f;
+
+		calculate();
+	}
+
+	public Matrix4f getViewMatrix() {
+		return new Matrix4f().lookAt(position, new Vector3f(position).add(direction), up);
+	}
+
+	private void calculate() {
 		direction.x = (float)(cos(toRadians(yaw)) * cos(toRadians(pitch)));
 		direction.y = (float)(sin(toRadians(pitch)));
 		direction.z = (float)(sin(toRadians(yaw)) * cos(toRadians(pitch)));
@@ -35,9 +64,5 @@ public class RendererCamera {
 
 		right = cross(direction, worldUp).normalize();
 		up = cross(right, direction).normalize();
-	}
-
-	public Matrix4f getViewMatrix() {
-		return new Matrix4f().lookAt(position, new Vector3f(position).add(direction), up);
 	}
 }

@@ -9,9 +9,6 @@ import com.github.krnl32.jupiter.game.Level;
 import com.github.krnl32.jupiter.game.Scene;
 import com.github.krnl32.jupiter.game.World;
 import com.github.krnl32.jupiter.gameobjects.EmptyGameObject;
-import com.github.krnl32.jupiter.input.Input;
-import com.github.krnl32.jupiter.input.KeyCode;
-import com.github.krnl32.jupiter.input.MouseCode;
 import com.github.krnl32.jupiter.renderer.Camera;
 import com.github.krnl32.jupiter.renderer.Renderer;
 import com.github.krnl32.jupiter.scenes.GamePlayScene;
@@ -55,6 +52,7 @@ public class Game extends Engine {
 		//if(Input.getInstance().isKeyUp(KeyCode.A))
 		//	System.out.println("A is Up");
 
+		/*
 		if(Input.getInstance().isKeyDown(KeyCode.A))
 			System.out.println("A is Down");
 
@@ -78,6 +76,7 @@ public class Game extends Engine {
 
 		if(Input.getInstance().isMouseScrollingDown())
 			System.out.println("Mouse Scrolling Down");
+		*/
 
 		world.onUpdate(dt);
 	}

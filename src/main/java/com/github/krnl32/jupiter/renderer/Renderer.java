@@ -24,9 +24,14 @@ public class Renderer {
 
 	// temp
 	private int vao, vbo, ibo, totalIndices;
+	RendererCamera rendererCamera;
 
 	public Renderer() {
 		shader = new Shader((System.getProperty("user.dir") + "\\assets\\shaders\\quad_vertex.glsl"), (System.getProperty("user.dir") + "\\assets\\shaders\\quad_fragment.glsl"));
+
+		// temp
+		setDepthTest(true);
+		rendererCamera = new RendererCamera(new Vector3f(0.0f, 0.0f, -1.0f), new Vector3f(0.0f, 1.0f, 0.0f), -90.0f, 0, 4, 1);
 	}
 
 	public void beginFrame() {
@@ -38,15 +43,35 @@ public class Renderer {
 
 
 		float[] vertices = {
-			-1.0f, -1.0f, 0.0f,     1.0f, 0.0f, 0.0f, 1.0f, // V0->BOTLEFT (Front)
+			-1.0f, -1.0f, 0.0f,		1.0f, 0.0f, 0.0f, 1.0f, // V0->BOTLEFT (Front)
 			1.0f, -1.0f, 0.0f,     0.0f, 0.0f, 1.0f, 1.0f, // V1->BOTRIGHT (Front
 			1.0f,  1.0f, 0.0f,     1.0f, 0.0f, 1.0f, 1.0f, // V2->TOPRIGHT (Front
 			-1.0f,  1.0f, 0.0f,     0.0f, 1.0f, 0.0f, 1.0f, // V3->TOPLEFT (Front)
+
+			-1.0f, -1.0f, 1.0f,     1.0f, 0.0f, 0.0f, 1.0f, // V4->BOTLEFT (BACK)
+			1.0f, -1.0f, 1.0f,     0.0f, 0.0f, 1.0f, 1.0f, // V5->BOTRIGHT (BACK)
+			1.0f,  1.0f, 1.0f,     1.0f, 0.0f, 1.0f, 1.0f, // V6->TOPRIGHT (BACK)
+			-1.0f,  1.0f, 1.0f,     0.0f, 1.0f, 0.0f, 1.0f, // V7->TOPLEFT (BACK)
 		};
 
 		int[] indices = {
 			0, 1, 2, // Front Face
 			0, 3, 2,
+
+			4, 5, 6, // Back Face
+			4, 7, 6,
+
+			0, 3, 7, // Left Face
+			7, 4, 0,
+
+			1, 2, 6, // Right Face
+			6, 5, 1,
+
+			3, 2, 6, // Top Face
+			6, 7, 3,
+
+			0, 1, 5, // Bot Face
+			5, 4, 0,
 		};
 		totalIndices = indices.length;
 
@@ -78,12 +103,13 @@ public class Renderer {
 		spriteBatch.render();
 
 		Matrix4f model = new Matrix4f().identity();
-		model.translate(new Vector3f(2.0f, 0.0f, 0.0f)).rotate((45 * (3.14f/180.0f)), new Vector3f(0.0f, 0.0f, 1.0f)).scale(new Vector3f(5.0f, 5.0f, 1.0f));
+		model.translate(new Vector3f(0.0f, 0.0f, -30.0f)).rotate((45 * (3.14f/180.0f)), new Vector3f(0.0f, 0.0f, 0.0f)).scale(new Vector3f(5.0f, 5.0f, 5.0f));
 
-		RendererCamera rendererCamera = new RendererCamera(new Vector3f(0.0f, 0.0f, -1.0f), new Vector3f(0.0f, 1.0f, 0.0f), -90.0f, 0, 4, 1);
+		rendererCamera.onUpdate(1);
 
 		Matrix4f projection = new Matrix4f().identity();
-		projection.ortho(-10, 10, -10, 10, -1, 1);
+		//projection.ortho(-10, 10, -10, 10, -1, 1);
+		projection.perspective(45.0f, (640/480), 0.1f, 100.0f);
 
 		shader.setMat4("u_Model", model);
 		shader.setMat4("u_View", rendererCamera.getViewMatrix());
@@ -125,5 +151,12 @@ public class Renderer {
 
 	public void setViewPort(int x, int y, int width, int height) {
 		glViewport(x, y, width, height);
+	}
+
+	public void setDepthTest(boolean state) {
+		if (state)
+			glEnable(GL_DEPTH_TEST);
+		else
+			glDisable(GL_DEPTH_TEST);
 	}
 }
