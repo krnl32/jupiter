@@ -32,16 +32,16 @@ public class Shader {
 		}
 	}
 
+	public void destroy() {
+		glDeleteProgram(programID);
+	}
+
 	public void bind() {
 		glUseProgram(programID);
 	}
 
 	public void unbind() {
 		glUseProgram(0);
-	}
-
-	public void delete() {
-		glDeleteProgram(programID);
 	}
 
 	public void setInt(String name, int value) {

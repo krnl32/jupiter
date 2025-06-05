@@ -10,10 +10,7 @@ import java.util.List;
 import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL11.glViewport;
 import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
-import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
-import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Renderer {
@@ -23,7 +20,9 @@ public class Renderer {
 	private Shader shader;
 
 	// temp
-	private int vao, vbo, ibo, totalIndices;
+	VertexArray va;
+	VertexBuffer vb;
+	IndexBuffer ib;
 	RendererCamera rendererCamera;
 
 	public Renderer() {
@@ -73,28 +72,22 @@ public class Renderer {
 			0, 1, 5, // Bot Face
 			5, 4, 0,
 		};
-		totalIndices = indices.length;
 
-		vao = glGenVertexArrays();
-		glBindVertexArray(vao);
+		va = new VertexArray();
+		va.bind();
 
-		vbo = glGenBuffers();
-		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		glBufferData(GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW);
+		vb = new VertexBuffer(vertices, GL_STATIC_DRAW);
+		VertexBufferLayout layout = new VertexBufferLayout(
+			new VertexBufferAttribute("a_Position", 3, ShaderDataType.Float, true, 0),
+			new VertexBufferAttribute("a_Color", 4, ShaderDataType.Float, true, 0)
+		);
+		vb.setLayout(layout);
 
-		ibo = glGenBuffers();
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_STATIC_DRAW);
+		ib = new IndexBuffer(indices, GL_STATIC_DRAW);
 
-		glVertexAttribPointer(0, 3, GL_FLOAT, false, (7 * Float.BYTES), 0);
-		glEnableVertexAttribArray(0);
-
-		glVertexAttribPointer(1, 4, GL_FLOAT, false, (7 * Float.BYTES), (3 * Float.BYTES));
-		glEnableVertexAttribArray(1);
-
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindVertexArray(0);
+		va.addVertexBuffer(vb);
+		va.setIndexBuffer(ib);
+		va.unbind();
 	}
 
 	public void endFrame() {
@@ -118,9 +111,8 @@ public class Renderer {
 		setClearColor(new Vector4f(0.07f, 0.13f, 0.17f, 1.0f));
 		clear();
 
-		glBindVertexArray(vao);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-		glDrawElements(GL_TRIANGLES, totalIndices, GL_UNSIGNED_INT, NULL);
+		va.bind();
+		glDrawElements(GL_TRIANGLES, ib.getSize(), GL_UNSIGNED_INT, NULL);
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
