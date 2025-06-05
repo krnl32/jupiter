@@ -1,5 +1,6 @@
 package com.github.krnl32.jupiter.core;
 
+import com.github.krnl32.jupiter.input.Input;
 import com.github.krnl32.jupiter.renderer.Renderer;
 import com.github.krnl32.jupiter.utility.DateTime;
 
@@ -28,7 +29,6 @@ public abstract class Engine {
 
 			if(dt > 0) {
 				//System.out.printf("FPS: %f\n", (1/dt));
-				onInput(dt);
 				onUpdate(dt);
 
 				renderer.beginFrame();
@@ -36,6 +36,7 @@ public abstract class Engine {
 				renderer.endFrame();
 			}
 
+			Input.getInstance().reset();
 			window.update();
 		}
 
@@ -43,7 +44,6 @@ public abstract class Engine {
 	}
 
 	public abstract boolean onInit();
-	public abstract void onInput(float dt);
 	public abstract void onUpdate(float dt);
 	public abstract void onRender(float dt, Renderer renderer);
 }

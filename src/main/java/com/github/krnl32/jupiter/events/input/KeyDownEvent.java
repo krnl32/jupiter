@@ -1,15 +1,16 @@
 package com.github.krnl32.jupiter.events.input;
 
 import com.github.krnl32.jupiter.event.Event;
+import com.github.krnl32.jupiter.input.KeyCode;
 
 public class KeyDownEvent implements Event {
-	private final int keyCode;
+	private final KeyCode keyCode;
 
-	public KeyDownEvent(int keyCode) {
+	public KeyDownEvent(KeyCode keyCode) {
 		this.keyCode = keyCode;
 	}
 
-	public int getKeyCode() {
+	public KeyCode getKeyCode() {
 		return keyCode;
 	}
 }

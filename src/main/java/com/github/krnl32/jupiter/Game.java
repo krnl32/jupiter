@@ -1,7 +1,6 @@
 package com.github.krnl32.jupiter;
 
 import com.github.krnl32.jupiter.components.CameraComponent;
-import com.github.krnl32.jupiter.gameobjects.EmptyGameObject;
 import com.github.krnl32.jupiter.components.MovementComponent;
 import com.github.krnl32.jupiter.components.TransformComponent;
 import com.github.krnl32.jupiter.core.Engine;
@@ -9,6 +8,10 @@ import com.github.krnl32.jupiter.game.GameObject;
 import com.github.krnl32.jupiter.game.Level;
 import com.github.krnl32.jupiter.game.Scene;
 import com.github.krnl32.jupiter.game.World;
+import com.github.krnl32.jupiter.gameobjects.EmptyGameObject;
+import com.github.krnl32.jupiter.input.Input;
+import com.github.krnl32.jupiter.input.KeyCode;
+import com.github.krnl32.jupiter.input.MouseCode;
 import com.github.krnl32.jupiter.renderer.Camera;
 import com.github.krnl32.jupiter.renderer.Renderer;
 import com.github.krnl32.jupiter.scenes.GamePlayScene;
@@ -48,12 +51,34 @@ public class Game extends Engine {
 	}
 
 	@Override
-	public void onInput(float dt) {
-
-	}
-
-	@Override
 	public void onUpdate(float dt) {
+		//if(Input.getInstance().isKeyUp(KeyCode.A))
+		//	System.out.println("A is Up");
+
+		if(Input.getInstance().isKeyDown(KeyCode.A))
+			System.out.println("A is Down");
+
+		if(Input.getInstance().isKeyPressed(KeyCode.E))
+			System.out.println("E is Pressed");
+
+		if(Input.getInstance().isKeyReleased(KeyCode.E))
+			System.out.println("E is Released");
+
+		if(Input.getInstance().isMouseButtonDown(MouseCode.Button1))
+			System.out.println("Button1 Down");
+
+		if(Input.getInstance().isMouseButtonPressed(MouseCode.Button2))
+			System.out.println("Button2 Pressed");
+
+		if(Input.getInstance().isMouseButtonReleased(MouseCode.Button2))
+			System.out.println("Button2 Released");
+
+		//Logger.info("Cursor({}, {})", Input.getInstance().getMouseCursorPosition().x, Input.getInstance().getMouseCursorPosition().y);
+		//Logger.info("Cursor Delta({}, {})", Input.getInstance().getMouseCursorDelta().x, Input.getInstance().getMouseCursorDelta().y);
+
+		if(Input.getInstance().isMouseScrollingDown())
+			System.out.println("Mouse Scrolling Down");
+
 		world.onUpdate(dt);
 	}
 
