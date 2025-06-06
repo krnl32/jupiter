@@ -1,7 +1,7 @@
 package com.github.krnl32.jupiter;
 
 import com.github.krnl32.jupiter.components.CameraComponent;
-import com.github.krnl32.jupiter.components.MovementComponent;
+import com.github.krnl32.jupiter.components.SpriteRendererComponent;
 import com.github.krnl32.jupiter.components.TransformComponent;
 import com.github.krnl32.jupiter.core.Engine;
 import com.github.krnl32.jupiter.game.GameObject;
@@ -11,8 +11,10 @@ import com.github.krnl32.jupiter.game.World;
 import com.github.krnl32.jupiter.gameobjects.EmptyGameObject;
 import com.github.krnl32.jupiter.renderer.Camera;
 import com.github.krnl32.jupiter.renderer.Renderer;
+import com.github.krnl32.jupiter.renderer.Sprite;
 import com.github.krnl32.jupiter.scenes.GamePlayScene;
 import org.joml.Vector3f;
+import org.joml.Vector4f;
 
 public class Game extends Engine {
 	private World world;
@@ -34,7 +36,8 @@ public class Game extends Engine {
 
 		GameObject go = new EmptyGameObject();
 		go.addComponent(new TransformComponent(new Vector3f(1.0f, 1.0f, 1.0f),new Vector3f(1.0f, 1.0f, 1.0f),new Vector3f(1.0f, 1.0f, 1.0f)));
-		go.addComponent(new MovementComponent());
+		go.addComponent(new SpriteRendererComponent(new Sprite(2, 2, 0, new Vector4f(1.0f, 0.0f, 0.0f, 1.0f))));
+		//go.addComponent(new MovementComponent());
 
 		Scene level1Scene = new GamePlayScene(level1);
 		level1Scene.addGameObject(camera);

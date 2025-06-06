@@ -10,8 +10,6 @@ import java.util.List;
 import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL11.glViewport;
 import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL30.glBindVertexArray;
-import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Renderer {
 	private final List<RenderCommand> commandQueue = new ArrayList<>();
@@ -20,9 +18,6 @@ public class Renderer {
 	private Shader shader;
 
 	// temp
-	VertexArray va;
-	VertexBuffer vb;
-	IndexBuffer ib;
 	RendererCamera rendererCamera;
 
 	public Renderer() {
@@ -39,62 +34,10 @@ public class Renderer {
 		// shader set camera uniform
 		commandQueue.clear();
 		spriteBatch.begin();
-
-
-		float[] vertices = {
-			-1.0f, -1.0f, 0.0f,		1.0f, 0.0f, 0.0f, 1.0f, // V0->BOTLEFT (Front)
-			1.0f, -1.0f, 0.0f,     0.0f, 0.0f, 1.0f, 1.0f, // V1->BOTRIGHT (Front
-			1.0f,  1.0f, 0.0f,     1.0f, 0.0f, 1.0f, 1.0f, // V2->TOPRIGHT (Front
-			-1.0f,  1.0f, 0.0f,     0.0f, 1.0f, 0.0f, 1.0f, // V3->TOPLEFT (Front)
-
-			-1.0f, -1.0f, 1.0f,     1.0f, 0.0f, 0.0f, 1.0f, // V4->BOTLEFT (BACK)
-			1.0f, -1.0f, 1.0f,     0.0f, 0.0f, 1.0f, 1.0f, // V5->BOTRIGHT (BACK)
-			1.0f,  1.0f, 1.0f,     1.0f, 0.0f, 1.0f, 1.0f, // V6->TOPRIGHT (BACK)
-			-1.0f,  1.0f, 1.0f,     0.0f, 1.0f, 0.0f, 1.0f, // V7->TOPLEFT (BACK)
-		};
-
-		int[] indices = {
-			0, 1, 2, // Front Face
-			0, 3, 2,
-
-			4, 5, 6, // Back Face
-			4, 7, 6,
-
-			0, 3, 7, // Left Face
-			7, 4, 0,
-
-			1, 2, 6, // Right Face
-			6, 5, 1,
-
-			3, 2, 6, // Top Face
-			6, 7, 3,
-
-			0, 1, 5, // Bot Face
-			5, 4, 0,
-		};
-
-		va = new VertexArray();
-		va.bind();
-
-		vb = new VertexBuffer(vertices, GL_STATIC_DRAW);
-		VertexBufferLayout layout = new VertexBufferLayout(
-			new VertexBufferAttribute("a_Position", 3, ShaderDataType.Float, true, 0),
-			new VertexBufferAttribute("a_Color", 4, ShaderDataType.Float, true, 0)
-		);
-		vb.setLayout(layout);
-
-		ib = new IndexBuffer(indices, GL_STATIC_DRAW);
-
-		va.addVertexBuffer(vb);
-		va.setIndexBuffer(ib);
-		va.unbind();
 	}
 
 	public void endFrame() {
-		for (var cmd: commandQueue)
-			cmd.execute(this);
-		spriteBatch.render();
-
+		// tmp
 		Matrix4f model = new Matrix4f().identity();
 		model.translate(new Vector3f(0.0f, 0.0f, -30.0f)).rotate((45 * (3.14f/180.0f)), new Vector3f(0.0f, 0.0f, 0.0f)).scale(new Vector3f(5.0f, 5.0f, 5.0f));
 
@@ -110,13 +53,11 @@ public class Renderer {
 
 		setClearColor(new Vector4f(0.07f, 0.13f, 0.17f, 1.0f));
 		clear();
+		//^^^TEMP
 
-		va.bind();
-		glDrawElements(GL_TRIANGLES, ib.getSize(), GL_UNSIGNED_INT, NULL);
-
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		glBindVertexArray(0);
-
+		for (var cmd: commandQueue)
+			cmd.execute(this);
+		spriteBatch.end();
 
 		shader.unbind();
 	}

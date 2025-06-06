@@ -13,8 +13,6 @@ public class RenderSpriteCommand implements RenderCommand {
 
 	@Override
 	public void execute(Renderer renderer) {
-		//renderer bind shader/camera stuff (Maybe Camera not Here)
-		//renderer draw quad
 		renderer.drawSprite(position, sprite);
 	}
 }
