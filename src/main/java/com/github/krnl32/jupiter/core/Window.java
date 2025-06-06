@@ -2,6 +2,8 @@ package com.github.krnl32.jupiter.core;
 
 import com.github.krnl32.jupiter.event.EventBus;
 import com.github.krnl32.jupiter.events.input.*;
+import com.github.krnl32.jupiter.events.window.WindowCloseEvent;
+import com.github.krnl32.jupiter.events.window.WindowResizeEvent;
 import com.github.krnl32.jupiter.input.KeyCode;
 import com.github.krnl32.jupiter.input.MouseCode;
 import org.joml.Vector2f;
@@ -11,7 +13,6 @@ import org.lwjgl.opengl.GL;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.glfw.GLFW.glfwSetCursorPosCallback;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Window {
@@ -70,6 +71,14 @@ public class Window {
 	}
 
 	private void setupEvents() {
+		glfwSetWindowCloseCallback(window, window -> {
+			EventBus.getInstance().emit(new WindowCloseEvent());
+		});
+
+		glfwSetWindowSizeCallback(window, (window, width, height) -> {
+			EventBus.getInstance().emit(new WindowResizeEvent(width, height));
+		});
+
 		glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
 			if (action == GLFW_PRESS)
 				EventBus.getInstance().emit(new KeyPressEvent(KeyCode.fromCode(key)));

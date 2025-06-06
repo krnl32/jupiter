@@ -1,5 +1,7 @@
 package com.github.krnl32.jupiter.core;
 
+import com.github.krnl32.jupiter.event.EventBus;
+import com.github.krnl32.jupiter.events.window.WindowCloseEvent;
 import com.github.krnl32.jupiter.input.Input;
 import com.github.krnl32.jupiter.renderer.Renderer;
 import com.github.krnl32.jupiter.utility.DateTime;
@@ -13,6 +15,10 @@ public abstract class Engine {
 		running = false;
 		window = new Window(name, width, height);
 		renderer = new Renderer();
+
+		EventBus.getInstance().register(WindowCloseEvent.class, event -> {
+			running = false;
+		});
 	}
 
 	public void run() {

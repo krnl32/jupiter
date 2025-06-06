@@ -30,9 +30,11 @@ public class Game extends Engine {
 		Level level1 = new Level();
 		level1.loadFromFile("level1Data.txt");
 
-		GameObject camera = new EmptyGameObject();
-		camera.addComponent(new TransformComponent(new Vector3f(1.0f, 1.0f, 1.0f),new Vector3f(1.0f, 1.0f, 1.0f),new Vector3f(1.0f, 1.0f, 1.0f)));
-		camera.addComponent(new CameraComponent(new Camera(), true));
+		GameObject cameraObject = new EmptyGameObject();
+		cameraObject.addComponent(new TransformComponent(new Vector3f(1.0f, 1.0f, 1.0f),new Vector3f(1.0f, 1.0f, 1.0f),new Vector3f(1.0f, 1.0f, 1.0f)));
+		cameraObject.addComponent(new CameraComponent(new Camera(new Vector3f(0.0f, 0.0f, -1.0f), new Vector3f(0.0f, 1.0f, 0.0f), -90.0f, 0, 10, 1), true));
+		cameraObject.getComponent(CameraComponent.class).setPerspective(45.0f, 0.1f, 1000.0f);
+		cameraObject.getComponent(CameraComponent.class).getCamera().setViewport(640, 480);
 
 		GameObject go = new EmptyGameObject();
 		go.addComponent(new TransformComponent(new Vector3f(1.0f, 1.0f, 1.0f),new Vector3f(1.0f, 1.0f, 1.0f),new Vector3f(1.0f, 1.0f, 1.0f)));
@@ -40,52 +42,24 @@ public class Game extends Engine {
 		//go.addComponent(new MovementComponent());
 
 		Scene level1Scene = new GamePlayScene(level1);
-		level1Scene.addGameObject(camera);
+		level1Scene.addGameObject(cameraObject);
 		level1Scene.addGameObject(go);
 
 		world.addScene("level1", level1Scene);
 		world.switchScene("level1");
-
 
 		return true;
 	}
 
 	@Override
 	public void onUpdate(float dt) {
-		//if(Input.getInstance().isKeyUp(KeyCode.A))
-		//	System.out.println("A is Up");
-
-		/*
-		if(Input.getInstance().isKeyDown(KeyCode.A))
-			System.out.println("A is Down");
-
-		if(Input.getInstance().isKeyPressed(KeyCode.E))
-			System.out.println("E is Pressed");
-
-		if(Input.getInstance().isKeyReleased(KeyCode.E))
-			System.out.println("E is Released");
-
-		if(Input.getInstance().isMouseButtonDown(MouseCode.Button1))
-			System.out.println("Button1 Down");
-
-		if(Input.getInstance().isMouseButtonPressed(MouseCode.Button2))
-			System.out.println("Button2 Pressed");
-
-		if(Input.getInstance().isMouseButtonReleased(MouseCode.Button2))
-			System.out.println("Button2 Released");
-
-		//Logger.info("Cursor({}, {})", Input.getInstance().getMouseCursorPosition().x, Input.getInstance().getMouseCursorPosition().y);
-		//Logger.info("Cursor Delta({}, {})", Input.getInstance().getMouseCursorDelta().x, Input.getInstance().getMouseCursorDelta().y);
-
-		if(Input.getInstance().isMouseScrollingDown())
-			System.out.println("Mouse Scrolling Down");
-		*/
-
 		world.onUpdate(dt);
 	}
 
 	@Override
 	public void onRender(float dt, Renderer renderer) {
+		renderer.setClearColor(new Vector4f(0.07f, 0.13f, 0.17f, 1.0f));
+		renderer.clear();
 		world.onRender(dt, renderer);
 	}
 }
