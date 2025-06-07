@@ -1,6 +1,7 @@
 package com.github.krnl32.jupiter;
 
 import com.github.krnl32.jupiter.components.CameraComponent;
+import com.github.krnl32.jupiter.components.MovementComponent;
 import com.github.krnl32.jupiter.components.SpriteRendererComponent;
 import com.github.krnl32.jupiter.components.TransformComponent;
 import com.github.krnl32.jupiter.core.Engine;
@@ -9,6 +10,7 @@ import com.github.krnl32.jupiter.game.Level;
 import com.github.krnl32.jupiter.game.Scene;
 import com.github.krnl32.jupiter.game.World;
 import com.github.krnl32.jupiter.gameobjects.EmptyGameObject;
+import com.github.krnl32.jupiter.input.KeyCode;
 import com.github.krnl32.jupiter.renderer.Camera;
 import com.github.krnl32.jupiter.renderer.Renderer;
 import com.github.krnl32.jupiter.renderer.Sprite;
@@ -35,6 +37,7 @@ public class Game extends Engine {
 		cameraObject.addComponent(new CameraComponent(new Camera(new Vector3f(0.0f, 0.0f, -1.0f), new Vector3f(0.0f, 1.0f, 0.0f), -90.0f, 0, 10, 1), true));
 		cameraObject.getComponent(CameraComponent.class).setPerspective(45.0f, 0.1f, 1000.0f);
 		cameraObject.getComponent(CameraComponent.class).getCamera().setViewport(640, 480);
+		cameraObject.addComponent(new MovementComponent(10, KeyCode.SPACE, KeyCode.LEFT_CONTROL, KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D));
 
 		GameObject go = new EmptyGameObject();
 		go.addComponent(new TransformComponent(new Vector3f(1.0f, 1.0f, 1.0f),new Vector3f(1.0f, 1.0f, 1.0f),new Vector3f(1.0f, 1.0f, 1.0f)));

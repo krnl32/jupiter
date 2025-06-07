@@ -3,20 +3,20 @@ package com.github.krnl32.jupiter.input;
 import com.github.krnl32.jupiter.core.Logger;
 
 public enum MouseCode {
-	Button1(0),
-	Button2(1),
-	Button3(2),
-	Button4(3),
-	Button5(4),
-	Button6(5),
-	Button7(6),
-	Button8(7),
+	BUTTON_1(0),
+	BUTTON_2(1),
+	BUTTON_3(2),
+	BUTTON_4(3),
+	BUTTON_5(4),
+	BUTTON_6(5),
+	BUTTON_7(6),
+	BUTTON_8(7),
 
-	// Aliases (custom logic to resolve them)
-	ButtonLast(7),
-	ButtonLeft(0),
-	ButtonRight(1),
-	ButtonMiddle(2);
+	// Aliases
+	BUTTON_LAST(7),
+	BUTTON_LEFT(0),
+	BUTTON_RIGHT(1),
+	BUTTON_MIDDLE(2);
 
 	private final int code;
 

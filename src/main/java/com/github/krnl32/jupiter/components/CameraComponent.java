@@ -16,6 +16,8 @@ public class CameraComponent extends Component {
 
 	@Override
 	public void onUpdate(float dt) {
+		TransformComponent transform = getGameObject().getComponent(TransformComponent.class);
+		camera.setPosition(transform.getTranslation());
 		camera.onUpdate(dt);
 	}
 

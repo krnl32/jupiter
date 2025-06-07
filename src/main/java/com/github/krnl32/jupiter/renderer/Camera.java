@@ -17,8 +17,8 @@ public class Camera {
 	private Vector3f right;
 	private Vector3f up;
 	private Vector3f worldUp;
-	private float yaw, pitch;
-	private float moveSpeed, turnSpeed;
+	private float yaw, pitch, roll = 0.0f;
+	private float moveSpeed, turnSpeed, rollSpeed = 45.0f;
 
 	private Matrix4f projectionMatrix;
 	private ProjectionType projectionType;
@@ -53,22 +53,22 @@ public class Camera {
 	}
 
 	public void onUpdate(float dt) {
-		// Keyboard
-		float velocity = moveSpeed * dt;
-		if (Input.getInstance().isKeyDown(KeyCode.W))
-			position.add(new Vector3f(direction).mul(velocity));
-		else if(Input.getInstance().isKeyDown(KeyCode.S))
-			position.sub(new Vector3f(direction).mul(velocity));
-		else if(Input.getInstance().isKeyDown(KeyCode.A))
-			position.sub(new Vector3f(right).mul(velocity));
-		else if(Input.getInstance().isKeyDown(KeyCode.D))
-			position.add(new Vector3f(right).mul(velocity));
-
 		// Mouse
 		Vector2f mouseCursorDelta = Input.getInstance().getMouseCursorDelta();
 		yaw += (mouseCursorDelta.x * turnSpeed);
 		pitch += (mouseCursorDelta.y * turnSpeed);
 		pitch = clamp(pitch, -89.0f, 89.0f);
+
+		if (Input.getInstance().isKeyDown(KeyCode.Q))
+			roll += rollSpeed * dt;
+
+		if (Input.getInstance().isKeyDown(KeyCode.E))
+			roll -= rollSpeed * dt;
+
+		if (roll > 180.0f)
+			roll -= 360.0f;
+		else if (roll < -180.0f)
+			roll += 360.0f;
 
 		calculateCamera();
 	}
@@ -76,6 +76,15 @@ public class Camera {
 	public void setViewport(int width, int height) {
 		aspectRatio = (float)width / height;
 		calculateProjection();
+	}
+
+	public Vector3f getPosition() {
+		return new Vector3f(position);
+	}
+
+	public void setPosition(Vector3f position) {
+		this.position = position;
+		calculateCamera();
 	}
 
 	public Matrix4f getProjectionMatrix() {
@@ -164,6 +173,10 @@ public class Camera {
 
 		right = cross(direction, worldUp).normalize();
 		up = cross(right, direction).normalize();
+
+		Matrix4f rollRotation = new Matrix4f().identity().rotate((float)Math.toRadians(roll), direction);
+		right = rollRotation.transformDirection(right);
+		up = rollRotation.transformDirection(up);
 	}
 
 	private void calculateProjection() {
