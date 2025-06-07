@@ -17,8 +17,8 @@ public class Camera {
 	private Vector3f right;
 	private Vector3f up;
 	private Vector3f worldUp;
-	private float yaw, pitch, roll = 0.0f;
-	private float moveSpeed, turnSpeed, rollSpeed = 45.0f;
+	private float yaw, pitch, roll, zoom;
+	private final float turnSpeed, rollSpeed, zoomSpeed;
 
 	private Matrix4f projectionMatrix;
 	private ProjectionType projectionType;
@@ -28,14 +28,17 @@ public class Camera {
 	private float projectionSize;
 	private float aspectRatio;
 
-	public Camera(Vector3f position, Vector3f worldUp, float yaw, float pitch, float moveSpeed, float turnSpeed) {
+	public Camera(Vector3f position, Vector3f worldUp, float yaw, float pitch, float roll, float zoom, float turnSpeed, float rollSpeed, float zoomSpeed) {
 		this.position = position;
 		this.direction = new Vector3f(0.0f, 0.0f, -1.0f);
 		this.worldUp = worldUp;
 		this.yaw = yaw;
 		this.pitch = pitch;
-		this.moveSpeed = moveSpeed;
+		this.roll = roll;
+		this.zoom = zoom;
 		this.turnSpeed = turnSpeed;
+		this.rollSpeed = rollSpeed;
+		this.zoomSpeed = zoomSpeed;
 		calculateCamera();
 
 		this.projectionMatrix = new Matrix4f().identity();
@@ -61,7 +64,6 @@ public class Camera {
 
 		if (Input.getInstance().isKeyDown(KeyCode.Q))
 			roll += rollSpeed * dt;
-
 		if (Input.getInstance().isKeyDown(KeyCode.E))
 			roll -= rollSpeed * dt;
 
@@ -69,6 +71,11 @@ public class Camera {
 			roll -= 360.0f;
 		else if (roll < -180.0f)
 			roll += 360.0f;
+
+		if (Input.getInstance().isMouseScrollingUp())
+			zoom(zoom * zoomSpeed * dt);
+		if (Input.getInstance().isMouseScrollingDown())
+			zoom(-zoom * zoomSpeed * dt);
 
 		calculateCamera();
 	}
@@ -163,6 +170,14 @@ public class Camera {
 
 	public Matrix4f getViewMatrix() {
 		return new Matrix4f().lookAt(position, new Vector3f(position).add(direction), up);
+	}
+
+	private void zoom(float size) {
+		if (projectionType == ProjectionType.ORTHOGRAPHIC)
+			projectionSize = max(0.1f, projectionSize - size * 0.1f);
+		else if (projectionType == ProjectionType.PERSPECTIVE)
+			projectionFOV = clamp(projectionFOV - size, 1.0f, 90.0f);
+		calculateProjection();
 	}
 
 	private void calculateCamera() {

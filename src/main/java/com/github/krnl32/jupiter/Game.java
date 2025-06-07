@@ -34,7 +34,7 @@ public class Game extends Engine {
 
 		GameObject cameraObject = new EmptyGameObject();
 		cameraObject.addComponent(new TransformComponent(new Vector3f(1.0f, 1.0f, 1.0f),new Vector3f(1.0f, 1.0f, 1.0f),new Vector3f(1.0f, 1.0f, 1.0f)));
-		cameraObject.addComponent(new CameraComponent(new Camera(new Vector3f(0.0f, 0.0f, -1.0f), new Vector3f(0.0f, 1.0f, 0.0f), -90.0f, 0, 10, 1), true));
+		cameraObject.addComponent(new CameraComponent(new Camera(new Vector3f(0.0f, 0.0f, -1.0f), new Vector3f(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 0.0f, 50.0f, 1.0f, 45.0f, 10.0f), true));
 		cameraObject.getComponent(CameraComponent.class).setPerspective(45.0f, 0.1f, 1000.0f);
 		cameraObject.getComponent(CameraComponent.class).getCamera().setViewport(640, 480);
 		cameraObject.addComponent(new MovementComponent(10, KeyCode.SPACE, KeyCode.LEFT_CONTROL, KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D));

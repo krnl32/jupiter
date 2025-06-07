@@ -6,7 +6,7 @@
 <h3 align="center">Jupiter</h3>
 
   <p align="center">
-    Jupiter 2D Game Engine
+    Jupiter Game Engine
     <br>
     <a href="https://github.com/krnl32/Jupiter/issues/new?labels=bug">Report bug</a>
     ·
@@ -16,7 +16,7 @@
 
 ## About
 
-Jupiter Game Engine an upcoming 2D Game Engine.
+Jupiter Game Engine an upcoming Game Engine.
 
 ## Features
 
