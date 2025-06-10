@@ -1,5 +1,8 @@
 package com.github.krnl32.jupiter.renderer;
 
+import com.github.krnl32.jupiter.asset.AssetManager;
+import com.github.krnl32.jupiter.asset.ShaderAsset;
+import com.github.krnl32.jupiter.core.Logger;
 import com.github.krnl32.jupiter.event.EventBus;
 import com.github.krnl32.jupiter.events.window.WindowResizeEvent;
 import org.joml.Matrix4f;
@@ -17,11 +20,15 @@ public class Renderer {
 	private final List<RenderCommand> commandQueue = new ArrayList<>();
 	private final SpriteBatch spriteBatch = new SpriteBatch();
 	private Camera activeCamera;
-	private final Shader shader;
+	private Shader shader;
 
 	public Renderer() {
 		setDepthTest(true);
-		shader = new Shader((System.getProperty("user.dir") + "\\assets\\shaders\\quad_vertex.glsl"), (System.getProperty("user.dir") + "\\assets\\shaders\\quad_fragment.glsl"));
+		ShaderAsset shaderAsset = AssetManager.getInstance().getAsset("shaders/quad");
+		if (shaderAsset == null || !shaderAsset.isLoaded())
+			Logger.critical("Renderer Quad Shader Null or Not Loaded");
+
+		shader = shaderAsset.getShader();
 		shader.bind();
 		shader.setMat4("u_Model", new Matrix4f().identity());
 

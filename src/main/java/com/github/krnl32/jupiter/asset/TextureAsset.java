@@ -6,26 +6,35 @@ public class TextureAsset extends Asset {
 	private final String texturePath;
 	private Texture2D texture;
 
-	public TextureAsset(String texturePath) {
+	public TextureAsset(String textureFileName) {
 		super(AssetType.Texture);
-		this.texturePath = getRootPath() + texturePath;
+		this.texturePath = getRootPath() + "\\textures\\" + textureFileName;
+	}
+
+	public Texture2D getTexture() {
+		return texture;
 	}
 
 	@Override
-	public boolean load() {
+	protected boolean load() {
 		texture = new Texture2D(texturePath);
 		setState(AssetState.Loaded);
 		return true;
 	}
 
 	@Override
-	public boolean reload() {
+	protected boolean reload() {
+		if (texture != null)
+			texture.destroy();
 		return load();
 	}
 
 	@Override
-	public void unload() {
-		texture.destroy();
+	protected void unload() {
+		if (texture != null) {
+			texture.destroy();
+			texture = null;
+		}
 		setState(AssetState.Unloaded);
 	}
 }

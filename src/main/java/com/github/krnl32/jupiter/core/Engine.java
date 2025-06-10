@@ -14,7 +14,6 @@ public abstract class Engine {
 	public Engine(String name, int width, int height) {
 		running = false;
 		window = new Window(name, width, height);
-		renderer = new Renderer();
 
 		EventBus.getInstance().register(WindowCloseEvent.class, event -> {
 			running = false;
@@ -24,6 +23,8 @@ public abstract class Engine {
 	public void run() {
 		if(!onInit())
 			Logger.critical("Failed to run onInit");
+
+		renderer = new Renderer();
 
 		running = true;
 

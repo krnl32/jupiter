@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 public class AssetManager {
 	private static AssetManager instance;
 	private final Map<String, AssetID> keyToAssetId = new HashMap<>();
+	private final Map<AssetID, String> assetIdToKey = new HashMap<>();
 	private final Map<AssetID, Asset> loadedAssets = new HashMap<>();
 	private final Map<AssetID, Integer> refCounter = new HashMap<>();
 	private final Map<String, Supplier<? extends Asset>> assetSuppliers = new HashMap<>();
@@ -42,6 +43,7 @@ public class AssetManager {
 
 		AssetID assetID = asset.getId();
 		keyToAssetId.put(key, assetID);
+		assetIdToKey.put(assetID, key);
 		loadedAssets.put(assetID, asset);
 		refCounter.put(assetID, 1);
 		Logger.info("AssetManager Loaded(Key={}, ID={}, Type={})", key, assetID, asset.getType());
@@ -64,7 +66,17 @@ public class AssetManager {
 			asset.unload();
 		refCounter.remove(assetID);
 		keyToAssetId.remove(key);
+		assetIdToKey.remove(assetID);
 		Logger.info("AssetManager Unloaded(Key={}, ID={})", key, assetID);
+	}
+
+	public void unload(AssetID assetID) {
+		String key = assetIdToKey.get(assetID);
+		if (key == null) {
+			Logger.error("AssetManager Unload(AssetID={}) Key Not Found", assetID);
+			return;
+		}
+		unload(key);
 	}
 
 	public AssetID reload(String key) {
@@ -92,10 +104,20 @@ public class AssetManager {
 
 		AssetID newAssetId = newAsset.getId();
 		keyToAssetId.put(key, newAssetId);
+		assetIdToKey.put(newAssetId, key);
 		loadedAssets.put(newAssetId, newAsset);
 		refCounter.put(newAssetId, 1);
 		Logger.info("AssetManager Reload(Key={}, new ID={}) Loaded New Asset", key, newAssetId);
 		return newAssetId;
+	}
+
+	public AssetID reload(AssetID assetID) {
+		String key = assetIdToKey.get(assetID);
+		if (key == null) {
+			Logger.error("AssetManager Reload(AssetID={}) Key Not Found", assetID);
+			return null;
+		}
+		return reload(key);
 	}
 
 	public void reloadAll() {
@@ -129,9 +151,33 @@ public class AssetManager {
 		return (T) asset;
 	}
 
+	@SuppressWarnings("unchecked")
+	public <T extends Asset> T getAsset(AssetID assetID) {
+		if (assetID == null)
+			return null;
+
+		Asset asset = loadedAssets.get(assetID);
+		if (asset == null) {
+			Logger.error("getAsset(AssetID={}) null", assetID);
+			return null;
+		}
+
+		if(!asset.isLoaded()) {
+			Logger.error("getAsset(AssetID={}) Not Loaded", assetID);
+			return null;
+		}
+
+		return (T) asset;
+	}
+
 	public boolean isLoaded(String key) {
 		AssetID assetID = keyToAssetId.get(key);
 		Asset asset = assetID != null ? loadedAssets.get(assetID) : null;
+		return asset != null && asset.isLoaded();
+	}
+
+	public boolean isLoaded(AssetID assetID) {
+		Asset asset = loadedAssets.get(assetID);
 		return asset != null && asset.isLoaded();
 	}
 

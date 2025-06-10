@@ -2,6 +2,7 @@ package com.github.krnl32.jupiter;
 
 import com.github.krnl32.jupiter.asset.AssetID;
 import com.github.krnl32.jupiter.asset.AssetManager;
+import com.github.krnl32.jupiter.asset.ShaderAsset;
 import com.github.krnl32.jupiter.asset.TextureAsset;
 import com.github.krnl32.jupiter.components.CameraComponent;
 import com.github.krnl32.jupiter.components.MovementComponent;
@@ -32,11 +33,17 @@ public class Game extends Engine {
 
 	@Override
 	public boolean onInit() {
-		world = new World();
+		// Load Shaders
+		AssetID quadShaderID = AssetManager.getInstance().load("shaders/quad", () -> new ShaderAsset("quad_vertex.glsl", "quad_fragment.glsl"));
+		if (quadShaderID == null)
+			Logger.critical("Game Failed to Load Shader Asset({})", "shaders/quad");
 
-		AssetID brickAssetID = AssetManager.getInstance().load("brickTexture", () -> new TextureAsset("textures/brick.png"));
+		// Load Textures
+		AssetID brickAssetID = AssetManager.getInstance().load("textures/brick.png", () -> new TextureAsset("brick.png"));
 		if (brickAssetID == null)
-			Logger.critical("Game Failed to Load Texture Asset({})", "brickTexture");
+			Logger.critical("Game Failed to Load Texture Asset({})", "textures/brick.png");
+
+		world = new World();
 
 		Level level1 = new Level();
 		level1.loadFromFile("level1Data.txt");
@@ -50,7 +57,7 @@ public class Game extends Engine {
 
 		GameObject go = new EmptyGameObject();
 		go.addComponent(new TransformComponent(new Vector3f(1.0f, 1.0f, -10.0f),new Vector3f(1.0f, 1.0f, 1.0f),new Vector3f(1.0f, 1.0f, 1.0f)));
-		go.addComponent(new SpriteRendererComponent(new Sprite(2, 2, 0, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), new Texture2D((System.getProperty("user.dir") + "\\assets\\textures\\brick.png")))));
+		go.addComponent(new SpriteRendererComponent(new Sprite(2, 2, 0, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), brickAssetID)));
 
 		GameObject go2 = new EmptyGameObject();
 		go2.addComponent(new TransformComponent(new Vector3f(-10.0f, 1.0f, -10.0f),new Vector3f(1.0f, 1.0f, 1.0f),new Vector3f(1.0f, 1.0f, 1.0f)));

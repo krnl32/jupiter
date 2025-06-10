@@ -12,7 +12,7 @@ public abstract class Asset {
 		id = new AssetID(UUID.randomUUID());
 		this.type = type;
 		this.state = AssetState.Unloaded;
-		this.rootPath = System.getProperty("user.dir") + "\\assets\\";
+		this.rootPath = System.getProperty("user.dir") + "\\assets";
 	}
 
 	public AssetID getId() {
@@ -43,7 +43,7 @@ public abstract class Asset {
 		return state == AssetState.Loaded;
 	}
 
-	public abstract boolean load();
-	public abstract boolean reload();
-	public abstract void unload();
+	protected abstract boolean load();
+	protected abstract boolean reload();
+	protected abstract void unload();
 }

@@ -25,4 +25,11 @@ public class AssetID {
 	public int hashCode() {
 		return Objects.hashCode(id);
 	}
+
+	@Override
+	public String toString() {
+		return "AssetID{" +
+			"id=" + id +
+			'}';
+	}
 }
