@@ -14,6 +14,7 @@ import com.github.krnl32.jupiter.input.KeyCode;
 import com.github.krnl32.jupiter.renderer.Camera;
 import com.github.krnl32.jupiter.renderer.Renderer;
 import com.github.krnl32.jupiter.renderer.Sprite;
+import com.github.krnl32.jupiter.renderer.Texture2D;
 import com.github.krnl32.jupiter.scenes.GamePlayScene;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -33,20 +34,24 @@ public class Game extends Engine {
 		level1.loadFromFile("level1Data.txt");
 
 		GameObject cameraObject = new EmptyGameObject();
-		cameraObject.addComponent(new TransformComponent(new Vector3f(1.0f, 1.0f, 1.0f),new Vector3f(1.0f, 1.0f, 1.0f),new Vector3f(1.0f, 1.0f, 1.0f)));
+		cameraObject.addComponent(new TransformComponent(new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(1.0f, 1.0f, 1.0f)));
 		cameraObject.addComponent(new CameraComponent(new Camera(new Vector3f(0.0f, 0.0f, -1.0f), new Vector3f(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 0.0f, 50.0f, 1.0f, 45.0f, 10.0f), true));
 		cameraObject.getComponent(CameraComponent.class).setPerspective(45.0f, 0.1f, 1000.0f);
-		cameraObject.getComponent(CameraComponent.class).getCamera().setViewport(640, 480);
+		cameraObject.getComponent(CameraComponent.class).getCamera().setViewport(getWindow().getWidth(), getWindow().getHeight());
 		cameraObject.addComponent(new MovementComponent(10, KeyCode.SPACE, KeyCode.LEFT_CONTROL, KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D));
 
 		GameObject go = new EmptyGameObject();
-		go.addComponent(new TransformComponent(new Vector3f(1.0f, 1.0f, 1.0f),new Vector3f(1.0f, 1.0f, 1.0f),new Vector3f(1.0f, 1.0f, 1.0f)));
-		go.addComponent(new SpriteRendererComponent(new Sprite(2, 2, 0, new Vector4f(1.0f, 0.0f, 0.0f, 1.0f))));
-		//go.addComponent(new MovementComponent());
+		go.addComponent(new TransformComponent(new Vector3f(1.0f, 1.0f, -10.0f),new Vector3f(1.0f, 1.0f, 1.0f),new Vector3f(1.0f, 1.0f, 1.0f)));
+		go.addComponent(new SpriteRendererComponent(new Sprite(2, 2, 0, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), new Texture2D((System.getProperty("user.dir") + "\\assets\\textures\\brick.png")))));
+
+		GameObject go2 = new EmptyGameObject();
+		go2.addComponent(new TransformComponent(new Vector3f(-10.0f, 1.0f, -10.0f),new Vector3f(1.0f, 1.0f, 1.0f),new Vector3f(1.0f, 1.0f, 1.0f)));
+		go2.addComponent(new SpriteRendererComponent(new Sprite(2, 2, 0, new Vector4f(1.0f, 0.0f, 0.0f, 1.0f), null)));
 
 		Scene level1Scene = new GamePlayScene(level1);
 		level1Scene.addGameObject(cameraObject);
 		level1Scene.addGameObject(go);
+		level1Scene.addGameObject(go2);
 
 		world.addScene("level1", level1Scene);
 		world.switchScene("level1");

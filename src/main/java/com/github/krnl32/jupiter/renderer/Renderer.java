@@ -22,6 +22,13 @@ public class Renderer {
 	public Renderer() {
 		setDepthTest(true);
 		shader = new Shader((System.getProperty("user.dir") + "\\assets\\shaders\\quad_vertex.glsl"), (System.getProperty("user.dir") + "\\assets\\shaders\\quad_fragment.glsl"));
+		shader.bind();
+		shader.setMat4("u_Model", new Matrix4f().identity());
+
+		int[] samplers = new int[32];
+		for (int i = 0; i < 32; i++)
+			samplers[i] = i;
+		shader.setIntArray("u_Textures", samplers);
 
 		EventBus.getInstance().register(WindowResizeEvent.class, event -> {
 			setViewPort(0, 0, event.getWidth(), event.getHeight());
@@ -35,7 +42,6 @@ public class Renderer {
 	}
 
 	public void endFrame() {
-		shader.setMat4("u_Model", new Matrix4f().identity().translate(new Vector3f(0.0f, 0.0f, -30.0f)).scale(new Vector3f(5.0f, 5.0f, 5.0f)));
 		if (activeCamera != null) {
 			shader.setMat4("u_View", activeCamera.getViewMatrix());
 			shader.setMat4("u_Projection", activeCamera.getProjectionMatrix());

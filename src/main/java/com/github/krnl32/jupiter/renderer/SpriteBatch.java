@@ -2,6 +2,10 @@ package com.github.krnl32.jupiter.renderer;
 
 import org.joml.Vector3f;
 
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
 import static org.lwjgl.system.MemoryUtil.NULL;
@@ -11,11 +15,15 @@ public class SpriteBatch {
 	private final int MAX_QUAD_VERTEX_SIZE = MAX_QUAD_SIZE * 4;
 	private final int MAX_QUAD_INDEX_SIZE = MAX_QUAD_SIZE * 6;
 	private final int MAX_VERTICES_PER_QUAD = 4;
-	private final int MAX_VERTEX_SIZE = 7; // x,y,z,r,g,b,a
-	private final int MAX_TEXTURE_SIZE = 32;
+	private final int MAX_VERTEX_SIZE = 10;
+	private final int MAX_TEXTURE_SLOTS = 32;
+
+	private final VertexArray vertexArray;
+	private final List<Texture2D> textures = new ArrayList<>(MAX_TEXTURE_SLOTS);
+	private final float[] textureUV;
+	private final Texture2D defaultTexture;
 
 	private float[] quadVertices;
-	private final VertexArray vertexArray;
 	private int quadCount;
 	private int quadIndex;
 
@@ -29,7 +37,9 @@ public class SpriteBatch {
 		VertexBuffer vertexBuffer = new VertexBuffer(quadVertices, GL_STATIC_DRAW);
 		VertexBufferLayout layout = new VertexBufferLayout(
 			new VertexBufferAttribute("a_Position", 3, ShaderDataType.Float, false, 0),
-			new VertexBufferAttribute("a_Color", 4, ShaderDataType.Float, false, 0)
+			new VertexBufferAttribute("a_Color", 4, ShaderDataType.Float, false, 0),
+			new VertexBufferAttribute("a_TextureUV", 2, ShaderDataType.Float, false, 0),
+			new VertexBufferAttribute("a_TextureID", 1, ShaderDataType.Float, false, 0)
 		);
 		vertexBuffer.setLayout(layout);
 
@@ -38,14 +48,23 @@ public class SpriteBatch {
 		vertexArray.addVertexBuffer(vertexBuffer);
 		vertexArray.setIndexBuffer(indexBuffer);
 		vertexArray.unbind();
+
+		textureUV = new float[] {
+			0.0f, 0.0f, // BL
+			1.0f, 0.0f, // BR
+			1.0f, 1.0f, // TR
+			0.0f, 1.0f, // TL
+		};
+
+		defaultTexture = new Texture2D(1, 1, 4);
+		defaultTexture.setBuffer(new int[]{0xffffffff});
 	}
 
 	public void begin() {
-		// prepare
-		// (clear vertex/index array data, etc...)
-		// Track Stats (quadCount, etc...)
 		quadCount = 0;
 		quadIndex = 0;
+		textures.clear();
+		textures.add(defaultTexture);
 	}
 
 	public void addSprite(Vector3f position, Sprite sprite) {
@@ -59,11 +78,14 @@ public class SpriteBatch {
 		float halfHeight = sprite.getHeight() / 2.0f;
 
 		float[][] positions = new float[][] {
-			{ position.x - halfWidth, position.y - halfHeight, position.z },
-			{ position.x + halfWidth, position.y - halfHeight, position.z },
-			{ position.x + halfWidth, position.y + halfHeight, position.z },
-			{ position.x - halfWidth, position.y + halfHeight, position.z }
+			{ position.x - halfWidth, position.y - halfHeight, position.z }, // BL
+			{ position.x + halfWidth, position.y - halfHeight, position.z }, // BR
+			{ position.x + halfWidth, position.y + halfHeight, position.z }, // TR
+			{ position.x - halfWidth, position.y + halfHeight, position.z }, // TL
 		};
+
+		Texture2D texture = sprite.getTexture() != null ? sprite.getTexture() : defaultTexture;
+		int textureSlot = getTextureSlot(texture);
 
 		for (int i = 0; i < 4; i++) {
 			quadVertices[quadIndex++] = positions[i][0];
@@ -73,6 +95,9 @@ public class SpriteBatch {
 			quadVertices[quadIndex++] = sprite.getColor().y;
 			quadVertices[quadIndex++] = sprite.getColor().z;
 			quadVertices[quadIndex++] = sprite.getColor().w;
+			quadVertices[quadIndex++] = textureUV[i * 2];
+			quadVertices[quadIndex++] = textureUV[i * 2 + 1];
+			quadVertices[quadIndex++] = textureSlot;
 		}
 
 		quadCount++;
@@ -81,6 +106,9 @@ public class SpriteBatch {
 	public void end() {
 		if (quadCount == 0)
 			return;
+
+		for (int i = 0; i < textures.size(); i++)
+			textures.get(i).bind(i);
 
 		vertexArray.bind();
 		vertexArray.getVertexBuffers().get(0).setBuffer(quadVertices, 0, quadCount * MAX_VERTICES_PER_QUAD * MAX_VERTEX_SIZE);
@@ -101,5 +129,21 @@ public class SpriteBatch {
 			offset += 4;
 		}
 		return indices;
+	}
+
+	private int getTextureSlot(Texture2D texture) {
+		for (int i = 0; i < textures.size(); i++) {
+			if (textures.get(i).getTextureID() == texture.getTextureID()) {
+				return i;
+			}
+		}
+
+		if (textures.size() >= MAX_TEXTURE_SLOTS) {
+			end();
+			begin();
+		}
+
+		textures.add(texture);
+		return textures.size() - 1;
 	}
 }

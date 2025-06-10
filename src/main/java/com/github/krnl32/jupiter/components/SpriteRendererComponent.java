@@ -20,7 +20,7 @@ public class SpriteRendererComponent extends Component {
 	@Override
 	public void onRender(float dt, Renderer renderer) {
 		TransformComponent transform = getGameObject().getComponent(TransformComponent.class);
-		Sprite spriteRender = new Sprite((int)(transform.getScale().x * sprite.getWidth()), (int)(transform.getScale().y * sprite.getHeight()), sprite.getIndex(), sprite.getColor());
+		Sprite spriteRender = new Sprite((int)(transform.getScale().x * sprite.getWidth()), (int)(transform.getScale().y * sprite.getHeight()), sprite.getIndex(), sprite.getColor(), sprite.getTexture());
 		renderer.submit(new RenderSpriteCommand(transform.getTranslation(), spriteRender));
 	}
 }

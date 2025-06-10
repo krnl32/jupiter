@@ -49,6 +49,10 @@ public abstract class Engine {
 		window.destroy();
 	}
 
+	protected Window getWindow() {
+		return window;
+	}
+
 	public abstract boolean onInit();
 	public abstract void onUpdate(float dt);
 	public abstract void onRender(float dt, Renderer renderer);

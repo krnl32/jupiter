@@ -43,6 +43,18 @@ public class Window {
 		}
 	}
 
+	public String getTitle() {
+		return title;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
 	private void init() {
 		Logger.info("LWJGL Version: {}", Version.getVersion());
 
