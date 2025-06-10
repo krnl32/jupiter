@@ -1,14 +1,15 @@
 package com.github.krnl32.jupiter.renderer;
 
+import com.github.krnl32.jupiter.asset.AssetID;
 import org.joml.Vector4f;
 
 public class Sprite {
 	private int width, height;
 	private int index;
 	private Vector4f color;
-	private Texture2D texture; // Temporary
+	private AssetID texture;
 
-	public Sprite(int width, int height, int index, Vector4f color, Texture2D texture) {
+	public Sprite(int width, int height, int index, Vector4f color, AssetID texture) {
 		this.width = width;
 		this.height = height;
 		this.index = index;
@@ -32,7 +33,7 @@ public class Sprite {
 		return color;
 	}
 
-	public Texture2D getTexture() {
+	public AssetID getTexture() {
 		return texture;
 	}
 }

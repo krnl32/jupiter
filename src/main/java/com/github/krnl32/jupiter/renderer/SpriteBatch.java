@@ -1,5 +1,7 @@
 package com.github.krnl32.jupiter.renderer;
 
+import com.github.krnl32.jupiter.asset.AssetManager;
+import com.github.krnl32.jupiter.asset.TextureAsset;
 import org.joml.Vector3f;
 
 import javax.swing.*;
@@ -83,6 +85,8 @@ public class SpriteBatch {
 			{ position.x + halfWidth, position.y + halfHeight, position.z }, // TR
 			{ position.x - halfWidth, position.y + halfHeight, position.z }, // TL
 		};
+
+		TextureAsset textureAsset = AssetManager.getInstance().getAsset() // Fix?
 
 		Texture2D texture = sprite.getTexture() != null ? sprite.getTexture() : defaultTexture;
 		int textureSlot = getTextureSlot(texture);
