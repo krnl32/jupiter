@@ -18,6 +18,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
 
     implementation("ch.qos.logback:logback-classic:1.5.18")
+	implementation("org.json:json:20250517")
 
 	implementation(platform("org.lwjgl:lwjgl-bom:$lwjglVersion"))
 	implementation("org.lwjgl:lwjgl")

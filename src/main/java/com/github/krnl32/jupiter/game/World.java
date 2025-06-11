@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class World {
-	private Map<String, Scene> scenes = new HashMap<>();
+	private final Map<String, Scene> scenes = new HashMap<>();
 	private Scene currentScene;
 
 	public void onUpdate(float dt) {

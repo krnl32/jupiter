@@ -1,18 +1,32 @@
 package com.github.krnl32.jupiter.scenes;
 
-import com.github.krnl32.jupiter.game.Level;
+import com.github.krnl32.jupiter.asset.AssetID;
+import com.github.krnl32.jupiter.asset.AssetManager;
+import com.github.krnl32.jupiter.asset.LevelAsset;
+import com.github.krnl32.jupiter.core.Logger;
 import com.github.krnl32.jupiter.game.Scene;
 
 public class GamePlayScene extends Scene {
-	private Level level; // level is a data container
+	AssetID levelAssetID;
 
-	public GamePlayScene(Level level) {
-		this.level = level;
+	public GamePlayScene(AssetID levelAssetID) {
+		this.levelAssetID = levelAssetID;
 	}
 
 	@Override
 	public void load() {
-		// Loop over Level Data and Spawn Actors based on it
-		// For Level.Actors, super.addActor(etc....);
+		LevelAsset levelAsset = AssetManager.getInstance().getAsset(levelAssetID);
+		if (levelAsset == null) {
+			Logger.error("GamePlayScene Level({}) Null", levelAssetID);
+			return;
+		}
+
+		if (!levelAsset.isLoaded()) {
+			Logger.error("GamePlayScene Level({}) Not Loaded", levelAssetID);
+			return;
+		}
+
+		for(var go: levelAsset.getLevel().getGameObjects())
+			addGameObject(go);
 	}
 }

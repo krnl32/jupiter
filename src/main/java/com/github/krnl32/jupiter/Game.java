@@ -1,25 +1,18 @@
 package com.github.krnl32.jupiter;
 
-import com.github.krnl32.jupiter.asset.AssetID;
-import com.github.krnl32.jupiter.asset.AssetManager;
-import com.github.krnl32.jupiter.asset.ShaderAsset;
-import com.github.krnl32.jupiter.asset.TextureAsset;
+import com.github.krnl32.jupiter.asset.*;
 import com.github.krnl32.jupiter.components.CameraComponent;
 import com.github.krnl32.jupiter.components.MovementComponent;
-import com.github.krnl32.jupiter.components.SpriteRendererComponent;
 import com.github.krnl32.jupiter.components.TransformComponent;
 import com.github.krnl32.jupiter.core.Engine;
 import com.github.krnl32.jupiter.core.Logger;
 import com.github.krnl32.jupiter.game.GameObject;
-import com.github.krnl32.jupiter.game.Level;
 import com.github.krnl32.jupiter.game.Scene;
 import com.github.krnl32.jupiter.game.World;
 import com.github.krnl32.jupiter.gameobjects.EmptyGameObject;
 import com.github.krnl32.jupiter.input.KeyCode;
 import com.github.krnl32.jupiter.renderer.Camera;
 import com.github.krnl32.jupiter.renderer.Renderer;
-import com.github.krnl32.jupiter.renderer.Sprite;
-import com.github.krnl32.jupiter.renderer.Texture2D;
 import com.github.krnl32.jupiter.scenes.GamePlayScene;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -43,11 +36,14 @@ public class Game extends Engine {
 		if (brickAssetID == null)
 			Logger.critical("Game Failed to Load Texture Asset({})", "textures/brick.png");
 
+		// Load Levels
+		AssetID level1AssetID = AssetManager.getInstance().load("levels/level1", () -> new LevelAsset("level1.json"));
+		if (level1AssetID == null)
+			Logger.critical("Game Failed to Load Level Asset({})", "levels/level1");
+
 		world = new World();
 
-		Level level1 = new Level();
-		level1.loadFromFile("level1Data.txt");
-
+		// Scene
 		GameObject cameraObject = new EmptyGameObject();
 		cameraObject.addComponent(new TransformComponent(new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(1.0f, 1.0f, 1.0f)));
 		cameraObject.addComponent(new CameraComponent(new Camera(new Vector3f(0.0f, 0.0f, -1.0f), new Vector3f(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 0.0f, 50.0f, 1.0f, 45.0f, 10.0f), true));
@@ -55,18 +51,8 @@ public class Game extends Engine {
 		cameraObject.getComponent(CameraComponent.class).getCamera().setViewport(getWindow().getWidth(), getWindow().getHeight());
 		cameraObject.addComponent(new MovementComponent(10, KeyCode.SPACE, KeyCode.LEFT_CONTROL, KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D));
 
-		GameObject go = new EmptyGameObject();
-		go.addComponent(new TransformComponent(new Vector3f(1.0f, 1.0f, -10.0f),new Vector3f(1.0f, 1.0f, 1.0f),new Vector3f(1.0f, 1.0f, 1.0f)));
-		go.addComponent(new SpriteRendererComponent(new Sprite(2, 2, 0, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), brickAssetID)));
-
-		GameObject go2 = new EmptyGameObject();
-		go2.addComponent(new TransformComponent(new Vector3f(-10.0f, 1.0f, -10.0f),new Vector3f(1.0f, 1.0f, 1.0f),new Vector3f(1.0f, 1.0f, 1.0f)));
-		go2.addComponent(new SpriteRendererComponent(new Sprite(2, 2, 0, new Vector4f(1.0f, 0.0f, 0.0f, 1.0f), null)));
-
-		Scene level1Scene = new GamePlayScene(level1);
+		Scene level1Scene = new GamePlayScene(level1AssetID);
 		level1Scene.addGameObject(cameraObject);
-		level1Scene.addGameObject(go);
-		level1Scene.addGameObject(go2);
 
 		world.addScene("level1", level1Scene);
 		world.switchScene("level1");

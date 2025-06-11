@@ -4,4 +4,5 @@ public enum AssetType {
 	None,
 	Texture,
 	Shader,
+	Level,
 }
