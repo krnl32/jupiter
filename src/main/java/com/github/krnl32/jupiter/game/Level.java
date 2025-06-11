@@ -37,7 +37,7 @@ public class Level {
 				String texturePath = obj.optString("texture", null);
 				AssetID textureID = null;
 				if (texturePath != null && !texturePath.isEmpty()) {
-					textureID = AssetManager.getInstance().load(texturePath, () -> new TextureAsset(texturePath));
+					textureID = AssetManager.getInstance().registerAndLoad(texturePath, () -> new TextureAsset(texturePath));
 				}
 
 				Vector4f color = parseVec4(obj.optJSONArray("color"), new Vector4f(1, 1, 1, 1));

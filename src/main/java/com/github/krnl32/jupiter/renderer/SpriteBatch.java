@@ -4,7 +4,6 @@ import com.github.krnl32.jupiter.asset.AssetManager;
 import com.github.krnl32.jupiter.asset.TextureAsset;
 import org.joml.Vector3f;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 

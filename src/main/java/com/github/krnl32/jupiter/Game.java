@@ -27,19 +27,19 @@ public class Game extends Engine {
 	@Override
 	public boolean onInit() {
 		// Load Shaders
-		AssetID quadShaderID = AssetManager.getInstance().load("shaders/quad", () -> new ShaderAsset("quad_vertex.glsl", "quad_fragment.glsl"));
+		AssetID quadShaderID = AssetManager.getInstance().registerAndLoad("shaders/quad", () -> new ShaderAsset("quad_vertex.glsl", "quad_fragment.glsl"));
 		if (quadShaderID == null)
 			Logger.critical("Game Failed to Load Shader Asset({})", "shaders/quad");
 
 		// Load Textures
-		AssetID brickAssetID = AssetManager.getInstance().load("textures/brick.png", () -> new TextureAsset("brick.png"));
+		AssetID brickAssetID = AssetManager.getInstance().registerAndLoad("textures/brick.png", () -> new TextureAsset("brick.png"));
 		if (brickAssetID == null)
 			Logger.critical("Game Failed to Load Texture Asset({})", "textures/brick.png");
 
 		// Load Levels
-		AssetID level1AssetID = AssetManager.getInstance().load("levels/level1", () -> new LevelAsset("level1.json"));
+		AssetID level1AssetID = AssetManager.getInstance().register("levels/level1", () -> new LevelAsset("level1.json"));
 		if (level1AssetID == null)
-			Logger.critical("Game Failed to Load Level Asset({})", "levels/level1");
+			Logger.critical("Game Failed to Register Level Asset({})", "levels/level1");
 
 		world = new World();
 

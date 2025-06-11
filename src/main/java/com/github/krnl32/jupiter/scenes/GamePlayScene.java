@@ -17,7 +17,7 @@ public class GamePlayScene extends Scene {
 	public void load() {
 		LevelAsset levelAsset = AssetManager.getInstance().getAsset(levelAssetID);
 		if (levelAsset == null) {
-			Logger.error("GamePlayScene Level({}) Null", levelAssetID);
+			Logger.error("GamePlayScene Level({}) Failed to get Level Asset", levelAssetID);
 			return;
 		}
 
