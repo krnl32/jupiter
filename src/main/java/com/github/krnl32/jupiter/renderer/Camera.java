@@ -28,7 +28,9 @@ public class Camera {
 	private float projectionSize;
 	private float aspectRatio;
 
-	public Camera(Vector3f position, Vector3f worldUp, float yaw, float pitch, float roll, float zoom, float turnSpeed, float rollSpeed, float zoomSpeed) {
+	private final boolean enableMouse;
+
+	public Camera(Vector3f position, Vector3f worldUp, float yaw, float pitch, float roll, float zoom, float turnSpeed, float rollSpeed, float zoomSpeed, boolean enableMouse) {
 		this.position = position;
 		this.direction = new Vector3f(0.0f, 0.0f, -1.0f);
 		this.worldUp = worldUp;
@@ -50,27 +52,31 @@ public class Camera {
 		this.aspectRatio = 1.778f;
 		calculateProjection();
 
+		this.enableMouse = enableMouse;
+
 		EventBus.getInstance().register(WindowResizeEvent.class, event -> {
 			setViewport(event.getWidth(), event.getHeight());
 		});
 	}
 
 	public void onUpdate(float dt) {
-		// Mouse
-		Vector2f mouseCursorDelta = Input.getInstance().getMouseCursorDelta();
-		yaw += (mouseCursorDelta.x * turnSpeed);
-		pitch += (mouseCursorDelta.y * turnSpeed);
-		pitch = clamp(pitch, -89.0f, 89.0f);
+		if (enableMouse) {
+			// Mouse
+			Vector2f mouseCursorDelta = Input.getInstance().getMouseCursorDelta();
+			yaw += (mouseCursorDelta.x * turnSpeed);
+			pitch += (mouseCursorDelta.y * turnSpeed);
+			pitch = clamp(pitch, -89.0f, 89.0f);
 
-		if (Input.getInstance().isKeyDown(KeyCode.Q))
-			roll += rollSpeed * dt;
-		if (Input.getInstance().isKeyDown(KeyCode.E))
-			roll -= rollSpeed * dt;
+			if (Input.getInstance().isKeyDown(KeyCode.Q))
+				roll += rollSpeed * dt;
+			if (Input.getInstance().isKeyDown(KeyCode.E))
+				roll -= rollSpeed * dt;
 
-		if (roll > 180.0f)
-			roll -= 360.0f;
-		else if (roll < -180.0f)
-			roll += 360.0f;
+			if (roll > 180.0f)
+				roll -= 360.0f;
+			else if (roll < -180.0f)
+				roll += 360.0f;
+		}
 
 		if (Input.getInstance().isMouseScrollingUp())
 			zoom(zoom * zoomSpeed * dt);

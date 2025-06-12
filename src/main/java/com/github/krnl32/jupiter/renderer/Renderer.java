@@ -23,7 +23,6 @@ public class Renderer {
 	private Shader shader;
 
 	public Renderer() {
-		setDepthTest(true);
 		ShaderAsset shaderAsset = AssetManager.getInstance().getAsset("shaders/quad");
 		if (shaderAsset == null || !shaderAsset.isLoaded())
 			Logger.critical("Renderer Quad Shader Null or Not Loaded");
@@ -90,5 +89,14 @@ public class Renderer {
 			glEnable(GL_DEPTH_TEST);
 		else
 			glDisable(GL_DEPTH_TEST);
+	}
+
+	public void setAlphaBlending(boolean state) {
+		if (state) {
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glEnable(GL_BLEND);
+		} else {
+			glDisable(GL_BLEND);
+		}
 	}
 }
