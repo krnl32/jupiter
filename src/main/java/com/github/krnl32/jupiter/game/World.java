@@ -25,6 +25,9 @@ public class World {
 	}
 
 	public void switchScene(String name) {
+		if (currentScene != null)
+			currentScene.onUnload();
+
 		currentScene = scenes.get(name);
 		if(currentScene == null) {
 			Logger.error("Scene {} doesn't exist", name);

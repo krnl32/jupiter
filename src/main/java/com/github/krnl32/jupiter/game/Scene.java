@@ -1,43 +1,59 @@
 package com.github.krnl32.jupiter.game;
 
-import com.github.krnl32.jupiter.components.CameraComponent;
-import com.github.krnl32.jupiter.gameobjects.EmptyGameObject;
-import com.github.krnl32.jupiter.renderer.Camera;
+import com.github.krnl32.jupiter.ecs.Entity;
+import com.github.krnl32.jupiter.ecs.Registry;
+import com.github.krnl32.jupiter.ecs.System;
 import com.github.krnl32.jupiter.renderer.Renderer;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public abstract class Scene {
-	private final List<GameObject> gameObjects = new ArrayList<>();
+	private final Registry registry = new Registry();
+	private boolean initialized = false;
 
 	public void onUpdate(float dt) {
-		for (var gameObject: gameObjects)
-			gameObject.onUpdate(dt);
+		registry.onUpdate(dt);
 	}
 
 	public void onRender(float dt, Renderer renderer) {
-		for (var gameObject: gameObjects)
-			gameObject.onRender(dt, renderer);
+		registry.onRender(dt, renderer);
 	}
 
-	public abstract void load();
-
-	public void addGameObject(GameObject gameObject) {
-		gameObjects.add(gameObject);
-	}
-
-	public void spawnGameObject() {
-		gameObjects.add(new EmptyGameObject());
-	}
-
-	public Camera getPrimaryCamera() {
-		for (var gameObject: gameObjects)
-		{
-			CameraComponent cameraComponent = gameObject.getComponent(CameraComponent.class);
-			if (cameraComponent != null && cameraComponent.isPrimary())
-				return cameraComponent.getCamera();
+	public final void load() {
+		if (!initialized) {
+			onCreate();
+			initialized = true;
 		}
-		return null;
+		onActivate();
+	}
+
+	public abstract void onCreate();
+	public abstract void onActivate();
+	public abstract void onUnload();
+
+	public Registry getRegistry() {
+		return registry;
+	}
+
+	public Entity createEntity() {
+		return registry.createEntity();
+	}
+
+	public void destroyEntity(Entity entity) {
+		registry.destroyEntity(entity);
+	}
+
+	public void addSystem(System system) {
+		registry.addSystem(system);
+	}
+
+	public void addSystem(System system, int priority, boolean enabled) {
+		registry.addSystem(system, priority, enabled);
+	}
+
+	public void removeSystem(Class<? extends System> system) {
+		registry.removeSystem(system);
+	}
+
+	public void setSystemEnabled(Class<? extends System> system, boolean enabled) {
+		registry.setSystemEnabled(system, enabled);
 	}
 }
