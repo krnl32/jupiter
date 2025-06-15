@@ -127,7 +127,7 @@ public class AssetManager {
 			asset.unload();
 		refCounter.remove(assetID);
 
-		Logger.info("AssetManager Unloaded(Key={}, ID={})", key, assetID);
+		Logger.info("AssetManager UNLOADED(Key={}, ID={})", key, assetID);
 	}
 
 	// Unload Asset
@@ -170,7 +170,7 @@ public class AssetManager {
 		registeredAssets.put(newAssetId, newAsset);
 		refCounter.put(newAssetId, 1);
 
-		Logger.info("AssetManager HardReload(Key={}, new ID={}) Loaded New Asset", key, newAssetId);
+		Logger.info("AssetManager HardReload(Key={}, new ID={}) LOADED New Asset", key, newAssetId);
 		return newAssetId;
 	}
 
@@ -197,7 +197,7 @@ public class AssetManager {
 
 		Asset asset = loadedAssets.get(assetID);
 		if (asset == null) {
-			Logger.error("AssetManager SoftReload(Key={}, ID={}) Not Loaded", key, assetID);
+			Logger.error("AssetManager SoftReload(Key={}, ID={}) Not LOADED", key, assetID);
 			return false;
 		}
 
@@ -265,7 +265,7 @@ public class AssetManager {
 
 		Asset asset = loadedAssets.get(assetID);
 		if (asset == null || !asset.isLoaded()) {
-			Logger.error("GetAsset(Key={}, ID={}) Not Loaded", key, assetID);
+			Logger.error("GetAsset(Key={}, ID={}) Not LOADED", key, assetID);
 			return null;
 		}
 
@@ -279,7 +279,7 @@ public class AssetManager {
 
 		Asset asset = loadedAssets.get(assetID);
 		if (asset == null || !asset.isLoaded()) {
-			Logger.error("GetAsset(AssetID={}) Not Loaded", assetID);
+			Logger.error("GetAsset(AssetID={}) Not LOADED", assetID);
 			return null;
 		}
 

@@ -2,7 +2,7 @@ package com.github.krnl32.jupiter;
 
 import com.github.krnl32.jupiter.asset.AssetID;
 import com.github.krnl32.jupiter.asset.AssetManager;
-import com.github.krnl32.jupiter.asset.LevelAsset;
+import com.github.krnl32.jupiter.asset.SceneAsset;
 import com.github.krnl32.jupiter.asset.ShaderAsset;
 import com.github.krnl32.jupiter.components.*;
 import com.github.krnl32.jupiter.core.Engine;
@@ -37,9 +37,9 @@ public class Game extends Engine {
 			Logger.critical("Game Failed to Load Shader Asset({})", "shaders/quad");
 
 		// Scene
-		AssetID level1AssetID = AssetManager.getInstance().register("levels/level1", () -> new LevelAsset("level1.json"));
+		AssetID level1AssetID = AssetManager.getInstance().register("scenes/level1", () -> new SceneAsset("level1.json"));
 		if (level1AssetID == null)
-			Logger.critical("Game Failed to Register Level Asset({})", "levels/level1");
+			Logger.critical("Game Failed to Register Scene Asset({})", "scenes/level1");
 
 		world = new World();
 		world.addScene("level1", new GamePlayScene(level1AssetID));

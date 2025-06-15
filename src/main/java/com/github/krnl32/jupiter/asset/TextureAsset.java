@@ -7,7 +7,7 @@ public class TextureAsset extends Asset {
 	private Texture2D texture;
 
 	public TextureAsset(String textureFileName) {
-		super(AssetType.Texture);
+		super(AssetType.TEXTURE);
 		this.texturePath = getRootPath() + "\\textures\\" + textureFileName;
 	}
 
@@ -18,7 +18,7 @@ public class TextureAsset extends Asset {
 	@Override
 	protected boolean load() {
 		texture = new Texture2D(texturePath);
-		setState(AssetState.Loaded);
+		setState(AssetState.LOADED);
 		return true;
 	}
 
@@ -35,6 +35,6 @@ public class TextureAsset extends Asset {
 			texture.destroy();
 			texture = null;
 		}
-		setState(AssetState.Unloaded);
+		setState(AssetState.UNLOADED);
 	}
 }

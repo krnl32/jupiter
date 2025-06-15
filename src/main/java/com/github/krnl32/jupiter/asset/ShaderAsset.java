@@ -8,7 +8,7 @@ public class ShaderAsset extends Asset{
 	private Shader shader;
 
 	public ShaderAsset(String vertexFileName, String fragmentFileName) {
-		super(AssetType.Shader);
+		super(AssetType.SHADER);
 		this.vertexFilePath = getRootPath() + "\\shaders\\" + vertexFileName;
 		this.fragmentFilePath = getRootPath() + "\\shaders\\" + fragmentFileName;
 	}
@@ -20,7 +20,7 @@ public class ShaderAsset extends Asset{
 	@Override
 	protected boolean load() {
 		shader = new Shader(vertexFilePath, fragmentFilePath);
-		setState(AssetState.Loaded);
+		setState(AssetState.LOADED);
 		return true;
 	}
 
@@ -37,6 +37,6 @@ public class ShaderAsset extends Asset{
 			shader.destroy();
 			shader = null;
 		}
-		setState(AssetState.Unloaded);
+		setState(AssetState.UNLOADED);
 	}
 }

@@ -6,7 +6,7 @@ import com.github.krnl32.jupiter.game.Scene;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class LevelSerializer {
+public class SceneSerializer {
 	public JSONObject serialize(Scene scene) {
 		JSONArray entities = new JSONArray();
 		for(Entity entity : scene.getRegistry().getEntities())

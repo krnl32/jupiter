@@ -25,7 +25,7 @@ public class Renderer {
 	public Renderer() {
 		ShaderAsset shaderAsset = AssetManager.getInstance().getAsset("shaders/quad");
 		if (shaderAsset == null || !shaderAsset.isLoaded())
-			Logger.critical("Renderer Quad Shader Null or Not Loaded");
+			Logger.critical("Renderer Quad Shader Null or Not LOADED");
 
 		shader = shaderAsset.getShader();
 		shader.bind();

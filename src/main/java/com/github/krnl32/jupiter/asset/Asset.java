@@ -11,7 +11,7 @@ public abstract class Asset {
 	public Asset(AssetType type) {
 		id = new AssetID(UUID.randomUUID());
 		this.type = type;
-		this.state = AssetState.Unloaded;
+		this.state = AssetState.UNLOADED;
 		this.rootPath = System.getProperty("user.dir") + "\\assets";
 	}
 
@@ -36,11 +36,11 @@ public abstract class Asset {
 	}
 
 	public boolean isValid() {
-		return state != AssetState.Invalid;
+		return state != AssetState.INVALID;
 	}
 
 	public boolean isLoaded() {
-		return state == AssetState.Loaded;
+		return state == AssetState.LOADED;
 	}
 
 	protected abstract boolean load();
