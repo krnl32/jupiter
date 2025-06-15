@@ -85,7 +85,7 @@ public class SpriteBatch {
 			{ position.x - halfWidth, position.y + halfHeight, position.z }, // TL
 		};
 
-		TextureAsset textureAsset = AssetManager.getInstance().getAsset(sprite.getTexture());
+		TextureAsset textureAsset = AssetManager.getInstance().getAsset(sprite.getTextureAssetID());
 		Texture2D texture = (textureAsset != null && textureAsset.isLoaded()) ? textureAsset.getTexture() : defaultTexture;
 		int textureSlot = getTextureSlot(texture);
 

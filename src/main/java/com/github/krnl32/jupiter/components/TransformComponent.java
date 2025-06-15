@@ -16,6 +16,13 @@ public class TransformComponent implements Component {
 		this.rotation2D = 0;
 	}
 
+	public TransformComponent(Vector3f translation, Vector3f rotation, Vector3f scale, float rotation2D) {
+		this.translation = translation;
+		this.rotation = rotation;
+		this.scale = scale;
+		this.rotation2D = rotation2D;
+	}
+
 	@Override
 	public String toString() {
 		return "TransformComponent{" +

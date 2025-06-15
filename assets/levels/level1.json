@@ -1,16 +1,97 @@
-{
-	"gameObjects": [
-		{
-			"position": [0.0, 0.0, -10.0],
-			"scale": [1.0, 1.0, 1.0],
-			"color": [1.0, 1.0, 1.0, 1.0],
-			"texture": "textures/brick.png"
+{"entities": [
+	{"components": {
+		"IDComponent": {"id": "138c94d6-34e8-41c8-9b05-43133d161097"},
+		"CameraComponent": {
+			"rollSpeed": 45,
+			"worldUp": {
+				"x": 0,
+				"y": 1,
+				"z": 0
+			},
+			"mouseEnabled": false,
+			"turnSpeed": 1,
+			"roll": 0,
+			"projectionType": "ORTHOGRAPHIC",
+			"projectionNear": 0,
+			"zoom": 50,
+			"aspectRatio": 1.3333334,
+			"projectionFar": 100,
+			"zoomSpeed": 10,
+			"yaw": -90,
+			"projectionSize": 10,
+			"position": {
+				"x": 0,
+				"y": 0,
+				"z": -1
+			},
+			"pitch": 0,
+			"projectionFOV": 45,
+			"primary": true
 		},
-		{
-			"position": [-5.0, 1.0, -10.0],
-			"scale": [1.0, 1.0, 1.0],
-			"color": [0.0, 1.0, 0.0, 1.0],
-			"texture": ""
+		"TransformComponent": {
+			"rotation2D": 0,
+			"rotation": {
+				"x": 1,
+				"y": 1,
+				"z": 1
+			},
+			"translation": {
+				"x": 1,
+				"y": 1,
+				"z": 1
+			},
+			"scale": {
+				"x": 1,
+				"y": 1,
+				"z": 1
+			}
 		}
-	]
-}
+	}},
+	{"components": {
+		"SpriteRendererComponent": {
+			"color": {
+				"w": 1,
+				"x": 1,
+				"y": 1,
+				"z": 1
+			},
+			"width": 1,
+			"index": 0,
+			"textureAssetID": "e1dca294-0a7f-4409-8e5c-de5b028d65c8",
+			"height": 1
+		},
+		"RigidBodyComponent": {"velocity": {
+			"x": 0,
+			"y": 1,
+			"z": 0
+		}},
+		"IDComponent": {"id": "289b77c0-fabb-45d8-b8ac-9b27ea683d44"},
+		"KeyboardMovementComponent": {
+			"upKey": 87,
+			"moveSpeed": 10,
+			"downKey": 83,
+			"leftKey": 65,
+			"rightKey": 68,
+			"backwardKey": 0,
+			"forwardKey": 0
+		},
+		"TransformComponent": {
+			"rotation2D": 0,
+			"rotation": {
+				"x": 1,
+				"y": 1,
+				"z": 1
+			},
+			"translation": {
+				"x": 1,
+				"y": -4,
+				"z": 0
+			},
+			"scale": {
+				"x": 1,
+				"y": 1,
+				"z": 1
+			}
+		}
+	}}
+]}

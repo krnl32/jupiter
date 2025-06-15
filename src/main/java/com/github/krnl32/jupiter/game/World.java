@@ -35,4 +35,11 @@ public class World {
 		}
 		currentScene.load();
 	}
+
+	public void setScene(Scene scene) {
+		if (currentScene != null)
+			currentScene.onUnload();
+		currentScene = scene;
+		currentScene.load();
+	}
 }

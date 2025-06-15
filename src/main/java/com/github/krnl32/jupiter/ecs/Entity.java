@@ -1,6 +1,7 @@
 package com.github.krnl32.jupiter.ecs;
 
 import java.util.Objects;
+import java.util.Set;
 
 public class Entity {
 	private final int id;
@@ -25,6 +26,10 @@ public class Entity {
 
 	public <T extends Component> T getComponent(Class<T> component) {
 		return registry.getComponent(this, component);
+	}
+
+	public Set<Component> getComponents() {
+		return registry.getComponents(this);
 	}
 
 	public <T extends Component> boolean hasComponent(Class<T> component) {

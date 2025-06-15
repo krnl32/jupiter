@@ -7,14 +7,14 @@ public class Sprite {
 	private int width, height;
 	private int index;
 	private Vector4f color;
-	private AssetID texture;
+	private AssetID textureAssetID;
 
-	public Sprite(int width, int height, int index, Vector4f color, AssetID texture) {
+	public Sprite(int width, int height, int index, Vector4f color, AssetID textureAssetID) {
 		this.width = width;
 		this.height = height;
 		this.index = index;
 		this.color = color;
-		this.texture = texture;
+		this.textureAssetID = textureAssetID;
 	}
 
 	public int getWidth() {
@@ -33,7 +33,7 @@ public class Sprite {
 		return color;
 	}
 
-	public AssetID getTexture() {
-		return texture;
+	public AssetID getTextureAssetID() {
+		return textureAssetID;
 	}
 }

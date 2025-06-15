@@ -30,6 +30,13 @@ public class Registry {
 		entityManager.remove(entity);
 	}
 
+	public Set<Entity> getEntities() {
+		Set<Entity> entities = new HashSet<>();
+		for (var entityId : entityManager.getAllEntityIds())
+			entities.add(new Entity(entityId, this));
+		return entities;
+	}
+
 	@SuppressWarnings("unchecked")
 	public <T extends Component> ComponentPool<T> getComponentPool(Class<T> component) {
 		return (ComponentPool<T>) componentPools.computeIfAbsent(component, c -> new ComponentPool<>(component, 10000));
@@ -70,6 +77,18 @@ public class Registry {
 
 	public <T extends Component> T getComponent(Entity entity, Class<T> component) {
 		return getComponentPool(component).get(entity);
+	}
+
+	public Set<Component> getComponents(Entity entity) {
+		Set<Component> components = new HashSet<>();
+		for (var pool : componentPools.values()) {
+			if (pool.has(entity)) {
+				Component component = pool.get(entity);
+				if (component != null)
+					components.add(component);
+			}
+		}
+		return components;
 	}
 
 	public <T extends Component> boolean hasComponent(Entity entity, Class<T> component) {

@@ -23,7 +23,7 @@ public class RenderSystem extends System {
 		for (Entity entity: getRegistry().getEntitiesWith(TransformComponent.class, SpriteRendererComponent.class)) {
 			TransformComponent transform = entity.getComponent(TransformComponent.class);
 			SpriteRendererComponent spriteRenderer = entity.getComponent(SpriteRendererComponent.class);
-			Sprite spriteRender = new Sprite((int)(transform.scale.x * spriteRenderer.sprite.getWidth()), (int)(transform.scale.y * spriteRenderer.sprite.getHeight()), spriteRenderer.sprite.getIndex(), spriteRenderer.sprite.getColor(), spriteRenderer.sprite.getTexture());
+			Sprite spriteRender = new Sprite((int)(transform.scale.x * spriteRenderer.sprite.getWidth()), (int)(transform.scale.y * spriteRenderer.sprite.getHeight()), spriteRenderer.sprite.getIndex(), spriteRenderer.sprite.getColor(), spriteRenderer.sprite.getTextureAssetID());
 
 			renderer.submit(new RenderSpriteCommand(transform.translation, spriteRender));		}
 	}

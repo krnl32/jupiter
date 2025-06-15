@@ -28,9 +28,9 @@ public class Camera {
 	private float projectionSize;
 	private float aspectRatio;
 
-	private final boolean enableMouse;
+	private final boolean mouseEnabled;
 
-	public Camera(Vector3f position, Vector3f worldUp, float yaw, float pitch, float roll, float zoom, float turnSpeed, float rollSpeed, float zoomSpeed, boolean enableMouse) {
+	public Camera(Vector3f position, Vector3f worldUp, float yaw, float pitch, float roll, float zoom, float turnSpeed, float rollSpeed, float zoomSpeed, boolean mouseEnabled) {
 		this.position = position;
 		this.direction = new Vector3f(0.0f, 0.0f, -1.0f);
 		this.worldUp = worldUp;
@@ -52,7 +52,7 @@ public class Camera {
 		this.aspectRatio = 1.778f;
 		calculateProjection();
 
-		this.enableMouse = enableMouse;
+		this.mouseEnabled = mouseEnabled;
 
 		EventBus.getInstance().register(WindowResizeEvent.class, event -> {
 			setViewport(event.getWidth(), event.getHeight());
@@ -60,7 +60,7 @@ public class Camera {
 	}
 
 	public void onUpdate(float dt) {
-		if (enableMouse) {
+		if (mouseEnabled) {
 			// Mouse
 			Vector2f mouseCursorDelta = Input.getInstance().getMouseCursorDelta();
 			yaw += (mouseCursorDelta.x * turnSpeed);
@@ -98,6 +98,42 @@ public class Camera {
 	public void setPosition(Vector3f position) {
 		this.position = position;
 		calculateCamera();
+	}
+
+	public Vector3f getWorldUp() {
+		return worldUp;
+	}
+
+	public float getYaw() {
+		return yaw;
+	}
+
+	public float getPitch() {
+		return pitch;
+	}
+
+	public float getRoll() {
+		return roll;
+	}
+
+	public float getZoom() {
+		return zoom;
+	}
+
+	public float getTurnSpeed() {
+		return turnSpeed;
+	}
+
+	public float getRollSpeed() {
+		return rollSpeed;
+	}
+
+	public float getZoomSpeed() {
+		return zoomSpeed;
+	}
+
+	public boolean isMouseEnabled() {
+		return mouseEnabled;
 	}
 
 	public Matrix4f getProjectionMatrix() {
