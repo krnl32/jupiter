@@ -8,14 +8,16 @@ import com.github.krnl32.jupiter.ecs.System;
 import com.github.krnl32.jupiter.input.Input;
 import com.github.krnl32.jupiter.renderer.Renderer;
 
-public class KeyboardMovementSystem extends System {
+public class KeyboardMovementSystem implements System {
+	private final Registry registry;
+
 	public KeyboardMovementSystem(Registry registry) {
-		super(registry);
+		this.registry = registry;
 	}
 
 	@Override
 	public void onUpdate(float dt) {
-		for (Entity entity: getRegistry().getEntitiesWith(TransformComponent.class, KeyboardMovementComponent.class)) {
+		for (Entity entity: registry.getEntitiesWith(TransformComponent.class, KeyboardMovementComponent.class)) {
 			TransformComponent transform = entity.getComponent(TransformComponent.class);
 			KeyboardMovementComponent keyboardMovement = entity.getComponent(KeyboardMovementComponent.class);
 

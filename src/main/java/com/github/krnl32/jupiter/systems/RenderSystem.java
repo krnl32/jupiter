@@ -9,9 +9,11 @@ import com.github.krnl32.jupiter.renderer.RenderSpriteCommand;
 import com.github.krnl32.jupiter.renderer.Renderer;
 import com.github.krnl32.jupiter.renderer.Sprite;
 
-public class RenderSystem extends System {
+public class RenderSystem implements System {
+	private final Registry registry;
+
 	public RenderSystem(Registry registry) {
-		super(registry);
+		this.registry = registry;
 	}
 
 	@Override
@@ -20,7 +22,7 @@ public class RenderSystem extends System {
 
 	@Override
 	public void onRender(float dt, Renderer renderer) {
-		for (Entity entity: getRegistry().getEntitiesWith(TransformComponent.class, SpriteRendererComponent.class)) {
+		for (Entity entity: registry.getEntitiesWith(TransformComponent.class, SpriteRendererComponent.class)) {
 			TransformComponent transform = entity.getComponent(TransformComponent.class);
 			SpriteRendererComponent spriteRenderer = entity.getComponent(SpriteRendererComponent.class);
 			Sprite spriteRender = new Sprite((int)(transform.scale.x * spriteRenderer.sprite.getWidth()), (int)(transform.scale.y * spriteRenderer.sprite.getHeight()), spriteRenderer.sprite.getIndex(), spriteRenderer.sprite.getColor(), spriteRenderer.sprite.getTextureAssetID());

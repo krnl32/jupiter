@@ -7,14 +7,16 @@ import com.github.krnl32.jupiter.ecs.Registry;
 import com.github.krnl32.jupiter.ecs.System;
 import com.github.krnl32.jupiter.renderer.Renderer;
 
-public class MovementSystem extends System {
+public class MovementSystem implements System {
+	private final Registry registry;
+
 	public MovementSystem(Registry registry) {
-		super(registry);
+		this.registry = registry;
 	}
 
 	@Override
 	public void onUpdate(float dt) {
-		for (Entity entity: getRegistry().getEntitiesWith(TransformComponent.class, RigidBodyComponent.class)) {
+		for (Entity entity: registry.getEntitiesWith(TransformComponent.class, RigidBodyComponent.class)) {
 			TransformComponent transform = entity.getComponent(TransformComponent.class);
 			RigidBodyComponent rigidBody = entity.getComponent(RigidBodyComponent.class);
 
