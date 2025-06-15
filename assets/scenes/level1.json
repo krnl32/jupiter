@@ -57,7 +57,7 @@
 			},
 			"width": 1,
 			"index": 0,
-			"textureAssetID": "e1dca294-0a7f-4409-8e5c-de5b028d65c8",
+			"textureAssetID": "spaceship_red.png",
 			"height": 1
 		},
 		"RigidBodyComponent": {"velocity": {

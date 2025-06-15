@@ -50,6 +50,8 @@ public class CameraComponentSerializer implements ComponentSerializer<CameraComp
 		else if(projectionType == ProjectionType.PERSPECTIVE)
 			camera.setPerspective(data.getFloat("projectionFOV"), data.getFloat("projectionNear"), data.getFloat("projectionFar"));
 
+		camera.setAspectRatio(data.getFloat("aspectRatio"));
+
 		return new CameraComponent(camera, data.getBoolean("primary"));
 	}
 }
