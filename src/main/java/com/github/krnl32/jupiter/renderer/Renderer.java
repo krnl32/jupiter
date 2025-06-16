@@ -63,8 +63,8 @@ public class Renderer {
 		commandQueue.add(cmd);
 	}
 
-	public void drawSprite(Matrix4f transform, SpriteRenderData spriteRenderData) {
-		spriteBatch.addSprite(transform, spriteRenderData);
+	public void drawSprite(Matrix4f transform, SpriteRenderData spriteRenderData, float[] textureUV) {
+		spriteBatch.addSprite(transform, spriteRenderData, textureUV);
 	}
 
 	public void setActiveCamera(Camera activeCamera) {

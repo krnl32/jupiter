@@ -21,7 +21,6 @@ public class SpriteBatch {
 
 	private final VertexArray vertexArray;
 	private final List<Texture2D> textures = new ArrayList<>(MAX_TEXTURE_SLOTS);
-	private final float[] textureUV;
 	private final Texture2D defaultTexture;
 
 	private float[] quadVertices;
@@ -50,13 +49,6 @@ public class SpriteBatch {
 		vertexArray.setIndexBuffer(indexBuffer);
 		vertexArray.unbind();
 
-		textureUV = new float[] {
-			0.0f, 0.0f, // BL
-			1.0f, 0.0f, // BR
-			1.0f, 1.0f, // TR
-			0.0f, 1.0f, // TL
-		};
-
 		defaultTexture = new Texture2D(1, 1, 4);
 		defaultTexture.setBuffer(new int[]{0xffffffff});
 	}
@@ -68,7 +60,7 @@ public class SpriteBatch {
 		textures.add(defaultTexture);
 	}
 
-	public void addSprite(Matrix4f transform, SpriteRenderData spriteRenderData) {
+	public void addSprite(Matrix4f transform, SpriteRenderData spriteRenderData, float[] textureUV) {
 		if (quadCount >= MAX_QUAD_SIZE) {
 			end();
 			begin();
