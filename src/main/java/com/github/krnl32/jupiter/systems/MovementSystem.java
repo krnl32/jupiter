@@ -21,6 +21,7 @@ public class MovementSystem implements System {
 			RigidBodyComponent rigidBody = entity.getComponent(RigidBodyComponent.class);
 
 			transform.translation.add(rigidBody.velocity.x * dt, rigidBody.velocity.y * dt, rigidBody.velocity.z * dt);
+			transform.rotation.add(rigidBody.angularVelocity.x * dt, rigidBody.angularVelocity.y * dt, rigidBody.angularVelocity.z * dt);
 		}
 	}
 

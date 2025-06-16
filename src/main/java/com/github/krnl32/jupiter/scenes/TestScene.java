@@ -37,7 +37,7 @@ public class TestScene extends Scene {
 			Logger.critical("Game Failed to Load Texture Asset({})", "textures/laser_red.png");
 
 		addSystem(new MovementSystem(getRegistry()), 0, true);
-		addSystem(new KeyboardMovementSystem(getRegistry()), 1, true);
+		addSystem(new KeyboardControlSystem(getRegistry()), 1, true);
 		addSystem(new CameraSystem(getRegistry()), 2, true);
 		addSystem(new RenderSystem(getRegistry()));
 		addSystem(new LifetimeSystem(getRegistry()));
@@ -56,7 +56,7 @@ public class TestScene extends Scene {
 		spaceshipEntity = createEntity();
 		spaceshipEntity.addComponent(new TransformComponent(new Vector3f(1.0f, -4.0f, 0.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(1.0f, 1.0f, 1.0f)));
 		spaceshipEntity.addComponent(new SpriteRendererComponent(1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), spaceshipRedID));
-		spaceshipEntity.addComponent(new KeyboardMovementComponent(10, KeyCode.W, KeyCode.S, KeyCode.UNKNOWN, KeyCode.UNKNOWN, KeyCode.A, KeyCode.D, KeyCode.Q, KeyCode.E));
+		spaceshipEntity.addComponent(new KeyboardControlComponent(10, 10, KeyCode.W, KeyCode.S, KeyCode.UNKNOWN, KeyCode.UNKNOWN, KeyCode.A, KeyCode.D, KeyCode.Q, KeyCode.E));
 		spaceshipEntity.addComponent(new RigidBodyComponent(new Vector3f(0.0f, 1.0f, 0.0f)));
 
 		spaceshipEntity.addComponent(new ProjectileEmitterComponent(KeyCode.SPACE, 5.55f, 10.0f, new Sprite(1, new Vector4f(1.0f, 0.0f, 0.0f, 1.0f), laserRedID)));

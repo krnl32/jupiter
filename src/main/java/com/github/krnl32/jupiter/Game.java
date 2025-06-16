@@ -30,7 +30,7 @@ public class Game extends Engine {
 		SerializerRegistry.registerComponentSerializer(SpriteRendererComponent.class, new SpriteRendererComponentSerializer());
 		SerializerRegistry.registerComponentSerializer(RigidBodyComponent.class, new RigidBodyComponentSerializer());
 		SerializerRegistry.registerComponentSerializer(CameraComponent.class, new CameraComponentSerializer());
-		SerializerRegistry.registerComponentSerializer(KeyboardMovementComponent.class, new KeyboardMovementComponentSerializer());
+		SerializerRegistry.registerComponentSerializer(KeyboardControlComponent.class, new KeyboardControlComponentSerializer());
 
 		// Load Global Assets
 		AssetID quadShaderID = AssetManager.getInstance().registerAndLoad("shaders/quad", () -> new ShaderAsset("quad_vertex.glsl", "quad_fragment.glsl"));

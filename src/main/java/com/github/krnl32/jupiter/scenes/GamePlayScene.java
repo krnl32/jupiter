@@ -7,7 +7,7 @@ import com.github.krnl32.jupiter.core.Logger;
 import com.github.krnl32.jupiter.game.Scene;
 import com.github.krnl32.jupiter.serializer.SceneSerializer;
 import com.github.krnl32.jupiter.systems.CameraSystem;
-import com.github.krnl32.jupiter.systems.KeyboardMovementSystem;
+import com.github.krnl32.jupiter.systems.KeyboardControlSystem;
 import com.github.krnl32.jupiter.systems.MovementSystem;
 import com.github.krnl32.jupiter.systems.RenderSystem;
 import org.json.JSONObject;
@@ -23,7 +23,7 @@ public class GamePlayScene extends Scene {
 	public void onCreate() {
 		// Register Systems
 		addSystem(new MovementSystem(getRegistry()), 0, true);
-		addSystem(new KeyboardMovementSystem(getRegistry()), 1, true);
+		addSystem(new KeyboardControlSystem(getRegistry()), 1, true);
 		addSystem(new CameraSystem(getRegistry()), 2, true);
 		addSystem(new RenderSystem(getRegistry()));
 	}

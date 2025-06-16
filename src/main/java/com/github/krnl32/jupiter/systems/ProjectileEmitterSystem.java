@@ -49,8 +49,8 @@ public class ProjectileEmitterSystem implements System {
 
 	private void spawnProjectile(Entity owner, TransformComponent transform, ProjectileEmitterComponent emitter) {
 		float angle = (float) toRadians(transform.rotation.z);
-		float directionX = (float) Math.cos(angle);
-		float directionY = (float) Math.sin(angle);
+		float directionX = (float) Math.sin(angle);
+		float directionY = (float) Math.cos(angle);
 		Vector3f direction = new Vector3f(directionX, directionY, 0.0f);
 		Vector3f velocity = new Vector3f(direction).mul(emitter.projectileSpeed);
 
