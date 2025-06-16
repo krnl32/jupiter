@@ -27,6 +27,7 @@ public class RenderSystem implements System {
 			SpriteRendererComponent spriteRenderer = entity.getComponent(SpriteRendererComponent.class);
 			Sprite spriteRender = new Sprite((int)(transform.scale.x * spriteRenderer.sprite.getWidth()), (int)(transform.scale.y * spriteRenderer.sprite.getHeight()), spriteRenderer.sprite.getIndex(), spriteRenderer.sprite.getColor(), spriteRenderer.sprite.getTextureAssetID());
 
-			renderer.submit(new RenderSpriteCommand(transform.translation, spriteRender));		}
+			renderer.submit(new RenderSpriteCommand(transform.translation, spriteRender));
+		}
 	}
 }

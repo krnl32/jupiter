@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL15.GL_DYNAMIC_DRAW;
 import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
@@ -35,7 +36,7 @@ public class SpriteBatch {
 		vertexArray = new VertexArray();
 		vertexArray.bind();
 
-		VertexBuffer vertexBuffer = new VertexBuffer(quadVertices, GL_STATIC_DRAW);
+		VertexBuffer vertexBuffer = new VertexBuffer(quadVertices, GL_DYNAMIC_DRAW);
 		VertexBufferLayout layout = new VertexBufferLayout(
 			new VertexBufferAttribute("a_Position", 3, ShaderDataType.Float, false, 0),
 			new VertexBufferAttribute("a_Color", 4, ShaderDataType.Float, false, 0),
@@ -114,7 +115,7 @@ public class SpriteBatch {
 
 		vertexArray.bind();
 		vertexArray.getVertexBuffers().get(0).setBuffer(quadVertices, 0, quadCount * MAX_VERTICES_PER_QUAD * MAX_VERTEX_SIZE);
-		glDrawElements(GL_TRIANGLES, vertexArray.getIndexBuffer().getSize(), GL_UNSIGNED_INT, NULL);
+		glDrawElements(GL_TRIANGLES, quadCount * 6, GL_UNSIGNED_INT, NULL);
 		vertexArray.unbind();
 	}
 
