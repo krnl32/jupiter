@@ -5,7 +5,6 @@ import com.github.krnl32.jupiter.asset.AssetManager;
 import com.github.krnl32.jupiter.asset.TextureAsset;
 import com.github.krnl32.jupiter.components.SpriteRendererComponent;
 import com.github.krnl32.jupiter.core.Logger;
-import com.github.krnl32.jupiter.renderer.Sprite;
 import com.github.krnl32.jupiter.serializer.ComponentSerializer;
 import com.github.krnl32.jupiter.serializer.JSONSerializerUtils;
 import org.json.JSONObject;
@@ -13,17 +12,15 @@ import org.json.JSONObject;
 public class SpriteRendererComponentSerializer implements ComponentSerializer<SpriteRendererComponent> {
 	@Override
 	public JSONObject serialize(SpriteRendererComponent component) {
-		TextureAsset textureAsset = AssetManager.getInstance().getAsset(component.sprite.getTextureAssetID());
+		TextureAsset textureAsset = AssetManager.getInstance().getAsset(component.textureAssetID);
 		if (textureAsset == null) {
-			Logger.error("SpriteRendererComponentSerializer Serialize Failed, Invalid Texture AssetID({})", component.sprite.getTextureAssetID());
+			Logger.error("SpriteRendererComponentSerializer Serialize Failed, Invalid Texture AssetID({})", component.textureAssetID);
 			return null;
 		}
 
 		return new JSONObject()
-			.put("width", component.sprite.getWidth())
-			.put("height", component.sprite.getHeight())
-			.put("index", component.sprite.getIndex())
-			.put("color", JSONSerializerUtils.serializeVector4f(component.sprite.getColor()))
+			.put("index", component.index)
+			.put("color", JSONSerializerUtils.serializeVector4f(component.color))
 			.put("textureAssetID", textureAsset.getTextureFileName());
 	}
 
@@ -35,12 +32,10 @@ public class SpriteRendererComponentSerializer implements ComponentSerializer<Sp
 			return null;
 		}
 
-		return new SpriteRendererComponent(new Sprite(
-			data.getInt("width"),
-			data.getInt("height"),
+		return new SpriteRendererComponent(
 			data.getInt("index"),
 			JSONSerializerUtils.deserializeVector4f(data.getJSONObject("color")),
 			textureAssetID
-		));
+		);
 	}
 }

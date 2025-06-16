@@ -9,7 +9,7 @@ import com.github.krnl32.jupiter.ecs.Entity;
 import com.github.krnl32.jupiter.game.Scene;
 import com.github.krnl32.jupiter.input.KeyCode;
 import com.github.krnl32.jupiter.renderer.Camera;
-import com.github.krnl32.jupiter.renderer.Sprite;
+import com.github.krnl32.jupiter.model.Sprite;
 import com.github.krnl32.jupiter.systems.*;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -19,6 +19,7 @@ public class TestScene extends Scene {
 	private Entity cameraEntity;
 	private Entity spaceshipEntity;
 	private AssetID spaceshipRedID;
+	private AssetID laserRedID;
 
 	public TestScene(int width, int height) {
 		this.width = width;
@@ -30,6 +31,10 @@ public class TestScene extends Scene {
 		spaceshipRedID = AssetManager.getInstance().registerAndLoad("textures/spaceship_red.png", () -> new TextureAsset("spaceship_red.png"));
 		if (spaceshipRedID == null)
 			Logger.critical("Game Failed to Load Texture Asset({})", "textures/spaceship_red.png");
+
+		laserRedID = AssetManager.getInstance().registerAndLoad("textures/laser_red.png", () -> new TextureAsset("laser_red.png"));
+		if (laserRedID == null)
+			Logger.critical("Game Failed to Load Texture Asset({})", "textures/laser_red.png");
 
 		addSystem(new MovementSystem(getRegistry()), 0, true);
 		addSystem(new KeyboardMovementSystem(getRegistry()), 1, true);
@@ -50,11 +55,11 @@ public class TestScene extends Scene {
 
 		spaceshipEntity = createEntity();
 		spaceshipEntity.addComponent(new TransformComponent(new Vector3f(1.0f, -4.0f, 0.0f), new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(1.0f, 1.0f, 1.0f)));
-		spaceshipEntity.addComponent(new SpriteRendererComponent(new Sprite(1, 1, 0, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), spaceshipRedID)));
+		spaceshipEntity.addComponent(new SpriteRendererComponent(1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), spaceshipRedID));
 		spaceshipEntity.addComponent(new KeyboardMovementComponent(10, KeyCode.W, KeyCode.S, KeyCode.UNKNOWN, KeyCode.UNKNOWN, KeyCode.A, KeyCode.D));
 		spaceshipEntity.addComponent(new RigidBodyComponent(new Vector3f(0.0f, 1.0f, 0.0f)));
 
-		spaceshipEntity.addComponent(new ProjectileEmitterComponent(KeyCode.SPACE, 5.55f, 10.0f, new Sprite(1, 1, 0, new Vector4f(1.0f, 0.0f, 0.0f, 1.0f), null)));
+		spaceshipEntity.addComponent(new ProjectileEmitterComponent(KeyCode.SPACE, 5.55f, 10.0f, new Sprite(1, new Vector4f(1.0f, 0.0f, 0.0f, 1.0f), laserRedID)));
 
 		/*
 		SceneSerializer sceneSerializer = new SceneSerializer();
@@ -69,7 +74,6 @@ public class TestScene extends Scene {
 	public void onUnload() {
 		if (cameraEntity != null)
 			destroyEntity(cameraEntity);
-
 		if (spaceshipEntity != null)
 			destroyEntity(spaceshipEntity);
 	}

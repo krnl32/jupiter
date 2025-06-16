@@ -1,7 +1,5 @@
 package com.github.krnl32.jupiter.renderer;
 
-import com.github.krnl32.jupiter.asset.AssetManager;
-import com.github.krnl32.jupiter.asset.TextureAsset;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
@@ -69,15 +67,15 @@ public class SpriteBatch {
 		textures.add(defaultTexture);
 	}
 
-	public void addSprite(Vector3f position, Sprite sprite) {
+	public void addSprite(Vector3f position, SpriteRenderData spriteRenderData) {
 		if (quadCount >= MAX_QUAD_SIZE) {
 			end();
 			begin();
 		}
 
 		// Center around Position
-		float halfWidth = sprite.getWidth() / 2.0f;
-		float halfHeight = sprite.getHeight() / 2.0f;
+		float halfWidth = spriteRenderData.getWidth() / 2.0f;
+		float halfHeight = spriteRenderData.getHeight() / 2.0f;
 
 		float[][] positions = new float[][] {
 			{ position.x - halfWidth, position.y - halfHeight, position.z }, // BL
@@ -86,18 +84,17 @@ public class SpriteBatch {
 			{ position.x - halfWidth, position.y + halfHeight, position.z }, // TL
 		};
 
-		TextureAsset textureAsset = AssetManager.getInstance().getAsset(sprite.getTextureAssetID());
-		Texture2D texture = (textureAsset != null && textureAsset.isLoaded()) ? textureAsset.getTexture() : defaultTexture;
+		Texture2D texture = (spriteRenderData.getTexture() != null) ? spriteRenderData.getTexture() : defaultTexture;
 		int textureSlot = getTextureSlot(texture);
 
 		for (int i = 0; i < 4; i++) {
 			quadVertices[quadIndex++] = positions[i][0];
 			quadVertices[quadIndex++] = positions[i][1];
 			quadVertices[quadIndex++] = positions[i][2];
-			quadVertices[quadIndex++] = sprite.getColor().x;
-			quadVertices[quadIndex++] = sprite.getColor().y;
-			quadVertices[quadIndex++] = sprite.getColor().z;
-			quadVertices[quadIndex++] = sprite.getColor().w;
+			quadVertices[quadIndex++] = spriteRenderData.getColor().x;
+			quadVertices[quadIndex++] = spriteRenderData.getColor().y;
+			quadVertices[quadIndex++] = spriteRenderData.getColor().z;
+			quadVertices[quadIndex++] = spriteRenderData.getColor().w;
 			quadVertices[quadIndex++] = textureUV[i * 2];
 			quadVertices[quadIndex++] = textureUV[i * 2 + 1];
 			quadVertices[quadIndex++] = textureSlot;

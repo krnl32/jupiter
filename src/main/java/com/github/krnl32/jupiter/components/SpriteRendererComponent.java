@@ -1,12 +1,17 @@
 package com.github.krnl32.jupiter.components;
 
+import com.github.krnl32.jupiter.asset.AssetID;
 import com.github.krnl32.jupiter.ecs.Component;
-import com.github.krnl32.jupiter.renderer.Sprite;
+import org.joml.Vector4f;
 
 public class SpriteRendererComponent implements Component {
-	public Sprite sprite;
+	public int index;
+	public Vector4f color;
+	public AssetID textureAssetID;
 
-	public SpriteRendererComponent(Sprite sprite) {
-		this.sprite = sprite;
+	public SpriteRendererComponent(int index, Vector4f color, AssetID textureAssetID) {
+		this.index = index;
+		this.color = color;
+		this.textureAssetID = textureAssetID;
 	}
 }

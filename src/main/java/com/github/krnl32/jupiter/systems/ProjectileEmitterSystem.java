@@ -55,10 +55,10 @@ public class ProjectileEmitterSystem implements System {
 		Vector3f velocity = new Vector3f(direction).mul(emitter.projectileSpeed);
 
 		Entity projectile = registry.createEntity();
-		projectile.addComponent(new TransformComponent(new Vector3f(transform.translation), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(1.0f, 1.0f, 1.0f)));
+		projectile.addComponent(new TransformComponent(new Vector3f(transform.translation), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(transform.scale.x / 3, transform.scale.y / 3, transform.scale.z / 3)));
 		projectile.addComponent(new RigidBodyComponent(velocity));
 		projectile.addComponent(new ProjectileComponent(owner, 10.0f));
 		projectile.addComponent(new LifetimeComponent(0.5f));
-		projectile.addComponent(new SpriteRendererComponent(emitter.sprite));
+		projectile.addComponent(new SpriteRendererComponent(emitter.sprite.getIndex(), emitter.sprite.getColor(), emitter.sprite.getTextureAssetID()));
 	}
 }
