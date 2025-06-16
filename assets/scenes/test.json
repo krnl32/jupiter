@@ -1,0 +1,93 @@
+{"entities": [
+    {"components": {
+        "CameraComponent": {
+            "rollSpeed": 45,
+            "worldUp": {
+                "x": 0,
+                "y": 1,
+                "z": 0
+            },
+            "mouseEnabled": false,
+            "turnSpeed": 1,
+            "roll": 0,
+            "projectionType": "ORTHOGRAPHIC",
+            "projectionNear": 0,
+            "zoom": 50,
+            "aspectRatio": 1.3333334,
+            "projectionFar": 100,
+            "zoomSpeed": 10,
+            "yaw": -90,
+            "projectionSize": 10,
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": -1
+            },
+            "pitch": 0,
+            "projectionFOV": 45,
+            "primary": true
+        },
+        "TransformComponent": {
+            "rotation": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "translation": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        }
+    }},
+    {"components": {
+        "SpriteRendererComponent": {
+            "color": {
+                "w": 1,
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "width": 1,
+            "index": 0,
+            "textureAssetID": "spaceship_red.png",
+            "height": 1
+        },
+        "RigidBodyComponent": {"velocity": {
+            "x": 0,
+            "y": 1,
+            "z": 0
+        }},
+        "KeyboardMovementComponent": {
+            "upKey": 87,
+            "moveSpeed": 10,
+            "downKey": 83,
+            "leftKey": 65,
+            "rightKey": 68,
+            "backwardKey": 0,
+            "forwardKey": 0
+        },
+        "TransformComponent": {
+            "rotation": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "translation": {
+                "x": -5,
+                "y": -4,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        }
+    }}
+]}

@@ -11,8 +11,7 @@ public class TransformComponentSerializer implements ComponentSerializer<Transfo
 		return new JSONObject()
 			.put("translation", JSONSerializerUtils.serializeVector3f(component.translation))
 			.put("rotation", JSONSerializerUtils.serializeVector3f(component.rotation))
-			.put("scale", JSONSerializerUtils.serializeVector3f(component.scale))
-			.put("rotation2D", component.rotation2D);
+			.put("scale", JSONSerializerUtils.serializeVector3f(component.scale));
 	}
 
 	@Override
@@ -20,7 +19,6 @@ public class TransformComponentSerializer implements ComponentSerializer<Transfo
 		return new TransformComponent(
 			JSONSerializerUtils.deserializeVector3f(data.getJSONObject("translation")),
 			JSONSerializerUtils.deserializeVector3f(data.getJSONObject("rotation")),
-			JSONSerializerUtils.deserializeVector3f(data.getJSONObject("scale")),
-			data.getFloat("rotation2D"));
+			JSONSerializerUtils.deserializeVector3f(data.getJSONObject("scale")));
 	}
 }

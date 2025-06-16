@@ -10,6 +10,7 @@ import com.github.krnl32.jupiter.core.Logger;
 import com.github.krnl32.jupiter.game.World;
 import com.github.krnl32.jupiter.renderer.Renderer;
 import com.github.krnl32.jupiter.scenes.GamePlayScene;
+import com.github.krnl32.jupiter.scenes.TestScene;
 import com.github.krnl32.jupiter.serializer.SerializerRegistry;
 import com.github.krnl32.jupiter.serializer.components.*;
 import org.joml.Vector4f;
@@ -43,7 +44,8 @@ public class Game extends Engine {
 
 		world = new World();
 		world.addScene("level1", new GamePlayScene(level1AssetID));
-		world.switchScene("level1");
+		world.addScene("test", new TestScene(getWindow().getWidth(), getWindow().getHeight()));
+		world.switchScene("test");
 		return true;
 	}
 

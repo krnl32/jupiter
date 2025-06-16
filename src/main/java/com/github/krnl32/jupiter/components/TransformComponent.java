@@ -7,20 +7,11 @@ public class TransformComponent implements Component {
 	public Vector3f translation;
 	public Vector3f rotation;
 	public Vector3f scale;
-	public float rotation2D;
 
 	public TransformComponent(Vector3f translation, Vector3f rotation, Vector3f scale) {
 		this.translation = translation;
 		this.rotation = rotation;
 		this.scale = scale;
-		this.rotation2D = 0;
-	}
-
-	public TransformComponent(Vector3f translation, Vector3f rotation, Vector3f scale, float rotation2D) {
-		this.translation = translation;
-		this.rotation = rotation;
-		this.scale = scale;
-		this.rotation2D = rotation2D;
 	}
 
 	@Override
@@ -29,7 +20,6 @@ public class TransformComponent implements Component {
 			"translation=" + translation +
 			", rotation=" + rotation +
 			", scale=" + scale +
-			", rotation2D=" + rotation2D +
 			'}';
 	}
 }

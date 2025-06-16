@@ -4,7 +4,7 @@ import com.github.krnl32.jupiter.event.EventBus;
 import com.github.krnl32.jupiter.events.window.WindowCloseEvent;
 import com.github.krnl32.jupiter.input.Input;
 import com.github.krnl32.jupiter.renderer.Renderer;
-import com.github.krnl32.jupiter.utility.DateTime;
+import com.github.krnl32.jupiter.utility.Timer;
 
 public abstract class Engine {
 	private boolean running;
@@ -32,7 +32,7 @@ public abstract class Engine {
 
 		float lastTime = 0.0f;
 		while (running) {
-			float time = DateTime.getTimeSeconds();
+			float time = Timer.getTimeSeconds();
 			float dt = time - lastTime;
 			lastTime = time;
 

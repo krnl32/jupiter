@@ -2,7 +2,7 @@ package com.github.krnl32.jupiter.utility;
 
 import static org.lwjgl.glfw.GLFW.glfwGetTime;
 
-public class DateTime {
+public class Timer {
 	public static float getTimeSeconds() {
 		return (float)glfwGetTime();
 	}
