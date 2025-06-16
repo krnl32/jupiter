@@ -31,14 +31,20 @@ public class KeyboardMovementSystem implements System {
 			if (Input.getInstance().isKeyDown(keyboardMovement.forwardKey))
 				transform.translation.z -= velocity;
 
-			if(Input.getInstance().isKeyDown(keyboardMovement.backwardKey))
+			if (Input.getInstance().isKeyDown(keyboardMovement.backwardKey))
 				transform.translation.z += velocity;
 
-			if(Input.getInstance().isKeyDown(keyboardMovement.leftKey))
+			if (Input.getInstance().isKeyDown(keyboardMovement.leftKey))
 				transform.translation.x -= velocity;
 
-			if(Input.getInstance().isKeyDown(keyboardMovement.rightKey))
+			if (Input.getInstance().isKeyDown(keyboardMovement.rightKey))
 				transform.translation.x += velocity;
+
+			if (Input.getInstance().isKeyDown(keyboardMovement.rotateLeftKey))
+				transform.rotation.z += velocity;
+
+			if (Input.getInstance().isKeyDown(keyboardMovement.rotateRightKey))
+				transform.rotation.z -= velocity;
 		}
 	}
 

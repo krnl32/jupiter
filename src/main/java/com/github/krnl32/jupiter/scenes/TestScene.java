@@ -54,9 +54,9 @@ public class TestScene extends Scene {
 		//cameraEntity.addComponent(new KeyboardMovementComponent(10, KeyCode.SPACE, KeyCode.LEFT_CONTROL, KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D));
 
 		spaceshipEntity = createEntity();
-		spaceshipEntity.addComponent(new TransformComponent(new Vector3f(1.0f, -4.0f, 0.0f), new Vector3f(1.0f, 1.0f, 1.0f), new Vector3f(1.0f, 1.0f, 1.0f)));
+		spaceshipEntity.addComponent(new TransformComponent(new Vector3f(1.0f, -4.0f, 0.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(1.0f, 1.0f, 1.0f)));
 		spaceshipEntity.addComponent(new SpriteRendererComponent(1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), spaceshipRedID));
-		spaceshipEntity.addComponent(new KeyboardMovementComponent(10, KeyCode.W, KeyCode.S, KeyCode.UNKNOWN, KeyCode.UNKNOWN, KeyCode.A, KeyCode.D));
+		spaceshipEntity.addComponent(new KeyboardMovementComponent(10, KeyCode.W, KeyCode.S, KeyCode.UNKNOWN, KeyCode.UNKNOWN, KeyCode.A, KeyCode.D, KeyCode.Q, KeyCode.E));
 		spaceshipEntity.addComponent(new RigidBodyComponent(new Vector3f(0.0f, 1.0f, 0.0f)));
 
 		spaceshipEntity.addComponent(new ProjectileEmitterComponent(KeyCode.SPACE, 5.55f, 10.0f, new Sprite(1, new Vector4f(1.0f, 0.0f, 0.0f, 1.0f), laserRedID)));

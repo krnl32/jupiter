@@ -64,8 +64,8 @@ public class Renderer {
 		commandQueue.add(cmd);
 	}
 
-	public void drawSprite(Vector3f position, SpriteRenderData spriteRenderData) {
-		spriteBatch.addSprite(position, spriteRenderData);
+	public void drawSprite(Vector3f position, Vector3f rotation, SpriteRenderData spriteRenderData) {
+		spriteBatch.addSprite(position, rotation, spriteRenderData);
 	}
 
 	public void setActiveCamera(Camera activeCamera) {

@@ -15,7 +15,9 @@ public class KeyboardMovementComponentSerializer implements ComponentSerializer<
 			.put("forwardKey", component.forwardKey.getCode())
 			.put("backwardKey", component.backwardKey.getCode())
 			.put("leftKey", component.leftKey.getCode())
-			.put("rightKey", component.rightKey.getCode());
+			.put("rightKey", component.rightKey.getCode())
+			.put("rotateLeftKey", component.rotateLeftKey.getCode())
+			.put("rotateRightKey", component.rotateRightKey.getCode());
 	}
 
 	@Override
@@ -27,6 +29,8 @@ public class KeyboardMovementComponentSerializer implements ComponentSerializer<
 			KeyCode.fromCode(data.getInt("forwardKey")),
 			KeyCode.fromCode(data.getInt("backwardKey")),
 			KeyCode.fromCode(data.getInt("leftKey")),
-			KeyCode.fromCode(data.getInt("rightKey")));
+			KeyCode.fromCode(data.getInt("rightKey")),
+			KeyCode.fromCode(data.getInt("rotateLeftKey")),
+			KeyCode.fromCode(data.getInt("rotateRightKey")));
 	}
 }

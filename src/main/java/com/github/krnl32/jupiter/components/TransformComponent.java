@@ -1,6 +1,7 @@
 package com.github.krnl32.jupiter.components;
 
 import com.github.krnl32.jupiter.ecs.Component;
+import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 public class TransformComponent implements Component {
@@ -12,6 +13,13 @@ public class TransformComponent implements Component {
 		this.translation = translation;
 		this.rotation = rotation;
 		this.scale = scale;
+	}
+
+	public Matrix4f getTransform() {
+		return new Matrix4f()
+			.translate(translation)
+			.rotateXYZ(rotation.x, rotation.y, rotation.z)
+			.scale(scale);
 	}
 
 	@Override

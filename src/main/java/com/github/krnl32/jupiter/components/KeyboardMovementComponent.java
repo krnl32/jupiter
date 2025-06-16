@@ -6,8 +6,9 @@ import com.github.krnl32.jupiter.input.KeyCode;
 public class KeyboardMovementComponent implements Component {
 	public float moveSpeed;
 	public KeyCode upKey, downKey, forwardKey, backwardKey, leftKey, rightKey;
+	public KeyCode rotateLeftKey, rotateRightKey;
 
-	public KeyboardMovementComponent(float moveSpeed, KeyCode upKey, KeyCode downKey, KeyCode forwardKey, KeyCode backwardKey, KeyCode leftKey, KeyCode rightKey) {
+	public KeyboardMovementComponent(float moveSpeed, KeyCode upKey, KeyCode downKey, KeyCode forwardKey, KeyCode backwardKey, KeyCode leftKey, KeyCode rightKey, KeyCode rotateLeftKey, KeyCode rotateRightKey) {
 		this.moveSpeed = moveSpeed;
 		this.upKey = upKey;
 		this.downKey = downKey;
@@ -15,5 +16,7 @@ public class KeyboardMovementComponent implements Component {
 		this.backwardKey = backwardKey;
 		this.leftKey = leftKey;
 		this.rightKey = rightKey;
+		this.rotateLeftKey = rotateLeftKey;
+		this.rotateRightKey = rotateRightKey;
 	}
 }
