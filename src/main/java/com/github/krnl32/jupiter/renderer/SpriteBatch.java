@@ -1,7 +1,7 @@
 package com.github.krnl32.jupiter.renderer;
 
-import org.joml.Quaternionf;
-import org.joml.Vector3f;
+import org.joml.Matrix4f;
+import org.joml.Vector4f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,35 +68,30 @@ public class SpriteBatch {
 		textures.add(defaultTexture);
 	}
 
-	public void addSprite(Vector3f position, Vector3f rotation, SpriteRenderData spriteRenderData) {
+	public void addSprite(Matrix4f transform, SpriteRenderData spriteRenderData) {
 		if (quadCount >= MAX_QUAD_SIZE) {
 			end();
 			begin();
 		}
 
-		// Center
-		float halfWidth = spriteRenderData.getWidth() / 2.0f;
-		float halfHeight = spriteRenderData.getHeight() / 2.0f;
-
-		Vector3f[] localPositions = new Vector3f[] {
-			new Vector3f(-halfWidth, -halfHeight, 0), // BL
-			new Vector3f( halfWidth, -halfHeight, 0), // BR
-			new Vector3f( halfWidth,  halfHeight, 0), // TR
-			new Vector3f(-halfWidth,  halfHeight, 0)  // TL
+		// Centered
+		Vector4f[] localPositions = new Vector4f[] {
+			new Vector4f(-0.5f, -0.5f, 0.0f, 1.0f), // BL
+			new Vector4f( 0.5f, -0.5f, 0.0f, 1.0f), // BR
+			new Vector4f( 0.5f,  0.5f, 0.0f, 1.0f), // TR
+			new Vector4f(-0.5f,  0.5f, 0.0f, 1.0f)  // TL
 		};
-
-		Quaternionf rotationQuat = new Quaternionf().rotateXYZ(rotation.x, rotation.y, rotation.z);
 
 		Texture2D texture = (spriteRenderData.getTexture() != null) ? spriteRenderData.getTexture() : defaultTexture;
 		int textureSlot = getTextureSlot(texture);
 
 		for (int i = 0; i < 4; i++) {
-			Vector3f rotatedPos = new Vector3f(localPositions[i]);
-			rotationQuat.transform(rotatedPos);
+			Vector4f worldPos = new Vector4f();
+			transform.transform(localPositions[i], worldPos);
 
-			quadVertices[quadIndex++] = position.x + rotatedPos.x;
-			quadVertices[quadIndex++] = position.y + rotatedPos.y;
-			quadVertices[quadIndex++] = position.z + rotatedPos.z;
+			quadVertices[quadIndex++] = worldPos.x;
+			quadVertices[quadIndex++] = worldPos.y;
+			quadVertices[quadIndex++] = worldPos.z;
 
 			quadVertices[quadIndex++] = spriteRenderData.getColor().x;
 			quadVertices[quadIndex++] = spriteRenderData.getColor().y;

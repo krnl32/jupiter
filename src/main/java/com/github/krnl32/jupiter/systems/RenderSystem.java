@@ -35,7 +35,7 @@ public class RenderSystem implements System {
 				Logger.error("RenderSystem Failed to get Texture Asset({})\n", spriteRenderer.textureAssetID);
 
 			Texture2D texture = (textureAsset != null && textureAsset.isLoaded()) ? textureAsset.getTexture() : null;
-			renderer.submit(new RenderSpriteCommand(transform.translation, transform.rotation, new SpriteRenderData(transform.scale.x, transform.scale.y, spriteRenderer.index, spriteRenderer.color, texture)));
+			renderer.submit(new RenderSpriteCommand(transform.getTransform(), new SpriteRenderData(spriteRenderer.index, spriteRenderer.color, texture)));
 		}
 	}
 }

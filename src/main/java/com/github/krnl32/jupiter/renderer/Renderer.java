@@ -6,7 +6,6 @@ import com.github.krnl32.jupiter.core.Logger;
 import com.github.krnl32.jupiter.event.EventBus;
 import com.github.krnl32.jupiter.events.window.WindowResizeEvent;
 import org.joml.Matrix4f;
-import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 import java.util.ArrayList;
@@ -64,8 +63,8 @@ public class Renderer {
 		commandQueue.add(cmd);
 	}
 
-	public void drawSprite(Vector3f position, Vector3f rotation, SpriteRenderData spriteRenderData) {
-		spriteBatch.addSprite(position, rotation, spriteRenderData);
+	public void drawSprite(Matrix4f transform, SpriteRenderData spriteRenderData) {
+		spriteBatch.addSprite(transform, spriteRenderData);
 	}
 
 	public void setActiveCamera(Camera activeCamera) {
