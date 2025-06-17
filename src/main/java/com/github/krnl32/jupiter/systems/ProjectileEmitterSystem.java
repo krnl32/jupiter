@@ -9,8 +9,6 @@ import com.github.krnl32.jupiter.renderer.Renderer;
 import com.github.krnl32.jupiter.utility.Timer;
 import org.joml.Vector3f;
 
-import static java.lang.Math.toRadians;
-
 public class ProjectileEmitterSystem implements System {
 	private final Registry registry;
 
@@ -48,10 +46,10 @@ public class ProjectileEmitterSystem implements System {
 	}
 
 	private void spawnProjectile(Entity owner, TransformComponent transform, ProjectileEmitterComponent emitter) {
-		float angle = (float) toRadians(transform.rotation.z);
+		float angle = (-transform.rotation.z);
 		float directionX = (float) Math.sin(angle);
 		float directionY = (float) Math.cos(angle);
-		Vector3f direction = new Vector3f(directionX, directionY, 0.0f);
+		Vector3f direction = new Vector3f(directionX, directionY, 0.0f).normalize();
 		Vector3f velocity = new Vector3f(direction).mul(emitter.projectileSpeed);
 
 		Entity projectile = registry.createEntity();

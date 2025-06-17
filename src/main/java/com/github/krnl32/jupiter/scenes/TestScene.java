@@ -8,8 +8,8 @@ import com.github.krnl32.jupiter.core.Logger;
 import com.github.krnl32.jupiter.ecs.Entity;
 import com.github.krnl32.jupiter.game.Scene;
 import com.github.krnl32.jupiter.input.KeyCode;
-import com.github.krnl32.jupiter.renderer.Camera;
 import com.github.krnl32.jupiter.model.Sprite;
+import com.github.krnl32.jupiter.renderer.Camera;
 import com.github.krnl32.jupiter.systems.*;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -54,12 +54,11 @@ public class TestScene extends Scene {
 		//cameraEntity.addComponent(new KeyboardMovementComponent(10, KeyCode.SPACE, KeyCode.LEFT_CONTROL, KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D));
 
 		spaceshipEntity = createEntity();
-		spaceshipEntity.addComponent(new TransformComponent(new Vector3f(1.0f, -4.0f, 0.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(1.0f, 1.0f, 1.0f)));
+		spaceshipEntity.addComponent(new TransformComponent(new Vector3f(1.0f, -3.0f, 0.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(1.0f, 1.0f, 1.0f)));
 		spaceshipEntity.addComponent(new SpriteRendererComponent(1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), spaceshipRedID));
 		spaceshipEntity.addComponent(new KeyboardControlComponent(10, 10, KeyCode.W, KeyCode.S, KeyCode.UNKNOWN, KeyCode.UNKNOWN, KeyCode.A, KeyCode.D, KeyCode.Q, KeyCode.E));
-		spaceshipEntity.addComponent(new RigidBodyComponent(new Vector3f(0.0f, 1.0f, 0.0f)));
-
-		spaceshipEntity.addComponent(new ProjectileEmitterComponent(KeyCode.SPACE, 5.55f, 10.0f, new Sprite(1, new Vector4f(1.0f, 0.0f, 0.0f, 1.0f), laserRedID)));
+		spaceshipEntity.addComponent(new RigidBodyComponent(new Vector3f(0.0f, 0.0f, 0.0f)));
+		spaceshipEntity.addComponent(new ProjectileEmitterComponent(KeyCode.SPACE, 5.55f, 10.0f, new Sprite(1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), laserRedID)));
 
 		/*
 		SceneSerializer sceneSerializer = new SceneSerializer();
