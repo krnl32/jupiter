@@ -1,5 +1,7 @@
 package com.github.krnl32.jupiter.ecs;
 
+import com.github.krnl32.jupiter.components.TagComponent;
+
 import java.util.Objects;
 import java.util.Set;
 
@@ -36,6 +38,10 @@ public class Entity {
 		return registry.hasComponent(this, component);
 	}
 
+	public void destroy() {
+		registry.destroyEntity(this);
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (o == null || getClass() != o.getClass()) return false;
@@ -46,6 +52,10 @@ public class Entity {
 	@Override
 	public int hashCode() {
 		return Objects.hashCode(id);
+	}
+
+	public String getTagOrId() {
+		return hasComponent(TagComponent.class) ? getComponent(TagComponent.class).tag : String.valueOf(id);
 	}
 
 	@Override

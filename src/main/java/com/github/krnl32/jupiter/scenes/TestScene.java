@@ -17,9 +17,9 @@ import org.joml.Vector4f;
 public class TestScene extends Scene {
 	private final int width, height;
 	private Entity cameraEntity;
-	private Entity spaceshipEntity;
-	private AssetID spaceshipRedID;
-	private AssetID laserRedID;
+	private Entity spaceshipRedEntity, spaceshipBlueEntity;
+	private AssetID spaceshipRedID, spaceshipBlueID;
+	private AssetID laserRedID, laserBlueID;
 
 	public TestScene(int width, int height) {
 		this.width = width;
@@ -32,9 +32,17 @@ public class TestScene extends Scene {
 		if (spaceshipRedID == null)
 			Logger.critical("Game Failed to Load Texture Asset({})", "textures/spaceship_red.png");
 
+		spaceshipBlueID = AssetManager.getInstance().registerAndLoad("textures/spaceship_blue.png", () -> new TextureAsset("spaceship_blue.png"));
+		if (spaceshipBlueID == null)
+			Logger.critical("Game Failed to Load Texture Asset({})", "textures/spaceship_blue.png");
+
 		laserRedID = AssetManager.getInstance().registerAndLoad("textures/laser_red.png", () -> new TextureAsset("laser_red.png"));
 		if (laserRedID == null)
 			Logger.critical("Game Failed to Load Texture Asset({})", "textures/laser_red.png");
+
+		laserBlueID = AssetManager.getInstance().registerAndLoad("textures/laser_blue.png", () -> new TextureAsset("laser_blue.png"));
+		if (laserBlueID == null)
+			Logger.critical("Game Failed to Load Texture Asset({})", "textures/laser_blue.png");
 
 		addSystem(new MovementSystem(getRegistry()), 0, true);
 		addSystem(new KeyboardControlSystem(getRegistry()), 1, true);
@@ -42,6 +50,10 @@ public class TestScene extends Scene {
 		addSystem(new RenderSystem(getRegistry()));
 		addSystem(new LifetimeSystem(getRegistry()));
 		addSystem(new ProjectileEmitterSystem(getRegistry()));
+		addSystem(new CollisionSystem(getRegistry()));
+		addSystem(new DamageSystem(getRegistry()));
+		addSystem(new HealthSystem(getRegistry()));
+		addSystem(new DestroySystem(getRegistry()));
 	}
 
 	@Override
@@ -53,12 +65,23 @@ public class TestScene extends Scene {
 		cameraEntity.getComponent(CameraComponent.class).camera.setViewport(width, height);
 		//cameraEntity.addComponent(new KeyboardMovementComponent(10, KeyCode.SPACE, KeyCode.LEFT_CONTROL, KeyCode.W, KeyCode.S, KeyCode.A, KeyCode.D));
 
-		spaceshipEntity = createEntity();
-		spaceshipEntity.addComponent(new TransformComponent(new Vector3f(1.0f, -3.0f, 0.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(1.0f, 1.0f, 1.0f)));
-		spaceshipEntity.addComponent(new SpriteRendererComponent(1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), spaceshipRedID));
-		spaceshipEntity.addComponent(new KeyboardControlComponent(10, 10, KeyCode.W, KeyCode.S, KeyCode.UNKNOWN, KeyCode.UNKNOWN, KeyCode.A, KeyCode.D, KeyCode.Q, KeyCode.E));
-		spaceshipEntity.addComponent(new RigidBodyComponent(new Vector3f(0.0f, 0.0f, 0.0f)));
-		spaceshipEntity.addComponent(new ProjectileEmitterComponent(KeyCode.SPACE, 5.55f, 10.0f, new Sprite(1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), laserRedID)));
+		spaceshipRedEntity = createEntity();
+		spaceshipRedEntity.addComponent(new TagComponent("SpaceshipRed"));
+		spaceshipRedEntity.addComponent(new TransformComponent(new Vector3f(1.0f, -3.0f, 0.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(1.0f, 1.0f, 1.0f)));
+		spaceshipRedEntity.addComponent(new SpriteRendererComponent(1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), spaceshipRedID));
+		spaceshipRedEntity.addComponent(new KeyboardControlComponent(10, 10, KeyCode.W, KeyCode.S, KeyCode.UNKNOWN, KeyCode.UNKNOWN, KeyCode.A, KeyCode.D, KeyCode.Q, KeyCode.E));
+		spaceshipRedEntity.addComponent(new RigidBodyComponent(new Vector3f(0.0f, 0.0f, 0.0f)));
+		spaceshipRedEntity.addComponent(new ProjectileEmitterComponent(KeyCode.SPACE, 15.55f, 10.0f, new Sprite(1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), laserRedID)));
+		spaceshipRedEntity.addComponent(new BoxColliderComponent(new Vector3f(1.0f, 1.0f, 1.0f)));
+		spaceshipRedEntity.addComponent(new HealthComponent(100, 100));
+
+		spaceshipBlueEntity = createEntity();
+		spaceshipBlueEntity.addComponent(new TagComponent("SpaceshipBlue"));
+		spaceshipBlueEntity.addComponent(new TransformComponent(new Vector3f(-3.0f, 5.0f, 0.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(1.0f, 1.0f, 1.0f)));
+		spaceshipBlueEntity.addComponent(new SpriteRendererComponent(1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), spaceshipBlueID));
+		spaceshipBlueEntity.addComponent(new RigidBodyComponent(new Vector3f(1.0f, 0.0f, 0.0f)));
+		spaceshipBlueEntity.addComponent(new BoxColliderComponent(new Vector3f(1.0f, 1.0f, 1.0f)));
+		spaceshipBlueEntity.addComponent(new HealthComponent(100, 100));
 
 		/*
 		SceneSerializer sceneSerializer = new SceneSerializer();
@@ -73,7 +96,9 @@ public class TestScene extends Scene {
 	public void onUnload() {
 		if (cameraEntity != null)
 			destroyEntity(cameraEntity);
-		if (spaceshipEntity != null)
-			destroyEntity(spaceshipEntity);
+		if (spaceshipRedEntity != null)
+			destroyEntity(spaceshipRedEntity);
+		if (spaceshipBlueEntity != null)
+			destroyEntity(spaceshipBlueEntity);
 	}
 }

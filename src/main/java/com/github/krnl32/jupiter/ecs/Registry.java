@@ -1,6 +1,5 @@
 package com.github.krnl32.jupiter.ecs;
 
-import com.github.krnl32.jupiter.core.Logger;
 import com.github.krnl32.jupiter.renderer.Renderer;
 
 import java.util.HashMap;
@@ -23,17 +22,17 @@ public class Registry {
 
 	public Entity createEntity() {
 		Entity entity = entityManager.create(this);
-		Logger.info("Registry Create Entity({})", entity.getId());
+		//Logger.info("Registry Create Entity({})", entity.getId());
 		return entity;
 	}
 
 	public void destroyEntity(Entity entity) {
 		for(ComponentPool<?> pool : componentPools.values()) {
-			Logger.info("Registry Remove Entity({}) from ComponentPool({}): ", entity.getId(), pool.getComponents().getClass().getSimpleName());
+			//Logger.info("Registry Remove Entity({}) from ComponentPool({}): ", entity.getId(), pool.getComponents().getClass().getSimpleName());
 			pool.remove(entity);
 		}
 		entityManager.remove(entity);
-		Logger.info("Registry Destroy Entity({})", entity.getId());
+		//Logger.info("Registry Destroy Entity({})", entity.getId());
 	}
 
 	public Set<Entity> getEntities() {
@@ -75,12 +74,12 @@ public class Registry {
 	@SuppressWarnings("unchecked")
 	public <T extends Component> void addComponent(Entity entity, T component) {
 		getComponentPool((Class<T>) component.getClass()).set(entity, component);
-		Logger.info("Registry Add Component({}) to Entity({})", component.getClass().getSimpleName(), entity.getId());
+		//Logger.info("Registry Add Component({}) to Entity({})", component.getClass().getSimpleName(), entity.getId());
 	}
 
 	public <T extends Component> void removeComponent(Entity entity, Class<T> component) {
 		getComponentPool(component).remove(entity);
-		Logger.info("Registry Remove Component({}) from Entity({})", component.getSimpleName(), entity.getId());
+		//Logger.info("Registry Remove Component({}) from Entity({})", component.getSimpleName(), entity.getId());
 	}
 
 	public <T extends Component> T getComponent(Entity entity, Class<T> component) {

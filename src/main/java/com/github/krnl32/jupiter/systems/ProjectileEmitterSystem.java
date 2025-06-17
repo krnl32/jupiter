@@ -56,7 +56,8 @@ public class ProjectileEmitterSystem implements System {
 		projectile.addComponent(new TransformComponent(new Vector3f(transform.translation), new Vector3f(transform.rotation), new Vector3f(transform.scale.x / 3, transform.scale.y / 3, transform.scale.z / 3)));
 		projectile.addComponent(new RigidBodyComponent(velocity));
 		projectile.addComponent(new ProjectileComponent(owner, 10.0f));
-		projectile.addComponent(new LifetimeComponent(0.5f));
+		projectile.addComponent(new LifetimeComponent(1.0f));
 		projectile.addComponent(new SpriteRendererComponent(emitter.sprite.getIndex(), emitter.sprite.getColor(), emitter.sprite.getTextureAssetID()));
+		projectile.addComponent(new BoxColliderComponent(new Vector3f(1.0f, 1.0f, 1.0f)));
 	}
 }
