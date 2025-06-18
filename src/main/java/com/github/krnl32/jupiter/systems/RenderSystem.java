@@ -2,6 +2,7 @@ package com.github.krnl32.jupiter.systems;
 
 import com.github.krnl32.jupiter.asset.AssetManager;
 import com.github.krnl32.jupiter.asset.TextureAsset;
+import com.github.krnl32.jupiter.components.BlinkComponent;
 import com.github.krnl32.jupiter.components.SpriteRendererComponent;
 import com.github.krnl32.jupiter.components.TransformComponent;
 import com.github.krnl32.jupiter.core.Logger;
@@ -27,6 +28,13 @@ public class RenderSystem implements System {
 	@Override
 	public void onRender(float dt, Renderer renderer) {
 		for (Entity entity: registry.getEntitiesWith(TransformComponent.class, SpriteRendererComponent.class)) {
+
+			if (entity.hasComponent(BlinkComponent.class)) {
+				BlinkComponent blink = entity.getComponent(BlinkComponent.class);
+				if (!blink.visible)
+					continue;
+			}
+
 			TransformComponent transform = entity.getComponent(TransformComponent.class);
 			SpriteRendererComponent spriteRenderer = entity.getComponent(SpriteRendererComponent.class);
 

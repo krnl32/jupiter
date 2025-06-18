@@ -1,8 +1,6 @@
 package com.github.krnl32.jupiter.systems;
 
-import com.github.krnl32.jupiter.components.DestroyComponent;
-import com.github.krnl32.jupiter.components.HealthComponent;
-import com.github.krnl32.jupiter.components.ProjectileComponent;
+import com.github.krnl32.jupiter.components.*;
 import com.github.krnl32.jupiter.core.Logger;
 import com.github.krnl32.jupiter.ecs.Entity;
 import com.github.krnl32.jupiter.ecs.Registry;
@@ -36,13 +34,25 @@ public class DamageSystem implements System {
 
 	private void applyDamage(Entity projectileEntity, Entity targetEntity) {
 		ProjectileComponent projectile = projectileEntity.getComponent(ProjectileComponent.class);
+
 		if (projectile.owner.equals(targetEntity) && !projectile.canHitOwner)
 			return;
+
+		if (projectileEntity.hasComponent(TeamComponent.class) && targetEntity.hasComponent(TeamComponent.class)) {
+			TeamComponent projectileTeam = projectileEntity.getComponent(TeamComponent.class);
+			TeamComponent targetTeam = targetEntity.getComponent(TeamComponent.class);
+			if (projectileTeam.teamID == targetTeam.teamID)
+				return;
+		}
 
 		HealthComponent health = targetEntity.getComponent(HealthComponent.class);
 		health.currentHealth -= projectile.damage;
 
 		projectileEntity.addComponent(new DestroyComponent());
+
+		if (!targetEntity.hasComponent(BlinkComponent.class))
+			targetEntity.addComponent(new BlinkComponent(0.3f, 0.05f));
+
 		Logger.info("Entity({}) hit Entity({}) {} Damage", projectile.owner.getTagOrId(), targetEntity.getTagOrId(), projectile.damage);
 	}
 }

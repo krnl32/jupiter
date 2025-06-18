@@ -54,6 +54,7 @@ public class TestScene extends Scene {
 		addSystem(new DamageSystem(getRegistry()));
 		addSystem(new HealthSystem(getRegistry()));
 		addSystem(new DestroySystem(getRegistry()));
+		addSystem(new BlinkSystem(getRegistry()));
 	}
 
 	@Override
@@ -74,6 +75,7 @@ public class TestScene extends Scene {
 		spaceshipRedEntity.addComponent(new ProjectileEmitterComponent(KeyCode.SPACE, 15.55f, 10.0f, new Sprite(1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), laserRedID)));
 		spaceshipRedEntity.addComponent(new BoxColliderComponent(new Vector3f(1.0f, 1.0f, 1.0f)));
 		spaceshipRedEntity.addComponent(new HealthComponent(100, 100));
+		spaceshipRedEntity.addComponent(new TeamComponent(1));
 
 		spaceshipBlueEntity = createEntity();
 		spaceshipBlueEntity.addComponent(new TagComponent("SpaceshipBlue"));
@@ -82,6 +84,7 @@ public class TestScene extends Scene {
 		spaceshipBlueEntity.addComponent(new RigidBodyComponent(new Vector3f(1.0f, 0.0f, 0.0f)));
 		spaceshipBlueEntity.addComponent(new BoxColliderComponent(new Vector3f(1.0f, 1.0f, 1.0f)));
 		spaceshipBlueEntity.addComponent(new HealthComponent(100, 100));
+		spaceshipBlueEntity.addComponent(new TeamComponent(2));
 
 		/*
 		SceneSerializer sceneSerializer = new SceneSerializer();

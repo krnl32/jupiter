@@ -59,5 +59,10 @@ public class ProjectileEmitterSystem implements System {
 		projectile.addComponent(new LifetimeComponent(1.0f));
 		projectile.addComponent(new SpriteRendererComponent(emitter.sprite.getIndex(), emitter.sprite.getColor(), emitter.sprite.getTextureAssetID()));
 		projectile.addComponent(new BoxColliderComponent(new Vector3f(1.0f, 1.0f, 1.0f)));
+
+		if (owner.hasComponent(TeamComponent.class)) {
+			TeamComponent team = owner.getComponent(TeamComponent.class);
+			projectile.addComponent(new TeamComponent(team.teamID));
+		}
 	}
 }
