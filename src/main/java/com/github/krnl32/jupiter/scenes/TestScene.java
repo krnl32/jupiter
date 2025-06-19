@@ -20,6 +20,7 @@ public class TestScene extends Scene {
 	private Entity spaceshipRedEntity, spaceshipBlueEntity;
 	private AssetID spaceshipRedID, spaceshipBlueID;
 	private AssetID laserRedID, laserBlueID;
+	private AssetID starParticleID;
 
 	public TestScene(int width, int height) {
 		this.width = width;
@@ -44,6 +45,10 @@ public class TestScene extends Scene {
 		if (laserBlueID == null)
 			Logger.critical("Game Failed to Load Texture Asset({})", "textures/laser_blue.png");
 
+		starParticleID = AssetManager.getInstance().registerAndLoad("textures/particles/star3.png", () -> new TextureAsset("particles/star3.png"));
+		if (starParticleID == null)
+			Logger.critical("Game Failed to Load Texture Asset({})", "textures/particles/star3.png");
+
 		addSystem(new MovementSystem(getRegistry()), 0, true);
 		addSystem(new KeyboardControlSystem(getRegistry()), 1, true);
 		addSystem(new CameraSystem(getRegistry()), 2, true);
@@ -56,6 +61,7 @@ public class TestScene extends Scene {
 		addSystem(new DestroySystem(getRegistry()));
 		addSystem(new BlinkSystem(getRegistry()));
 		addSystem(new ParticleSystem(getRegistry()));
+		addSystem(new DeathEffectSystem(getRegistry()));
 	}
 
 	@Override
@@ -77,6 +83,7 @@ public class TestScene extends Scene {
 		spaceshipRedEntity.addComponent(new BoxColliderComponent(new Vector3f(1.0f, 1.0f, 1.0f)));
 		spaceshipRedEntity.addComponent(new HealthComponent(100, 100));
 		spaceshipRedEntity.addComponent(new TeamComponent(1));
+		spaceshipRedEntity.addComponent(new DeathEffectComponent(20, new Sprite(0, new Vector4f(1.0f, 0.45f, 0.0f, 0.95f), starParticleID)));
 
 		spaceshipBlueEntity = createEntity();
 		spaceshipBlueEntity.addComponent(new TagComponent("SpaceshipBlue"));
@@ -86,6 +93,7 @@ public class TestScene extends Scene {
 		spaceshipBlueEntity.addComponent(new BoxColliderComponent(new Vector3f(1.0f, 1.0f, 1.0f)));
 		spaceshipBlueEntity.addComponent(new HealthComponent(100, 100));
 		spaceshipBlueEntity.addComponent(new TeamComponent(2));
+		spaceshipBlueEntity.addComponent(new DeathEffectComponent(20, new Sprite(0, new Vector4f(1.0f, 0.45f, 0.0f, 0.95f), starParticleID)));
 
 		/*
 		SceneSerializer sceneSerializer = new SceneSerializer();

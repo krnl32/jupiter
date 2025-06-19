@@ -1,5 +1,7 @@
 package com.github.krnl32.jupiter.event;
 
+import com.github.krnl32.jupiter.core.Logger;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +21,7 @@ public class EventBus {
 	}
 
 	public <T extends Event> void register(Class<T> eventType, EventListener<T> listener) {
+		Logger.info("EventBus Registering Event({}) with Listener({})", eventType.getSimpleName(), listener.getClass().getSimpleName());
 		listeners.computeIfAbsent(eventType, k -> new ArrayList<>()).add(listener);
 	}
 
