@@ -55,6 +55,7 @@ public class TestScene extends Scene {
 		addSystem(new HealthSystem(getRegistry()));
 		addSystem(new DestroySystem(getRegistry()));
 		addSystem(new BlinkSystem(getRegistry()));
+		addSystem(new ParticleSystem(getRegistry()));
 	}
 
 	@Override
