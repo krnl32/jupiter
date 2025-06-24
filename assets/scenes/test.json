@@ -1,5 +1,6 @@
 {"entities": [
     {"components": {
+        "IDComponent": {"id": "70221f3f-06c0-4abe-a20f-60d021d23eee"},
         "CameraComponent": {
             "rollSpeed": 45,
             "worldUp": {
@@ -47,40 +48,89 @@
     }},
     {"components": {
         "SpriteRendererComponent": {
+            "textureUV": [
+                0,
+                0,
+                1,
+                0,
+                1,
+                1,
+                0,
+                1
+            ],
             "color": {
                 "w": 1,
                 "x": 1,
                 "y": 1,
                 "z": 1
             },
-            "width": 1,
-            "index": 0,
-            "textureAssetID": "spaceship_red.png",
-            "height": 1
+            "index": 1,
+            "textureAssetID": "players/spaceship_red.png"
         },
-        "RigidBodyComponent": {"velocity": {
-            "x": 0,
-            "y": 1,
-            "z": 0
-        }},
-        "KeyboardMovementComponent": {
+        "TeamComponent": {"teamID": 1},
+        "RigidBodyComponent": {
+            "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "angularVelocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            }
+        },
+        "KeyboardControlComponent": {
             "upKey": 87,
             "moveSpeed": 10,
             "downKey": 83,
             "leftKey": 65,
             "rightKey": 68,
+            "rotationSpeed": 10,
             "backwardKey": 0,
+            "rotateRightKey": 69,
+            "rotateLeftKey": 81,
             "forwardKey": 0
         },
-        "TransformComponent": {
-            "rotation": {
+        "HealthComponent": {
+            "currentHealth": 100,
+            "maxHealth": 100
+        },
+        "DeathEffectComponent": {
+            "particleSprite": {
+                "color": {
+                    "w": 0.95,
+                    "x": 1,
+                    "y": 0.45,
+                    "z": 0
+                },
+                "index": 0,
+                "textureAssetID": "particles/star3.png"
+            },
+            "particleCount": 20
+        },
+        "IDComponent": {"id": "e7d0ddc3-fc1d-4ec4-aa41-93a1858675cf"},
+        "BoxColliderComponent": {
+            "size": {
                 "x": 1,
                 "y": 1,
                 "z": 1
             },
+            "offset": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            }
+        },
+        "TransformComponent": {
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
             "translation": {
-                "x": -5,
-                "y": -4,
+                "x": 1,
+                "y": -3,
                 "z": 0
             },
             "scale": {
@@ -88,6 +138,7 @@
                 "y": 1,
                 "z": 1
             }
-        }
+        },
+        "TagComponent": {"tag": "SpaceshipRed"}
     }}
 ]}

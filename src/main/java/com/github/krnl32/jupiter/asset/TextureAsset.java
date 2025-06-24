@@ -2,19 +2,17 @@ package com.github.krnl32.jupiter.asset;
 
 import com.github.krnl32.jupiter.renderer.Texture2D;
 
-import java.io.File;
-
 public class TextureAsset extends Asset {
-	private final String texturePath;
+	private final String textureAssetPath;
 	private Texture2D texture;
 
-	public TextureAsset(String textureFileName) {
+	public TextureAsset(String textureAssetPath) {
 		super(AssetType.TEXTURE);
-		this.texturePath = getRootPath() + "\\textures\\" + textureFileName;
+		this.textureAssetPath = textureAssetPath;
 	}
 
-	public String getTextureFileName() {
-		return new File(texturePath).getName();
+	public String getTextureAssetPath() {
+		return textureAssetPath;
 	}
 
 	public Texture2D getTexture() {
@@ -23,7 +21,7 @@ public class TextureAsset extends Asset {
 
 	@Override
 	protected boolean load() {
-		texture = new Texture2D(texturePath);
+		texture = new Texture2D(getRootPath() + "\\textures\\" + textureAssetPath);
 		setState(AssetState.LOADED);
 		return true;
 	}

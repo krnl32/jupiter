@@ -1,0 +1,17 @@
+package com.github.krnl32.jupiter.serializer.components;
+
+import com.github.krnl32.jupiter.components.TagComponent;
+import com.github.krnl32.jupiter.serializer.ComponentSerializer;
+import org.json.JSONObject;
+
+public class TagComponentSerializer implements ComponentSerializer<TagComponent> {
+	@Override
+	public JSONObject serialize(TagComponent component) {
+		return new JSONObject().put("tag", component.tag);
+	}
+
+	@Override
+	public TagComponent deserialize(JSONObject data) {
+		return new TagComponent(data.getString("tag"));
+	}
+}

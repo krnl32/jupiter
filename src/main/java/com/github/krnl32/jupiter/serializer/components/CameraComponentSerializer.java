@@ -4,15 +4,15 @@ import com.github.krnl32.jupiter.components.CameraComponent;
 import com.github.krnl32.jupiter.renderer.Camera;
 import com.github.krnl32.jupiter.renderer.ProjectionType;
 import com.github.krnl32.jupiter.serializer.ComponentSerializer;
-import com.github.krnl32.jupiter.serializer.JSONSerializerUtils;
+import com.github.krnl32.jupiter.serializer.utility.JOMLSerializerUtils;
 import org.json.JSONObject;
 
 public class CameraComponentSerializer implements ComponentSerializer<CameraComponent> {
 	@Override
 	public JSONObject serialize(CameraComponent component) {
 		return new JSONObject()
-			.put("position", JSONSerializerUtils.serializeVector3f(component.camera.getPosition()))
-			.put("worldUp", JSONSerializerUtils.serializeVector3f(component.camera.getWorldUp()))
+			.put("position", JOMLSerializerUtils.serializeVector3f(component.camera.getPosition()))
+			.put("worldUp", JOMLSerializerUtils.serializeVector3f(component.camera.getWorldUp()))
 			.put("yaw", component.camera.getYaw())
 			.put("pitch", component.camera.getPitch())
 			.put("roll", component.camera.getRoll())
@@ -33,8 +33,8 @@ public class CameraComponentSerializer implements ComponentSerializer<CameraComp
 	@Override
 	public CameraComponent deserialize(JSONObject data) {
 		Camera camera = new Camera(
-			JSONSerializerUtils.deserializeVector3f(data.getJSONObject("position")),
-			JSONSerializerUtils.deserializeVector3f(data.getJSONObject("worldUp")),
+			JOMLSerializerUtils.deserializeVector3f(data.getJSONObject("position")),
+			JOMLSerializerUtils.deserializeVector3f(data.getJSONObject("worldUp")),
 			data.getFloat("yaw"),
 			data.getFloat("pitch"),
 			data.getFloat("roll"),

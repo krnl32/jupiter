@@ -1,0 +1,22 @@
+package com.github.krnl32.jupiter.serializer.components;
+
+import com.github.krnl32.jupiter.components.HealthComponent;
+import com.github.krnl32.jupiter.serializer.ComponentSerializer;
+import org.json.JSONObject;
+
+public class HealthComponentSerializer implements ComponentSerializer<HealthComponent> {
+	@Override
+	public JSONObject serialize(HealthComponent component) {
+		return new JSONObject()
+			.put("maxHealth", component.maxHealth)
+			.put("currentHealth", component.currentHealth);
+	}
+
+	@Override
+	public HealthComponent deserialize(JSONObject data) {
+		return new HealthComponent(
+			data.getFloat("maxHealth"),
+			data.getFloat("currentHealth")
+		);
+	}
+}

@@ -26,11 +26,19 @@ public class Game extends Engine {
 	public boolean onInit() {
 		// Register Component Serializers
 		SerializerRegistry.registerComponentSerializer(IDComponent.class, new IDComponentSerializer());
+		SerializerRegistry.registerComponentSerializer(TagComponent.class, new TagComponentSerializer());
 		SerializerRegistry.registerComponentSerializer(TransformComponent.class, new TransformComponentSerializer());
-		SerializerRegistry.registerComponentSerializer(SpriteRendererComponent.class, new SpriteRendererComponentSerializer());
 		SerializerRegistry.registerComponentSerializer(RigidBodyComponent.class, new RigidBodyComponentSerializer());
+		SerializerRegistry.registerComponentSerializer(SpriteRendererComponent.class, new SpriteRendererComponentSerializer());
 		SerializerRegistry.registerComponentSerializer(CameraComponent.class, new CameraComponentSerializer());
 		SerializerRegistry.registerComponentSerializer(KeyboardControlComponent.class, new KeyboardControlComponentSerializer());
+		SerializerRegistry.registerComponentSerializer(TeamComponent.class, new TeamComponentSerializer());
+		SerializerRegistry.registerComponentSerializer(HealthComponent.class, new HealthComponentSerializer());
+		SerializerRegistry.registerComponentSerializer(LifetimeComponent.class, new LifetimeComponentSerializer());
+		SerializerRegistry.registerComponentSerializer(BoxColliderComponent.class, new BoxColliderComponentSerializer());
+		SerializerRegistry.registerComponentSerializer(ParticleComponent.class, new ParticleComponentSerializer());
+		SerializerRegistry.registerComponentSerializer(BlinkComponent.class, new BlinkComponentSerializer());
+		SerializerRegistry.registerComponentSerializer(DeathEffectComponent.class, new DeathEffectComponentSerializer());
 
 		// Load Global Assets
 		AssetID quadShaderID = AssetManager.getInstance().registerAndLoad("shaders/quad", () -> new ShaderAsset("quad_vertex.glsl", "quad_fragment.glsl"));

@@ -6,7 +6,7 @@ import com.github.krnl32.jupiter.asset.TextureAsset;
 import com.github.krnl32.jupiter.components.SpriteRendererComponent;
 import com.github.krnl32.jupiter.core.Logger;
 import com.github.krnl32.jupiter.serializer.ComponentSerializer;
-import com.github.krnl32.jupiter.serializer.JSONSerializerUtils;
+import com.github.krnl32.jupiter.serializer.utility.JOMLSerializerUtils;
 import org.json.JSONObject;
 
 public class SpriteRendererComponentSerializer implements ComponentSerializer<SpriteRendererComponent> {
@@ -20,8 +20,9 @@ public class SpriteRendererComponentSerializer implements ComponentSerializer<Sp
 
 		return new JSONObject()
 			.put("index", component.index)
-			.put("color", JSONSerializerUtils.serializeVector4f(component.color))
-			.put("textureAssetID", textureAsset.getTextureFileName());
+			.put("color", JOMLSerializerUtils.serializeVector4f(component.color))
+			.put("textureAssetID", textureAsset.getTextureAssetPath())
+			.put("textureUV", component.textureUV);
 	}
 
 	@Override
@@ -34,8 +35,18 @@ public class SpriteRendererComponentSerializer implements ComponentSerializer<Sp
 
 		return new SpriteRendererComponent(
 			data.getInt("index"),
-			JSONSerializerUtils.deserializeVector4f(data.getJSONObject("color")),
-			textureAssetID
+			JOMLSerializerUtils.deserializeVector4f(data.getJSONObject("color")),
+			textureAssetID,
+			new float[] {
+				data.getJSONArray("textureUV").getFloat(0),
+				data.getJSONArray("textureUV").getFloat(1),
+				data.getJSONArray("textureUV").getFloat(2),
+				data.getJSONArray("textureUV").getFloat(3),
+				data.getJSONArray("textureUV").getFloat(4),
+				data.getJSONArray("textureUV").getFloat(5),
+				data.getJSONArray("textureUV").getFloat(6),
+				data.getJSONArray("textureUV").getFloat(7),
+			}
 		);
 	}
 }
