@@ -3,6 +3,7 @@ package com.github.krnl32.jupiter.serializer.components;
 import com.github.krnl32.jupiter.components.KeyboardControlComponent;
 import com.github.krnl32.jupiter.input.KeyCode;
 import com.github.krnl32.jupiter.serializer.ComponentSerializer;
+import com.github.krnl32.jupiter.serializer.resolvers.EntityResolver;
 import org.json.JSONObject;
 
 public class KeyboardControlComponentSerializer implements ComponentSerializer<KeyboardControlComponent> {
@@ -22,7 +23,7 @@ public class KeyboardControlComponentSerializer implements ComponentSerializer<K
 	}
 
 	@Override
-	public KeyboardControlComponent deserialize(JSONObject data) {
+	public KeyboardControlComponent deserialize(JSONObject data, EntityResolver resolver) {
 		return new KeyboardControlComponent(
 			data.getFloat("moveSpeed"),
 			data.getFloat("rotationSpeed"),

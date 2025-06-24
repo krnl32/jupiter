@@ -2,6 +2,7 @@ package com.github.krnl32.jupiter.serializer.components;
 
 import com.github.krnl32.jupiter.components.BlinkComponent;
 import com.github.krnl32.jupiter.serializer.ComponentSerializer;
+import com.github.krnl32.jupiter.serializer.resolvers.EntityResolver;
 import org.json.JSONObject;
 
 public class BlinkComponentSerializer implements ComponentSerializer<BlinkComponent> {
@@ -16,7 +17,7 @@ public class BlinkComponentSerializer implements ComponentSerializer<BlinkCompon
 	}
 
 	@Override
-	public BlinkComponent deserialize(JSONObject data) {
+	public BlinkComponent deserialize(JSONObject data, EntityResolver resolver) {
 		return new BlinkComponent(
 			data.getFloat("duration"),
 			data.getFloat("interval"),

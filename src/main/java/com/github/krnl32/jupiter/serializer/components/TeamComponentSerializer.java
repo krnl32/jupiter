@@ -2,6 +2,7 @@ package com.github.krnl32.jupiter.serializer.components;
 
 import com.github.krnl32.jupiter.components.TeamComponent;
 import com.github.krnl32.jupiter.serializer.ComponentSerializer;
+import com.github.krnl32.jupiter.serializer.resolvers.EntityResolver;
 import org.json.JSONObject;
 
 public class TeamComponentSerializer implements ComponentSerializer<TeamComponent> {
@@ -11,7 +12,7 @@ public class TeamComponentSerializer implements ComponentSerializer<TeamComponen
 	}
 
 	@Override
-	public TeamComponent deserialize(JSONObject data) {
+	public TeamComponent deserialize(JSONObject data, EntityResolver resolver) {
 		return new TeamComponent(data.getInt("teamID"));
 	}
 }

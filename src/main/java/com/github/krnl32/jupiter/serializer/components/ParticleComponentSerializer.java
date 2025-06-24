@@ -2,6 +2,7 @@ package com.github.krnl32.jupiter.serializer.components;
 
 import com.github.krnl32.jupiter.components.ParticleComponent;
 import com.github.krnl32.jupiter.serializer.ComponentSerializer;
+import com.github.krnl32.jupiter.serializer.resolvers.EntityResolver;
 import com.github.krnl32.jupiter.serializer.utility.JOMLSerializerUtils;
 import org.json.JSONObject;
 
@@ -15,7 +16,7 @@ public class ParticleComponentSerializer implements ComponentSerializer<Particle
 	}
 
 	@Override
-	public ParticleComponent deserialize(JSONObject data) {
+	public ParticleComponent deserialize(JSONObject data, EntityResolver resolver) {
 		return new ParticleComponent(
 			JOMLSerializerUtils.deserializeVector3f(data.getJSONObject("velocity")),
 			data.getFloat("duration"),

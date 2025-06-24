@@ -6,6 +6,7 @@ import com.github.krnl32.jupiter.asset.TextureAsset;
 import com.github.krnl32.jupiter.components.SpriteRendererComponent;
 import com.github.krnl32.jupiter.core.Logger;
 import com.github.krnl32.jupiter.serializer.ComponentSerializer;
+import com.github.krnl32.jupiter.serializer.resolvers.EntityResolver;
 import com.github.krnl32.jupiter.serializer.utility.JOMLSerializerUtils;
 import org.json.JSONObject;
 
@@ -26,7 +27,7 @@ public class SpriteRendererComponentSerializer implements ComponentSerializer<Sp
 	}
 
 	@Override
-	public SpriteRendererComponent deserialize(JSONObject data) {
+	public SpriteRendererComponent deserialize(JSONObject data, EntityResolver resolver) {
 		AssetID textureAssetID = AssetManager.getInstance().registerAndLoad(data.getString("textureAssetID"), () -> new TextureAsset(data.getString("textureAssetID")));
 		if (textureAssetID == null) {
 			Logger.error("SpriteRendererComponentSerializer Deserialize Failed, Invalid Texture textureAssetID Path({})", data.getString("textureAssetID"));

@@ -2,6 +2,7 @@ package com.github.krnl32.jupiter.serializer.components;
 
 import com.github.krnl32.jupiter.components.RigidBodyComponent;
 import com.github.krnl32.jupiter.serializer.ComponentSerializer;
+import com.github.krnl32.jupiter.serializer.resolvers.EntityResolver;
 import com.github.krnl32.jupiter.serializer.utility.JOMLSerializerUtils;
 import org.json.JSONObject;
 
@@ -14,7 +15,7 @@ public class RigidBodyComponentSerializer implements ComponentSerializer<RigidBo
 	}
 
 	@Override
-	public RigidBodyComponent deserialize(JSONObject data) {
+	public RigidBodyComponent deserialize(JSONObject data, EntityResolver resolver) {
 		return new RigidBodyComponent(
 			JOMLSerializerUtils.deserializeVector3f(data.getJSONObject("velocity")),
 			JOMLSerializerUtils.deserializeVector3f(data.getJSONObject("angularVelocity"))

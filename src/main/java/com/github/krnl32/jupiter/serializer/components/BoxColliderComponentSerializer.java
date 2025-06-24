@@ -2,6 +2,7 @@ package com.github.krnl32.jupiter.serializer.components;
 
 import com.github.krnl32.jupiter.components.BoxColliderComponent;
 import com.github.krnl32.jupiter.serializer.ComponentSerializer;
+import com.github.krnl32.jupiter.serializer.resolvers.EntityResolver;
 import com.github.krnl32.jupiter.serializer.utility.JOMLSerializerUtils;
 import org.json.JSONObject;
 
@@ -14,7 +15,7 @@ public class BoxColliderComponentSerializer implements ComponentSerializer<BoxCo
 	}
 
 	@Override
-	public BoxColliderComponent deserialize(JSONObject data) {
+	public BoxColliderComponent deserialize(JSONObject data, EntityResolver resolver) {
 		return new BoxColliderComponent(
 			JOMLSerializerUtils.deserializeVector3f(data.getJSONObject("size")),
 			JOMLSerializerUtils.deserializeVector3f(data.getJSONObject("offset"))

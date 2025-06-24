@@ -2,6 +2,7 @@ package com.github.krnl32.jupiter.serializer.components;
 
 import com.github.krnl32.jupiter.components.DeathEffectComponent;
 import com.github.krnl32.jupiter.serializer.ComponentSerializer;
+import com.github.krnl32.jupiter.serializer.resolvers.EntityResolver;
 import com.github.krnl32.jupiter.serializer.utility.JupiterSerializerUtils;
 import org.json.JSONObject;
 
@@ -14,7 +15,7 @@ public class DeathEffectComponentSerializer implements ComponentSerializer<Death
 	}
 
 	@Override
-	public DeathEffectComponent deserialize(JSONObject data) {
+	public DeathEffectComponent deserialize(JSONObject data, EntityResolver resolver) {
 		return new DeathEffectComponent(
 			data.getInt("particleCount"),
 			JupiterSerializerUtils.deserializeSprite(data.getJSONObject("particleSprite"))

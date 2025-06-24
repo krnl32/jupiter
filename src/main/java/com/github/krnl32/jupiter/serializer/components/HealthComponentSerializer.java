@@ -2,6 +2,7 @@ package com.github.krnl32.jupiter.serializer.components;
 
 import com.github.krnl32.jupiter.components.HealthComponent;
 import com.github.krnl32.jupiter.serializer.ComponentSerializer;
+import com.github.krnl32.jupiter.serializer.resolvers.EntityResolver;
 import org.json.JSONObject;
 
 public class HealthComponentSerializer implements ComponentSerializer<HealthComponent> {
@@ -13,7 +14,7 @@ public class HealthComponentSerializer implements ComponentSerializer<HealthComp
 	}
 
 	@Override
-	public HealthComponent deserialize(JSONObject data) {
+	public HealthComponent deserialize(JSONObject data, EntityResolver resolver) {
 		return new HealthComponent(
 			data.getFloat("maxHealth"),
 			data.getFloat("currentHealth")

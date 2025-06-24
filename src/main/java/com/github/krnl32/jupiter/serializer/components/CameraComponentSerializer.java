@@ -4,6 +4,7 @@ import com.github.krnl32.jupiter.components.CameraComponent;
 import com.github.krnl32.jupiter.renderer.Camera;
 import com.github.krnl32.jupiter.renderer.ProjectionType;
 import com.github.krnl32.jupiter.serializer.ComponentSerializer;
+import com.github.krnl32.jupiter.serializer.resolvers.EntityResolver;
 import com.github.krnl32.jupiter.serializer.utility.JOMLSerializerUtils;
 import org.json.JSONObject;
 
@@ -31,7 +32,7 @@ public class CameraComponentSerializer implements ComponentSerializer<CameraComp
 	}
 
 	@Override
-	public CameraComponent deserialize(JSONObject data) {
+	public CameraComponent deserialize(JSONObject data, EntityResolver resolver) {
 		Camera camera = new Camera(
 			JOMLSerializerUtils.deserializeVector3f(data.getJSONObject("position")),
 			JOMLSerializerUtils.deserializeVector3f(data.getJSONObject("worldUp")),

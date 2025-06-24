@@ -93,6 +93,7 @@ public class TestScene extends Scene {
 		spaceshipRedEntity.addComponent(new HealthComponent(100, 100));
 		spaceshipRedEntity.addComponent(new TeamComponent(1));
 		spaceshipRedEntity.addComponent(new DeathEffectComponent(20, new Sprite(0, new Vector4f(1.0f, 0.45f, 0.0f, 0.95f), starParticleID)));
+		spaceshipRedEntity.addComponent(new ProjectileComponent(spaceshipRedEntity, 12.25f, true));
 
 //		spaceshipBlueEntity = createEntity();
 //		spaceshipBlueEntity.addComponent(new IDComponent());

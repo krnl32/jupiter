@@ -2,6 +2,7 @@ package com.github.krnl32.jupiter.serializer.components;
 
 import com.github.krnl32.jupiter.components.TransformComponent;
 import com.github.krnl32.jupiter.serializer.ComponentSerializer;
+import com.github.krnl32.jupiter.serializer.resolvers.EntityResolver;
 import com.github.krnl32.jupiter.serializer.utility.JOMLSerializerUtils;
 import org.json.JSONObject;
 
@@ -15,7 +16,7 @@ public class TransformComponentSerializer implements ComponentSerializer<Transfo
 	}
 
 	@Override
-	public TransformComponent deserialize(JSONObject data) {
+	public TransformComponent deserialize(JSONObject data, EntityResolver resolver) {
 		return new TransformComponent(
 			JOMLSerializerUtils.deserializeVector3f(data.getJSONObject("translation")),
 			JOMLSerializerUtils.deserializeVector3f(data.getJSONObject("rotation")),
