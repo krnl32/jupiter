@@ -6,10 +6,7 @@ import com.github.krnl32.jupiter.asset.SceneAsset;
 import com.github.krnl32.jupiter.core.Logger;
 import com.github.krnl32.jupiter.game.Scene;
 import com.github.krnl32.jupiter.serializer.SceneSerializer;
-import com.github.krnl32.jupiter.systems.CameraSystem;
-import com.github.krnl32.jupiter.systems.KeyboardControlSystem;
-import com.github.krnl32.jupiter.systems.MovementSystem;
-import com.github.krnl32.jupiter.systems.RenderSystem;
+import com.github.krnl32.jupiter.systems.*;
 import org.json.JSONObject;
 
 public class GamePlayScene extends Scene {
@@ -26,6 +23,15 @@ public class GamePlayScene extends Scene {
 		addSystem(new KeyboardControlSystem(getRegistry()), 1, true);
 		addSystem(new CameraSystem(getRegistry()), 2, true);
 		addSystem(new RenderSystem(getRegistry()));
+		addSystem(new LifetimeSystem(getRegistry()));
+		addSystem(new ProjectileEmitterSystem(getRegistry()));
+		addSystem(new CollisionSystem(getRegistry()));
+		addSystem(new DamageSystem(getRegistry()));
+		addSystem(new HealthSystem(getRegistry()));
+		addSystem(new DestroySystem(getRegistry()));
+		addSystem(new BlinkSystem(getRegistry()));
+		addSystem(new ParticleSystem(getRegistry()));
+		addSystem(new DeathEffectSystem(getRegistry()));
 	}
 
 	@Override

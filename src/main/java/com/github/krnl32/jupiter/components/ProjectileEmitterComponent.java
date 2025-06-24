@@ -18,4 +18,12 @@ public class ProjectileEmitterComponent implements Component {
 		this.lastEmissionTime = 0.0f;
 		this.sprite = sprite;
 	}
+
+	public ProjectileEmitterComponent(KeyCode shootKey, float fireRate, float projectileSpeed, float lastEmissionTime, Sprite sprite) {
+		this.shootKey = shootKey;
+		this.fireRate = fireRate;
+		this.projectileSpeed = projectileSpeed;
+		this.lastEmissionTime = lastEmissionTime;
+		this.sprite = sprite;
+	}
 }

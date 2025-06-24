@@ -1,6 +1,6 @@
 {"entities": [
     {"components": {
-        "UUIDComponent": {"uuid": "f597b838-d37d-4e9a-a3d1-d179305d4f91"},
+        "UUIDComponent": {"uuid": "1e4acd0a-3926-4a40-8763-9fe230bf8ade"},
         "CameraComponent": {
             "rollSpeed": 45,
             "worldUp": {
@@ -96,6 +96,7 @@
             "rotateLeftKey": 81,
             "forwardKey": 0
         },
+        "UUIDComponent": {"uuid": "fa770b88-ccb6-47ac-9922-c8d75515f92f"},
         "DeathEffectComponent": {
             "particleSprite": {
                 "color": {
@@ -109,7 +110,6 @@
             },
             "particleCount": 20
         },
-        "UUIDComponent": {"uuid": "86d803dc-be65-453e-8e84-ecc2423e3e4a"},
         "BoxColliderComponent": {
             "size": {
                 "x": 1,
@@ -140,10 +140,104 @@
             }
         },
         "TagComponent": {"tag": "SpaceshipRed"},
-        "ProjectileComponent": {
-            "owner": "86d803dc-be65-453e-8e84-ecc2423e3e4a",
-            "damage": 12.25,
-            "canHitOwner": true
+        "ProjectileEmitterComponent": {
+            "fireRate": 15.55,
+            "sprite": {
+                "color": {
+                    "w": 1,
+                    "x": 1,
+                    "y": 1,
+                    "z": 1
+                },
+                "index": 1,
+                "textureAssetID": "projectiles/laser_red.png"
+            },
+            "shootKey": 32,
+            "lastEmissionTime": 0,
+            "projectileSpeed": 10
         }
+    }},
+    {"components": {
+        "SpriteRendererComponent": {
+            "textureUV": [
+                0,
+                0,
+                1,
+                0,
+                1,
+                1,
+                0,
+                1
+            ],
+            "color": {
+                "w": 1,
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "index": 1,
+            "textureAssetID": "players/spaceship_blue.png"
+        },
+        "TeamComponent": {"teamID": 2},
+        "RigidBodyComponent": {
+            "velocity": {
+                "x": 1,
+                "y": 0,
+                "z": 0
+            },
+            "angularVelocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            }
+        },
+        "HealthComponent": {
+            "currentHealth": 100,
+            "maxHealth": 100
+        },
+        "DeathEffectComponent": {
+            "particleSprite": {
+                "color": {
+                    "w": 0.95,
+                    "x": 1,
+                    "y": 0.45,
+                    "z": 0
+                },
+                "index": 0,
+                "textureAssetID": "particles/star3.png"
+            },
+            "particleCount": 20
+        },
+        "UUIDComponent": {"uuid": "d926c065-10e0-49d9-a201-dd94c58fdc0a"},
+        "BoxColliderComponent": {
+            "size": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "offset": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            }
+        },
+        "TransformComponent": {
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "translation": {
+                "x": -3,
+                "y": 5,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        "TagComponent": {"tag": "SpaceshipBlue"}
     }}
 ]}

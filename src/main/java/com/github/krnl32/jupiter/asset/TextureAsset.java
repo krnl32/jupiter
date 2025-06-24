@@ -21,7 +21,7 @@ public class TextureAsset extends Asset {
 
 	@Override
 	protected boolean load() {
-		texture = new Texture2D(getRootPath() + "\\textures\\" + textureAssetPath);
+		texture = new Texture2D(getRootPath() + "/textures/" + textureAssetPath);
 		setState(AssetState.LOADED);
 		return true;
 	}
