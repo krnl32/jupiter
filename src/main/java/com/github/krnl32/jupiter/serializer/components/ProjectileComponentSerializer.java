@@ -1,6 +1,6 @@
 package com.github.krnl32.jupiter.serializer.components;
 
-import com.github.krnl32.jupiter.components.IDComponent;
+import com.github.krnl32.jupiter.components.UUIDComponent;
 import com.github.krnl32.jupiter.components.ProjectileComponent;
 import com.github.krnl32.jupiter.core.Logger;
 import com.github.krnl32.jupiter.serializer.ComponentSerializer;
@@ -12,14 +12,14 @@ import java.util.UUID;
 public class ProjectileComponentSerializer implements ComponentSerializer<ProjectileComponent> {
 	@Override
 	public JSONObject serialize(ProjectileComponent component) {
-		IDComponent ownerIDComponent = component.owner.getComponent(IDComponent.class);
-		if (ownerIDComponent == null) {
-			Logger.error("ProjectileComponentSerializer Serialize Failed, Owner Entity({}) has No IDComponent", component.owner.getId());
+		UUIDComponent ownerUUIDComponent = component.owner.getComponent(UUIDComponent.class);
+		if (ownerUUIDComponent == null) {
+			Logger.error("ProjectileComponentSerializer Serialize Failed, Owner Entity({}) has No UUIDComponent", component.owner.getId());
 			return null;
 		}
 
 		return new JSONObject()
-			.put("owner", ownerIDComponent.id.toString())
+			.put("owner", ownerUUIDComponent.uuid.toString())
 			.put("damage", component.damage)
 			.put("canHitOwner", component.canHitOwner);
 	}

@@ -1,6 +1,6 @@
 package com.github.krnl32.jupiter.serializer;
 
-import com.github.krnl32.jupiter.components.IDComponent;
+import com.github.krnl32.jupiter.components.UUIDComponent;
 import com.github.krnl32.jupiter.core.Logger;
 import com.github.krnl32.jupiter.ecs.Component;
 import com.github.krnl32.jupiter.ecs.Entity;
@@ -26,18 +26,18 @@ public class SceneSerializer {
 	public void deserialize(JSONObject data, Scene scene) {
 		JSONArray entities = data.getJSONArray("entities");
 
-		// Create Entities with IDComponents
+		// Create Entities with UUIDComponents
 		for (int i = 0; i < entities.length(); i++) {
 			JSONObject components = entities.getJSONObject(i).getJSONObject("components");
-			JSONObject idComponent = components.getJSONObject("IDComponent");
-			if (idComponent == null) {
-				Logger.error("SceneSerializer Deserialize Failed, IDComponent not Found for Entity({})", i);
+			JSONObject uuidComponent = components.getJSONObject("UUIDComponent");
+			if (uuidComponent == null) {
+				Logger.error("SceneSerializer Deserialize Failed, UUIDComponent not Found for Entity({})", i);
 				return;
 			}
-			UUID uuid = UUID.fromString(idComponent.getString("id"));
+			UUID uuid = UUID.fromString(uuidComponent.getString("uuid"));
 
 			Entity entity = scene.createEntity();
-			entity.addComponent(new IDComponent(uuid));
+			entity.addComponent(new UUIDComponent(uuid));
 			uuidToEntity.put(uuid, entity);
 		}
 
@@ -68,11 +68,11 @@ public class SceneSerializer {
 
 	private void deserializeEntity(JSONObject data, Scene scene, EntityResolver resolver) {
 		JSONObject components = data.getJSONObject("components");
-		UUID uuid = UUID.fromString(components.getJSONObject("IDComponent").getString("id"));
+		UUID uuid = UUID.fromString(components.getJSONObject("UUIDComponent").getString("uuid"));
 		Entity entity = uuidToEntity.get(uuid);
 
 		for (String key: components.keySet()) {
-			if (key.equals("IDComponent"))
+			if (key.equals("UUIDComponent"))
 				continue;
 
 			for (var entry : SerializerRegistry.getComponentSerializers().entrySet()) {

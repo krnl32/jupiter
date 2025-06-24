@@ -1,6 +1,6 @@
 {"entities": [
     {"components": {
-        "IDComponent": {"id": "6aeb0fa5-98c5-4169-995f-33b7ffed00de"},
+        "UUIDComponent": {"uuid": "f597b838-d37d-4e9a-a3d1-d179305d4f91"},
         "CameraComponent": {
             "rollSpeed": 45,
             "worldUp": {
@@ -109,7 +109,7 @@
             },
             "particleCount": 20
         },
-        "IDComponent": {"id": "642d187b-8231-4d55-ae11-c4a90b00de6d"},
+        "UUIDComponent": {"uuid": "86d803dc-be65-453e-8e84-ecc2423e3e4a"},
         "BoxColliderComponent": {
             "size": {
                 "x": 1,
@@ -141,7 +141,7 @@
         },
         "TagComponent": {"tag": "SpaceshipRed"},
         "ProjectileComponent": {
-            "owner": "642d187b-8231-4d55-ae11-c4a90b00de6d",
+            "owner": "86d803dc-be65-453e-8e84-ecc2423e3e4a",
             "damage": 12.25,
             "canHitOwner": true
         }

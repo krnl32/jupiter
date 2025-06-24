@@ -25,7 +25,7 @@ public class Game extends Engine {
 	@Override
 	public boolean onInit() {
 		// Register Component Serializers
-		SerializerRegistry.registerComponentSerializer(IDComponent.class, new IDComponentSerializer());
+		SerializerRegistry.registerComponentSerializer(UUIDComponent.class, new UUIDComponentSerializer());
 		SerializerRegistry.registerComponentSerializer(TagComponent.class, new TagComponentSerializer());
 		SerializerRegistry.registerComponentSerializer(TransformComponent.class, new TransformComponentSerializer());
 		SerializerRegistry.registerComponentSerializer(RigidBodyComponent.class, new RigidBodyComponentSerializer());
