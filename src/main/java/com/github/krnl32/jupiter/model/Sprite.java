@@ -7,11 +7,25 @@ public class Sprite {
 	private final int index;
 	private final Vector4f color;
 	private final AssetID textureAssetID;
+	public final float[] textureUV;
 
 	public Sprite(int index, Vector4f color, AssetID textureAssetID) {
 		this.index = index;
 		this.color = color;
 		this.textureAssetID = textureAssetID;
+		this.textureUV = new float[] {
+			0.0f, 0.0f, // BL
+			1.0f, 0.0f, // BR
+			1.0f, 1.0f, // TR
+			0.0f, 1.0f  // TL
+		};
+	}
+
+	public Sprite(int index, Vector4f color, AssetID textureAssetID, float[] textureUV) {
+		this.index = index;
+		this.color = color;
+		this.textureAssetID = textureAssetID;
+		this.textureUV = textureUV;
 	}
 
 	public int getIndex() {
@@ -24,5 +38,9 @@ public class Sprite {
 
 	public AssetID getTextureAssetID() {
 		return textureAssetID;
+	}
+
+	public float[] getTextureUV() {
+		return textureUV;
 	}
 }

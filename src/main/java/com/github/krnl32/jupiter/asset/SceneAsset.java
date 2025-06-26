@@ -35,6 +35,7 @@ public class SceneAsset extends Asset {
 
 	@Override
 	protected boolean reload() {
+		unload();
 		return load();
 	}
 

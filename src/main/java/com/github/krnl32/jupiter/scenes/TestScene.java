@@ -23,7 +23,7 @@ public class TestScene extends Scene {
 	private AssetID spaceshipRedID, spaceshipBlueID;
 	private AssetID laserRedID, laserBlueID;
 	private AssetID starParticleID;
-	private AssetID spaceshipTextureID, spaceshipSpritesheetID;
+	private AssetID spaceshipSpritesheetID;
 	private SpritesheetAsset spaceshipSpritesheetAsset;
 
 	public TestScene(int width, int height) {
@@ -52,10 +52,6 @@ public class TestScene extends Scene {
 		starParticleID = AssetManager.getInstance().registerAndLoad("textures/particles/star3.png", () -> new TextureAsset("textures/particles/star3.png"));
 		if (starParticleID == null)
 			Logger.critical("Game Failed to Load Texture Asset({})", "textures/particles/star3.png");
-
-		spaceshipTextureID = AssetManager.getInstance().registerAndLoad("spritesheets/spaceship/spaceship.png", () -> new TextureAsset("spritesheets/spaceship/spaceship.png"));
-		if (spaceshipTextureID == null)
-			Logger.critical("Game Failed to Load Texture Asset({})", "spritesheets/spaceship/spaceship.png");
 
 		spaceshipSpritesheetID = AssetManager.getInstance().registerAndLoad("spritesheets/spaceship/spaceship.json", () -> new SpritesheetAsset("spritesheets/spaceship/spaceship.json"));
 		if (spaceshipSpritesheetID == null)
@@ -105,7 +101,7 @@ public class TestScene extends Scene {
 		spaceshipBlueEntity.addComponent(new UUIDComponent());
 		spaceshipBlueEntity.addComponent(new TagComponent("SpaceshipBlue"));
 		spaceshipBlueEntity.addComponent(new TransformComponent(new Vector3f(-3.0f, 5.0f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(1.0f, 1.0f, 1.0f)));
-		spaceshipBlueEntity.addComponent(new SpriteRendererComponent(-2, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), spaceshipTextureID, spaceshipSpritesheetAsset.getSpriteUV("playerShip1_blue.png")));
+		spaceshipBlueEntity.addComponent(new SpriteRendererComponent(-2, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), spaceshipSpritesheetAsset.getSprite("playerShip1_blue.png").getTextureAssetID(), spaceshipSpritesheetAsset.getSprite("playerShip1_blue.png").getTextureUV()));
 		spaceshipBlueEntity.addComponent(new RigidBodyComponent(new Vector3f(1.0f, 0.0f, 0.0f)));
 		spaceshipBlueEntity.addComponent(new BoxColliderComponent(new Vector3f(1.0f, 1.0f, 1.0f)));
 		spaceshipBlueEntity.addComponent(new HealthComponent(100, 100));

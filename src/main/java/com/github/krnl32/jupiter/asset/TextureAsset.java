@@ -28,8 +28,7 @@ public class TextureAsset extends Asset {
 
 	@Override
 	protected boolean reload() {
-		if (texture != null)
-			texture.destroy();
+		unload();
 		return load();
 	}
 

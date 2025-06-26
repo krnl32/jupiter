@@ -26,8 +26,7 @@ public class ShaderAsset extends Asset{
 
 	@Override
 	protected boolean reload() {
-		if (shader != null)
-			shader.destroy();
+		unload();
 		return load();
 	}
 

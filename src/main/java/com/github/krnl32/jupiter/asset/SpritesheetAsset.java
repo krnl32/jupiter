@@ -1,8 +1,10 @@
 package com.github.krnl32.jupiter.asset;
 
 import com.github.krnl32.jupiter.core.Logger;
+import com.github.krnl32.jupiter.model.Sprite;
 import com.github.krnl32.jupiter.utility.FileIO;
 import org.joml.Vector2f;
+import org.joml.Vector4f;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,16 +19,17 @@ public class SpritesheetAsset extends Asset {
 	private String imagePath;
 	private int atlasWidth, atlasHeight;
 	private float scale;
-	private Map<String, Sprite> sprites;
+	private Map<String, SpriteData> sprites;
+	private AssetID textureAssetID;
 
 	public SpritesheetAsset(String atlasMetadataPath) {
 		super(AssetType.SPRITESHEET);
 		this.atlasMetadataPath = atlasMetadataPath;
 	}
 
-	public float[] getSpriteUV(String name) {
-		Sprite sprite = sprites.get(name);
-		return (sprite != null) ? sprite.getUV() : null;
+	public Sprite getSprite(String name) {
+		SpriteData spriteData = sprites.get(name);
+		return (spriteData != null) ? new Sprite(-1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), textureAssetID, spriteData.getUV()) : null;
 	}
 
 	@Override
@@ -36,41 +39,49 @@ public class SpritesheetAsset extends Asset {
 		try {
 			JSONObject root = new JSONObject(FileIO.readFileContent(getRootPath() + atlasMetadataPath));
 			JSONObject spritesheet = root.getJSONObject("spritesheet");
-			imagePath = getRootPath() + spritesheet.getString("imagePath");
+			imagePath = spritesheet.getString("imagePath");
 			atlasWidth = spritesheet.getJSONObject("size").getInt("width");
 			atlasHeight = spritesheet.getJSONObject("size").getInt("height");
 			scale = spritesheet.optFloat("scale", 1.0f);
 
-			// Sprites
-			JSONArray spritesData = spritesheet.getJSONArray("sprites");
-			for (int i = 0; i < spritesData.length(); i++) {
-				JSONObject spriteData = spritesData.getJSONObject(i);
-				String spriteName = spriteData.getString("name");
+			// Load Texture
+			textureAssetID = AssetManager.getInstance().registerAndLoad(imagePath, () -> new TextureAsset(imagePath));
+			if (textureAssetID == null) {
+				Logger.error("SpritesheetAsset Failed to Load Texture Asset({})", imagePath);
+				setState(AssetState.MISSING);
+				return false;
+			}
 
-				JSONObject spriteFrame = spriteData.getJSONObject("frame");
+			// Sprites
+			JSONArray spritesArrayData = spritesheet.getJSONArray("sprites");
+			for (int i = 0; i < spritesArrayData.length(); i++) {
+				JSONObject spriteObject = spritesArrayData.getJSONObject(i);
+				String spriteName = spriteObject.getString("name");
+
+				JSONObject spriteFrame = spriteObject.getJSONObject("frame");
 				int spriteFrameX = spriteFrame.getInt("x");
 				int spriteFrameY = spriteFrame.getInt("y");
 				int spriteFrameWidth = spriteFrame.getInt("width");
 				int spriteFrameHeight = spriteFrame.getInt("height");
 
-				JSONObject spriteSourceSize = spriteData.getJSONObject("sourceSize");
+				JSONObject spriteSourceSize = spriteObject.getJSONObject("sourceSize");
 				int spriteSourceSizeWidth = spriteSourceSize.getInt("width");
 				int spriteSourceSizeHeight = spriteSourceSize.getInt("height");
 
-				JSONObject spriteOffset = spriteData.getJSONObject("offset");
+				JSONObject spriteOffset = spriteObject.getJSONObject("offset");
 				Vector2f spriteOffsetVec = new Vector2f(spriteOffset.getInt("x"), spriteOffset.getInt("y"));
 
-				boolean spriteRotated = spriteData.getBoolean("rotated");
-				boolean spriteTrimmed = spriteData.getBoolean("trimmed");
+				boolean spriteRotated = spriteObject.getBoolean("rotated");
+				boolean spriteTrimmed = spriteObject.getBoolean("trimmed");
 
-				JSONObject spriteAnchor = spriteData.getJSONObject("anchor");
+				JSONObject spriteAnchor = spriteObject.getJSONObject("anchor");
 				Vector2f spriteAnchorVec = (spriteAnchor != null)
 					? new Vector2f(spriteAnchor.optFloat("x", 0.5f), spriteAnchor.optFloat("y", 0.5f))
 					: new Vector2f(0.5f, 0.5f);
 
-				Sprite sprite = new Sprite(
+				SpriteData spriteData = new SpriteData(
 					spriteName,
-					new Frame(spriteFrameX, spriteFrameY, spriteFrameWidth, spriteFrameHeight),
+					new SpriteFrame(spriteFrameX, spriteFrameY, spriteFrameWidth, spriteFrameHeight),
 					spriteSourceSizeWidth, spriteSourceSizeHeight,
 					spriteOffsetVec,
 					spriteRotated, spriteTrimmed,
@@ -78,7 +89,7 @@ public class SpritesheetAsset extends Asset {
 					atlasWidth, atlasHeight
 				);
 
-				sprites.put(spriteName, sprite);
+				sprites.put(spriteName, spriteData);
 			}
 
 		} catch (JSONException e) {
@@ -97,20 +108,24 @@ public class SpritesheetAsset extends Asset {
 
 	@Override
 	protected boolean reload() {
-		sprites = null;
+		unload();
 		return load();
 	}
 
 	@Override
 	protected void unload() {
 		sprites = null;
+		if (textureAssetID != null) {
+			AssetManager.getInstance().unregister(textureAssetID);
+			textureAssetID = null;
+		}
 		setState(AssetState.UNLOADED);
 	}
 }
 
-class Sprite {
+class SpriteData {
 	private final String name;
-	private final Frame frame;
+	private final SpriteFrame spriteFrame;
 	private final int sourceWidth, sourceHeight;
 	private final Vector2f offset;
 	private final boolean rotated;
@@ -118,9 +133,9 @@ class Sprite {
 	private final Vector2f anchor;
 	private final float u1, v1, u2, v2;
 
-	public Sprite(String name, Frame frame, int sourceWidth, int sourceHeight, Vector2f offset, boolean rotated, boolean trimmed, Vector2f anchor, int atlasWidth, int atlasHeight) {
+	public SpriteData(String name, SpriteFrame spriteFrame, int sourceWidth, int sourceHeight, Vector2f offset, boolean rotated, boolean trimmed, Vector2f anchor, int atlasWidth, int atlasHeight) {
 		this.name = name;
-		this.frame = frame;
+		this.spriteFrame = spriteFrame;
 		this.sourceWidth = sourceWidth;
 		this.sourceHeight = sourceHeight;
 		this.offset = offset;
@@ -129,15 +144,15 @@ class Sprite {
 		this.anchor = anchor;
 
 		if (rotated) {
-			u1 = (float) frame.getX() / atlasWidth;
-			v1 = (float) frame.getY() / atlasHeight;
-			u2 = (float) (frame.getX() + frame.getHeight()) / atlasWidth;
-			v2 = (float) (frame.getY() + frame.getWidth()) / atlasHeight;
+			u1 = (float) spriteFrame.getX() / atlasWidth;
+			v1 = (float) spriteFrame.getY() / atlasHeight;
+			u2 = (float) (spriteFrame.getX() + spriteFrame.getHeight()) / atlasWidth;
+			v2 = (float) (spriteFrame.getY() + spriteFrame.getWidth()) / atlasHeight;
 		} else {
-			u1 = (float) frame.getX() / atlasWidth;
-			v1 = 1.0f - ((float) (frame.getY() + frame.getHeight()) / atlasHeight);
-			u2 = (float) (frame.getX() + frame.getWidth()) / atlasWidth;
-			v2 = 1.0f - ((float) (frame.getY()) / atlasHeight);
+			u1 = (float) spriteFrame.getX() / atlasWidth;
+			v1 = 1.0f - ((float) (spriteFrame.getY() + spriteFrame.getHeight()) / atlasHeight);
+			u2 = (float) (spriteFrame.getX() + spriteFrame.getWidth()) / atlasWidth;
+			v2 = 1.0f - ((float) (spriteFrame.getY()) / atlasHeight);
 		}
 	}
 
@@ -145,8 +160,8 @@ class Sprite {
 		return name;
 	}
 
-	public Frame getFrame() {
-		return frame;
+	public SpriteFrame getSpriteFrame() {
+		return spriteFrame;
 	}
 
 	public int getSourceWidth() {
@@ -197,9 +212,9 @@ class Sprite {
 
 	@Override
 	public String toString() {
-		return "Sprite{" +
+		return "SpriteData{" +
 			"name='" + name + '\'' +
-			", frame=" + frame +
+			", spriteFrame=" + spriteFrame +
 			", sourceWidth=" + sourceWidth +
 			", sourceHeight=" + sourceHeight +
 			", offset=" + offset +
@@ -211,11 +226,11 @@ class Sprite {
 	}
 }
 
-class Frame {
+class SpriteFrame {
 	private final int x, y;
 	private final int width, height;
 
-	public Frame(int x, int y, int width, int height) {
+	public SpriteFrame(int x, int y, int width, int height) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -240,7 +255,7 @@ class Frame {
 
 	@Override
 	public String toString() {
-		return "Frame{" +
+		return "SpriteFrame{" +
 			"x=" + x +
 			", y=" + y +
 			", width=" + width +
