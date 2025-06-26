@@ -68,10 +68,10 @@ public class SpriteBatch {
 
 		// Centered
 		Vector4f[] localPositions = new Vector4f[] {
-			new Vector4f(-0.5f, -0.5f, 0.0f, 1.0f), // BL
-			new Vector4f( 0.5f, -0.5f, 0.0f, 1.0f), // BR
-			new Vector4f( 0.5f,  0.5f, 0.0f, 1.0f), // TR
-			new Vector4f(-0.5f,  0.5f, 0.0f, 1.0f)  // TL
+			new Vector4f(-0.5f, -0.5f, 1.0f, 1.0f), // BL
+			new Vector4f( 0.5f, -0.5f, 1.0f, 1.0f), // BR
+			new Vector4f( 0.5f,  0.5f, 1.0f, 1.0f), // TR
+			new Vector4f(-0.5f,  0.5f, 1.0f, 1.0f)  // TL
 		};
 
 		Texture2D texture = (spriteRenderData.getTexture() != null) ? spriteRenderData.getTexture() : defaultTexture;

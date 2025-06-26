@@ -1,6 +1,6 @@
 {"entities": [
     {"components": {
-        "UUIDComponent": {"uuid": "3f5ca103-7900-48b6-9072-c95a5695cf04"},
+        "UUIDComponent": {"uuid": "b7eecd49-958e-447e-b02c-cce55e21f1d1"},
         "CameraComponent": {
             "rollSpeed": 45,
             "worldUp": {
@@ -12,7 +12,7 @@
             "turnSpeed": 1,
             "roll": 0,
             "projectionType": "ORTHOGRAPHIC",
-            "projectionNear": 0,
+            "projectionNear": 0.1,
             "zoom": 50,
             "aspectRatio": 1.3333334,
             "projectionFar": 100,
@@ -64,7 +64,7 @@
                 "y": 1,
                 "z": 1
             },
-            "index": 1,
+            "index": -1,
             "textureAssetID": "textures/players/spaceship_red.png"
         },
         "TeamComponent": {"teamID": 1},
@@ -109,7 +109,7 @@
             },
             "particleCount": 20
         },
-        "UUIDComponent": {"uuid": "d4f01192-7e9b-4b79-aa78-b2035d625dd4"},
+        "UUIDComponent": {"uuid": "a282b4b9-ebca-467d-80cc-37dc5c1c88d0"},
         "BoxColliderComponent": {
             "size": {
                 "x": 1,
@@ -131,7 +131,7 @@
             "translation": {
                 "x": 1,
                 "y": -3,
-                "z": 0
+                "z": -1
             },
             "scale": {
                 "x": 1,
@@ -175,7 +175,7 @@
                 "y": 1,
                 "z": 1
             },
-            "index": 1,
+            "index": -2,
             "textureAssetID": "spritesheets/spaceship/spaceship.png"
         },
         "TeamComponent": {"teamID": 2},
@@ -195,7 +195,7 @@
                 "z": 0
             }
         },
-        "UUIDComponent": {"uuid": "5da99ba6-eac2-4a76-baba-a8120912c644"},
+        "UUIDComponent": {"uuid": "92f14a46-b1d9-4a4b-8288-59187a9a9bee"},
         "DeathEffectComponent": {
             "particleSprite": {
                 "color": {
@@ -230,7 +230,7 @@
             "translation": {
                 "x": -3,
                 "y": 5,
-                "z": 0
+                "z": -1
             },
             "scale": {
                 "x": 1,

@@ -17,4 +17,8 @@ public class RenderSpriteCommand implements RenderCommand {
 	public void execute(Renderer renderer) {
 		renderer.drawSprite(transform, spriteRenderData, textureUV);
 	}
+
+	public SpriteRenderData getSpriteRenderData() {
+		return spriteRenderData;
+	}
 }

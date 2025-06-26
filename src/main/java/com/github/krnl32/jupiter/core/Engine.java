@@ -25,7 +25,7 @@ public abstract class Engine {
 			Logger.critical("Failed to run onInit");
 
 		renderer = new Renderer();
-		renderer.setDepthTest(true);
+		renderer.setDepthTest(false);
 		renderer.setAlphaBlending(true);
 
 		running = true;

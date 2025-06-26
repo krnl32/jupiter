@@ -52,6 +52,12 @@ public class Renderer {
 			shader.setMat4("u_Projection", activeCamera.getProjectionMatrix());
 		}
 
+		commandQueue.sort((a, b) -> {
+			int aZ = ((RenderSpriteCommand)a).getSpriteRenderData().getIndex();
+			int bZ = ((RenderSpriteCommand)b).getSpriteRenderData().getIndex();
+			return Integer.compare(aZ, bZ);
+		});
+
 		for (var cmd: commandQueue)
 			cmd.execute(this);
 		spriteBatch.end();
