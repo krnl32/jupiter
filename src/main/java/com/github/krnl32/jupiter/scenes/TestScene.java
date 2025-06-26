@@ -1,8 +1,6 @@
 package com.github.krnl32.jupiter.scenes;
 
-import com.github.krnl32.jupiter.asset.AssetID;
-import com.github.krnl32.jupiter.asset.AssetManager;
-import com.github.krnl32.jupiter.asset.TextureAsset;
+import com.github.krnl32.jupiter.asset.*;
 import com.github.krnl32.jupiter.components.*;
 import com.github.krnl32.jupiter.core.Logger;
 import com.github.krnl32.jupiter.ecs.Entity;
@@ -25,6 +23,8 @@ public class TestScene extends Scene {
 	private AssetID spaceshipRedID, spaceshipBlueID;
 	private AssetID laserRedID, laserBlueID;
 	private AssetID starParticleID;
+	private AssetID spaceshipTextureID, spaceshipSpritesheetID;
+	private SpritesheetAsset spaceshipSpritesheetAsset;
 
 	public TestScene(int width, int height) {
 		this.width = width;
@@ -52,6 +52,15 @@ public class TestScene extends Scene {
 		starParticleID = AssetManager.getInstance().registerAndLoad("textures/particles/star3.png", () -> new TextureAsset("particles/star3.png"));
 		if (starParticleID == null)
 			Logger.critical("Game Failed to Load Texture Asset({})", "textures/particles/star3.png");
+
+		spaceshipTextureID = AssetManager.getInstance().registerAndLoad("spritesheets/spaceship.png", () -> new TextureAsset("spritesheets/spaceship.png"));
+		if (starParticleID == null)
+			Logger.critical("Game Failed to Load Texture Asset({})", "spritesheets/spaceship.png");
+
+		spaceshipSpritesheetID = AssetManager.getInstance().registerAndLoad("spritesheets/spaceship/spaceship.json", () -> new SpritesheetAsset("spaceship/spaceship.json"));
+		if (spaceshipSpritesheetID == null)
+			Logger.critical("Game Failed to Load Spritesheet Asset({})", "spritesheets/spaceship/spaceship.json");
+		spaceshipSpritesheetAsset = AssetManager.getInstance().getAsset(spaceshipSpritesheetID);
 
 		// Systems
 		addSystem(new MovementSystem(getRegistry()), 0, true);
@@ -96,7 +105,7 @@ public class TestScene extends Scene {
 		spaceshipBlueEntity.addComponent(new UUIDComponent());
 		spaceshipBlueEntity.addComponent(new TagComponent("SpaceshipBlue"));
 		spaceshipBlueEntity.addComponent(new TransformComponent(new Vector3f(-3.0f, 5.0f, 0.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(1.0f, 1.0f, 1.0f)));
-		spaceshipBlueEntity.addComponent(new SpriteRendererComponent(1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), spaceshipBlueID));
+		spaceshipBlueEntity.addComponent(new SpriteRendererComponent(1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), spaceshipTextureID, spaceshipSpritesheetAsset.getSpriteUV("playerShip1_blue.png")));
 		spaceshipBlueEntity.addComponent(new RigidBodyComponent(new Vector3f(1.0f, 0.0f, 0.0f)));
 		spaceshipBlueEntity.addComponent(new BoxColliderComponent(new Vector3f(1.0f, 1.0f, 1.0f)));
 		spaceshipBlueEntity.addComponent(new HealthComponent(100, 100));

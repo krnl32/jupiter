@@ -1,6 +1,6 @@
 {"entities": [
     {"components": {
-        "UUIDComponent": {"uuid": "1e4acd0a-3926-4a40-8763-9fe230bf8ade"},
+        "UUIDComponent": {"uuid": "2f0d1127-bcfe-4e55-9de7-4a1a1f937b8b"},
         "CameraComponent": {
             "rollSpeed": 45,
             "worldUp": {
@@ -68,6 +68,10 @@
             "textureAssetID": "players/spaceship_red.png"
         },
         "TeamComponent": {"teamID": 1},
+        "HealthComponent": {
+            "currentHealth": 100,
+            "maxHealth": 100
+        },
         "RigidBodyComponent": {
             "velocity": {
                 "x": 0,
@@ -79,10 +83,6 @@
                 "y": 0,
                 "z": 0
             }
-        },
-        "HealthComponent": {
-            "currentHealth": 100,
-            "maxHealth": 100
         },
         "KeyboardControlComponent": {
             "upKey": 87,
@@ -96,7 +96,6 @@
             "rotateLeftKey": 81,
             "forwardKey": 0
         },
-        "UUIDComponent": {"uuid": "fa770b88-ccb6-47ac-9922-c8d75515f92f"},
         "DeathEffectComponent": {
             "particleSprite": {
                 "color": {
@@ -110,6 +109,7 @@
             },
             "particleCount": 20
         },
+        "UUIDComponent": {"uuid": "289be280-c8d2-4c65-8ddb-8e98e43a088f"},
         "BoxColliderComponent": {
             "size": {
                 "x": 1,
@@ -160,14 +160,14 @@
     {"components": {
         "SpriteRendererComponent": {
             "textureUV": [
-                0,
-                0,
-                1,
-                0,
-                1,
-                1,
-                0,
-                1
+                0.20605469,
+                0.9921875,
+                0.30273438,
+                0.9921875,
+                0.30273438,
+                0.9189453,
+                0.20605469,
+                0.9189453
             ],
             "color": {
                 "w": 1,
@@ -176,9 +176,13 @@
                 "z": 1
             },
             "index": 1,
-            "textureAssetID": "players/spaceship_blue.png"
+            "textureAssetID": "spritesheets/spaceship.png"
         },
         "TeamComponent": {"teamID": 2},
+        "HealthComponent": {
+            "currentHealth": 100,
+            "maxHealth": 100
+        },
         "RigidBodyComponent": {
             "velocity": {
                 "x": 1,
@@ -191,10 +195,7 @@
                 "z": 0
             }
         },
-        "HealthComponent": {
-            "currentHealth": 100,
-            "maxHealth": 100
-        },
+        "UUIDComponent": {"uuid": "a3ae8389-682f-46bd-9bd2-69c83a2b1852"},
         "DeathEffectComponent": {
             "particleSprite": {
                 "color": {
@@ -208,7 +209,6 @@
             },
             "particleCount": 20
         },
-        "UUIDComponent": {"uuid": "d926c065-10e0-49d9-a201-dd94c58fdc0a"},
         "BoxColliderComponent": {
             "size": {
                 "x": 1,

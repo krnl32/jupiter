@@ -5,4 +5,5 @@ public enum AssetType {
 	TEXTURE,
 	SHADER,
 	SCENE,
+	SPRITESHEET,
 }
