@@ -43,14 +43,14 @@ public class Game extends Engine {
 		SerializerRegistry.registerComponentSerializer(ProjectileEmitterComponent.class, new ProjectileEmitterComponentSerializer());
 
 		// Load Global Assets
-		AssetID quadShaderID = AssetManager.getInstance().registerAndLoad("shaders/quad", () -> new ShaderAsset("quad_vertex.glsl", "quad_fragment.glsl"));
+		AssetID quadShaderID = AssetManager.getInstance().registerAndLoad("shaders/quad", () -> new ShaderAsset("shaders/quad_vertex.glsl", "shaders/quad_fragment.glsl"));
 		if (quadShaderID == null)
 			Logger.critical("Game Failed to Load Shader Asset({})", "shaders/quad");
 
 		// Scene
-		AssetID level1AssetID = AssetManager.getInstance().register("scenes/level1", () -> new SceneAsset("level1.json"));
+		AssetID level1AssetID = AssetManager.getInstance().register("scenes/level1.json", () -> new SceneAsset("scenes/level1.json"));
 		if (level1AssetID == null)
-			Logger.critical("Game Failed to Register Scene Asset({})", "scenes/level1");
+			Logger.critical("Game Failed to Register Scene Asset({})", "scenes/level1.json");
 
 		world = new World();
 		world.addScene("level1", new GamePlayScene(level1AssetID));

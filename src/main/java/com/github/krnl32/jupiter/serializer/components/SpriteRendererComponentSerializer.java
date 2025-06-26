@@ -22,7 +22,7 @@ public class SpriteRendererComponentSerializer implements ComponentSerializer<Sp
 		return new JSONObject()
 			.put("index", component.index)
 			.put("color", JOMLSerializerUtils.serializeVector4f(component.color))
-			.put("textureAssetID", textureAsset.getTextureAssetPath())
+			.put("textureAssetID", textureAsset.getTexturePath())
 			.put("textureUV", component.textureUV);
 	}
 

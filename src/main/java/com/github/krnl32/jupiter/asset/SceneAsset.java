@@ -11,9 +11,9 @@ public class SceneAsset extends Asset {
 	private final String scenePath;
 	private JSONObject sceneData;
 
-	public SceneAsset(String sceneFileName) {
+	public SceneAsset(String scenePath) {
 		super(AssetType.SCENE);
-		this.scenePath = getRootPath() + "/scenes/" + sceneFileName;;
+		this.scenePath = getRootPath() + scenePath;
 	}
 
 	public JSONObject getSceneData() {

@@ -18,7 +18,7 @@ public class JupiterSerializerUtils {
 		return new JSONObject()
 			.put("index", sprite.getIndex())
 			.put("color", JOMLSerializerUtils.serializeVector4f(sprite.getColor()))
-			.put("textureAssetID", textureAsset.getTextureAssetPath());
+			.put("textureAssetID", textureAsset.getTexturePath());
 	}
 
 	public static Sprite deserializeSprite(JSONObject data) {

@@ -13,15 +13,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SpritesheetAsset extends Asset {
-	private final String atlasMetadataAssetPath;
+	private final String atlasMetadataPath;
 	private String imagePath;
 	private int atlasWidth, atlasHeight;
 	private float scale;
 	private Map<String, Sprite> sprites;
 
-	public SpritesheetAsset(String atlasMetadataAssetPath) {
+	public SpritesheetAsset(String atlasMetadataPath) {
 		super(AssetType.SPRITESHEET);
-		this.atlasMetadataAssetPath = atlasMetadataAssetPath;
+		this.atlasMetadataPath = atlasMetadataPath;
 	}
 
 	public float[] getSpriteUV(String name) {
@@ -35,9 +35,9 @@ public class SpritesheetAsset extends Asset {
 		sprites = new HashMap<>();
 
 		try {
-			JSONObject root = new JSONObject(FileIO.readFileContent(getRootPath() + "/spritesheets/" + atlasMetadataAssetPath));
+			JSONObject root = new JSONObject(FileIO.readFileContent(getRootPath() + atlasMetadataPath));
 			JSONObject spritesheet = root.getJSONObject("spritesheet");
-			imagePath = getRootPath() + "/spritesheets/" + spritesheet.getString("imagePath");
+			imagePath = getRootPath() + spritesheet.getString("imagePath");
 			atlasWidth = spritesheet.getJSONObject("size").getInt("width");
 			atlasHeight = spritesheet.getJSONObject("size").getInt("height");
 			scale = spritesheet.optFloat("scale", 1.0f);
@@ -84,11 +84,11 @@ public class SpritesheetAsset extends Asset {
 
 		} catch (JSONException e) {
 			setState(AssetState.MISSING);
-			Logger.error("Spritesheet({}) Failed to Parse: ", atlasMetadataAssetPath, e.getMessage());
+			Logger.error("Spritesheet({}) Failed to Parse: ", atlasMetadataPath, e.getMessage());
 			return false;
 		} catch (IOException e) {
 			setState(AssetState.MISSING);
-			Logger.error("Spritesheet({}) File Not Found: ", atlasMetadataAssetPath, e.getMessage());
+			Logger.error("Spritesheet({}) File Not Found: ", atlasMetadataPath, e.getMessage());
 			return false;
 		}
 

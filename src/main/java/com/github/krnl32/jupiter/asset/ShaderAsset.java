@@ -9,8 +9,8 @@ public class ShaderAsset extends Asset{
 
 	public ShaderAsset(String vertexFileName, String fragmentFileName) {
 		super(AssetType.SHADER);
-		this.vertexFilePath = getRootPath() + "/shaders/" + vertexFileName;
-		this.fragmentFilePath = getRootPath() + "/shaders/" + fragmentFileName;
+		this.vertexFilePath = getRootPath() + vertexFileName;
+		this.fragmentFilePath = getRootPath() + fragmentFileName;
 	}
 
 	public Shader getShader() {

@@ -33,31 +33,31 @@ public class TestScene extends Scene {
 
 	@Override
 	public void onCreate() {
-		spaceshipRedID = AssetManager.getInstance().registerAndLoad("textures/players/spaceship_red.png", () -> new TextureAsset("players/spaceship_red.png"));
+		spaceshipRedID = AssetManager.getInstance().registerAndLoad("textures/players/spaceship_red.png", () -> new TextureAsset("textures/players/spaceship_red.png"));
 		if (spaceshipRedID == null)
 			Logger.critical("Game Failed to Load Texture Asset({})", "textures/players/spaceship_red.png");
 
-		spaceshipBlueID = AssetManager.getInstance().registerAndLoad("textures/players/spaceship_blue.png", () -> new TextureAsset("players/spaceship_blue.png"));
+		spaceshipBlueID = AssetManager.getInstance().registerAndLoad("textures/players/spaceship_blue.png", () -> new TextureAsset("textures/players/spaceship_blue.png"));
 		if (spaceshipBlueID == null)
 			Logger.critical("Game Failed to Load Texture Asset({})", "textures/players/spaceship_blue.png");
 
-		laserRedID = AssetManager.getInstance().registerAndLoad("textures/projectiles/laser_red.png", () -> new TextureAsset("projectiles/laser_red.png"));
+		laserRedID = AssetManager.getInstance().registerAndLoad("textures/projectiles/laser_red.png", () -> new TextureAsset("textures/projectiles/laser_red.png"));
 		if (laserRedID == null)
 			Logger.critical("Game Failed to Load Texture Asset({})", "textures/projectiles/laser_red.png");
 
-		laserBlueID = AssetManager.getInstance().registerAndLoad("textures/projectiles/laser_blue.png", () -> new TextureAsset("projectiles/laser_blue.png"));
+		laserBlueID = AssetManager.getInstance().registerAndLoad("textures/projectiles/laser_blue.png", () -> new TextureAsset("textures/projectiles/laser_blue.png"));
 		if (laserBlueID == null)
 			Logger.critical("Game Failed to Load Texture Asset({})", "textures/projectiles/laser_blue.png");
 
-		starParticleID = AssetManager.getInstance().registerAndLoad("textures/particles/star3.png", () -> new TextureAsset("particles/star3.png"));
+		starParticleID = AssetManager.getInstance().registerAndLoad("textures/particles/star3.png", () -> new TextureAsset("textures/particles/star3.png"));
 		if (starParticleID == null)
 			Logger.critical("Game Failed to Load Texture Asset({})", "textures/particles/star3.png");
 
-		spaceshipTextureID = AssetManager.getInstance().registerAndLoad("spritesheets/spaceship.png", () -> new TextureAsset("spritesheets/spaceship.png"));
-		if (starParticleID == null)
-			Logger.critical("Game Failed to Load Texture Asset({})", "spritesheets/spaceship.png");
+		spaceshipTextureID = AssetManager.getInstance().registerAndLoad("spritesheets/spaceship/spaceship.png", () -> new TextureAsset("spritesheets/spaceship/spaceship.png"));
+		if (spaceshipTextureID == null)
+			Logger.critical("Game Failed to Load Texture Asset({})", "spritesheets/spaceship/spaceship.png");
 
-		spaceshipSpritesheetID = AssetManager.getInstance().registerAndLoad("spritesheets/spaceship/spaceship.json", () -> new SpritesheetAsset("spaceship/spaceship.json"));
+		spaceshipSpritesheetID = AssetManager.getInstance().registerAndLoad("spritesheets/spaceship/spaceship.json", () -> new SpritesheetAsset("spritesheets/spaceship/spaceship.json"));
 		if (spaceshipSpritesheetID == null)
 			Logger.critical("Game Failed to Load Spritesheet Asset({})", "spritesheets/spaceship/spaceship.json");
 		spaceshipSpritesheetAsset = AssetManager.getInstance().getAsset(spaceshipSpritesheetID);
@@ -115,7 +115,7 @@ public class TestScene extends Scene {
 
 		SceneSerializer sceneSerializer = new SceneSerializer();
 		try {
-			FileIO.writeFileContent("C:\\Users\\DMP\\IdeaProjects\\jupiter\\assets\\scenes\\test.json", sceneSerializer.serialize(this).toString(4));
+			FileIO.writeFileContent(System.getProperty("user.dir") + "/assets/scenes/test.json", sceneSerializer.serialize(this).toString(4));
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

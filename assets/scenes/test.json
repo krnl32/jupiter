@@ -1,6 +1,6 @@
 {"entities": [
     {"components": {
-        "UUIDComponent": {"uuid": "2f0d1127-bcfe-4e55-9de7-4a1a1f937b8b"},
+        "UUIDComponent": {"uuid": "b673344b-b3ab-4a67-811a-648d7dfa30a1"},
         "CameraComponent": {
             "rollSpeed": 45,
             "worldUp": {
@@ -65,7 +65,7 @@
                 "z": 1
             },
             "index": 1,
-            "textureAssetID": "players/spaceship_red.png"
+            "textureAssetID": "textures/players/spaceship_red.png"
         },
         "TeamComponent": {"teamID": 1},
         "HealthComponent": {
@@ -105,11 +105,11 @@
                     "z": 0
                 },
                 "index": 0,
-                "textureAssetID": "particles/star3.png"
+                "textureAssetID": "textures/particles/star3.png"
             },
             "particleCount": 20
         },
-        "UUIDComponent": {"uuid": "289be280-c8d2-4c65-8ddb-8e98e43a088f"},
+        "UUIDComponent": {"uuid": "eb1c6943-029f-4dd4-9698-526679edb042"},
         "BoxColliderComponent": {
             "size": {
                 "x": 1,
@@ -150,7 +150,7 @@
                     "z": 1
                 },
                 "index": 1,
-                "textureAssetID": "projectiles/laser_red.png"
+                "textureAssetID": "textures/projectiles/laser_red.png"
             },
             "shootKey": 32,
             "lastEmissionTime": 0,
@@ -176,7 +176,7 @@
                 "z": 1
             },
             "index": 1,
-            "textureAssetID": "spritesheets/spaceship.png"
+            "textureAssetID": "spritesheets/spaceship/spaceship.png"
         },
         "TeamComponent": {"teamID": 2},
         "HealthComponent": {
@@ -195,7 +195,7 @@
                 "z": 0
             }
         },
-        "UUIDComponent": {"uuid": "a3ae8389-682f-46bd-9bd2-69c83a2b1852"},
+        "UUIDComponent": {"uuid": "a0c4b254-48f3-4572-a867-12ec8fdab804"},
         "DeathEffectComponent": {
             "particleSprite": {
                 "color": {
@@ -205,7 +205,7 @@
                     "z": 0
                 },
                 "index": 0,
-                "textureAssetID": "particles/star3.png"
+                "textureAssetID": "textures/particles/star3.png"
             },
             "particleCount": 20
         },

@@ -3,16 +3,16 @@ package com.github.krnl32.jupiter.asset;
 import com.github.krnl32.jupiter.renderer.Texture2D;
 
 public class TextureAsset extends Asset {
-	private final String textureAssetPath;
+	private final String texturePath;
 	private Texture2D texture;
 
-	public TextureAsset(String textureAssetPath) {
+	public TextureAsset(String texturePath) {
 		super(AssetType.TEXTURE);
-		this.textureAssetPath = textureAssetPath;
+		this.texturePath = texturePath;
 	}
 
-	public String getTextureAssetPath() {
-		return textureAssetPath;
+	public String getTexturePath() {
+		return texturePath;
 	}
 
 	public Texture2D getTexture() {
@@ -21,7 +21,7 @@ public class TextureAsset extends Asset {
 
 	@Override
 	protected boolean load() {
-		texture = new Texture2D(getRootPath() + "/textures/" + textureAssetPath);
+		texture = new Texture2D(getRootPath() + texturePath);
 		setState(AssetState.LOADED);
 		return true;
 	}

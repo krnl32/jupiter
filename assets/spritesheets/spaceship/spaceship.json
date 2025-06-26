@@ -1,6 +1,6 @@
 {
 	"spritesheet": {
-		"imagePath": "spaceship.png",
+		"imagePath": "spritesheets/spaceship/spaceship.png",
 		"size": { "width": 1024, "height": 1024 },
 		"scale": 1,
 		"sprites": [

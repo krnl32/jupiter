@@ -12,7 +12,7 @@ public abstract class Asset {
 		id = new AssetID(UUID.randomUUID());
 		this.type = type;
 		this.state = AssetState.UNLOADED;
-		this.rootPath = System.getProperty("user.dir") + "/assets";
+		this.rootPath = System.getProperty("user.dir") + "/assets/";
 	}
 
 	public AssetID getId() {
