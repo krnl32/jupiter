@@ -1,6 +1,6 @@
 {"entities": [
     {"components": {
-        "UUIDComponent": {"uuid": "b673344b-b3ab-4a67-811a-648d7dfa30a1"},
+        "UUIDComponent": {"uuid": "3f5ca103-7900-48b6-9072-c95a5695cf04"},
         "CameraComponent": {
             "rollSpeed": 45,
             "worldUp": {
@@ -72,18 +72,6 @@
             "currentHealth": 100,
             "maxHealth": 100
         },
-        "RigidBodyComponent": {
-            "velocity": {
-                "x": 0,
-                "y": 0,
-                "z": 0
-            },
-            "angularVelocity": {
-                "x": 0,
-                "y": 0,
-                "z": 0
-            }
-        },
         "KeyboardControlComponent": {
             "upKey": 87,
             "moveSpeed": 10,
@@ -95,6 +83,18 @@
             "rotateRightKey": 69,
             "rotateLeftKey": 81,
             "forwardKey": 0
+        },
+        "RigidBodyComponent": {
+            "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "angularVelocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            }
         },
         "DeathEffectComponent": {
             "particleSprite": {
@@ -109,7 +109,7 @@
             },
             "particleCount": 20
         },
-        "UUIDComponent": {"uuid": "eb1c6943-029f-4dd4-9698-526679edb042"},
+        "UUIDComponent": {"uuid": "d4f01192-7e9b-4b79-aa78-b2035d625dd4"},
         "BoxColliderComponent": {
             "size": {
                 "x": 1,
@@ -161,13 +161,13 @@
         "SpriteRendererComponent": {
             "textureUV": [
                 0.20605469,
-                0.9921875,
+                0.0078125,
                 0.30273438,
-                0.9921875,
+                0.0078125,
                 0.30273438,
-                0.9189453,
+                0.08105469,
                 0.20605469,
-                0.9189453
+                0.08105469
             ],
             "color": {
                 "w": 1,
@@ -195,7 +195,7 @@
                 "z": 0
             }
         },
-        "UUIDComponent": {"uuid": "a0c4b254-48f3-4572-a867-12ec8fdab804"},
+        "UUIDComponent": {"uuid": "5da99ba6-eac2-4a76-baba-a8120912c644"},
         "DeathEffectComponent": {
             "particleSprite": {
                 "color": {

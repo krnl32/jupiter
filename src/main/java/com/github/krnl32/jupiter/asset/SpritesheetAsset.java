@@ -26,7 +26,6 @@ public class SpritesheetAsset extends Asset {
 
 	public float[] getSpriteUV(String name) {
 		Sprite sprite = sprites.get(name);
-		System.out.println(sprite);
 		return (sprite != null) ? sprite.getUV() : null;
 	}
 
@@ -136,9 +135,9 @@ class Sprite {
 			v2 = (float) (frame.getY() + frame.getWidth()) / atlasHeight;
 		} else {
 			u1 = (float) frame.getX() / atlasWidth;
-			v1 = (float) frame.getY() / atlasHeight;
+			v1 = 1.0f - ((float) (frame.getY() + frame.getHeight()) / atlasHeight);
 			u2 = (float) (frame.getX() + frame.getWidth()) / atlasWidth;
-			v2 = (float) (frame.getY() + frame.getHeight()) / atlasHeight;
+			v2 = 1.0f - ((float) (frame.getY()) / atlasHeight);
 		}
 	}
 
@@ -177,12 +176,11 @@ class Sprite {
 	public float[] getUV() {
 		if (rotated)
 			return getUVRotated();
-
 		return new float[]{
-			u1, v2, // BL
-			u2, v2, // BR
-			u2, v1, // TR
-			u1, v1  // TL
+			u1, v1, // BL
+			u2, v1, // BR
+			u2, v2, // TR
+			u1, v2  // TL
 		};
 	}
 
