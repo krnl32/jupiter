@@ -17,7 +17,7 @@ import static org.lwjgl.opengl.GL15.*;
 
 public class Renderer {
 	private final List<RenderCommand> commandQueue = new ArrayList<>();
-	private final SpriteBatch spriteBatch = new SpriteBatch();
+	private final SpriteRenderBatch spriteRenderBatch = new SpriteRenderBatch();
 	private Camera activeCamera;
 	private Shader shader;
 
@@ -43,7 +43,7 @@ public class Renderer {
 	public void beginFrame() {
 		shader.bind();
 		commandQueue.clear();
-		spriteBatch.begin();
+		spriteRenderBatch.begin();
 	}
 
 	public void endFrame() {
@@ -53,14 +53,14 @@ public class Renderer {
 		}
 
 		commandQueue.sort((a, b) -> {
-			int aZ = ((RenderSpriteCommand)a).getSpriteRenderData().getIndex();
-			int bZ = ((RenderSpriteCommand)b).getSpriteRenderData().getIndex();
+			int aZ = ((RenderSpriteCommand)a).getRenderPacket().getIndex();
+			int bZ = ((RenderSpriteCommand)b).getRenderPacket().getIndex();
 			return Integer.compare(aZ, bZ);
 		});
 
 		for (var cmd: commandQueue)
 			cmd.execute(this);
-		spriteBatch.end();
+		spriteRenderBatch.end();
 
 		shader.unbind();
 	}
@@ -69,8 +69,8 @@ public class Renderer {
 		commandQueue.add(cmd);
 	}
 
-	public void drawSprite(Matrix4f transform, SpriteRenderData spriteRenderData, float[] textureUV) {
-		spriteBatch.addSprite(transform, spriteRenderData, textureUV);
+	public void drawSprite(Matrix4f transform, RenderPacket renderPacket, float[] textureUV) {
+		spriteRenderBatch.addQuad(transform, renderPacket, textureUV);
 	}
 
 	public void setActiveCamera(Camera activeCamera) {

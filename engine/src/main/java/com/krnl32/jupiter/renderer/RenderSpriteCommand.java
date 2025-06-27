@@ -4,21 +4,21 @@ import org.joml.Matrix4f;
 
 public class RenderSpriteCommand implements RenderCommand {
 	private final Matrix4f transform;
-	private final SpriteRenderData spriteRenderData;
+	private final RenderPacket renderPacket;
 	private final float[] textureUV;
 
-	public RenderSpriteCommand(Matrix4f transform, SpriteRenderData spriteRenderData, float[] textureUV) {
+	public RenderSpriteCommand(Matrix4f transform, RenderPacket renderPacket, float[] textureUV) {
 		this.transform = transform;
-		this.spriteRenderData = spriteRenderData;
+		this.renderPacket = renderPacket;
 		this.textureUV = textureUV;
 	}
 
 	@Override
 	public void execute(Renderer renderer) {
-		renderer.drawSprite(transform, spriteRenderData, textureUV);
+		renderer.drawSprite(transform, renderPacket, textureUV);
 	}
 
-	public SpriteRenderData getSpriteRenderData() {
-		return spriteRenderData;
+	public RenderPacket getRenderPacket() {
+		return renderPacket;
 	}
 }
