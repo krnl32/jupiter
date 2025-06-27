@@ -2,7 +2,7 @@ plugins {
     id("java")
 }
 
-group = "com.github.krnl32"
+group = "com.krnl32"
 version = "1.0-SNAPSHOT"
 
 val lwjglVersion = "3.3.6"
