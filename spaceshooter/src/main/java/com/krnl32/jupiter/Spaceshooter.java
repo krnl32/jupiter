@@ -2,23 +2,23 @@ package com.krnl32.jupiter;
 
 import com.krnl32.jupiter.asset.AssetID;
 import com.krnl32.jupiter.asset.AssetManager;
+import com.krnl32.jupiter.asset.SceneAsset;
 import com.krnl32.jupiter.asset.ShaderAsset;
 import com.krnl32.jupiter.components.*;
 import com.krnl32.jupiter.core.Engine;
 import com.krnl32.jupiter.core.Logger;
-import com.krnl32.jupiter.editor.EditorUI;
 import com.krnl32.jupiter.game.World;
 import com.krnl32.jupiter.renderer.Renderer;
-import com.krnl32.jupiter.scenes.EmptyScene;
+import com.krnl32.jupiter.scenes.GamePlayScene;
+import com.krnl32.jupiter.scenes.TestScene;
 import com.krnl32.jupiter.serializer.SerializerRegistry;
 import com.krnl32.jupiter.serializer.components.*;
 import org.joml.Vector4f;
 
-public class Editor extends Engine {
+public class Spaceshooter extends Engine {
 	private World world;
-	private EditorUI editorUI;
 
-	public Editor(String name, int width, int height) {
+	public Spaceshooter(String name, int width, int height) {
 		super(name, width, height);
 	}
 
@@ -47,12 +47,15 @@ public class Editor extends Engine {
 		if (quadShaderID == null)
 			Logger.critical("Game Failed to Load Shader Asset({})", "shaders/quad");
 
-		// Editor
-		editorUI = new EditorUI(getWindow());
+		// Scene
+		AssetID level1AssetID = AssetManager.getInstance().register("scenes/level1.json", () -> new SceneAsset("scenes/level1.json"));
+		if (level1AssetID == null)
+			Logger.critical("Game Failed to Register Scene Asset({})", "scenes/level1.json");
 
 		world = new World();
-		world.addScene("empty", new EmptyScene());
-		world.switchScene("empty");
+		world.addScene("level1", new GamePlayScene(level1AssetID));
+		world.addScene("test", new TestScene(getWindow().getWidth(), getWindow().getHeight()));
+		world.switchScene("test");
 		return true;
 	}
 
@@ -65,8 +68,6 @@ public class Editor extends Engine {
 	public void onRender(float dt, Renderer renderer) {
 		renderer.setClearColor(new Vector4f(0.07f, 0.13f, 0.17f, 1.0f));
 		renderer.clear();
-
-		editorUI.onRender(dt);
 		world.onRender(dt, renderer);
 	}
 }

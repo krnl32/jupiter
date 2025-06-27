@@ -1,2 +1,2 @@
 rootProject.name = "jupiter"
-include("engine", "editor", "sandbox")
+include("engine", "spaceshooter")
