@@ -6,6 +6,7 @@ import com.krnl32.jupiter.asset.ShaderAsset;
 import com.krnl32.jupiter.components.*;
 import com.krnl32.jupiter.core.Engine;
 import com.krnl32.jupiter.core.Logger;
+import com.krnl32.jupiter.editor.EditorUI;
 import com.krnl32.jupiter.game.World;
 import com.krnl32.jupiter.renderer.Renderer;
 import com.krnl32.jupiter.scenes.EmptyScene;
@@ -15,6 +16,7 @@ import org.joml.Vector4f;
 
 public class Editor extends Engine {
 	private World world;
+	private EditorUI editorUI;
 
 	public Editor(String name, int width, int height) {
 		super(name, width, height);
@@ -45,6 +47,9 @@ public class Editor extends Engine {
 		if (quadShaderID == null)
 			Logger.critical("Game Failed to Load Shader Asset({})", "shaders/quad");
 
+		// Editor
+		editorUI = new EditorUI(getWindow());
+
 		world = new World();
 		world.addScene("empty", new EmptyScene());
 		world.switchScene("empty");
@@ -60,6 +65,8 @@ public class Editor extends Engine {
 	public void onRender(float dt, Renderer renderer) {
 		renderer.setClearColor(new Vector4f(0.07f, 0.13f, 0.17f, 1.0f));
 		renderer.clear();
+
+		editorUI.onRender(dt);
 		world.onRender(dt, renderer);
 	}
 }

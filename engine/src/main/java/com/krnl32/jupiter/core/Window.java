@@ -55,6 +55,10 @@ public class Window {
 		return height;
 	}
 
+	public long getNativeWindow() {
+		return window;
+	}
+
 	private void init() {
 		Logger.info("LWJGL Version: {}", Version.getVersion());
 
