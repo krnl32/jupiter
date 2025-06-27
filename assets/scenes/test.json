@@ -1,6 +1,6 @@
 {"entities": [
     {"components": {
-        "UUIDComponent": {"uuid": "f7e16220-b6c5-4bfd-9cf1-a5b2ec703dec"},
+        "UUIDComponent": {"uuid": "4084bb69-ff1e-4229-8827-9640f4ea1173"},
         "CameraComponent": {
             "rollSpeed": 45,
             "worldUp": {
@@ -68,22 +68,6 @@
             "textureAssetID": "textures/players/spaceship_red.png"
         },
         "TeamComponent": {"teamID": 1},
-        "RigidBodyComponent": {
-            "velocity": {
-                "x": 0,
-                "y": 0,
-                "z": 0
-            },
-            "angularVelocity": {
-                "x": 0,
-                "y": 0,
-                "z": 0
-            }
-        },
-        "HealthComponent": {
-            "currentHealth": 100,
-            "maxHealth": 100
-        },
         "KeyboardControlComponent": {
             "upKey": 87,
             "moveSpeed": 10,
@@ -96,6 +80,23 @@
             "rotateLeftKey": 81,
             "forwardKey": 0
         },
+        "HealthComponent": {
+            "currentHealth": 100,
+            "maxHealth": 100
+        },
+        "RigidBodyComponent": {
+            "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "angularVelocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            }
+        },
+        "UUIDComponent": {"uuid": "82c6d9c6-f53e-4951-866c-6dfa6b9ab009"},
         "DeathEffectComponent": {
             "particleSprite": {
                 "color": {
@@ -109,7 +110,6 @@
             },
             "particleCount": 20
         },
-        "UUIDComponent": {"uuid": "6c99ab62-fbec-48aa-8667-d3721ede45b2"},
         "BoxColliderComponent": {
             "size": {
                 "x": 1,
@@ -179,6 +179,10 @@
             "textureAssetID": "spritesheets/spaceship/spaceship.png"
         },
         "TeamComponent": {"teamID": 2},
+        "HealthComponent": {
+            "currentHealth": 100,
+            "maxHealth": 100
+        },
         "RigidBodyComponent": {
             "velocity": {
                 "x": 1,
@@ -191,11 +195,6 @@
                 "z": 0
             }
         },
-        "HealthComponent": {
-            "currentHealth": 100,
-            "maxHealth": 100
-        },
-        "UUIDComponent": {"uuid": "c204847c-5d03-421c-aed8-066413b8f167"},
         "DeathEffectComponent": {
             "particleSprite": {
                 "color": {
@@ -209,6 +208,7 @@
             },
             "particleCount": 20
         },
+        "UUIDComponent": {"uuid": "50d94300-15e2-4f49-9b75-7607480911ee"},
         "BoxColliderComponent": {
             "size": {
                 "x": 1,

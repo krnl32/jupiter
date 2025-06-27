@@ -1,11 +1,7 @@
 package com.krnl32.jupiter.renderer;
 
-import com.krnl32.jupiter.asset.AssetManager;
-import com.krnl32.jupiter.asset.ShaderAsset;
-import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.event.EventBus;
 import com.krnl32.jupiter.events.window.WindowResizeEvent;
-import org.joml.Matrix4f;
 import org.joml.Vector4f;
 
 import java.util.ArrayList;
@@ -16,61 +12,32 @@ import static org.lwjgl.opengl.GL11.glViewport;
 import static org.lwjgl.opengl.GL15.*;
 
 public class Renderer {
-	private final List<RenderCommand> commandQueue = new ArrayList<>();
-	private final SpriteRenderBatch spriteRenderBatch = new SpriteRenderBatch();
+	private final List<RenderPass> renderPasses = new ArrayList<>();
 	private Camera activeCamera;
-	private Shader shader;
 
 	public Renderer() {
-		ShaderAsset shaderAsset = AssetManager.getInstance().getAsset("shaders/quad");
-		if (shaderAsset == null || !shaderAsset.isLoaded())
-			Logger.critical("Renderer Quad Shader Null or Not LOADED");
-
-		shader = shaderAsset.getShader();
-		shader.bind();
-		shader.setMat4("u_Model", new Matrix4f().identity());
-
-		int[] samplers = new int[32];
-		for (int i = 0; i < 32; i++)
-			samplers[i] = i;
-		shader.setIntArray("u_Textures", samplers);
-
 		EventBus.getInstance().register(WindowResizeEvent.class, event -> {
 			setViewPort(0, 0, event.getWidth(), event.getHeight());
 		});
 	}
 
 	public void beginFrame() {
-		shader.bind();
-		commandQueue.clear();
-		spriteRenderBatch.begin();
+		for (RenderPass renderPass : renderPasses)
+			renderPass.beginFrame(activeCamera);
 	}
 
 	public void endFrame() {
-		if (activeCamera != null) {
-			shader.setMat4("u_View", activeCamera.getViewMatrix());
-			shader.setMat4("u_Projection", activeCamera.getProjectionMatrix());
-		}
-
-		commandQueue.sort((a, b) -> {
-			int aZ = ((RenderSpriteCommand)a).getRenderPacket().getIndex();
-			int bZ = ((RenderSpriteCommand)b).getRenderPacket().getIndex();
-			return Integer.compare(aZ, bZ);
-		});
-
-		for (var cmd: commandQueue)
-			cmd.execute(this);
-		spriteRenderBatch.end();
-
-		shader.unbind();
+		for (RenderPass renderPass : renderPasses)
+			renderPass.endFrame();
 	}
 
 	public void submit(RenderCommand cmd) {
-		commandQueue.add(cmd);
+		for (RenderPass renderPass : renderPasses)
+			renderPass.submit(cmd);
 	}
 
-	public void drawSprite(Matrix4f transform, RenderPacket renderPacket, float[] textureUV) {
-		spriteRenderBatch.addQuad(transform, renderPacket, textureUV);
+	public void addRenderPass(RenderPass renderPass) {
+		renderPasses.add(renderPass);
 	}
 
 	public void setActiveCamera(Camera activeCamera) {

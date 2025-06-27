@@ -13,12 +13,15 @@ public class RenderSpriteCommand implements RenderCommand {
 		this.textureUV = textureUV;
 	}
 
-	@Override
-	public void execute(Renderer renderer) {
-		renderer.drawSprite(transform, renderPacket, textureUV);
+	public Matrix4f getTransform() {
+		return transform;
 	}
 
 	public RenderPacket getRenderPacket() {
 		return renderPacket;
+	}
+
+	public float[] getTextureUV() {
+		return textureUV;
 	}
 }

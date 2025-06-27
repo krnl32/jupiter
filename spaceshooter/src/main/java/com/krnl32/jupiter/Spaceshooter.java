@@ -3,7 +3,6 @@ package com.krnl32.jupiter;
 import com.krnl32.jupiter.asset.AssetID;
 import com.krnl32.jupiter.asset.AssetManager;
 import com.krnl32.jupiter.asset.SceneAsset;
-import com.krnl32.jupiter.asset.ShaderAsset;
 import com.krnl32.jupiter.components.*;
 import com.krnl32.jupiter.core.Engine;
 import com.krnl32.jupiter.core.Logger;
@@ -41,11 +40,6 @@ public class Spaceshooter extends Engine {
 		SerializerRegistry.registerComponentSerializer(DeathEffectComponent.class, new DeathEffectComponentSerializer());
 		SerializerRegistry.registerComponentSerializer(ProjectileComponent.class, new ProjectileComponentSerializer());
 		SerializerRegistry.registerComponentSerializer(ProjectileEmitterComponent.class, new ProjectileEmitterComponentSerializer());
-
-		// Load Global Assets
-		AssetID quadShaderID = AssetManager.getInstance().registerAndLoad("shaders/quad", () -> new ShaderAsset("shaders/quad_vertex.glsl", "shaders/quad_fragment.glsl"));
-		if (quadShaderID == null)
-			Logger.critical("Game Failed to Load Shader Asset({})", "shaders/quad");
 
 		// Scene
 		AssetID level1AssetID = AssetManager.getInstance().register("scenes/level1.json", () -> new SceneAsset("scenes/level1.json"));
