@@ -4,8 +4,8 @@ import com.krnl32.jupiter.core.Logger;
 
 public class Main {
 	public static void main(String[] args) {
-		Logger.info("Jupiter Game Engine");
-		Game game = new Game("JupiterGame", 1024, 768);
-		game.run();
+		Logger.info("Jupiter Sandbox...");
+		Sandbox sandbox = new Sandbox("JupiterSandbox", 1024, 768);
+		sandbox.run();
 	}
 }

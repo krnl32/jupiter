@@ -15,10 +15,10 @@ import com.krnl32.jupiter.serializer.SerializerRegistry;
 import com.krnl32.jupiter.serializer.components.*;
 import org.joml.Vector4f;
 
-public class Game extends Engine {
+public class Sandbox extends Engine {
 	private World world;
 
-	public Game(String name, int width, int height) {
+	public Sandbox(String name, int width, int height) {
 		super(name, width, height);
 	}
 

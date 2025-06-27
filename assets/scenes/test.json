@@ -1,6 +1,6 @@
 {"entities": [
     {"components": {
-        "UUIDComponent": {"uuid": "35065400-e92a-4cd9-bf73-dbbe520a189e"},
+        "UUIDComponent": {"uuid": "0704dfc2-7ae9-4009-8888-189de7737a4f"},
         "CameraComponent": {
             "rollSpeed": 45,
             "worldUp": {
@@ -109,7 +109,7 @@
             },
             "particleCount": 20
         },
-        "UUIDComponent": {"uuid": "7a4b06af-53ab-4b06-928e-65e57f5d4752"},
+        "UUIDComponent": {"uuid": "4cb2e1f0-2a5d-482b-96f9-4e36ff1c1263"},
         "BoxColliderComponent": {
             "size": {
                 "x": 1,
@@ -179,10 +179,6 @@
             "textureAssetID": "spritesheets/spaceship/spaceship.png"
         },
         "TeamComponent": {"teamID": 2},
-        "HealthComponent": {
-            "currentHealth": 100,
-            "maxHealth": 100
-        },
         "RigidBodyComponent": {
             "velocity": {
                 "x": 1,
@@ -195,7 +191,11 @@
                 "z": 0
             }
         },
-        "UUIDComponent": {"uuid": "1eeb2fd7-c1dc-49f4-b314-895451dcf774"},
+        "HealthComponent": {
+            "currentHealth": 100,
+            "maxHealth": 100
+        },
+        "UUIDComponent": {"uuid": "c127c306-b0cf-421f-a0df-d4efcd2663f0"},
         "DeathEffectComponent": {
             "particleSprite": {
                 "color": {
