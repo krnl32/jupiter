@@ -2,6 +2,7 @@ package com.krnl32.jupiter.renderer;
 
 import com.krnl32.jupiter.event.EventBus;
 import com.krnl32.jupiter.events.window.WindowResizeEvent;
+import org.joml.Vector2f;
 import org.joml.Vector4f;
 
 import java.util.ArrayList;
@@ -12,11 +13,16 @@ import static org.lwjgl.opengl.GL11.glViewport;
 import static org.lwjgl.opengl.GL15.*;
 
 public class Renderer {
-	private final List<RenderPass> renderPasses = new ArrayList<>();
+	private final List<RenderPass> renderPasses;
+	private final Vector2f viewport;
 	private Camera activeCamera;
 
 	public Renderer() {
+		renderPasses = new ArrayList<>();
+		viewport = new Vector2f();
+
 		EventBus.getInstance().register(WindowResizeEvent.class, event -> {
+			viewport.set(event.getWidth(), event.getHeight());
 			setViewPort(0, 0, event.getWidth(), event.getHeight());
 		});
 	}
@@ -52,7 +58,12 @@ public class Renderer {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
+	public Vector2f getViewport() {
+		return viewport;
+	}
+
 	public void setViewPort(int x, int y, int width, int height) {
+		viewport.set(width, height);
 		glViewport(x, y, width, height);
 	}
 

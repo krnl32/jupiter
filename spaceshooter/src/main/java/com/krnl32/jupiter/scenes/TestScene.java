@@ -5,6 +5,8 @@ import com.krnl32.jupiter.asset.AssetManager;
 import com.krnl32.jupiter.asset.SpritesheetAsset;
 import com.krnl32.jupiter.asset.TextureAsset;
 import com.krnl32.jupiter.components.*;
+import com.krnl32.jupiter.components.ui.UIRenderComponent;
+import com.krnl32.jupiter.components.ui.UITransformComponent;
 import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.game.Scene;
@@ -13,6 +15,7 @@ import com.krnl32.jupiter.model.Sprite;
 import com.krnl32.jupiter.renderer.Camera;
 import com.krnl32.jupiter.serializer.SceneSerializer;
 import com.krnl32.jupiter.systems.*;
+import com.krnl32.jupiter.systems.ui.UIRenderSystem;
 import com.krnl32.jupiter.utility.FileIO;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -75,6 +78,7 @@ public class TestScene extends Scene {
 		addSystem(new BlinkSystem(getRegistry()));
 		addSystem(new ParticleSystem(getRegistry()));
 		addSystem(new DeathEffectSystem(getRegistry()));
+		addSystem(new UIRenderSystem(getRegistry()));
 	}
 
 	@Override
@@ -110,6 +114,10 @@ public class TestScene extends Scene {
 		spaceshipBlueEntity.addComponent(new HealthComponent(100, 100));
 		spaceshipBlueEntity.addComponent(new TeamComponent(2));
 		spaceshipBlueEntity.addComponent(new DeathEffectComponent(20, new Sprite(0, new Vector4f(1.0f, 0.45f, 0.0f, 0.95f), starParticleID)));
+
+		Entity button = createEntity();
+		button.addComponent(new UITransformComponent(new Vector3f(0.0f, 0.0f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(100.0f, 100.0f, 1.0f)));
+		button.addComponent(new UIRenderComponent(-1, new Vector4f(1.0f, 0.0f, 0.0f, 1.0f), null));
 
 		SceneSerializer sceneSerializer = new SceneSerializer();
 		try {

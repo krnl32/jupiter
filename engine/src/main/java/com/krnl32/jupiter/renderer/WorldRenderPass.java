@@ -24,6 +24,7 @@ public class WorldRenderPass implements RenderPass {
 			shader.setMat4("u_View", camera.getViewMatrix());
 			shader.setMat4("u_Projection", camera.getProjectionMatrix());
 		}
+		shader.unbind();
 	}
 
 	@Override
@@ -38,6 +39,7 @@ public class WorldRenderPass implements RenderPass {
 			spriteRenderBatch.addQuad(cmd.getTransform(), cmd.getRenderPacket(), cmd.getTextureUV());
 		}
 
+		shader.bind();
 		spriteRenderBatch.end();
 		shader.unbind();
 	}
