@@ -5,6 +5,7 @@ import com.krnl32.jupiter.asset.AssetManager;
 import com.krnl32.jupiter.asset.SpritesheetAsset;
 import com.krnl32.jupiter.asset.TextureAsset;
 import com.krnl32.jupiter.components.*;
+import com.krnl32.jupiter.components.ui.UIButtonComponent;
 import com.krnl32.jupiter.components.ui.UIRenderComponent;
 import com.krnl32.jupiter.components.ui.UITransformComponent;
 import com.krnl32.jupiter.core.Logger;
@@ -15,12 +16,15 @@ import com.krnl32.jupiter.model.Sprite;
 import com.krnl32.jupiter.renderer.Camera;
 import com.krnl32.jupiter.serializer.SceneSerializer;
 import com.krnl32.jupiter.systems.*;
+import com.krnl32.jupiter.systems.ui.UIButtonSystem;
 import com.krnl32.jupiter.systems.ui.UIRenderSystem;
 import com.krnl32.jupiter.utility.FileIO;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 import java.io.IOException;
+
+import static org.joml.Math.toRadians;
 
 public class TestScene extends Scene {
 	private final int width, height;
@@ -30,6 +34,7 @@ public class TestScene extends Scene {
 	private AssetID laserRedID, laserBlueID;
 	private AssetID starParticleID;
 	private AssetID spaceshipSpritesheetID;
+	private AssetID buttonBlueID;
 	private SpritesheetAsset spaceshipSpritesheetAsset;
 
 	public TestScene(int width, int height) {
@@ -64,6 +69,10 @@ public class TestScene extends Scene {
 			Logger.critical("Game Failed to Load Spritesheet Asset({})", "spritesheets/spaceship/spaceship.json");
 		spaceshipSpritesheetAsset = AssetManager.getInstance().getAsset(spaceshipSpritesheetID);
 
+		buttonBlueID = AssetManager.getInstance().registerAndLoad("textures/ui/button_blue.png", () -> new TextureAsset("textures/ui/button_blue.png"));
+		if (buttonBlueID == null)
+			Logger.critical("MainMenuScene Failed to Load Texture Asset({})", "textures/ui/button_blue.png");
+
 		// Systems
 		addSystem(new MovementSystem(getRegistry()), 0, true);
 		addSystem(new KeyboardControlSystem(getRegistry()), 1, true);
@@ -79,6 +88,7 @@ public class TestScene extends Scene {
 		addSystem(new ParticleSystem(getRegistry()));
 		addSystem(new DeathEffectSystem(getRegistry()));
 		addSystem(new UIRenderSystem(getRegistry()));
+		addSystem(new UIButtonSystem(getRegistry()));
 	}
 
 	@Override
@@ -116,8 +126,21 @@ public class TestScene extends Scene {
 		spaceshipBlueEntity.addComponent(new DeathEffectComponent(20, new Sprite(0, new Vector4f(1.0f, 0.45f, 0.0f, 0.95f), starParticleID)));
 
 		Entity button = createEntity();
-		button.addComponent(new UITransformComponent(new Vector3f(0.0f, 0.0f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(100.0f, 100.0f, 1.0f)));
-		button.addComponent(new UIRenderComponent(-1, new Vector4f(1.0f, 0.0f, 0.0f, 1.0f), null));
+		button.addComponent(new UITransformComponent(new Vector3f(100.0f, 1000.0f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(222.0f, 39.0f, 1.0f)));
+		button.addComponent(new UIRenderComponent(-1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), buttonBlueID));
+		button.addComponent(new UIButtonComponent(() -> {
+			Entity spaceshipBlueEntity = createEntity();
+			spaceshipBlueEntity.addComponent(new UUIDComponent());
+			spaceshipBlueEntity.addComponent(new TagComponent("SpaceshipBlue"));
+			spaceshipBlueEntity.addComponent(new TransformComponent(new Vector3f(-3.0f, 5.0f, -1.0f), new Vector3f(0.0f, 0.0f, toRadians(180.0f)), new Vector3f(1.0f, 1.0f, 1.0f)));
+			spaceshipBlueEntity.addComponent(new SpriteRendererComponent(-2, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), spaceshipSpritesheetAsset.getSprite("playerShip1_blue.png").getTextureAssetID(), spaceshipSpritesheetAsset.getSprite("playerShip1_blue.png").getTextureUV()));
+			spaceshipBlueEntity.addComponent(new RigidBodyComponent(new Vector3f(1.0f, 0.0f, 0.0f)));
+			spaceshipBlueEntity.addComponent(new BoxColliderComponent(new Vector3f(1.0f, 1.0f, 1.0f)));
+			spaceshipBlueEntity.addComponent(new HealthComponent(100, 100));
+			spaceshipBlueEntity.addComponent(new TeamComponent(2));
+			spaceshipBlueEntity.addComponent(new DeathEffectComponent(20, new Sprite(0, new Vector4f(1.0f, 0.45f, 0.0f, 0.95f), starParticleID)));
+			spaceshipBlueEntity.addComponent(new ProjectileEmitterComponent(null, 15.55f, 10.0f, new Sprite(1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), laserBlueID)));
+		}));
 
 		SceneSerializer sceneSerializer = new SceneSerializer();
 		try {

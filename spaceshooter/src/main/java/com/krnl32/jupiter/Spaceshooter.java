@@ -10,6 +10,7 @@ import com.krnl32.jupiter.game.World;
 import com.krnl32.jupiter.renderer.Renderer;
 import com.krnl32.jupiter.scenes.GamePlayScene;
 import com.krnl32.jupiter.scenes.TestScene;
+import com.krnl32.jupiter.scenes.menu.MainMenuScene;
 import com.krnl32.jupiter.serializer.SerializerRegistry;
 import com.krnl32.jupiter.serializer.components.*;
 import org.joml.Vector4f;
@@ -49,6 +50,7 @@ public class Spaceshooter extends Engine {
 		world = new World();
 		world.addScene("level1", new GamePlayScene(level1AssetID));
 		world.addScene("test", new TestScene(getWindow().getWidth(), getWindow().getHeight()));
+		world.addScene("mainMenu", new MainMenuScene());
 		world.switchScene("test");
 		return true;
 	}
