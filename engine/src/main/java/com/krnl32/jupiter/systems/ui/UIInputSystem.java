@@ -7,9 +7,12 @@ import com.krnl32.jupiter.components.ui.UITransformComponent;
 import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.ecs.Registry;
 import com.krnl32.jupiter.ecs.System;
+import com.krnl32.jupiter.event.EventBus;
+import com.krnl32.jupiter.events.entity.EntityDestroyedEvent;
 import com.krnl32.jupiter.input.Input;
 import com.krnl32.jupiter.input.MouseCode;
 import com.krnl32.jupiter.renderer.Renderer;
+import com.krnl32.jupiter.utility.UIUtils;
 import org.joml.Vector2f;
 
 public class UIInputSystem implements System {
@@ -19,6 +22,20 @@ public class UIInputSystem implements System {
 	public UIInputSystem(Registry registry) {
 		this.registry = registry;
 		this.focusedEntity = null;
+
+		EventBus.getInstance().register(EntityDestroyedEvent.class, event -> {
+			if (event.getEntity() == focusedEntity) {
+				UIInputStateComponent inputState = focusedEntity.getComponent(UIInputStateComponent.class);
+				UIInputEventComponent inputEvent = focusedEntity.getComponent(UIInputEventComponent.class);
+				if (inputState != null) {
+					inputState.isFocused = false;
+					if (inputEvent != null && inputEvent.onBlur != null) {
+						inputEvent.onBlur.accept(focusedEntity);
+					}
+				}
+				focusedEntity = null;
+			}
+		});
 	}
 
 	@Override
@@ -31,7 +48,7 @@ public class UIInputSystem implements System {
 			UIInputEventComponent inputEvent = entity.getComponent(UIInputEventComponent.class);
 			UITransformComponent transformComponent = entity.getComponent(UITransformComponent.class);
 
-			boolean inside = isMouseInside(mousePosition, transformComponent);
+			boolean inside = UIUtils.isMouseOver(mousePosition, transformComponent);
 			if (inside) {
 				mouseInUI = true;
 			}
@@ -119,14 +136,5 @@ public class UIInputSystem implements System {
 				renderComponent.color.set(1.0f, 1.0f, 1.0f, 1.0f);
 			}
 		}
-	}
-
-	private boolean isMouseInside(Vector2f mousePosition, UITransformComponent transformComponent) {
-		return (
-			mousePosition.x >= transformComponent.translation.x &&
-				mousePosition.y >= transformComponent.translation.y &&
-				mousePosition.x <= transformComponent.translation.x + transformComponent.scale.x &&
-				mousePosition.y <= transformComponent.translation.y + transformComponent.scale.y
-		);
 	}
 }

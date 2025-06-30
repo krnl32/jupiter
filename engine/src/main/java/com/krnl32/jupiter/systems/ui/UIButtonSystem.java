@@ -9,6 +9,7 @@ import com.krnl32.jupiter.ecs.System;
 import com.krnl32.jupiter.input.Input;
 import com.krnl32.jupiter.input.MouseCode;
 import com.krnl32.jupiter.renderer.Renderer;
+import com.krnl32.jupiter.utility.UIUtils;
 import org.joml.Vector2f;
 
 public class UIButtonSystem implements System {
@@ -26,7 +27,7 @@ public class UIButtonSystem implements System {
 			UITransformComponent transformComponent = entity.getComponent(UITransformComponent.class);
 			UIButtonComponent buttonComponent = entity.getComponent(UIButtonComponent.class);
 
-			boolean inside = isMouseInside(mousePosition, transformComponent);
+			boolean inside = UIUtils.isMouseOver(mousePosition, transformComponent);
 
 			// Handle Hovering
 			if(inside && !buttonComponent.isHovered) {
@@ -65,14 +66,5 @@ public class UIButtonSystem implements System {
 				renderComponent.color.set(1.0f, 1.0f, 1.0f, 1.0f);
 			}
 		}
-	}
-
-	private boolean isMouseInside(Vector2f mousePosition, UITransformComponent transformComponent) {
-		return (
-			mousePosition.x >= transformComponent.translation.x &&
-				mousePosition.y >= transformComponent.translation.y &&
-				mousePosition.x <= transformComponent.translation.x + transformComponent.scale.x &&
-				mousePosition.y <= transformComponent.translation.y + transformComponent.scale.y
-		);
 	}
 }

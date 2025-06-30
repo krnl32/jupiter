@@ -13,6 +13,7 @@ import com.krnl32.jupiter.game.Scene;
 import com.krnl32.jupiter.renderer.Camera;
 import com.krnl32.jupiter.systems.*;
 import com.krnl32.jupiter.systems.ui.UIButtonSystem;
+import com.krnl32.jupiter.systems.ui.UIFocusSystem;
 import com.krnl32.jupiter.systems.ui.UIInputSystem;
 import com.krnl32.jupiter.systems.ui.UIRenderSystem;
 import org.joml.Vector3f;
@@ -44,6 +45,7 @@ public class MainMenuScene extends Scene {
 		addSystem(new UIRenderSystem(getRegistry()));
 		addSystem(new UIButtonSystem(getRegistry()));
 		addSystem(new UIInputSystem(getRegistry()));
+		addSystem(new UIFocusSystem(getRegistry()));
 	}
 
 	@Override
@@ -89,20 +91,38 @@ public class MainMenuScene extends Scene {
 		box.addComponent(new UIInputStateComponent());
 		box.addComponent(new UIInputEventComponent(
 			(entity -> {
-				System.out.println("Clicked2: " + entity.getTagOrId());
+				System.out.println("Clicked: " + entity.getTagOrId());
 			}),
 			(entity -> {
-				System.out.println("Hovering Start2: " + entity.getTagOrId());
+				System.out.println("Hovering Start: " + entity.getTagOrId());
 			}),
 			(entity -> {
-				System.out.println("Hovering End2: " + entity.getTagOrId());
+				System.out.println("Hovering End: " + entity.getTagOrId());
 			}),
 			(entity -> {
-				System.out.println("Focusing2: " + entity.getTagOrId());
+				System.out.println("Focusing: " + entity.getTagOrId());
 			}),
 			(entity -> {
-				System.out.println("Blur2: " + entity.getTagOrId());
+				System.out.println("Blur: " + entity.getTagOrId());
 			})));
+
+		box = createEntity();
+		box.addComponent(new UITransformComponent(new Vector3f(500.0f, 500.0f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(100.0f, 100.0f, 1.0f)));
+		box.addComponent(new UIRenderComponent(-1, new Vector4f(1.0f, 0.0f, 0.0f, 1.0f), null));
+		box.addComponent(new UIFocusComponent((entity -> {
+			System.out.println("Focusing: " + entity.getTagOrId());
+		}), (entity -> {
+			System.out.println("Blur: " + entity.getTagOrId());
+		})));
+
+		box = createEntity();
+		box.addComponent(new UITransformComponent(new Vector3f(700.0f, 500.0f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(100.0f, 100.0f, 1.0f)));
+		box.addComponent(new UIRenderComponent(-1, new Vector4f(1.0f, 0.0f, 0.0f, 1.0f), null));
+		box.addComponent(new UIFocusComponent((entity -> {
+			System.out.println("Focusing: " + entity.getTagOrId());
+		}), (entity -> {
+			System.out.println("Blur: " + entity.getTagOrId());
+		})));
 	}
 
 	@Override

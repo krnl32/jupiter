@@ -4,6 +4,8 @@ import com.krnl32.jupiter.components.DestroyComponent;
 import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.ecs.Registry;
 import com.krnl32.jupiter.ecs.System;
+import com.krnl32.jupiter.event.EventBus;
+import com.krnl32.jupiter.events.entity.EntityDestroyedEvent;
 import com.krnl32.jupiter.renderer.Renderer;
 
 public class DestroySystem implements System {
@@ -16,6 +18,7 @@ public class DestroySystem implements System {
 	@Override
 	public void onUpdate(float dt) {
 		for (Entity entity: registry.getEntitiesWith(DestroyComponent.class)) {
+			EventBus.getInstance().emit(new EntityDestroyedEvent(entity));
 			//Logger.info("Destroying Entity({})", entity.getTagOrId());
 			entity.destroy();
 		}
@@ -23,6 +26,5 @@ public class DestroySystem implements System {
 
 	@Override
 	public void onRender(float dt, Renderer renderer) {
-
 	}
 }
