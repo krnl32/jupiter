@@ -128,7 +128,7 @@ public class TestScene extends Scene {
 		Entity button = createEntity();
 		button.addComponent(new UITransformComponent(new Vector3f(100.0f, 1000.0f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(222.0f, 39.0f, 1.0f)));
 		button.addComponent(new UIRenderComponent(-1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), buttonBlueID));
-		button.addComponent(new UIButtonComponent(() -> {
+		button.addComponent(new UIButtonComponent((entity) -> {
 			Entity spaceshipBlueEntity = createEntity();
 			spaceshipBlueEntity.addComponent(new UUIDComponent());
 			spaceshipBlueEntity.addComponent(new TagComponent("SpaceshipBlue"));

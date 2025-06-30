@@ -1,6 +1,7 @@
 package com.krnl32.jupiter.systems.ui;
 
 import com.krnl32.jupiter.components.ui.UIButtonComponent;
+import com.krnl32.jupiter.components.ui.UIRenderComponent;
 import com.krnl32.jupiter.components.ui.UITransformComponent;
 import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.ecs.Registry;
@@ -42,7 +43,7 @@ public class UIButtonSystem implements System {
 			if (buttonComponent.isPressed && Input.getInstance().isMouseButtonReleased(MouseCode.BUTTON_LEFT)) {
 				buttonComponent.isPressed = false;
 				if (inside && buttonComponent.onClick != null) {
-					buttonComponent.onClick.run();
+					buttonComponent.onClick.accept(entity);
 				}
 			}
 		}
@@ -50,6 +51,20 @@ public class UIButtonSystem implements System {
 
 	@Override
 	public void onRender(float dt, Renderer renderer) {
+		for (Entity entity : registry.getEntitiesWith(UIButtonComponent.class, UIRenderComponent.class)) {
+			UIButtonComponent buttonComponent = entity.getComponent(UIButtonComponent.class);
+			UIRenderComponent renderComponent = entity.getComponent(UIRenderComponent.class);
+
+			if (buttonComponent.isPressed) {
+				renderComponent.color.set(0.122f, 0.380f, 0.553f, 1.0f);
+			}
+			else if (buttonComponent.isHovered) {
+				renderComponent.color.set(0.161f, 0.502f, 0.725f, 1.0f);
+			}
+			else {
+				renderComponent.color.set(1.0f, 1.0f, 1.0f, 1.0f);
+			}
+		}
 	}
 
 	private boolean isMouseInside(Vector2f mousePosition, UITransformComponent transformComponent) {

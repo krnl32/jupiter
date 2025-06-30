@@ -51,7 +51,7 @@ public class Spaceshooter extends Engine {
 		world.addScene("level1", new GamePlayScene(level1AssetID));
 		world.addScene("test", new TestScene(getWindow().getWidth(), getWindow().getHeight()));
 		world.addScene("mainMenu", new MainMenuScene());
-		world.switchScene("test");
+		world.switchScene("mainMenu");
 		return true;
 	}
 

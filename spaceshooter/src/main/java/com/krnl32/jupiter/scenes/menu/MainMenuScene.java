@@ -6,15 +6,14 @@ import com.krnl32.jupiter.asset.TextureAsset;
 import com.krnl32.jupiter.components.CameraComponent;
 import com.krnl32.jupiter.components.TransformComponent;
 import com.krnl32.jupiter.components.UUIDComponent;
-import com.krnl32.jupiter.components.ui.UIButtonComponent;
-import com.krnl32.jupiter.components.ui.UIRenderComponent;
-import com.krnl32.jupiter.components.ui.UITransformComponent;
+import com.krnl32.jupiter.components.ui.*;
 import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.game.Scene;
 import com.krnl32.jupiter.renderer.Camera;
 import com.krnl32.jupiter.systems.*;
 import com.krnl32.jupiter.systems.ui.UIButtonSystem;
+import com.krnl32.jupiter.systems.ui.UIInputSystem;
 import com.krnl32.jupiter.systems.ui.UIRenderSystem;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -44,6 +43,7 @@ public class MainMenuScene extends Scene {
 		addSystem(new DeathEffectSystem(getRegistry()));
 		addSystem(new UIRenderSystem(getRegistry()));
 		addSystem(new UIButtonSystem(getRegistry()));
+		addSystem(new UIInputSystem(getRegistry()));
 	}
 
 	@Override
@@ -58,9 +58,51 @@ public class MainMenuScene extends Scene {
 		Entity button = createEntity();
 		button.addComponent(new UITransformComponent(new Vector3f(500.0f, 700.0f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(222.0f, 39.0f, 1.0f)));
 		button.addComponent(new UIRenderComponent(-1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), buttonBlueID));
-		button.addComponent(new UIButtonComponent(() -> {
-			System.out.println("Clicked");
+		button.addComponent(new UIButtonComponent((entity) -> {
+			System.out.println("Clicked: " + entity.getTagOrId());
 		}));
+
+		Entity box = createEntity();
+		box.addComponent(new UITransformComponent(new Vector3f(100.0f, 100.0f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(100.0f, 100.0f, 1.0f)));
+		box.addComponent(new UIRenderComponent(-1, new Vector4f(1.0f, 0.0f, 1.0f, 1.0f), null));
+		box.addComponent(new UIInputStateComponent());
+		box.addComponent(new UIInputEventComponent(
+			(entity -> {
+				System.out.println("Clicked: " + entity.getTagOrId());
+			}),
+			(entity -> {
+				System.out.println("Hovering Start: " + entity.getTagOrId());
+			}),
+			(entity -> {
+				System.out.println("Hovering End: " + entity.getTagOrId());
+			}),
+			(entity -> {
+				System.out.println("Focusing: " + entity.getTagOrId());
+			}),
+			(entity -> {
+				System.out.println("Blur: " + entity.getTagOrId());
+			})));
+
+		box = createEntity();
+		box.addComponent(new UITransformComponent(new Vector3f(500.0f, 100.0f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(100.0f, 100.0f, 1.0f)));
+		box.addComponent(new UIRenderComponent(-1, new Vector4f(1.0f, 0.0f, 1.0f, 1.0f), null));
+		box.addComponent(new UIInputStateComponent());
+		box.addComponent(new UIInputEventComponent(
+			(entity -> {
+				System.out.println("Clicked2: " + entity.getTagOrId());
+			}),
+			(entity -> {
+				System.out.println("Hovering Start2: " + entity.getTagOrId());
+			}),
+			(entity -> {
+				System.out.println("Hovering End2: " + entity.getTagOrId());
+			}),
+			(entity -> {
+				System.out.println("Focusing2: " + entity.getTagOrId());
+			}),
+			(entity -> {
+				System.out.println("Blur2: " + entity.getTagOrId());
+			})));
 	}
 
 	@Override
