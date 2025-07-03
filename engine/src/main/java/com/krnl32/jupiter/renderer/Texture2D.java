@@ -10,7 +10,6 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
 import static org.lwjgl.opengl.GL13.glActiveTexture;
 import static org.lwjgl.opengl.GL30.glGenerateMipmap;
-import static org.lwjgl.opengl.GL44.glBindTextures;
 import static org.lwjgl.opengl.GL45.*;
 import static org.lwjgl.stb.STBImage.*;
 
@@ -30,6 +29,9 @@ public class Texture2D {
 		} else if (channels == 3) {
 			internalFormat = GL_RGB8;
 			format = GL_RGB;
+		} else if (channels == 1) {
+			internalFormat = GL_R8;
+			format = GL_RED;
 		} else {
 			Logger.error("Texture2D Invalid Channels({})", channels);
 			return;
@@ -37,10 +39,10 @@ public class Texture2D {
 
 		textureID = glCreateTextures(GL_TEXTURE_2D);
 		glTextureStorage2D(textureID, 1, internalFormat, width, height);
-		glTextureParameteri(textureID, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTextureParameteri(textureID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTextureParameteri(textureID, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTextureParameteri(textureID, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTextureParameteri(textureID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTextureParameteri(textureID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTextureParameteri(textureID, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTextureParameteri(textureID, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	}
 
 	public Texture2D(String filepath) {
@@ -73,6 +75,10 @@ public class Texture2D {
 
 	public void unbind() {
 		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+
+	public void setBuffer(ByteBuffer data) {
+		glTextureSubImage2D(textureID, 0, 0, 0, width, height, format, GL_UNSIGNED_BYTE, data);
 	}
 
 	public void setBuffer(int[] data) {

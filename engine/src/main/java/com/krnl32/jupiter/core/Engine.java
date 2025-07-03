@@ -6,10 +6,7 @@ import com.krnl32.jupiter.asset.ShaderAsset;
 import com.krnl32.jupiter.event.EventBus;
 import com.krnl32.jupiter.events.window.WindowCloseEvent;
 import com.krnl32.jupiter.input.Input;
-import com.krnl32.jupiter.renderer.Renderer;
-import com.krnl32.jupiter.renderer.Shader;
-import com.krnl32.jupiter.renderer.UIRenderPass;
-import com.krnl32.jupiter.renderer.WorldRenderPass;
+import com.krnl32.jupiter.renderer.*;
 import com.krnl32.jupiter.utility.Timer;
 import org.joml.Matrix4f;
 
@@ -73,6 +70,10 @@ public abstract class Engine {
 	}
 
 	private void initRenderPass(Renderer renderer) {
+		int[] shaderSamplers = new int[32];
+		for (int i = 0; i < 32; i++)
+			shaderSamplers[i] = i;
+
 		// Setup World Shader & WorldRenderPass
 		AssetID worldShaderID = AssetManager.getInstance().registerAndLoad("shaders/world", () -> new ShaderAsset("shaders/world_vertex.glsl", "shaders/world_fragment.glsl"));
 		if (worldShaderID == null)
@@ -85,11 +86,7 @@ public abstract class Engine {
 		Shader worldShader = worldShaderAsset.getShader();
 		worldShader.bind();
 		worldShader.setMat4("u_Model", new Matrix4f().identity());
-
-		int[] worldShaderSamplers = new int[32];
-		for (int i = 0; i < 32; i++)
-			worldShaderSamplers[i] = i;
-		worldShader.setIntArray("u_Textures", worldShaderSamplers);
+		worldShader.setIntArray("u_Textures", shaderSamplers);
 		worldShader.unbind();
 
 		renderer.addRenderPass(new WorldRenderPass(worldShader));
@@ -106,13 +103,26 @@ public abstract class Engine {
 		Shader uiShader = uiShaderAsset.getShader();
 		uiShader.bind();
 		uiShader.setMat4("u_Model", new Matrix4f().identity());
-
-		int[] uiShaderSamplers = new int[32];
-		for (int i = 0; i < 32; i++)
-			uiShaderSamplers[i] = i;
-		uiShader.setIntArray("u_Textures", uiShaderSamplers);
+		uiShader.setIntArray("u_Textures", shaderSamplers);
 		uiShader.unbind();
 
 		renderer.addRenderPass(new UIRenderPass(uiShader, getWindow().getWidth(), getWindow().getHeight()));
+
+		// Setup Text Shader & TextRenderPass
+		AssetID textShaderID = AssetManager.getInstance().registerAndLoad("shaders/text", () -> new ShaderAsset("shaders/text_vertex.glsl", "shaders/text_fragment.glsl"));
+		if (textShaderID == null)
+			Logger.critical("Engine Failed to Load UI Shader Asset({})", "shaders/text");
+
+		ShaderAsset textShaderAsset = AssetManager.getInstance().getAsset(textShaderID);
+		if (textShaderAsset == null || !textShaderAsset.isLoaded())
+			Logger.critical("Engine Text Shader Null or Not LOADED");
+
+		Shader textShader = textShaderAsset.getShader();
+		textShader.bind();
+		textShader.setMat4("u_Model", new Matrix4f().identity());
+		textShader.setIntArray("u_Textures", shaderSamplers);
+		textShader.unbind();
+
+		renderer.addRenderPass(new TextRenderPass(textShader, getWindow().getWidth(), getWindow().getHeight()));
 	}
 }

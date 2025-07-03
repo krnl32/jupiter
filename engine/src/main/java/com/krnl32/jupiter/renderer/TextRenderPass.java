@@ -7,15 +7,15 @@ import org.joml.Matrix4f;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UIRenderPass implements RenderPass {
-	private final List<RenderUICommand> renderUICommands;
-	private final UIRenderBatch uiRenderBatch;
+public class TextRenderPass implements RenderPass {
+	private final List<RenderTextCommand> renderTextCommands;
+	private final TextRenderBatch textRenderBatch;
 	private final Shader shader;
 	private final Matrix4f projectionMatrix;
 
-	public UIRenderPass(Shader shader, int screenWidth, int screenHeight) {
-		this.renderUICommands = new ArrayList<>();
-		this.uiRenderBatch = new UIRenderBatch();
+	public TextRenderPass(Shader shader, int screenWidth, int screenHeight) {
+		this.renderTextCommands = new ArrayList<>();
+		this.textRenderBatch = new TextRenderBatch();
 		this.shader = shader;
 		this.projectionMatrix = new Matrix4f().ortho(0.0f, screenWidth, screenHeight, 0.0f, 0.1f, 100.0f);
 
@@ -26,8 +26,8 @@ public class UIRenderPass implements RenderPass {
 
 	@Override
 	public void beginFrame(Camera camera) {
-		renderUICommands.clear();
-		uiRenderBatch.begin();
+		renderTextCommands.clear();
+		textRenderBatch.begin();
 
 		shader.bind();
 		if (camera != null) {
@@ -39,25 +39,25 @@ public class UIRenderPass implements RenderPass {
 
 	@Override
 	public void endFrame() {
-		renderUICommands.sort((a, b) -> {
+		renderTextCommands.sort((a, b) -> {
 			int aZ = a.getRenderPacket().getIndex();
 			int bZ = b.getRenderPacket().getIndex();
 			return Integer.compare(aZ, bZ);
 		});
 
-		for (RenderUICommand cmd : renderUICommands) {
-			uiRenderBatch.addQuad(cmd.getTransform(), cmd.getRenderPacket(), cmd.getTextureUV());
+		for (RenderTextCommand cmd : renderTextCommands) {
+			textRenderBatch.addQuad(cmd.getTransform(), cmd.getRenderPacket(), cmd.getTextureUV());
 		}
 
 		shader.bind();
-		uiRenderBatch.end();
+		textRenderBatch.end();
 		shader.unbind();
 	}
 
 	@Override
 	public void submit(RenderCommand cmd) {
-		if (cmd instanceof RenderUICommand uiCommand) {
-			renderUICommands.add(uiCommand);
+		if (cmd instanceof RenderTextCommand textCommand) {
+			renderTextCommands.add(textCommand);
 		}
 	}
 }

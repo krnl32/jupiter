@@ -1,6 +1,6 @@
 {"entities": [
     {"components": {
-        "UUIDComponent": {"uuid": "073bf761-21d1-41a5-baee-f0a2eaed4872"},
+        "UUIDComponent": {"uuid": "facf6afa-c4a2-4fbd-bd44-ef974a6880e0"},
         "CameraComponent": {
             "rollSpeed": 45,
             "worldUp": {
@@ -68,18 +68,6 @@
             "textureAssetID": "textures/players/spaceship_red.png"
         },
         "TeamComponent": {"teamID": 1},
-        "KeyboardControlComponent": {
-            "upKey": 87,
-            "moveSpeed": 10,
-            "downKey": 83,
-            "leftKey": 65,
-            "rightKey": 68,
-            "rotationSpeed": 10,
-            "backwardKey": 0,
-            "rotateRightKey": 69,
-            "rotateLeftKey": 81,
-            "forwardKey": 0
-        },
         "RigidBodyComponent": {
             "velocity": {
                 "x": 0,
@@ -96,7 +84,18 @@
             "currentHealth": 100,
             "maxHealth": 100
         },
-        "UUIDComponent": {"uuid": "1a274cd1-ecbe-4775-8825-1f6a764ff4c5"},
+        "KeyboardControlComponent": {
+            "upKey": 87,
+            "moveSpeed": 10,
+            "downKey": 83,
+            "leftKey": 65,
+            "rightKey": 68,
+            "rotationSpeed": 10,
+            "backwardKey": 0,
+            "rotateRightKey": 69,
+            "rotateLeftKey": 81,
+            "forwardKey": 0
+        },
         "DeathEffectComponent": {
             "particleSprite": {
                 "color": {
@@ -110,6 +109,7 @@
             },
             "particleCount": 20
         },
+        "UUIDComponent": {"uuid": "d97a0b59-7e9b-45af-a713-fe210041bd61"},
         "BoxColliderComponent": {
             "size": {
                 "x": 1,
@@ -179,10 +179,6 @@
             "textureAssetID": "spritesheets/spaceship/spaceship.png"
         },
         "TeamComponent": {"teamID": 2},
-        "HealthComponent": {
-            "currentHealth": 100,
-            "maxHealth": 100
-        },
         "RigidBodyComponent": {
             "velocity": {
                 "x": 1,
@@ -195,7 +191,10 @@
                 "z": 0
             }
         },
-        "UUIDComponent": {"uuid": "eaf92929-0da4-48f8-ae2f-5f6b0bfd930b"},
+        "HealthComponent": {
+            "currentHealth": 100,
+            "maxHealth": 100
+        },
         "DeathEffectComponent": {
             "particleSprite": {
                 "color": {
@@ -209,6 +208,7 @@
             },
             "particleCount": 20
         },
+        "UUIDComponent": {"uuid": "3ca21524-338f-4e2a-9597-2fc992f13cd0"},
         "BoxColliderComponent": {
             "size": {
                 "x": 1,
@@ -240,5 +240,6 @@
         },
         "TagComponent": {"tag": "SpaceshipBlue"}
     }},
+    {"components": {}},
     {"components": {}}
 ]}
