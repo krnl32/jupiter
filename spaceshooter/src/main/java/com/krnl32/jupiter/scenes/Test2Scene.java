@@ -17,6 +17,7 @@ import com.krnl32.jupiter.systems.*;
 import com.krnl32.jupiter.systems.ui.UIButtonSystem;
 import com.krnl32.jupiter.systems.ui.UIRenderSystem;
 import com.krnl32.jupiter.systems.ui.UITextRenderSystem;
+import com.krnl32.jupiter.ui.UIHierarchyManager;
 import com.krnl32.jupiter.ui.text.TextAlign;
 import com.krnl32.jupiter.utility.FileIO;
 import org.joml.Vector3f;
@@ -133,8 +134,12 @@ public class Test2Scene extends Scene {
 		spaceshipBlueEntity.addComponent(new TeamComponent(2));
 		spaceshipBlueEntity.addComponent(new DeathEffectComponent(20, new Sprite(0, new Vector4f(1.0f, 0.45f, 0.0f, 0.95f), starParticleID)));
 
+		Entity uiRoot = createEntity();
+		uiRoot.addComponent(new UITransformComponent(new Vector3f(100.0f, 800.0f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(500.0f, 200.0f, 1.0f)));
+		uiRoot.addComponent(new UIRenderComponent(-1, new Vector4f(0.0f, 0.0f, 0.0f, 1.0f), null));
+
 		Entity button = createEntity();
-		button.addComponent(new UITransformComponent(new Vector3f(100.0f, 1000.0f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(222.0f, 39.0f, 1.0f)));
+		button.addComponent(new UITransformComponent(new Vector3f(0.0f, 150.0f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(222.0f, 39.0f, 1.0f)));
 		button.addComponent(new UIRenderComponent(-1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), buttonBlueID));
 		button.addComponent(new UIButtonComponent((entity) -> {
 			Entity spaceshipBlueEntity = createEntity();
@@ -150,11 +155,12 @@ public class Test2Scene extends Scene {
 			spaceshipBlueEntity.addComponent(new ProjectileEmitterComponent(null, 15.55f, 10.0f, new Sprite(1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), laserBlueID)));
 		}));
 		button.addComponent(new UITextComponent("Spawn Enemy", new Vector4f(0.705f, 0.118f, 0.118f, 1.0f), arialFontID, TextAlign.CENTER));
+		UIHierarchyManager.attach(uiRoot, button);
 
 		Entity label = createEntity();
-		label.addComponent(new UITransformComponent(new Vector3f(500.0f, 500.0f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(5, 5, 1.0f)));
+		label.addComponent(new UITransformComponent(new Vector3f(100.0f, 100.0f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(1.0f, 1.0f, 1.0f)));
 		label.addComponent(new UITextComponent("Hello", new Vector4f(1.0f, 0.0f, 1.0f, 1.0f), arialFontID));
-
+		UIHierarchyManager.attach(uiRoot, label);
 
 		SceneSerializer sceneSerializer = new SceneSerializer();
 		try {
