@@ -1,6 +1,6 @@
 {"entities": [
     {"components": {
-        "UUIDComponent": {"uuid": "59388ff9-65b1-4163-b1fd-73cb990ac0b1"},
+        "UUIDComponent": {"uuid": "06439615-5758-4a5c-b15c-57c47cea916e"},
         "CameraComponent": {
             "rollSpeed": 45,
             "worldUp": {
@@ -96,7 +96,7 @@
             "rotateLeftKey": 81,
             "forwardKey": 0
         },
-        "UUIDComponent": {"uuid": "78623ae5-9099-4f8c-8c6f-2ca5607bbd93"},
+        "UUIDComponent": {"uuid": "db62bea8-b9b6-4aef-b500-6079f2cdd712"},
         "DeathEffectComponent": {
             "particleSprite": {
                 "color": {
@@ -195,7 +195,7 @@
                 "z": 0
             }
         },
-        "UUIDComponent": {"uuid": "d4255034-a0ba-43e5-9585-36736443e7b3"},
+        "UUIDComponent": {"uuid": "59966f00-4f01-4048-9d76-2729356c28a1"},
         "DeathEffectComponent": {
             "particleSprite": {
                 "color": {

@@ -29,7 +29,7 @@ public class UIRenderSystem implements System {
 
 	@Override
 	public void onRender(float dt, Renderer renderer) {
-		for (Entity entity : registry.getEntitiesWith(UITransformComponent.class, UIRenderComponent.class)) {
+		for (Entity entity : registry.getEntitiesWith(UITransformComponent.class)) {
 			UIHierarchyComponent uiHierarchy = entity.getComponent(UIHierarchyComponent.class);
 			if (uiHierarchy == null || uiHierarchy.parent == null) {
 				renderHierarchy(renderer, entity, new Matrix4f());
@@ -41,23 +41,30 @@ public class UIRenderSystem implements System {
 		UITransformComponent transformComponent = entity.getComponent(UITransformComponent.class);
 		UIRenderComponent renderComponent = entity.getComponent(UIRenderComponent.class);
 
-		// Remove scale from parent transform
-		Vector3f parentScale = new Vector3f();
-		parentTransform.getScale(parentScale);
-		Matrix4f parentTransformNoScale = new Matrix4f(parentTransform).scale(1.0f / parentScale.x, 1.0f / parentScale.y, 1.0f / parentScale.z);
-
-		Matrix4f localTransform = new Matrix4f().translate(transformComponent.translation).rotateXYZ(transformComponent.rotation).scale(transformComponent.scale);
-		Matrix4f worldTransform = new Matrix4f(parentTransformNoScale).mul(localTransform);
-
-		Texture2D texture = null;
-		if (renderComponent.textureAssetID != null) {
-			TextureAsset textureAsset = AssetManager.getInstance().getAsset(renderComponent.textureAssetID);
-			if (textureAsset == null || !textureAsset.isLoaded())
-				Logger.error("UIRenderSystem Failed to get Texture Asset({})\n", renderComponent.textureAssetID);
-			texture = (textureAsset != null && textureAsset.isLoaded()) ? textureAsset.getTexture() : null;
+		Matrix4f worldTransform;
+		if(renderComponent != null) {
+			// Remove scale from parent transform
+			Vector3f parentScale = new Vector3f();
+			parentTransform.getScale(parentScale);
+			Matrix4f parentTransformNoScale = new Matrix4f(parentTransform).scale(1.0f / parentScale.x, 1.0f / parentScale.y, 1.0f / parentScale.z);
+			Matrix4f localTransform = new Matrix4f().translate(transformComponent.translation).rotateXYZ(transformComponent.rotation).scale(transformComponent.scale);
+			worldTransform = new Matrix4f(parentTransformNoScale).mul(localTransform);
+		} else {
+			Matrix4f localTransform = new Matrix4f().translate(transformComponent.translation).rotateXYZ(transformComponent.rotation).scale(transformComponent.scale);
+			worldTransform = new Matrix4f(parentTransform).mul(localTransform);
 		}
 
-		renderer.submit(new RenderUICommand(new RenderPacket(renderComponent.index, renderComponent.color, texture), worldTransform, renderComponent.textureUV));
+		if (renderComponent != null) {
+			Texture2D texture = null;
+			if (renderComponent.textureAssetID != null) {
+				TextureAsset textureAsset = AssetManager.getInstance().getAsset(renderComponent.textureAssetID);
+				if (textureAsset == null || !textureAsset.isLoaded())
+					Logger.error("UIRenderSystem Failed to get Texture Asset({})\n", renderComponent.textureAssetID);
+				texture = (textureAsset != null && textureAsset.isLoaded()) ? textureAsset.getTexture() : null;
+			}
+
+			renderer.submit(new RenderUICommand(new RenderPacket(renderComponent.index, renderComponent.color, texture), worldTransform, renderComponent.textureUV));
+		}
 
 		UIHierarchyComponent childHierarchy = entity.getComponent(UIHierarchyComponent.class);
 		if (childHierarchy != null) {

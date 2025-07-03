@@ -42,13 +42,18 @@ public class UITextRenderSystem implements System {
 		UITransformComponent transform = entity.getComponent(UITransformComponent.class);
 		UITextComponent text = entity.getComponent(UITextComponent.class);
 
-		// Remove scale from parent transform
-		Vector3f parentScale = new Vector3f();
-		parentTransform.getScale(parentScale);
-		Matrix4f parentTransformNoScale = new Matrix4f(parentTransform).scale(1.0f / parentScale.x, 1.0f / parentScale.y, 1.0f / parentScale.z);
-
-		Matrix4f localTransform = new Matrix4f().translate(transform.translation).rotateXYZ(transform.rotation);
-		Matrix4f worldTransform = new Matrix4f(parentTransformNoScale).mul(localTransform);
+		Matrix4f worldTransform;
+		if (text != null) {
+			// Remove scale from parent transform
+			Vector3f parentScale = new Vector3f();
+			parentTransform.getScale(parentScale);
+			Matrix4f parentTransformNoScale = new Matrix4f(parentTransform).scale(1.0f / parentScale.x, 1.0f / parentScale.y, 1.0f / parentScale.z);
+			Matrix4f localTransform = new Matrix4f().translate(transform.translation).rotateXYZ(transform.rotation);
+			worldTransform = new Matrix4f(parentTransformNoScale).mul(localTransform);
+		} else {
+			Matrix4f localTransform = new Matrix4f().translate(transform.translation).rotateXYZ(transform.rotation).scale(transform.scale);
+			worldTransform = new Matrix4f(parentTransform).mul(localTransform);
+		}
 
 		if (text != null) {
 			FontAsset fontAsset = AssetManager.getInstance().getAsset(text.fontAssetID);

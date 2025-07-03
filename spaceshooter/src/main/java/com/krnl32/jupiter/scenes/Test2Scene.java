@@ -136,7 +136,7 @@ public class Test2Scene extends Scene {
 
 		Entity uiRoot = createEntity();
 		uiRoot.addComponent(new UITransformComponent(new Vector3f(100.0f, 800.0f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(500.0f, 200.0f, 1.0f)));
-		uiRoot.addComponent(new UIRenderComponent(-1, new Vector4f(0.0f, 0.0f, 0.0f, 1.0f), null));
+		//uiRoot.addComponent(new UIRenderComponent(-1, new Vector4f(0.0f, 0.0f, 0.0f, 1.0f), null));
 
 		Entity button = createEntity();
 		button.addComponent(new UITransformComponent(new Vector3f(0.0f, 150.0f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(222.0f, 39.0f, 1.0f)));
