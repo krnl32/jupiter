@@ -1,6 +1,6 @@
 package com.krnl32.jupiter.ui.text;
 
-public enum TextAlign {
+public enum TextHorizontalAlign {
 	LEFT,
 	CENTER,
 	RIGHT,

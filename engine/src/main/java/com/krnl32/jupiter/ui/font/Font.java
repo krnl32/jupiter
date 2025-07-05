@@ -30,4 +30,29 @@ public class Font {
 	public int getSize() {
 		return size;
 	}
+
+	public float getLineHeight() {
+		float height = 0.0f;
+		for (char c = 32; c < 127; c++) {
+			Glyph glyph = glyphs.get(c);
+			if (glyph != null) {
+				float glyphHeight = glyph.y1 - glyph.y0;
+				if (glyphHeight > height) {
+					height = glyphHeight;
+				}
+			}
+		}
+		return height;
+	}
+
+	public float getTextWidth(String text) {
+		float width = 0.0f;
+		for (char c : text.toCharArray()) {
+			Glyph glyph = glyphs.get(c);
+			if (glyph != null) {
+				width += glyph.xAdvance;
+			}
+		}
+		return width;
+	}
 }
