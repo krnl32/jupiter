@@ -16,7 +16,7 @@ public class UITransformComponent implements Component {
 		this.rotation = rotation;
 		this.scale = scale;
 		this.anchor = new Vector2f(0.0f, 0.0f);
-		this.pivot = new Vector2f(0.5f, 0.5f);
+		this.pivot = new Vector2f(0.0f, 0.0f);
 	}
 
 	public UITransformComponent(Vector3f translation, Vector3f rotation, Vector3f scale, Vector2f anchor, Vector2f pivot) {
