@@ -1,6 +1,6 @@
 {"entities": [
     {"components": {
-        "UUIDComponent": {"uuid": "4ee7522f-0501-4fe1-922e-f6fdabb520cf"},
+        "UUIDComponent": {"uuid": "452278f9-0309-4033-aaa4-4568d7fc51d4"},
         "CameraComponent": {
             "rollSpeed": 45,
             "worldUp": {
@@ -68,18 +68,6 @@
             "textureAssetID": "textures/players/spaceship_red.png"
         },
         "TeamComponent": {"teamID": 1},
-        "RigidBodyComponent": {
-            "velocity": {
-                "x": 0,
-                "y": 0,
-                "z": 0
-            },
-            "angularVelocity": {
-                "x": 0,
-                "y": 0,
-                "z": 0
-            }
-        },
         "KeyboardControlComponent": {
             "upKey": 87,
             "moveSpeed": 10,
@@ -92,10 +80,23 @@
             "rotateLeftKey": 81,
             "forwardKey": 0
         },
+        "RigidBodyComponent": {
+            "velocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "angularVelocity": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            }
+        },
         "HealthComponent": {
             "currentHealth": 100,
             "maxHealth": 100
         },
+        "UUIDComponent": {"uuid": "5942cedb-c69e-491f-be30-411a6aafcf69"},
         "DeathEffectComponent": {
             "particleSprite": {
                 "color": {
@@ -109,7 +110,6 @@
             },
             "particleCount": 20
         },
-        "UUIDComponent": {"uuid": "75fdf4e6-e10f-4338-a773-785c1d256876"},
         "BoxColliderComponent": {
             "size": {
                 "x": 1,
@@ -195,7 +195,6 @@
             "currentHealth": 100,
             "maxHealth": 100
         },
-        "UUIDComponent": {"uuid": "66b14777-1639-4bf4-ab70-4bbb3fe41e95"},
         "DeathEffectComponent": {
             "particleSprite": {
                 "color": {
@@ -209,6 +208,7 @@
             },
             "particleCount": 20
         },
+        "UUIDComponent": {"uuid": "8e79d4f2-93f8-478b-8580-4e17fbf38283"},
         "BoxColliderComponent": {
             "size": {
                 "x": 1,

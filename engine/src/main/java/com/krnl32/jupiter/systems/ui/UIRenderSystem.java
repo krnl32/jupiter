@@ -2,6 +2,7 @@ package com.krnl32.jupiter.systems.ui;
 
 import com.krnl32.jupiter.asset.AssetManager;
 import com.krnl32.jupiter.asset.TextureAsset;
+import com.krnl32.jupiter.components.ui.UIClipComponent;
 import com.krnl32.jupiter.components.ui.UIHierarchyComponent;
 import com.krnl32.jupiter.components.ui.UIRenderComponent;
 import com.krnl32.jupiter.components.ui.UITransformComponent;
@@ -9,10 +10,7 @@ import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.ecs.Registry;
 import com.krnl32.jupiter.ecs.System;
-import com.krnl32.jupiter.renderer.RenderPacket;
-import com.krnl32.jupiter.renderer.RenderUICommand;
-import com.krnl32.jupiter.renderer.Renderer;
-import com.krnl32.jupiter.renderer.Texture2D;
+import com.krnl32.jupiter.renderer.*;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
@@ -32,12 +30,12 @@ public class UIRenderSystem implements System {
 		for (Entity entity : registry.getEntitiesWith(UITransformComponent.class)) {
 			UIHierarchyComponent uiHierarchy = entity.getComponent(UIHierarchyComponent.class);
 			if (uiHierarchy == null || uiHierarchy.parent == null) {
-				renderHierarchy(renderer, entity, new Matrix4f());
+				renderHierarchy(renderer, entity, new Matrix4f(), null);
 			}
 		}
 	}
 
-	private void renderHierarchy(Renderer renderer, Entity entity, Matrix4f parentTransform) {
+	private void renderHierarchy(Renderer renderer, Entity entity, Matrix4f parentTransform, ClipRect parentClipRect) {
 		UITransformComponent transformComponent = entity.getComponent(UITransformComponent.class);
 		UIRenderComponent renderComponent = entity.getComponent(UIRenderComponent.class);
 
@@ -54,6 +52,16 @@ public class UIRenderSystem implements System {
 			worldTransform = new Matrix4f(parentTransform).mul(localTransform);
 		}
 
+		// Handle Clipping
+		ClipRect localClipRect = parentClipRect;
+		UIClipComponent clip = entity.getComponent(UIClipComponent.class);
+		if (clip != null) {
+			localClipRect = new ClipRect(clip.x, clip.y, clip.width, clip.height);
+			if (parentClipRect != null) {
+				localClipRect = localClipRect.intersect(parentClipRect);
+			}
+		}
+
 		if (renderComponent != null) {
 			Texture2D texture = null;
 			if (renderComponent.textureAssetID != null) {
@@ -63,14 +71,14 @@ public class UIRenderSystem implements System {
 				texture = (textureAsset != null && textureAsset.isLoaded()) ? textureAsset.getTexture() : null;
 			}
 
-			renderer.submit(new RenderUICommand(new RenderPacket(renderComponent.index, renderComponent.color, texture), worldTransform, renderComponent.textureUV));
+			renderer.submit(new RenderUICommand(new RenderPacket(renderComponent.index, renderComponent.color, texture), worldTransform, renderComponent.textureUV, localClipRect));
 		}
 
 		UIHierarchyComponent childHierarchy = entity.getComponent(UIHierarchyComponent.class);
 		if (childHierarchy != null) {
 			for (Entity child : childHierarchy.children) {
 				if (child.hasComponent(UITransformComponent.class) && child.hasComponent(UIRenderComponent.class)) {
-					renderHierarchy(renderer, child, worldTransform);
+					renderHierarchy(renderer, child, worldTransform, localClipRect);
 				}
 			}
 		}

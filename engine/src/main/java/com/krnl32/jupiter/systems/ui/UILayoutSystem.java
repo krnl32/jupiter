@@ -1,9 +1,6 @@
 package com.krnl32.jupiter.systems.ui;
 
-import com.krnl32.jupiter.components.ui.UIHierarchyComponent;
-import com.krnl32.jupiter.components.ui.UILayoutComponent;
-import com.krnl32.jupiter.components.ui.UIScrollComponent;
-import com.krnl32.jupiter.components.ui.UITransformComponent;
+import com.krnl32.jupiter.components.ui.*;
 import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.ecs.Registry;
 import com.krnl32.jupiter.ecs.System;
@@ -26,6 +23,18 @@ public class UILayoutSystem implements System {
 
 			float containerWidth = transform.scale.x - (layout.paddingLeft + layout.paddingRight);
 			float containerHeight  = transform.scale.y - (layout.paddingTop + layout.paddingBottom);
+
+			if (layout.overflow == LayoutOverflow.SCROLL) {
+				UIClipComponent clip = entity.getComponent(UIClipComponent.class);
+				if (clip == null) {
+					clip = new UIClipComponent(0, 0, 0, 0);
+					entity.addComponent(clip);
+				}
+				clip.x = (int)(transform.translation.x + layout.paddingLeft);
+				clip.y = (int)(transform.translation.y + layout.paddingTop);
+				clip.width = (int)containerWidth;
+				clip.height = (int)containerHeight;
+			}
 
 			switch (layout.type) {
 				case HORIZONTAL -> layoutHorizontal(entity, layout, hierarchy, containerWidth, containerHeight);

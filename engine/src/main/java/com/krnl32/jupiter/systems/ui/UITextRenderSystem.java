@@ -2,6 +2,7 @@ package com.krnl32.jupiter.systems.ui;
 
 import com.krnl32.jupiter.asset.AssetManager;
 import com.krnl32.jupiter.asset.FontAsset;
+import com.krnl32.jupiter.components.ui.UIClipComponent;
 import com.krnl32.jupiter.components.ui.UIHierarchyComponent;
 import com.krnl32.jupiter.components.ui.UITextComponent;
 import com.krnl32.jupiter.components.ui.UITransformComponent;
@@ -9,6 +10,7 @@ import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.ecs.Registry;
 import com.krnl32.jupiter.ecs.System;
+import com.krnl32.jupiter.renderer.ClipRect;
 import com.krnl32.jupiter.renderer.RenderPacket;
 import com.krnl32.jupiter.renderer.RenderTextCommand;
 import com.krnl32.jupiter.renderer.Renderer;
@@ -36,14 +38,24 @@ public class UITextRenderSystem implements System {
 		for (Entity entity : registry.getEntitiesWith(UITransformComponent.class)) {
 			UIHierarchyComponent uiHierarchy = entity.getComponent(UIHierarchyComponent.class);
 			if (uiHierarchy == null || uiHierarchy.parent == null) {
-				renderHierarchy(renderer, entity, new Matrix4f());
+				renderHierarchy(renderer, entity, new Matrix4f(), null);
 			}
 		}
 	}
 
-	private void renderHierarchy(Renderer renderer, Entity entity, Matrix4f parentTransform) {
+	private void renderHierarchy(Renderer renderer, Entity entity, Matrix4f parentTransform, ClipRect parentClipRect) {
 		UITransformComponent transform = entity.getComponent(UITransformComponent.class);
 		UITextComponent text = entity.getComponent(UITextComponent.class);
+
+		// Handle Clipping
+		ClipRect localClipRect = parentClipRect;
+		UIClipComponent clip = entity.getComponent(UIClipComponent.class);
+		if (clip != null) {
+			localClipRect = new ClipRect(clip.x, clip.y, clip.width, clip.height);
+			if (parentClipRect != null) {
+				localClipRect = localClipRect.intersect(parentClipRect);
+			}
+		}
 
 		Matrix4f worldTransform;
 
@@ -56,10 +68,10 @@ public class UITextRenderSystem implements System {
 			worldTransform = new Matrix4f(parentTransformNoScale).mul(localTransform);
 
 			switch (text.overflow) {
-				case CLIP -> renderTextClipped(renderer, text, transform, worldTransform);
-				case ELLIPSIS -> renderTextEllipsis(renderer, text, transform, worldTransform);
-				case SCALE -> renderTextScaled(renderer, text, transform, worldTransform);
-				case WRAP -> renderTextWrapped(renderer, text, transform, worldTransform);
+				case CLIP -> renderTextClipped(renderer, text, transform, worldTransform, localClipRect);
+				case ELLIPSIS -> renderTextEllipsis(renderer, text, transform, worldTransform, localClipRect);
+				case SCALE -> renderTextScaled(renderer, text, transform, worldTransform, localClipRect);
+				case WRAP -> renderTextWrapped(renderer, text, transform, worldTransform, localClipRect);
 			}
 		} else {
 			Matrix4f localTransform = new Matrix4f().translate(transform.translation).rotateXYZ(transform.rotation).scale(transform.scale);
@@ -70,13 +82,13 @@ public class UITextRenderSystem implements System {
 		if (uiHierarchy != null) {
 			for (Entity child : uiHierarchy.children) {
 				if (child.hasComponent(UITransformComponent.class)) {
-					renderHierarchy(renderer, child, worldTransform);
+					renderHierarchy(renderer, child, worldTransform, localClipRect);
 				}
 			}
 		}
 	}
 
-	private void renderTextClipped(Renderer renderer, UITextComponent textComponent, UITransformComponent transformComponent, Matrix4f worldTransform) {
+	private void renderTextClipped(Renderer renderer, UITextComponent textComponent, UITransformComponent transformComponent, Matrix4f worldTransform, ClipRect clipRect) {
 		FontAsset fontAsset = AssetManager.getInstance().getAsset(textComponent.fontAssetID);
 		if (fontAsset == null || !fontAsset.isLoaded()) {
 			Logger.error("UITextRenderSystem Failed to get Font Asset({})", textComponent.fontAssetID);
@@ -152,14 +164,15 @@ public class UITextRenderSystem implements System {
 			renderer.submit(new RenderTextCommand(
 				new RenderPacket(-1, textComponent.color, fontAsset.getFont().getAtlas()),
 				glyphTransform,
-				uvs
+				uvs,
+				clipRect
 			));
 
 			drawnWidth += glyph.xAdvance;
 		}
 	}
 
-	private void renderTextEllipsis(Renderer renderer, UITextComponent textComponent, UITransformComponent transformComponent, Matrix4f worldTransform) {
+	private void renderTextEllipsis(Renderer renderer, UITextComponent textComponent, UITransformComponent transformComponent, Matrix4f worldTransform, ClipRect clipRect) {
 		FontAsset fontAsset = AssetManager.getInstance().getAsset(textComponent.fontAssetID);
 		if (fontAsset == null || !fontAsset.isLoaded()) {
 			Logger.error("UITextRenderSystem Failed to get Font Asset({})", textComponent.fontAssetID);
@@ -237,7 +250,8 @@ public class UITextRenderSystem implements System {
 			renderer.submit(new RenderTextCommand(
 				new RenderPacket(-1, textComponent.color, fontAsset.getFont().getAtlas()),
 				glyphTransform,
-				uvs
+				uvs,
+				clipRect
 			));
 
 			drawnWidth += glyph.xAdvance;
@@ -265,13 +279,14 @@ public class UITextRenderSystem implements System {
 				renderer.submit(new RenderTextCommand(
 					new RenderPacket(-1, textComponent.color, fontAsset.getFont().getAtlas()),
 					glyphTransform,
-					uvs
+					uvs,
+					clipRect
 				));
 			}
 		}
 	}
 
-	private void renderTextScaled(Renderer renderer, UITextComponent textComponent, UITransformComponent transformComponent, Matrix4f worldTransform) {
+	private void renderTextScaled(Renderer renderer, UITextComponent textComponent, UITransformComponent transformComponent, Matrix4f worldTransform, ClipRect clipRect) {
 		FontAsset fontAsset = AssetManager.getInstance().getAsset(textComponent.fontAssetID);
 		if (fontAsset == null || !fontAsset.isLoaded()) {
 			Logger.error("UITextRenderSystem Failed to get Font Asset({})", textComponent.fontAssetID);
@@ -343,14 +358,15 @@ public class UITextRenderSystem implements System {
 			renderer.submit(new RenderTextCommand(
 				new RenderPacket(-1, textComponent.color, fontAsset.getFont().getAtlas()),
 				glyphTransform,
-				uvs
+				uvs,
+				clipRect
 			));
 
 			cursorX += glyph.xAdvance * scale;
 		}
 	}
 
-	private void renderTextWrapped(Renderer renderer, UITextComponent textComponent, UITransformComponent transformComponent, Matrix4f worldTransform) {
+	private void renderTextWrapped(Renderer renderer, UITextComponent textComponent, UITransformComponent transformComponent, Matrix4f worldTransform, ClipRect clipRect) {
 		FontAsset fontAsset = AssetManager.getInstance().getAsset(textComponent.fontAssetID);
 		if (fontAsset == null || !fontAsset.isLoaded()) {
 			Logger.error("UITextRenderSystem Failed to get Font Asset({})", textComponent.fontAssetID);
@@ -461,7 +477,8 @@ public class UITextRenderSystem implements System {
 				renderer.submit(new RenderTextCommand(
 					new RenderPacket(-1, textComponent.color, fontAsset.getFont().getAtlas()),
 					glyphTransform,
-					uvs
+					uvs,
+					clipRect
 				));
 
 				drawnWidth += glyph.xAdvance * scale;
