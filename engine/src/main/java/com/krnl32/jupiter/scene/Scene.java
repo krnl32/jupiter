@@ -1,4 +1,4 @@
-package com.krnl32.jupiter.game;
+package com.krnl32.jupiter.scene;
 
 import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.ecs.Registry;

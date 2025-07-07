@@ -24,10 +24,9 @@ public class UIButtonSystem implements System {
 		Vector2f mousePosition = Input.getInstance().getMouseCursorPosition();
 
 		for (Entity entity : registry.getEntitiesWith(UITransformComponent.class, UIButtonComponent.class)) {
-			UITransformComponent transformComponent = entity.getComponent(UITransformComponent.class);
 			UIButtonComponent buttonComponent = entity.getComponent(UIButtonComponent.class);
 
-			boolean inside = UIUtils.isMouseOver(mousePosition, UIUtils.getWorldPosition(entity), transformComponent.scale);
+			boolean inside = UIUtils.isMouseOver(mousePosition, entity);
 
 			// Handle Hovering
 			if(inside && !buttonComponent.isHovered) {

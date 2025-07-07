@@ -40,4 +40,9 @@ public class UIUtils {
 				mousePosition.y <= translation.y + scale.y
 		);
 	}
+
+	public static boolean isMouseOver(Vector2f mousePosition, Entity entity) {
+		UITransformComponent transform = entity.getComponent(UITransformComponent.class);
+		return transform != null && (UIUtils.isMouseOver(mousePosition, UIUtils.getWorldPosition(entity), transform.scale));
+	}
 }

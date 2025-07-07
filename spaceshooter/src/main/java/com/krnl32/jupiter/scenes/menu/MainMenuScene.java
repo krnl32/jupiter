@@ -9,13 +9,10 @@ import com.krnl32.jupiter.components.UUIDComponent;
 import com.krnl32.jupiter.components.ui.*;
 import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.ecs.Entity;
-import com.krnl32.jupiter.game.Scene;
+import com.krnl32.jupiter.scene.Scene;
 import com.krnl32.jupiter.renderer.Camera;
 import com.krnl32.jupiter.systems.*;
-import com.krnl32.jupiter.systems.ui.UIButtonSystem;
-import com.krnl32.jupiter.systems.ui.UIFocusSystem;
-import com.krnl32.jupiter.systems.ui.UIInputSystem;
-import com.krnl32.jupiter.systems.ui.UIRenderSystem;
+import com.krnl32.jupiter.systems.ui.*;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
@@ -42,10 +39,12 @@ public class MainMenuScene extends Scene {
 		addSystem(new BlinkSystem(getRegistry()));
 		addSystem(new ParticleSystem(getRegistry()));
 		addSystem(new DeathEffectSystem(getRegistry()));
+		addSystem(new UILayoutSystem(getRegistry()));
+		addSystem(new UIInputSystem(getRegistry()));
 		addSystem(new UIRenderSystem(getRegistry()));
 		addSystem(new UIButtonSystem(getRegistry()));
-		addSystem(new UIInputSystem(getRegistry()));
-		addSystem(new UIFocusSystem(getRegistry()));
+		addSystem(new UITextRenderSystem(getRegistry()));
+		addSystem(new UIScrollSystem(getRegistry()));
 	}
 
 	@Override

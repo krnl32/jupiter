@@ -6,8 +6,8 @@ import com.krnl32.jupiter.asset.SceneAsset;
 import com.krnl32.jupiter.components.*;
 import com.krnl32.jupiter.core.Engine;
 import com.krnl32.jupiter.core.Logger;
-import com.krnl32.jupiter.game.World;
 import com.krnl32.jupiter.renderer.Renderer;
+import com.krnl32.jupiter.scene.SceneManager;
 import com.krnl32.jupiter.scenes.GamePlayScene;
 import com.krnl32.jupiter.scenes.Test2Scene;
 import com.krnl32.jupiter.scenes.TestScene;
@@ -17,7 +17,7 @@ import com.krnl32.jupiter.serializer.components.*;
 import org.joml.Vector4f;
 
 public class Spaceshooter extends Engine {
-	private World world;
+	private SceneManager sceneManager;
 
 	public Spaceshooter(String name, int width, int height) {
 		super(name, width, height);
@@ -48,24 +48,24 @@ public class Spaceshooter extends Engine {
 		if (level1AssetID == null)
 			Logger.critical("Game Failed to Register Scene Asset({})", "scenes/level1.json");
 
-		world = new World();
-		world.addScene("level1", new GamePlayScene(level1AssetID));
-		world.addScene("test", new TestScene(getWindow().getWidth(), getWindow().getHeight()));
-		world.addScene("test2", new Test2Scene(getWindow().getWidth(), getWindow().getHeight()));
-		world.addScene("mainMenu", new MainMenuScene());
-		world.switchScene("test2");
+		sceneManager = new SceneManager();
+		sceneManager.addScene("level1", new GamePlayScene(level1AssetID));
+		sceneManager.addScene("test", new TestScene(getWindow().getWidth(), getWindow().getHeight()));
+		sceneManager.addScene("test2", new Test2Scene(getWindow().getWidth(), getWindow().getHeight()));
+		sceneManager.addScene("mainMenu", new MainMenuScene());
+		sceneManager.switchScene("mainMenu");
 		return true;
 	}
 
 	@Override
 	public void onUpdate(float dt) {
-		world.onUpdate(dt);
+		sceneManager.onUpdate(dt);
 	}
 
 	@Override
 	public void onRender(float dt, Renderer renderer) {
 		renderer.setClearColor(new Vector4f(0.07f, 0.13f, 0.17f, 1.0f));
 		renderer.clear();
-		world.onRender(dt, renderer);
+		sceneManager.onRender(dt, renderer);
 	}
 }

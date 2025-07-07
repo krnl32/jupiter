@@ -10,7 +10,7 @@ import com.krnl32.jupiter.components.ui.UIRenderComponent;
 import com.krnl32.jupiter.components.ui.UITransformComponent;
 import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.ecs.Entity;
-import com.krnl32.jupiter.game.Scene;
+import com.krnl32.jupiter.scene.Scene;
 import com.krnl32.jupiter.input.KeyCode;
 import com.krnl32.jupiter.model.Sprite;
 import com.krnl32.jupiter.renderer.Camera;

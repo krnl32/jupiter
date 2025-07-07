@@ -1,4 +1,4 @@
-package com.krnl32.jupiter.game;
+package com.krnl32.jupiter.scene;
 
 import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.renderer.Renderer;
@@ -6,7 +6,7 @@ import com.krnl32.jupiter.renderer.Renderer;
 import java.util.HashMap;
 import java.util.Map;
 
-public class World {
+public class SceneManager {
 	private final Map<String, Scene> scenes = new HashMap<>();
 	private Scene currentScene;
 

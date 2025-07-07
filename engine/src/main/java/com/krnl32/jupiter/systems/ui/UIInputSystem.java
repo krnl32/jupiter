@@ -46,9 +46,8 @@ public class UIInputSystem implements System {
 		for (Entity entity : registry.getEntitiesWith(UIInputStateComponent.class, UIInputEventComponent.class, UITransformComponent.class)) {
 			UIInputStateComponent inputState = entity.getComponent(UIInputStateComponent.class);
 			UIInputEventComponent inputEvent = entity.getComponent(UIInputEventComponent.class);
-			UITransformComponent transformComponent = entity.getComponent(UITransformComponent.class);
 
-			boolean inside = UIUtils.isMouseOver(mousePosition, UIUtils.getWorldPosition(entity), transformComponent.scale);
+			boolean inside = UIUtils.isMouseOver(mousePosition, entity);
 			if (inside) {
 				mouseInUI = true;
 			}

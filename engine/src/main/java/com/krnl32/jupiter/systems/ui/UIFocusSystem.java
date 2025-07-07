@@ -43,9 +43,8 @@ public class UIFocusSystem implements System {
 		boolean mouseInUI = false;
 		for (Entity entity : registry.getEntitiesWith(UIFocusComponent.class, UITransformComponent.class)) {
 			UIFocusComponent focus = entity.getComponent(UIFocusComponent.class);
-			UITransformComponent transform = entity.getComponent(UITransformComponent.class);
 
-			boolean inside = UIUtils.isMouseOver(mousePosition, transform);
+			boolean inside = UIUtils.isMouseOver(mousePosition, entity);
 			if (inside) {
 				mouseInUI = true;
 			}

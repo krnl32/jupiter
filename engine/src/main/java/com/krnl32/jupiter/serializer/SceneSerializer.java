@@ -4,7 +4,7 @@ import com.krnl32.jupiter.components.UUIDComponent;
 import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.ecs.Component;
 import com.krnl32.jupiter.ecs.Entity;
-import com.krnl32.jupiter.game.Scene;
+import com.krnl32.jupiter.scene.Scene;
 import com.krnl32.jupiter.serializer.resolvers.EntityResolver;
 import org.json.JSONArray;
 import org.json.JSONObject;
