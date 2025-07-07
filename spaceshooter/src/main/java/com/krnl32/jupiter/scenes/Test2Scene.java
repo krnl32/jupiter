@@ -11,10 +11,7 @@ import com.krnl32.jupiter.model.Sprite;
 import com.krnl32.jupiter.renderer.Camera;
 import com.krnl32.jupiter.serializer.SceneSerializer;
 import com.krnl32.jupiter.systems.*;
-import com.krnl32.jupiter.systems.ui.UIButtonSystem;
-import com.krnl32.jupiter.systems.ui.UILayoutSystem;
-import com.krnl32.jupiter.systems.ui.UIRenderSystem;
-import com.krnl32.jupiter.systems.ui.UITextRenderSystem;
+import com.krnl32.jupiter.systems.ui.*;
 import com.krnl32.jupiter.ui.UIHierarchyManager;
 import com.krnl32.jupiter.ui.layout.LayoutOverflow;
 import com.krnl32.jupiter.ui.layout.LayoutType;
@@ -101,6 +98,7 @@ public class Test2Scene extends Scene {
 		addSystem(new UIRenderSystem(getRegistry()));
 		addSystem(new UIButtonSystem(getRegistry()));
 		addSystem(new UITextRenderSystem(getRegistry()));
+		addSystem(new UIScrollSystem(getRegistry()));
 	}
 
 	@Override
@@ -137,10 +135,13 @@ public class Test2Scene extends Scene {
 		spaceshipBlueEntity.addComponent(new TeamComponent(2));
 		spaceshipBlueEntity.addComponent(new DeathEffectComponent(20, new Sprite(0, new Vector4f(1.0f, 0.45f, 0.0f, 0.95f), starParticleID)));
 
+
+		// UI
 		Entity uiRoot = createEntity();
 		uiRoot.addComponent(new UITransformComponent(new Vector3f(100.0f, 600.0f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(500.0f, 300.0f, 1.0f)));
 		uiRoot.addComponent(new UIRenderComponent(-1, new Vector4f(0.5f, 0.5f, 0.5f, 0.5f), null));
-		uiRoot.addComponent(new UILayoutComponent(LayoutType.HORIZONTAL, LayoutOverflow.SCALE, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, true));
+		uiRoot.addComponent(new UILayoutComponent(LayoutType.HORIZONTAL, LayoutOverflow.SCROLL, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, true));
+		uiRoot.addComponent(new UIScrollComponent(true, false));
 
 		Entity button = createEntity();
 		button.addComponent(new UITransformComponent(new Vector3f(0.0f, 200.0f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(222.0f, 39.0f, 1.0f)));

@@ -76,12 +76,12 @@ public class Camera {
 				roll -= 360.0f;
 			else if (roll < -180.0f)
 				roll += 360.0f;
-		}
 
-		if (Input.getInstance().isMouseScrollingUp())
-			zoom(zoom * zoomSpeed * dt);
-		if (Input.getInstance().isMouseScrollingDown())
-			zoom(-zoom * zoomSpeed * dt);
+			if (Input.getInstance().isMouseScrollingUp())
+				zoom(zoom * zoomSpeed * dt);
+			if (Input.getInstance().isMouseScrollingDown())
+				zoom(-zoom * zoomSpeed * dt);
+		}
 
 		calculateCamera();
 	}

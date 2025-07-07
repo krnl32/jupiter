@@ -2,6 +2,7 @@ package com.krnl32.jupiter.systems.ui;
 
 import com.krnl32.jupiter.components.ui.UIHierarchyComponent;
 import com.krnl32.jupiter.components.ui.UILayoutComponent;
+import com.krnl32.jupiter.components.ui.UIScrollComponent;
 import com.krnl32.jupiter.components.ui.UITransformComponent;
 import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.ecs.Registry;
@@ -27,14 +28,14 @@ public class UILayoutSystem implements System {
 			float containerHeight  = transform.scale.y - (layout.paddingTop + layout.paddingBottom);
 
 			switch (layout.type) {
-				case HORIZONTAL -> layoutHorizontal(layout, hierarchy, containerWidth, containerHeight);
-				case VERTICAL -> layoutVertical(layout, hierarchy, containerWidth, containerHeight);
+				case HORIZONTAL -> layoutHorizontal(entity, layout, hierarchy, containerWidth, containerHeight);
+				case VERTICAL -> layoutVertical(entity, layout, hierarchy, containerWidth, containerHeight);
 				case ABSOLUTE -> {}
 			}
 		}
 	}
 
-	private void layoutHorizontal(UILayoutComponent layout, UIHierarchyComponent hierarchy, float containerWidth, float containerHeight) {
+	private void layoutHorizontal(Entity entity, UILayoutComponent layout, UIHierarchyComponent hierarchy, float containerWidth, float containerHeight) {
 		// Calculate total height of children + spacing
 		float totalWidth = 0.0f;
 		int childCount = 0;
@@ -51,13 +52,22 @@ public class UILayoutSystem implements System {
 			totalWidth += layout.spacing * (childCount - 1);
 		}
 
+		// if overflow scroll
+		float scrollOffsetX = 0.0f;
+		UIScrollComponent scroll = entity.getComponent(UIScrollComponent.class);
+		if (layout.overflow == LayoutOverflow.SCROLL && scroll != null && scroll.scrollX) {
+			float maxOffsetX = Math.max(0.0f, totalWidth - containerWidth);
+			scroll.offset.x = Math.max(0.0f, Math.min(scroll.offset.x, maxOffsetX));
+			scrollOffsetX = scroll.offset.x;
+		}
+
 		// if overflow is SCALE and totalWidth > containerWidth
 		float scale = 1.0f;
 		if (layout.overflow == LayoutOverflow.SCALE && totalWidth > containerWidth) {
 			scale = containerWidth / totalWidth;
 		}
 
-		float cursorX = layout.paddingLeft;
+		float cursorX = layout.paddingLeft - scrollOffsetX;
 		for (Entity child : hierarchy.children) {
 			UITransformComponent childTransform = child.getComponent(UITransformComponent.class);
 			if (childTransform == null)
@@ -75,7 +85,7 @@ public class UILayoutSystem implements System {
 		}
 	}
 
-	private void layoutVertical(UILayoutComponent layout, UIHierarchyComponent hierarchy, float containerWidth, float containerHeight) {
+	private void layoutVertical(Entity entity, UILayoutComponent layout, UIHierarchyComponent hierarchy, float containerWidth, float containerHeight) {
 		// Calculate total height of children + spacing
 		float totalHeight = 0f;
 		int childCount = 0;
@@ -90,13 +100,22 @@ public class UILayoutSystem implements System {
 			totalHeight += layout.spacing * (childCount - 1);
 		}
 
+		// if overflow scroll
+		UIScrollComponent scroll = entity.getComponent(UIScrollComponent.class);
+		float scrollOffsetY = 0.0f;
+		if (layout.overflow == LayoutOverflow.SCROLL && scroll != null && scroll.scrollY) {
+			float maxOffsetY = Math.max(0f, totalHeight - containerHeight);
+			scroll.offset.y = Math.max(0f, Math.min(scroll.offset.y, maxOffsetY));
+			scrollOffsetY = scroll.offset.y;
+		}
+
 		// Handle Scale Overflow
 		float scale = 1f;
 		if (layout.overflow == LayoutOverflow.SCALE && totalHeight > containerHeight) {
 			scale = containerHeight / totalHeight;
 		}
 
-		float cursorY = layout.paddingTop;
+		float cursorY = layout.paddingTop - scrollOffsetY;
 
 		for (Entity child : hierarchy.children) {
 			UITransformComponent childTransform = child.getComponent(UITransformComponent.class);
