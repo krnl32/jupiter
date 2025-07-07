@@ -49,5 +49,5 @@ void main()
 		case 31: texSample = texture(u_Textures[31], v_TextureUV); break;
 	}
 
-	o_Color = vec4(color.rgb, color.a * texSample.r);
+	o_Color = vec4(color.rgb * texSample.rgb, color.a * texSample.r);
 }

@@ -8,9 +8,8 @@ import com.krnl32.jupiter.core.Engine;
 import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.renderer.Renderer;
 import com.krnl32.jupiter.scene.SceneManager;
-import com.krnl32.jupiter.scenes.GamePlayScene;
-import com.krnl32.jupiter.scenes.Test2Scene;
 import com.krnl32.jupiter.scenes.TestScene;
+import com.krnl32.jupiter.scenes.levels.Level1Scene;
 import com.krnl32.jupiter.scenes.menu.MainMenuScene;
 import com.krnl32.jupiter.serializer.SerializerRegistry;
 import com.krnl32.jupiter.serializer.components.*;
@@ -49,10 +48,9 @@ public class Spaceshooter extends Engine {
 			Logger.critical("Game Failed to Register Scene Asset({})", "scenes/level1.json");
 
 		sceneManager = new SceneManager();
-		sceneManager.addScene("level1", new GamePlayScene(level1AssetID));
+		sceneManager.addScene("mainMenu", new MainMenuScene(getWindow().getWidth(), getWindow().getHeight()));
+		sceneManager.addScene("level1", new Level1Scene(getWindow().getWidth(), getWindow().getHeight()));
 		sceneManager.addScene("test", new TestScene(getWindow().getWidth(), getWindow().getHeight()));
-		sceneManager.addScene("test2", new Test2Scene(getWindow().getWidth(), getWindow().getHeight()));
-		sceneManager.addScene("mainMenu", new MainMenuScene());
 		sceneManager.switchScene("mainMenu");
 		return true;
 	}
