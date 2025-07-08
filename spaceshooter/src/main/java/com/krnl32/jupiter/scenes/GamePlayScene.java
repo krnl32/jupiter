@@ -20,7 +20,6 @@ public class GamePlayScene extends Scene {
 	@Override
 	public void onCreate() {
 		// Register Systems
-		addSystem(new MovementSystem(getRegistry()), 0, true);
 		addSystem(new KeyboardControlSystem(getRegistry()), 1, true);
 		addSystem(new CameraSystem(getRegistry()), 2, true);
 		addSystem(new RenderSystem(getRegistry()));

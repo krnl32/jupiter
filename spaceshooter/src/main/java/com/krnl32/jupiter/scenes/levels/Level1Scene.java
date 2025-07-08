@@ -68,7 +68,6 @@ public class Level1Scene extends Scene {
 			Logger.critical("Game Failed to Load Font Asset({})", "fonts/arial.ttf");
 
 		// Register Systems
-		addSystem(new MovementSystem(getRegistry()), 0, true);
 		addSystem(new KeyboardControlSystem(getRegistry()), 1, true);
 		addSystem(new CameraSystem(getRegistry()), 2, true);
 		addSystem(new RenderSystem(getRegistry()));
@@ -104,8 +103,8 @@ public class Level1Scene extends Scene {
 		playerSpaceship.addComponent(new TagComponent("playerSpaceship"));
 		playerSpaceship.addComponent(new TransformComponent(new Vector3f(1.0f, -3.0f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(1.0f, 1.0f, 1.0f)));
 		playerSpaceship.addComponent(new SpriteRendererComponent(-1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), spaceshipRedID));
-		playerSpaceship.addComponent(new KeyboardControlComponent(10, 10, KeyCode.W, KeyCode.S, KeyCode.UNKNOWN, KeyCode.UNKNOWN, KeyCode.A, KeyCode.D, KeyCode.Q, KeyCode.E));
-		playerSpaceship.addComponent(new RigidBodyComponent(new Vector3f(0.0f, 0.0f, 0.0f)));
+		//playerSpaceship.addComponent(new KeyboardControlComponent(10, 10, KeyCode.W, KeyCode.S, KeyCode.UNKNOWN, KeyCode.UNKNOWN, KeyCode.A, KeyCode.D, KeyCode.Q, KeyCode.E));
+		//playerSpaceship.addComponent(new RigidBodyComponent(new Vector3f(0.0f, 0.0f, 0.0f)));
 		playerSpaceship.addComponent(new ProjectileEmitterComponent(KeyCode.SPACE, 15.55f, 10.0f, new Sprite(1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), laserRedID)));
 		playerSpaceship.addComponent(new BoxColliderComponent(new Vector3f(1.0f, 1.0f, 1.0f)));
 		playerSpaceship.addComponent(new HealthComponent(100, 100));
@@ -119,7 +118,7 @@ public class Level1Scene extends Scene {
 			enemySpaceship.addComponent(new TagComponent("enemySpaceship" + i));
 			enemySpaceship.addComponent(new TransformComponent(new Vector3f(-3.0f * i, 5.0f, -1.0f), new Vector3f(0.0f, 0.0f, toRadians(180.0f)), new Vector3f(1.0f, 1.0f, 1.0f)));
 			enemySpaceship.addComponent(new SpriteRendererComponent(-1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), spaceshipSpritesheetAsset.getSprite("playerShip1_blue.png").getTextureAssetID(), spaceshipSpritesheetAsset.getSprite("playerShip1_blue.png").getTextureUV()));
-			enemySpaceship.addComponent(new RigidBodyComponent(new Vector3f(1.0f, 0.0f, 0.0f)));
+			//enemySpaceship.addComponent(new RigidBody2DComponent(new Vector3f(1.0f, 0.0f, 0.0f)));
 			enemySpaceship.addComponent(new BoxColliderComponent(new Vector3f(1.0f, 1.0f, 1.0f)));
 			enemySpaceship.addComponent(new HealthComponent(100, 100));
 			enemySpaceship.addComponent(new TeamComponent(2));

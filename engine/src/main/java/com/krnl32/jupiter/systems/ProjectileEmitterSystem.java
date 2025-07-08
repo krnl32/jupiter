@@ -7,6 +7,7 @@ import com.krnl32.jupiter.ecs.System;
 import com.krnl32.jupiter.input.Input;
 import com.krnl32.jupiter.renderer.Renderer;
 import com.krnl32.jupiter.utility.Timer;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 public class ProjectileEmitterSystem implements System {
@@ -54,11 +55,11 @@ public class ProjectileEmitterSystem implements System {
 
 		Entity projectile = registry.createEntity();
 		projectile.addComponent(new TransformComponent(new Vector3f(transform.translation), new Vector3f(transform.rotation), new Vector3f(transform.scale.x / 3, transform.scale.y / 3, transform.scale.z / 3)));
-		projectile.addComponent(new RigidBodyComponent(velocity));
+		projectile.addComponent(new RigidBody2DComponent());
+		projectile.addComponent(new BoxCollider2DComponent(new Vector2f(1.0f, 1.0f)));
 		projectile.addComponent(new ProjectileComponent(owner, 10.0f));
 		projectile.addComponent(new LifetimeComponent(1.0f));
 		projectile.addComponent(new SpriteRendererComponent(emitter.sprite.getIndex(), emitter.sprite.getColor(), emitter.sprite.getTextureAssetID()));
-		projectile.addComponent(new BoxColliderComponent(new Vector3f(1.0f, 1.0f, 1.0f)));
 
 		if (owner.hasComponent(TeamComponent.class)) {
 			TeamComponent team = owner.getComponent(TeamComponent.class);

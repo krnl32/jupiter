@@ -1,7 +1,7 @@
 package com.krnl32.jupiter.systems;
 
 import com.krnl32.jupiter.components.KeyboardControlComponent;
-import com.krnl32.jupiter.components.RigidBodyComponent;
+import com.krnl32.jupiter.components.MovementIntentComponent;
 import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.ecs.Registry;
 import com.krnl32.jupiter.ecs.System;
@@ -17,36 +17,41 @@ public class KeyboardControlSystem implements System {
 
 	@Override
 	public void onUpdate(float dt) {
-		for (Entity entity: registry.getEntitiesWith(KeyboardControlComponent.class, RigidBodyComponent.class)) {
+		for (Entity entity: registry.getEntitiesWith(KeyboardControlComponent.class, MovementIntentComponent.class)) {
 			KeyboardControlComponent keyboardControl = entity.getComponent(KeyboardControlComponent.class);
-			RigidBodyComponent rigidBody = entity.getComponent(RigidBodyComponent.class);
+			MovementIntentComponent movementIntent = entity.getComponent(MovementIntentComponent.class);
 
-			rigidBody.velocity.set(0, 0, 0);
-			rigidBody.angularVelocity.set(0, 0, 0);
+			movementIntent.translation.set(0.0f, 0.0f, 0.0f);
+			movementIntent.rotation.set(0.0f, 0.0f, 0.0f);
+			movementIntent.jump = false;
+			movementIntent.sprint = false;
 
 			if (Input.getInstance().isKeyDown(keyboardControl.upKey))
-				rigidBody.velocity.y += keyboardControl.moveSpeed;
+				movementIntent.translation.y += 1;
 
 			if (Input.getInstance().isKeyDown(keyboardControl.downKey))
-				rigidBody.velocity.y -= keyboardControl.moveSpeed;
-
-			if (Input.getInstance().isKeyDown(keyboardControl.forwardKey))
-				rigidBody.velocity.z -= keyboardControl.moveSpeed;
-
-			if (Input.getInstance().isKeyDown(keyboardControl.backwardKey))
-				rigidBody.velocity.z += keyboardControl.moveSpeed;
+				movementIntent.translation.y -= 1;
 
 			if (Input.getInstance().isKeyDown(keyboardControl.leftKey))
-				rigidBody.velocity.x -= keyboardControl.moveSpeed;
+				movementIntent.translation.x -= 1;
 
 			if (Input.getInstance().isKeyDown(keyboardControl.rightKey))
-				rigidBody.velocity.x += keyboardControl.moveSpeed;
+				movementIntent.translation.x += 1;
+
+			if (movementIntent.translation.lengthSquared() > 0.001f)
+				movementIntent.translation.normalize();
 
 			if (Input.getInstance().isKeyDown(keyboardControl.rotateLeftKey))
-				rigidBody.angularVelocity.z += keyboardControl.rotationSpeed;
+				movementIntent.rotation.z += 1;
 
 			if (Input.getInstance().isKeyDown(keyboardControl.rotateRightKey))
-				rigidBody.angularVelocity.z -= keyboardControl.rotationSpeed;
+				movementIntent.rotation.z -= 1;
+
+			if (Input.getInstance().isKeyDown(keyboardControl.jumpKey))
+				movementIntent.jump = true;
+
+			if (Input.getInstance().isKeyDown(keyboardControl.sprintKey))
+				movementIntent.sprint = true;
 		}
 	}
 

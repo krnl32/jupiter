@@ -1,6 +1,6 @@
 {"entities": [
     {"components": {
-        "UUIDComponent": {"uuid": "ae1a2bc8-6861-44d4-bbad-465e4d4240ae"},
+        "UUIDComponent": {"uuid": "ac8d65d8-6c01-4497-b091-9325d09ec8b5"},
         "CameraComponent": {
             "rollSpeed": 45,
             "worldUp": {
@@ -68,18 +68,6 @@
             "textureAssetID": "textures/players/spaceshipRed.png"
         },
         "TeamComponent": {"teamID": 1},
-        "RigidBodyComponent": {
-            "velocity": {
-                "x": 0,
-                "y": 0,
-                "z": 0
-            },
-            "angularVelocity": {
-                "x": 0,
-                "y": 0,
-                "z": 0
-            }
-        },
         "KeyboardControlComponent": {
             "upKey": 87,
             "moveSpeed": 10,
@@ -89,7 +77,9 @@
             "rotationSpeed": 10,
             "backwardKey": 0,
             "rotateRightKey": 69,
+            "sprintKey": 340,
             "rotateLeftKey": 81,
+            "jumpKey": 32,
             "forwardKey": 0
         },
         "HealthComponent": {
@@ -109,7 +99,7 @@
             },
             "particleCount": 20
         },
-        "UUIDComponent": {"uuid": "ba1bcc5f-5d40-4ccd-86aa-a79927631487"},
+        "UUIDComponent": {"uuid": "10004d76-af06-4b81-98b1-24785253387c"},
         "BoxColliderComponent": {
             "size": {
                 "x": 1,
@@ -158,7 +148,7 @@
         }
     }},
     {"components": {
-        "UUIDComponent": {"uuid": "b4087c1c-f010-4ebe-a926-5c0a6b79b8a7"},
+        "UUIDComponent": {"uuid": "90ceef13-71ce-4438-bb7a-9f0e5e331f06"},
         "TransformComponent": {
             "rotation": {
                 "x": 0,
@@ -204,7 +194,6 @@
             "currentHealth": 100,
             "maxHealth": 100
         },
-        "UUIDComponent": {"uuid": "f416d20b-e71b-42de-95b4-dc7e5c91c49c"},
         "DeathEffectComponent": {
             "particleSprite": {
                 "color": {
@@ -218,6 +207,7 @@
             },
             "particleCount": 20
         },
+        "UUIDComponent": {"uuid": "735211c9-254c-4130-94d4-72388ea89824"},
         "TransformComponent": {
             "rotation": {
                 "x": 0,

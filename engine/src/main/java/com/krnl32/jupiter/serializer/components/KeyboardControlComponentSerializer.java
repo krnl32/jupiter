@@ -19,7 +19,9 @@ public class KeyboardControlComponentSerializer implements ComponentSerializer<K
 			.put("leftKey", component.leftKey.getCode())
 			.put("rightKey", component.rightKey.getCode())
 			.put("rotateLeftKey", component.rotateLeftKey.getCode())
-			.put("rotateRightKey", component.rotateRightKey.getCode());
+			.put("rotateRightKey", component.rotateRightKey.getCode())
+			.put("jumpKey", component.jumpKey.getCode())
+			.put("sprintKey", component.sprintKey.getCode());
 	}
 
 	@Override
@@ -34,6 +36,8 @@ public class KeyboardControlComponentSerializer implements ComponentSerializer<K
 			KeyCode.fromCode(data.getInt("leftKey")),
 			KeyCode.fromCode(data.getInt("rightKey")),
 			KeyCode.fromCode(data.getInt("rotateLeftKey")),
-			KeyCode.fromCode(data.getInt("rotateRightKey")));
+			KeyCode.fromCode(data.getInt("rotateRightKey")),
+			KeyCode.fromCode(data.getInt("jumpKey")),
+			KeyCode.fromCode(data.getInt("sprintKey")));
 	}
 }

@@ -66,7 +66,7 @@ public class Physics2DSystem implements System {
 				} else if (boxCollider2D != null) {
 					Vector2f halfSize = boxCollider2D.getHalfSize();
 					Vector2f offset = boxCollider2D.offset;
-					shape.setAsBox(halfSize.x, halfSize.y, new Vec2(0.0f, 0.0f), 0);
+					shape.setAsBox(halfSize.x, halfSize.y, new Vec2(offset.x, offset.y), 0);
 
 					Vec2 bodyDefPos = bodyDef.position;
 					bodyDef.position.set((bodyDefPos.x + offset.x), (bodyDefPos.y + offset.y));
