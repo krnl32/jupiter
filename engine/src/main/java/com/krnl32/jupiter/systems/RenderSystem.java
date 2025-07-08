@@ -39,7 +39,7 @@ public class RenderSystem implements System {
 			SpriteRendererComponent spriteRenderer = entity.getComponent(SpriteRendererComponent.class);
 
 			TextureAsset textureAsset = AssetManager.getInstance().getAsset(spriteRenderer.textureAssetID);
-			if (textureAsset == null || !textureAsset.isLoaded())
+			if (spriteRenderer.textureAssetID != null && (textureAsset == null || !textureAsset.isLoaded()))
 				Logger.error("RenderSystem Failed to get Texture Asset({})\n", spriteRenderer.textureAssetID);
 
 			Texture2D texture = (textureAsset != null && textureAsset.isLoaded()) ? textureAsset.getTexture() : null;

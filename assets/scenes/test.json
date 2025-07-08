@@ -1,6 +1,6 @@
 {"entities": [
     {"components": {
-        "UUIDComponent": {"uuid": "0157cc8c-7841-4308-b471-ee547aa7e25a"},
+        "UUIDComponent": {"uuid": "ae1a2bc8-6861-44d4-bbad-465e4d4240ae"},
         "CameraComponent": {
             "rollSpeed": 45,
             "worldUp": {
@@ -65,21 +65,9 @@
                 "z": 1
             },
             "index": -1,
-            "textureAssetID": "textures/players/spaceship_red.png"
+            "textureAssetID": "textures/players/spaceshipRed.png"
         },
         "TeamComponent": {"teamID": 1},
-        "KeyboardControlComponent": {
-            "upKey": 87,
-            "moveSpeed": 10,
-            "downKey": 83,
-            "leftKey": 65,
-            "rightKey": 68,
-            "rotationSpeed": 10,
-            "backwardKey": 0,
-            "rotateRightKey": 69,
-            "rotateLeftKey": 81,
-            "forwardKey": 0
-        },
         "RigidBodyComponent": {
             "velocity": {
                 "x": 0,
@@ -92,11 +80,22 @@
                 "z": 0
             }
         },
+        "KeyboardControlComponent": {
+            "upKey": 87,
+            "moveSpeed": 10,
+            "downKey": 83,
+            "leftKey": 65,
+            "rightKey": 68,
+            "rotationSpeed": 10,
+            "backwardKey": 0,
+            "rotateRightKey": 69,
+            "rotateLeftKey": 81,
+            "forwardKey": 0
+        },
         "HealthComponent": {
             "currentHealth": 100,
             "maxHealth": 100
         },
-        "UUIDComponent": {"uuid": "b7e4b750-49e6-434c-ae90-6e362a18f66d"},
         "DeathEffectComponent": {
             "particleSprite": {
                 "color": {
@@ -110,6 +109,7 @@
             },
             "particleCount": 20
         },
+        "UUIDComponent": {"uuid": "ba1bcc5f-5d40-4ccd-86aa-a79927631487"},
         "BoxColliderComponent": {
             "size": {
                 "x": 1,
@@ -150,12 +150,33 @@
                     "z": 1
                 },
                 "index": 1,
-                "textureAssetID": "textures/projectiles/laser_red.png"
+                "textureAssetID": "textures/projectiles/laserRed.png"
             },
             "shootKey": 32,
             "lastEmissionTime": 0,
             "projectileSpeed": 10
         }
+    }},
+    {"components": {
+        "UUIDComponent": {"uuid": "b4087c1c-f010-4ebe-a926-5c0a6b79b8a7"},
+        "TransformComponent": {
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "translation": {
+                "x": -3,
+                "y": -2.5,
+                "z": -1
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            }
+        },
+        "TagComponent": {"tag": "staticFloor"}
     }},
     {"components": {
         "SpriteRendererComponent": {
@@ -179,22 +200,11 @@
             "textureAssetID": "spritesheets/spaceship/spaceship.png"
         },
         "TeamComponent": {"teamID": 2},
-        "RigidBodyComponent": {
-            "velocity": {
-                "x": 1,
-                "y": 0,
-                "z": 0
-            },
-            "angularVelocity": {
-                "x": 0,
-                "y": 0,
-                "z": 0
-            }
-        },
         "HealthComponent": {
             "currentHealth": 100,
             "maxHealth": 100
         },
+        "UUIDComponent": {"uuid": "f416d20b-e71b-42de-95b4-dc7e5c91c49c"},
         "DeathEffectComponent": {
             "particleSprite": {
                 "color": {
@@ -207,19 +217,6 @@
                 "textureAssetID": "textures/particles/star3.png"
             },
             "particleCount": 20
-        },
-        "UUIDComponent": {"uuid": "1e50e72e-a8b2-49be-9ebe-05da86e22d3d"},
-        "BoxColliderComponent": {
-            "size": {
-                "x": 1,
-                "y": 1,
-                "z": 1
-            },
-            "offset": {
-                "x": 0,
-                "y": 0,
-                "z": 0
-            }
         },
         "TransformComponent": {
             "rotation": {
@@ -240,9 +237,6 @@
         },
         "TagComponent": {"tag": "SpaceshipBlue"}
     }},
-    {"components": {}},
-    {"components": {}},
-    {"components": {}},
     {"components": {}},
     {"components": {}},
     {"components": {}}

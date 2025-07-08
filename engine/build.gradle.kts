@@ -18,6 +18,7 @@ dependencies {
 	implementation("org.lwjgl:lwjgl-openal")
 	implementation("org.lwjgl:lwjgl-opengl")
 	implementation("org.lwjgl:lwjgl-stb")
+	implementation(files("${rootProject.projectDir}/thirdparty/jbox2d-library.jar"))
 
 	runtimeOnly("org.lwjgl:lwjgl::$lwjglNatives")
 	runtimeOnly("org.lwjgl:lwjgl-assimp::$lwjglNatives")
