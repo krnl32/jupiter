@@ -9,28 +9,37 @@ import com.krnl32.jupiter.ecs.Registry;
 import com.krnl32.jupiter.ecs.System;
 import com.krnl32.jupiter.event.EventBus;
 import com.krnl32.jupiter.events.entity.EntityDestroyedEvent;
+import com.krnl32.jupiter.physics.CollisionRule;
+import com.krnl32.jupiter.physics.DelegatingContactFilter;
 import com.krnl32.jupiter.physics.Physics2D;
 import com.krnl32.jupiter.renderer.Renderer;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.joml.Vector2f;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Physics2DSystem implements System {
 	private final Registry registry;
 	private final Physics2D physics2D;
+	private final Set<Body> bodiesToDestroy;
 
 	public Physics2DSystem(Registry registry) {
 		this.registry = registry;
 		this.physics2D = new Physics2D();
+		this.physics2D.getWorld().setContactFilter(new DelegatingContactFilter(((entityA, entityB) -> true)));
+		this.bodiesToDestroy = new HashSet<>();
 
 		EventBus.getInstance().register(EntityDestroyedEvent.class, event -> {
 			RigidBody2DComponent rigidBody2D = event.getEntity().getComponent(RigidBody2DComponent.class);
-			if (rigidBody2D != null) {
-				physics2D.getWorld().destroyBody(rigidBody2D.rawBody);
+			if (rigidBody2D != null && rigidBody2D.rawBody != null) {
+				bodiesToDestroy.add(rigidBody2D.rawBody);
 				rigidBody2D.rawBody = null;
 			}
 		});
@@ -104,9 +113,20 @@ public class Physics2DSystem implements System {
 		}
 
 		physics2D.onUpdate(dt);
+
+		for (Body body : bodiesToDestroy) {
+			if (body.m_world != null) {
+				physics2D.getWorld().destroyBody(body);
+			}
+		}
+		bodiesToDestroy.clear();
 	}
 
 	@Override
 	public void onRender(float dt, Renderer renderer) {
+	}
+
+	public void setCollisionRule(CollisionRule collisionRule) {
+		this.physics2D.getWorld().setContactFilter(new DelegatingContactFilter(collisionRule));
 	}
 }

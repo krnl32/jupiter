@@ -5,6 +5,7 @@ import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.ecs.Registry;
 import com.krnl32.jupiter.ecs.System;
 import com.krnl32.jupiter.input.Input;
+import com.krnl32.jupiter.physics.BodyType;
 import com.krnl32.jupiter.renderer.Renderer;
 import com.krnl32.jupiter.utility.Timer;
 import org.joml.Vector2f;
@@ -47,18 +48,24 @@ public class ProjectileEmitterSystem implements System {
 	}
 
 	private void spawnProjectile(Entity owner, TransformComponent transform, ProjectileEmitterComponent emitter) {
+		// Calculate Forward Direction
 		float angle = (-transform.rotation.z);
 		float directionX = (float) Math.sin(angle);
 		float directionY = (float) Math.cos(angle);
 		Vector3f direction = new Vector3f(directionX, directionY, 0.0f).normalize();
-		Vector3f velocity = new Vector3f(direction).mul(emitter.projectileSpeed);
 
+		// Offset Projectile Position
+		Vector3f projectileTranslation = new Vector3f(transform.translation).add(new Vector3f(direction).mul(0.5f));
+		Vector3f projectileScale = new Vector3f(transform.scale).div(3);
+
+		// Initial Velocity
+		Vector2f velocity = new Vector2f(direction).mul(emitter.projectileSpeed);
+
+		// Spawn Projectile
 		Entity projectile = registry.createEntity();
-		Vector3f projectileTranslation = new Vector3f(transform.translation);
-		projectileTranslation.y += 0.5f;
-		projectile.addComponent(new TransformComponent(projectileTranslation, new Vector3f(transform.rotation), new Vector3f(transform.scale.x / 3, transform.scale.y / 3, transform.scale.z / 3)));
-		projectile.addComponent(new RigidBody2DComponent(velocity));
-		projectile.addComponent(new BoxCollider2DComponent(new Vector2f(1.0f, 1.0f)));
+		projectile.addComponent(new TransformComponent(projectileTranslation, new Vector3f(transform.rotation), projectileScale));
+		projectile.addComponent(new RigidBody2DComponent(BodyType.KINEMATIC, velocity, 0.0f, 0.0f, 0.1f, 0.0f, true, true));
+		projectile.addComponent(new BoxCollider2DComponent(new Vector2f(projectileScale.x, projectileScale.y), new Vector2f(0.0f, 0.0f), 0.0f, 0.0f, true));
 		projectile.addComponent(new ProjectileComponent(owner, 10.0f));
 		projectile.addComponent(new LifetimeComponent(1.0f));
 		projectile.addComponent(new SpriteRendererComponent(emitter.sprite.getIndex(), emitter.sprite.getColor(), emitter.sprite.getTextureAssetID()));

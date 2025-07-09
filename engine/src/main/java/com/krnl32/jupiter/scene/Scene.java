@@ -4,6 +4,8 @@ import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.ecs.Registry;
 import com.krnl32.jupiter.ecs.System;
 import com.krnl32.jupiter.renderer.Renderer;
+import com.krnl32.jupiter.systems.*;
+import com.krnl32.jupiter.systems.ui.*;
 
 public abstract class Scene {
 	private final Registry registry = new Registry();
@@ -19,6 +21,7 @@ public abstract class Scene {
 
 	public final void load() {
 		if (!initialized) {
+			registerDefaultSystems();
 			onCreate();
 			initialized = true;
 		}
@@ -55,5 +58,27 @@ public abstract class Scene {
 
 	public void setSystemEnabled(Class<? extends System> system, boolean enabled) {
 		registry.setSystemEnabled(system, enabled);
+	}
+
+	protected void registerDefaultSystems() {
+		addSystem(new KeyboardControlSystem(getRegistry()), 1, true);
+		addSystem(new UIInputSystem(getRegistry()), 2, true);
+		addSystem(new UIButtonSystem(getRegistry()));
+		addSystem(new ForceMovementSystem(getRegistry()));
+		addSystem(new Physics2DSystem(getRegistry()));
+		addSystem(new ProjectileEmitterSystem(getRegistry()));
+		addSystem(new DamageSystem(getRegistry()));
+		addSystem(new HealthSystem(getRegistry()));
+		addSystem(new LifetimeSystem(getRegistry()));
+		addSystem(new DestroySystem(getRegistry()));
+		addSystem(new BlinkSystem(getRegistry()));
+		addSystem(new CameraSystem(getRegistry()), 50, true);
+		addSystem(new ParticleSystem(getRegistry()));
+		addSystem(new DeathEffectSystem(getRegistry()));
+		addSystem(new UILayoutSystem(getRegistry()));
+		addSystem(new UIScrollSystem(getRegistry()));
+		addSystem(new UITextRenderSystem(getRegistry()));
+		addSystem(new UIRenderSystem(getRegistry()));
+		addSystem(new RenderSystem(getRegistry()));
 	}
 }

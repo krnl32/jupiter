@@ -28,7 +28,6 @@ public class Spaceshooter extends Engine {
 		SerializerRegistry.registerComponentSerializer(UUIDComponent.class, new UUIDComponentSerializer());
 		SerializerRegistry.registerComponentSerializer(TagComponent.class, new TagComponentSerializer());
 		SerializerRegistry.registerComponentSerializer(TransformComponent.class, new TransformComponentSerializer());
-		//SerializerRegistry.registerComponentSerializer(RigidBodyComponent.class, new RigidBodyComponentSerializer());
 		SerializerRegistry.registerComponentSerializer(SpriteRendererComponent.class, new SpriteRendererComponentSerializer());
 		SerializerRegistry.registerComponentSerializer(CameraComponent.class, new CameraComponentSerializer());
 		SerializerRegistry.registerComponentSerializer(KeyboardControlComponent.class, new KeyboardControlComponentSerializer());
@@ -50,7 +49,7 @@ public class Spaceshooter extends Engine {
 		sceneManager.addScene("mainMenu", new MainMenuScene(getWindow().getWidth(), getWindow().getHeight()));
 		sceneManager.addScene("level1", new Level1Scene(getWindow().getWidth(), getWindow().getHeight()));
 		sceneManager.addScene("test", new TestScene(getWindow().getWidth(), getWindow().getHeight()));
-		sceneManager.switchScene("test");
+		sceneManager.switchScene("mainMenu");
 		return true;
 	}
 

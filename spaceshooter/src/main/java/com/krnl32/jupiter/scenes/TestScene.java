@@ -11,8 +11,6 @@ import com.krnl32.jupiter.physics.BodyType;
 import com.krnl32.jupiter.renderer.Camera;
 import com.krnl32.jupiter.scene.Scene;
 import com.krnl32.jupiter.serializer.SceneSerializer;
-import com.krnl32.jupiter.systems.*;
-import com.krnl32.jupiter.systems.ui.*;
 import com.krnl32.jupiter.ui.UIHierarchyManager;
 import com.krnl32.jupiter.ui.layout.LayoutOverflow;
 import com.krnl32.jupiter.ui.layout.LayoutType;
@@ -79,29 +77,6 @@ public class TestScene extends Scene {
 		arialFontID = AssetManager.getInstance().registerAndLoad("fonts/arial.ttf", () -> new FontAsset("fonts/arial.ttf", 34));
 		if (arialFontID == null)
 			Logger.critical("Game Failed to Load Font Asset({})", "fonts/arial.ttf");
-
-
-
-		// Systems
-		addSystem(new KeyboardControlSystem(getRegistry()), 1, true);
-		addSystem(new CameraSystem(getRegistry()), 2, true);
-		addSystem(new RenderSystem(getRegistry()));
-		addSystem(new LifetimeSystem(getRegistry()));
-		addSystem(new ProjectileEmitterSystem(getRegistry()));
-		addSystem(new DamageSystem(getRegistry()));
-		addSystem(new HealthSystem(getRegistry()));
-		addSystem(new DestroySystem(getRegistry()));
-		addSystem(new BlinkSystem(getRegistry()));
-		addSystem(new ParticleSystem(getRegistry()));
-		addSystem(new DeathEffectSystem(getRegistry()));
-		addSystem(new UILayoutSystem(getRegistry()));
-		addSystem(new UIInputSystem(getRegistry()));
-		addSystem(new UIRenderSystem(getRegistry()));
-		addSystem(new UIButtonSystem(getRegistry()));
-		addSystem(new UITextRenderSystem(getRegistry()));
-		addSystem(new UIScrollSystem(getRegistry()));
-		addSystem(new Physics2DSystem(getRegistry()));
-		addSystem(new ForceMovementSystem(getRegistry()));
 	}
 
 	@Override
@@ -124,7 +99,7 @@ public class TestScene extends Scene {
 		spaceshipRedEntity.addComponent(new HealthComponent(100, 100));
 		spaceshipRedEntity.addComponent(new TeamComponent(1));
 		spaceshipRedEntity.addComponent(new DeathEffectComponent(20, new Sprite(0, new Vector4f(1.0f, 0.45f, 0.0f, 0.95f), starParticleID)));
-		spaceshipRedEntity.addComponent(new RigidBody2DComponent());
+		spaceshipRedEntity.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC, new Vector2f(0.0f, 0.0f), 6.0f, 1.5f, 1.0f, 1.0f, false, false));
 		spaceshipRedEntity.addComponent(new BoxCollider2DComponent(new Vector2f(1.0f, 1.0f)));
 		spaceshipRedEntity.addComponent(new MovementIntentComponent());
 		spaceshipRedEntity.addComponent(new ForceMovementComponent());
@@ -147,7 +122,7 @@ public class TestScene extends Scene {
 		spaceshipBlueEntity.addComponent(new HealthComponent(100, 100));
 		spaceshipBlueEntity.addComponent(new TeamComponent(2));
 		spaceshipBlueEntity.addComponent(new DeathEffectComponent(20, new Sprite(0, new Vector4f(1.0f, 0.45f, 0.0f, 0.95f), starParticleID)));
-		spaceshipBlueEntity.addComponent(new RigidBody2DComponent());
+		spaceshipBlueEntity.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC, new Vector2f(0.0f, 0.0f), 6.0f, 1.5f, 1.0f, 1.0f, false, false));
 		spaceshipBlueEntity.addComponent(new BoxCollider2DComponent(new Vector2f(1.0f, 1.0f)));
 
 		// UI
@@ -160,15 +135,17 @@ public class TestScene extends Scene {
 		button.addComponent(new UITransformComponent(new Vector3f(0.0f, 200.0f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(222.0f, 39.0f, 1.0f)));
 		button.addComponent(new UIRenderComponent(-1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), buttonBlueID));
 		button.addComponent(new UIButtonComponent((entity) -> {
-			Entity spaceshipBlueEntity = createEntity();
-			spaceshipBlueEntity.addComponent(new UUIDComponent());
-			spaceshipBlueEntity.addComponent(new TagComponent("SpaceshipEnemyBlue"));
-			spaceshipBlueEntity.addComponent(new TransformComponent(new Vector3f(-3.0f, 5.0f, -1.0f), new Vector3f(0.0f, 0.0f, toRadians(180.0f)), new Vector3f(1.0f, 1.0f, 1.0f)));
-			spaceshipBlueEntity.addComponent(new SpriteRendererComponent(-1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), spaceshipSpritesheetAsset.getSprite("playerShip1_blue.png").getTextureAssetID(), spaceshipSpritesheetAsset.getSprite("playerShip1_blue.png").getTextureUV()));
-			spaceshipBlueEntity.addComponent(new HealthComponent(100, 100));
-			spaceshipBlueEntity.addComponent(new TeamComponent(2));
-			spaceshipBlueEntity.addComponent(new DeathEffectComponent(20, new Sprite(0, new Vector4f(1.0f, 0.45f, 0.0f, 0.95f), starParticleID)));
-			spaceshipBlueEntity.addComponent(new ProjectileEmitterComponent(null, 15.55f, 10.0f, new Sprite(1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), laserBlueID)));
+			Entity spaceship = createEntity();
+			spaceship.addComponent(new UUIDComponent());
+			spaceship.addComponent(new TagComponent("SpaceshipEnemyBlue"));
+			spaceship.addComponent(new TransformComponent(new Vector3f(-3.0f, 5.0f, -1.0f), new Vector3f(0.0f, 0.0f, toRadians(180.0f)), new Vector3f(1.0f, 1.0f, 1.0f)));
+			spaceship.addComponent(new SpriteRendererComponent(-1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), spaceshipSpritesheetAsset.getSprite("playerShip1_blue.png").getTextureAssetID(), spaceshipSpritesheetAsset.getSprite("playerShip1_blue.png").getTextureUV()));
+			spaceship.addComponent(new HealthComponent(100, 100));
+			spaceship.addComponent(new TeamComponent(2));
+			spaceship.addComponent(new DeathEffectComponent(20, new Sprite(0, new Vector4f(1.0f, 0.45f, 0.0f, 0.95f), starParticleID)));
+			spaceship.addComponent(new ProjectileEmitterComponent(null, 15.55f, 10.0f, new Sprite(1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), laserBlueID)));
+			spaceship.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC, new Vector2f(0.0f, 0.0f), 6.0f, 1.5f, 1.0f, 1.0f, false, false));
+			spaceship.addComponent(new BoxCollider2DComponent(new Vector2f(1.0f, 1.0f)));
 		}));
 		button.addComponent(new UITextComponent("Spawn Enemy Blue", new Vector4f(0.118f, 0.118f, 0.705f, 1.0f), arialFontID, TextHorizontalAlign.CENTER, TextVerticalAlign.CENTER, TextOverflow.SCALE));
 		UIHierarchyManager.attach(uiRoot, button);
@@ -177,15 +154,17 @@ public class TestScene extends Scene {
 		button2.addComponent(new UITransformComponent(new Vector3f(0.0f, 250.0f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(222.0f, 39.0f, 1.0f)));
 		button2.addComponent(new UIRenderComponent(-1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), buttonBlueID));
 		button2.addComponent(new UIButtonComponent((entity) -> {
-			Entity spaceshipBlueEntity = createEntity();
-			spaceshipBlueEntity.addComponent(new UUIDComponent());
-			spaceshipBlueEntity.addComponent(new TagComponent("SpaceshipEnemyRed"));
-			spaceshipBlueEntity.addComponent(new TransformComponent(new Vector3f(-3.0f, 5.0f, -1.0f), new Vector3f(0.0f, 0.0f, toRadians(180.0f)), new Vector3f(1.0f, 1.0f, 1.0f)));
-			spaceshipBlueEntity.addComponent(new SpriteRendererComponent(-1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), spaceshipSpritesheetAsset.getSprite("playerShip1_red.png").getTextureAssetID(), spaceshipSpritesheetAsset.getSprite("playerShip1_red.png").getTextureUV()));
-			spaceshipBlueEntity.addComponent(new HealthComponent(100, 100));
-			spaceshipBlueEntity.addComponent(new TeamComponent(2));
-			spaceshipBlueEntity.addComponent(new DeathEffectComponent(20, new Sprite(0, new Vector4f(1.0f, 0.45f, 0.0f, 0.95f), starParticleID)));
-			spaceshipBlueEntity.addComponent(new ProjectileEmitterComponent(null, 15.55f, 10.0f, new Sprite(1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), laserBlueID)));
+			Entity spaceship = createEntity();
+			spaceship.addComponent(new UUIDComponent());
+			spaceship.addComponent(new TagComponent("SpaceshipEnemyRed"));
+			spaceship.addComponent(new TransformComponent(new Vector3f(-3.0f, 5.0f, -1.0f), new Vector3f(0.0f, 0.0f, toRadians(180.0f)), new Vector3f(1.0f, 1.0f, 1.0f)));
+			spaceship.addComponent(new SpriteRendererComponent(-1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), spaceshipSpritesheetAsset.getSprite("playerShip1_red.png").getTextureAssetID(), spaceshipSpritesheetAsset.getSprite("playerShip1_red.png").getTextureUV()));
+			spaceship.addComponent(new HealthComponent(100, 100));
+			spaceship.addComponent(new TeamComponent(2));
+			spaceship.addComponent(new DeathEffectComponent(20, new Sprite(0, new Vector4f(1.0f, 0.45f, 0.0f, 0.95f), starParticleID)));
+			spaceship.addComponent(new ProjectileEmitterComponent(null, 15.55f, 10.0f, new Sprite(1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), laserBlueID)));
+			spaceship.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC, new Vector2f(0.0f, 0.0f), 6.0f, 1.5f, 1.0f, 1.0f, false, false));
+			spaceship.addComponent(new BoxCollider2DComponent(new Vector2f(1.0f, 1.0f)));
 		}));
 		button2.addComponent(new UITextComponent("Spawn Enemy Red", new Vector4f(0.705f, 0.118f, 0.118f, 1.0f), arialFontID, TextHorizontalAlign.CENTER, TextVerticalAlign.CENTER, TextOverflow.SCALE));
 		UIHierarchyManager.attach(uiRoot, button2);

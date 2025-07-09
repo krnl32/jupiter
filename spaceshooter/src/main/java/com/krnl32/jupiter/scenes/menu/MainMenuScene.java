@@ -81,25 +81,6 @@ public class MainMenuScene extends Scene {
 		buttonYellowID = AssetManager.getInstance().registerAndLoad("textures/ui/buttons/buttonYellow.png", () -> new TextureAsset("textures/ui/buttons/buttonYellow.png"));
 		if (buttonYellowID == null)
 			Logger.critical("MainMenuScene Failed to Load Texture Asset({})", "textures/ui/buttons/buttonYellow.png");
-
-		// Register Systems
-		addSystem(new KeyboardControlSystem(getRegistry()), 1, true);
-		addSystem(new CameraSystem(getRegistry()), 2, true);
-		addSystem(new RenderSystem(getRegistry()));
-		addSystem(new LifetimeSystem(getRegistry()));
-		addSystem(new ProjectileEmitterSystem(getRegistry()));
-		addSystem(new DamageSystem(getRegistry()));
-		addSystem(new HealthSystem(getRegistry()));
-		addSystem(new DestroySystem(getRegistry()));
-		addSystem(new BlinkSystem(getRegistry()));
-		addSystem(new ParticleSystem(getRegistry()));
-		addSystem(new DeathEffectSystem(getRegistry()));
-		addSystem(new UILayoutSystem(getRegistry()));
-		addSystem(new UIInputSystem(getRegistry()));
-		addSystem(new UIRenderSystem(getRegistry()));
-		addSystem(new UIButtonSystem(getRegistry()));
-		addSystem(new UITextRenderSystem(getRegistry()));
-		addSystem(new UIScrollSystem(getRegistry()));
 	}
 
 	@Override

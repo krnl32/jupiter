@@ -1,6 +1,6 @@
 {"entities": [
     {"components": {
-        "UUIDComponent": {"uuid": "3354e52d-3d44-4cf3-9ebc-61896b569b66"},
+        "UUIDComponent": {"uuid": "3aa13963-4deb-408f-8469-fa6e00196cda"},
         "CameraComponent": {
             "rollSpeed": 45,
             "worldUp": {
@@ -68,6 +68,10 @@
             "textureAssetID": "textures/players/spaceshipRed.png"
         },
         "TeamComponent": {"teamID": 1},
+        "HealthComponent": {
+            "currentHealth": 100,
+            "maxHealth": 100
+        },
         "KeyboardControlComponent": {
             "upKey": 87,
             "downKey": 83,
@@ -80,11 +84,6 @@
             "jumpKey": 32,
             "forwardKey": 0
         },
-        "HealthComponent": {
-            "currentHealth": 100,
-            "maxHealth": 100
-        },
-        "UUIDComponent": {"uuid": "13ac682a-eccb-4fd8-a269-4bc05c5aa90a"},
         "DeathEffectComponent": {
             "particleSprite": {
                 "color": {
@@ -98,6 +97,7 @@
             },
             "particleCount": 20
         },
+        "UUIDComponent": {"uuid": "8cbdf199-daa0-4c33-a043-03d127deb367"},
         "TransformComponent": {
             "rotation": {
                 "x": 0,
@@ -134,7 +134,7 @@
         }
     }},
     {"components": {
-        "UUIDComponent": {"uuid": "cb62fc0b-6824-49d4-9c57-dd902b66b52f"},
+        "UUIDComponent": {"uuid": "b1361919-3c3e-4efd-894d-d116c11ef511"},
         "TransformComponent": {
             "rotation": {
                 "x": 0,
@@ -193,7 +193,7 @@
             },
             "particleCount": 20
         },
-        "UUIDComponent": {"uuid": "812acbac-d01c-435b-ad91-6b955757aecf"},
+        "UUIDComponent": {"uuid": "2b2ef3d5-9450-4830-864a-5df02a9ab9dc"},
         "TransformComponent": {
             "rotation": {
                 "x": 0,
