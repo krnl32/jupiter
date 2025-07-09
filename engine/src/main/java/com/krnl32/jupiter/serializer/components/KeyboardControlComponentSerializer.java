@@ -10,8 +10,6 @@ public class KeyboardControlComponentSerializer implements ComponentSerializer<K
 	@Override
 	public JSONObject serialize(KeyboardControlComponent component) {
 		return new JSONObject()
-			.put("moveSpeed", component.moveSpeed)
-			.put("rotationSpeed", component.rotationSpeed)
 			.put("upKey", component.upKey.getCode())
 			.put("downKey", component.downKey.getCode())
 			.put("forwardKey", component.forwardKey.getCode())
@@ -27,8 +25,6 @@ public class KeyboardControlComponentSerializer implements ComponentSerializer<K
 	@Override
 	public KeyboardControlComponent deserialize(JSONObject data, EntityResolver resolver) {
 		return new KeyboardControlComponent(
-			data.getFloat("moveSpeed"),
-			data.getFloat("rotationSpeed"),
 			KeyCode.fromCode(data.getInt("upKey")),
 			KeyCode.fromCode(data.getInt("downKey")),
 			KeyCode.fromCode(data.getInt("forwardKey")),

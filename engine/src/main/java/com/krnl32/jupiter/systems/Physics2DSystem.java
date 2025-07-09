@@ -11,10 +11,12 @@ import com.krnl32.jupiter.event.EventBus;
 import com.krnl32.jupiter.events.entity.EntityDestroyedEvent;
 import com.krnl32.jupiter.physics.Physics2D;
 import com.krnl32.jupiter.renderer.Renderer;
+import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.FixtureDef;
 import org.joml.Vector2f;
 
 public class Physics2DSystem implements System {
@@ -40,40 +42,57 @@ public class Physics2DSystem implements System {
 			RigidBody2DComponent rigidBody2D = entity.getComponent(RigidBody2DComponent.class);
 			TransformComponent transform = entity.getComponent(TransformComponent.class);
 
-			// Register with Physics World
+			// Register with Physics World (Maybe listen for EntityCreatedEvent?)
 			if (rigidBody2D.rawBody == null) {
+				// Create Raw Body
 				BodyDef bodyDef = new BodyDef();
-				bodyDef.angle = transform.rotation.z;
-				bodyDef.position.set(transform.translation.x, transform.translation.y);
-				bodyDef.angularDamping = rigidBody2D.angularDamping;
-				bodyDef.linearDamping = rigidBody2D.linearDamping;
-				bodyDef.fixedRotation = rigidBody2D.fixedRotation;
-				bodyDef.bullet = rigidBody2D.continuousCollision;
-
 				bodyDef.type = switch (rigidBody2D.bodyType) {
 					case STATIC -> BodyType.STATIC;
 					case DYNAMIC -> BodyType.DYNAMIC;
 					case KINEMATIC -> BodyType.KINEMATIC;
 				};
+				bodyDef.userData = entity;
+				bodyDef.position.set(transform.translation.x, transform.translation.y);
+				bodyDef.angle = transform.rotation.z;
+				bodyDef.linearVelocity.set(rigidBody2D.initialVelocity.x, rigidBody2D.initialVelocity.y);
+				bodyDef.linearDamping = rigidBody2D.linearDamping;
+				bodyDef.angularDamping = rigidBody2D.angularDamping;
+				bodyDef.fixedRotation = rigidBody2D.fixedRotation;
+				bodyDef.bullet = rigidBody2D.continuousCollision;
+				bodyDef.gravityScale = rigidBody2D.gravityScale;
+				rigidBody2D.rawBody = physics2D.getWorld().createBody(bodyDef);
+				rigidBody2D.rawBody.m_mass = rigidBody2D.mass;
 
-				PolygonShape shape = new PolygonShape();
-
+				// Setup Colliders
 				CircleCollider2DComponent circleCollider2D = entity.getComponent(CircleCollider2DComponent.class);
-				BoxCollider2DComponent boxCollider2D = entity.getComponent(BoxCollider2DComponent.class);
-
 				if (circleCollider2D != null) {
-					shape.setRadius(circleCollider2D.radius);
-				} else if (boxCollider2D != null) {
-					Vector2f halfSize = boxCollider2D.getHalfSize();
-					Vector2f offset = boxCollider2D.offset;
-					shape.setAsBox(halfSize.x, halfSize.y, new Vec2(offset.x, offset.y), 0);
+					CircleShape circleShape = new CircleShape();
+					circleShape.setRadius(circleCollider2D.radius);
+					circleShape.m_p.set(circleCollider2D.offset.x, circleCollider2D.offset.y);
 
-					Vec2 bodyDefPos = bodyDef.position;
-					bodyDef.position.set((bodyDefPos.x + offset.x), (bodyDefPos.y + offset.y));
+					FixtureDef fixtureDef = new FixtureDef();
+					fixtureDef.shape = circleShape;
+					fixtureDef.userData = entity;
+					fixtureDef.friction = circleCollider2D.friction;
+					fixtureDef.density = circleCollider2D.density;
+					fixtureDef.isSensor = circleCollider2D.sensor;
+					rigidBody2D.rawBody.createFixture(fixtureDef);
 				}
 
-				rigidBody2D.rawBody = physics2D.getWorld().createBody(bodyDef);
-				rigidBody2D.rawBody.createFixture(shape, rigidBody2D.mass);
+				BoxCollider2DComponent boxCollider2D = entity.getComponent(BoxCollider2DComponent.class);
+				if (boxCollider2D != null) {
+					PolygonShape boxShape = new PolygonShape();
+					Vector2f halfSize = boxCollider2D.getHalfSize();
+					boxShape.setAsBox(halfSize.x, halfSize.y, new Vec2(boxCollider2D.offset.x, boxCollider2D.offset.y), 0);
+
+					FixtureDef fixtureDef = new FixtureDef();
+					fixtureDef.shape = boxShape;
+					fixtureDef.userData = entity;
+					fixtureDef.friction = boxCollider2D.friction;
+					fixtureDef.density = boxCollider2D.density;
+					fixtureDef.isSensor = boxCollider2D.sensor;
+					rigidBody2D.rawBody.createFixture(fixtureDef);
+				}
 			}
 
 			// Update Physics

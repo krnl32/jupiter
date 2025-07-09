@@ -1,6 +1,6 @@
 {"entities": [
     {"components": {
-        "UUIDComponent": {"uuid": "ac8d65d8-6c01-4497-b091-9325d09ec8b5"},
+        "UUIDComponent": {"uuid": "3354e52d-3d44-4cf3-9ebc-61896b569b66"},
         "CameraComponent": {
             "rollSpeed": 45,
             "worldUp": {
@@ -70,11 +70,9 @@
         "TeamComponent": {"teamID": 1},
         "KeyboardControlComponent": {
             "upKey": 87,
-            "moveSpeed": 10,
             "downKey": 83,
             "leftKey": 65,
             "rightKey": 68,
-            "rotationSpeed": 10,
             "backwardKey": 0,
             "rotateRightKey": 69,
             "sprintKey": 340,
@@ -86,6 +84,7 @@
             "currentHealth": 100,
             "maxHealth": 100
         },
+        "UUIDComponent": {"uuid": "13ac682a-eccb-4fd8-a269-4bc05c5aa90a"},
         "DeathEffectComponent": {
             "particleSprite": {
                 "color": {
@@ -98,19 +97,6 @@
                 "textureAssetID": "textures/particles/star3.png"
             },
             "particleCount": 20
-        },
-        "UUIDComponent": {"uuid": "10004d76-af06-4b81-98b1-24785253387c"},
-        "BoxColliderComponent": {
-            "size": {
-                "x": 1,
-                "y": 1,
-                "z": 1
-            },
-            "offset": {
-                "x": 0,
-                "y": 0,
-                "z": 0
-            }
         },
         "TransformComponent": {
             "rotation": {
@@ -142,13 +128,13 @@
                 "index": 1,
                 "textureAssetID": "textures/projectiles/laserRed.png"
             },
-            "shootKey": 32,
+            "shootKey": 341,
             "lastEmissionTime": 0,
-            "projectileSpeed": 10
+            "projectileSpeed": 25
         }
     }},
     {"components": {
-        "UUIDComponent": {"uuid": "90ceef13-71ce-4438-bb7a-9f0e5e331f06"},
+        "UUIDComponent": {"uuid": "cb62fc0b-6824-49d4-9c57-dd902b66b52f"},
         "TransformComponent": {
             "rotation": {
                 "x": 0,
@@ -207,7 +193,7 @@
             },
             "particleCount": 20
         },
-        "UUIDComponent": {"uuid": "735211c9-254c-4130-94d4-72388ea89824"},
+        "UUIDComponent": {"uuid": "812acbac-d01c-435b-ad91-6b955757aecf"},
         "TransformComponent": {
             "rotation": {
                 "x": 0,

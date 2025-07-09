@@ -35,7 +35,6 @@ public class Spaceshooter extends Engine {
 		SerializerRegistry.registerComponentSerializer(TeamComponent.class, new TeamComponentSerializer());
 		SerializerRegistry.registerComponentSerializer(HealthComponent.class, new HealthComponentSerializer());
 		SerializerRegistry.registerComponentSerializer(LifetimeComponent.class, new LifetimeComponentSerializer());
-		SerializerRegistry.registerComponentSerializer(BoxColliderComponent.class, new BoxColliderComponentSerializer());
 		SerializerRegistry.registerComponentSerializer(ParticleComponent.class, new ParticleComponentSerializer());
 		SerializerRegistry.registerComponentSerializer(BlinkComponent.class, new BlinkComponentSerializer());
 		SerializerRegistry.registerComponentSerializer(DeathEffectComponent.class, new DeathEffectComponentSerializer());

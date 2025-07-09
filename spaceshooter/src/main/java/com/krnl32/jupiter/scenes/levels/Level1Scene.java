@@ -73,7 +73,6 @@ public class Level1Scene extends Scene {
 		addSystem(new RenderSystem(getRegistry()));
 		addSystem(new LifetimeSystem(getRegistry()));
 		addSystem(new ProjectileEmitterSystem(getRegistry()));
-		addSystem(new CollisionSystem(getRegistry()));
 		addSystem(new DamageSystem(getRegistry()));
 		addSystem(new HealthSystem(getRegistry()));
 		addSystem(new DestroySystem(getRegistry()));
@@ -106,7 +105,6 @@ public class Level1Scene extends Scene {
 		//playerSpaceship.addComponent(new KeyboardControlComponent(10, 10, KeyCode.W, KeyCode.S, KeyCode.UNKNOWN, KeyCode.UNKNOWN, KeyCode.A, KeyCode.D, KeyCode.Q, KeyCode.E));
 		//playerSpaceship.addComponent(new RigidBodyComponent(new Vector3f(0.0f, 0.0f, 0.0f)));
 		playerSpaceship.addComponent(new ProjectileEmitterComponent(KeyCode.SPACE, 15.55f, 10.0f, new Sprite(1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), laserRedID)));
-		playerSpaceship.addComponent(new BoxColliderComponent(new Vector3f(1.0f, 1.0f, 1.0f)));
 		playerSpaceship.addComponent(new HealthComponent(100, 100));
 		playerSpaceship.addComponent(new TeamComponent(1));
 		playerSpaceship.addComponent(new DeathEffectComponent(20, new Sprite(0, new Vector4f(1.0f, 0.45f, 0.0f, 0.95f), starParticleID)));
@@ -119,7 +117,6 @@ public class Level1Scene extends Scene {
 			enemySpaceship.addComponent(new TransformComponent(new Vector3f(-3.0f * i, 5.0f, -1.0f), new Vector3f(0.0f, 0.0f, toRadians(180.0f)), new Vector3f(1.0f, 1.0f, 1.0f)));
 			enemySpaceship.addComponent(new SpriteRendererComponent(-1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), spaceshipSpritesheetAsset.getSprite("playerShip1_blue.png").getTextureAssetID(), spaceshipSpritesheetAsset.getSprite("playerShip1_blue.png").getTextureUV()));
 			//enemySpaceship.addComponent(new RigidBody2DComponent(new Vector3f(1.0f, 0.0f, 0.0f)));
-			enemySpaceship.addComponent(new BoxColliderComponent(new Vector3f(1.0f, 1.0f, 1.0f)));
 			enemySpaceship.addComponent(new HealthComponent(100, 100));
 			enemySpaceship.addComponent(new TeamComponent(2));
 			enemySpaceship.addComponent(new DeathEffectComponent(20, new Sprite(0, new Vector4f(1.0f, 0.45f, 0.0f, 0.95f), starParticleID)));

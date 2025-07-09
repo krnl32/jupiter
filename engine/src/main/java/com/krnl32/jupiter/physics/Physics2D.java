@@ -18,6 +18,7 @@ public class Physics2D {
 		this.physicsTimeStep = 1.0f / 60.0f;
 		this.velocityIterations = 8;
 		this.positionIterations = 3;
+		world.setContactListener(new ContactListener());
 	}
 
 	public void onUpdate(float dt) {

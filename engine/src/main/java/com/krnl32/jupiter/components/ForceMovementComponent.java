@@ -10,11 +10,11 @@ public class ForceMovementComponent implements Component {
 	public float jumpImpulse;
 
 	public ForceMovementComponent() {
-		this.moveForce = 30.0f;
+		this.moveForce = 10.0f;
 		this.sprintMultiplier = 1.5f;
-		this.maxSpeed = 10.0f;
-		this.rotationTorque = 3.0f;
-		this.jumpImpulse = 20.0f;
+		this.maxSpeed = 15.0f;
+		this.rotationTorque = 1.0f;
+		this.jumpImpulse = 10.0f;
 	}
 
 	public ForceMovementComponent(float moveForce, float sprintMultiplier, float maxSpeed, float rotationTorque, float jumpImpulse) {

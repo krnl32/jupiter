@@ -88,7 +88,6 @@ public class TestScene extends Scene {
 		addSystem(new RenderSystem(getRegistry()));
 		addSystem(new LifetimeSystem(getRegistry()));
 		addSystem(new ProjectileEmitterSystem(getRegistry()));
-		addSystem(new CollisionSystem(getRegistry()));
 		addSystem(new DamageSystem(getRegistry()));
 		addSystem(new HealthSystem(getRegistry()));
 		addSystem(new DestroySystem(getRegistry()));
@@ -120,9 +119,8 @@ public class TestScene extends Scene {
 		spaceshipRedEntity.addComponent(new TagComponent("SpaceshipRed"));
 		spaceshipRedEntity.addComponent(new TransformComponent(new Vector3f(1.0f, -3.0f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(1.0f, 1.0f, 1.0f)));
 		spaceshipRedEntity.addComponent(new SpriteRendererComponent(-1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), spaceshipRedID));
-		spaceshipRedEntity.addComponent(new KeyboardControlComponent(10, 10, KeyCode.W, KeyCode.S, KeyCode.UNKNOWN, KeyCode.UNKNOWN, KeyCode.A, KeyCode.D, KeyCode.Q, KeyCode.E, KeyCode.SPACE, KeyCode.LEFT_SHIFT));
-		spaceshipRedEntity.addComponent(new ProjectileEmitterComponent(KeyCode.SPACE, 15.55f, 10.0f, new Sprite(1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), laserRedID)));
-		spaceshipRedEntity.addComponent(new BoxColliderComponent(new Vector3f(1.0f, 1.0f, 1.0f)));
+		spaceshipRedEntity.addComponent(new KeyboardControlComponent(KeyCode.W, KeyCode.S, KeyCode.UNKNOWN, KeyCode.UNKNOWN, KeyCode.A, KeyCode.D, KeyCode.Q, KeyCode.E, KeyCode.SPACE, KeyCode.LEFT_SHIFT));
+		spaceshipRedEntity.addComponent(new ProjectileEmitterComponent(KeyCode.LEFT_CONTROL, 15.55f, 25.0f, new Sprite(1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), laserRedID)));
 		spaceshipRedEntity.addComponent(new HealthComponent(100, 100));
 		spaceshipRedEntity.addComponent(new TeamComponent(1));
 		spaceshipRedEntity.addComponent(new DeathEffectComponent(20, new Sprite(0, new Vector4f(1.0f, 0.45f, 0.0f, 0.95f), starParticleID)));
@@ -167,7 +165,6 @@ public class TestScene extends Scene {
 			spaceshipBlueEntity.addComponent(new TagComponent("SpaceshipEnemyBlue"));
 			spaceshipBlueEntity.addComponent(new TransformComponent(new Vector3f(-3.0f, 5.0f, -1.0f), new Vector3f(0.0f, 0.0f, toRadians(180.0f)), new Vector3f(1.0f, 1.0f, 1.0f)));
 			spaceshipBlueEntity.addComponent(new SpriteRendererComponent(-1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), spaceshipSpritesheetAsset.getSprite("playerShip1_blue.png").getTextureAssetID(), spaceshipSpritesheetAsset.getSprite("playerShip1_blue.png").getTextureUV()));
-			spaceshipBlueEntity.addComponent(new BoxColliderComponent(new Vector3f(1.0f, 1.0f, 1.0f)));
 			spaceshipBlueEntity.addComponent(new HealthComponent(100, 100));
 			spaceshipBlueEntity.addComponent(new TeamComponent(2));
 			spaceshipBlueEntity.addComponent(new DeathEffectComponent(20, new Sprite(0, new Vector4f(1.0f, 0.45f, 0.0f, 0.95f), starParticleID)));
@@ -185,7 +182,6 @@ public class TestScene extends Scene {
 			spaceshipBlueEntity.addComponent(new TagComponent("SpaceshipEnemyRed"));
 			spaceshipBlueEntity.addComponent(new TransformComponent(new Vector3f(-3.0f, 5.0f, -1.0f), new Vector3f(0.0f, 0.0f, toRadians(180.0f)), new Vector3f(1.0f, 1.0f, 1.0f)));
 			spaceshipBlueEntity.addComponent(new SpriteRendererComponent(-1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), spaceshipSpritesheetAsset.getSprite("playerShip1_red.png").getTextureAssetID(), spaceshipSpritesheetAsset.getSprite("playerShip1_red.png").getTextureUV()));
-			spaceshipBlueEntity.addComponent(new BoxColliderComponent(new Vector3f(1.0f, 1.0f, 1.0f)));
 			spaceshipBlueEntity.addComponent(new HealthComponent(100, 100));
 			spaceshipBlueEntity.addComponent(new TeamComponent(2));
 			spaceshipBlueEntity.addComponent(new DeathEffectComponent(20, new Sprite(0, new Vector4f(1.0f, 0.45f, 0.0f, 0.95f), starParticleID)));

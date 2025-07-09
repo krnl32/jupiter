@@ -88,7 +88,6 @@ public class MainMenuScene extends Scene {
 		addSystem(new RenderSystem(getRegistry()));
 		addSystem(new LifetimeSystem(getRegistry()));
 		addSystem(new ProjectileEmitterSystem(getRegistry()));
-		addSystem(new CollisionSystem(getRegistry()));
 		addSystem(new DamageSystem(getRegistry()));
 		addSystem(new HealthSystem(getRegistry()));
 		addSystem(new DestroySystem(getRegistry()));

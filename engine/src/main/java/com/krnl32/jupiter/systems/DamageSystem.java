@@ -6,7 +6,7 @@ import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.ecs.Registry;
 import com.krnl32.jupiter.ecs.System;
 import com.krnl32.jupiter.event.EventBus;
-import com.krnl32.jupiter.events.physics.CollisionEvent;
+import com.krnl32.jupiter.events.physics.BeginCollisionEvent;
 import com.krnl32.jupiter.renderer.Renderer;
 
 public class DamageSystem implements System {
@@ -15,7 +15,7 @@ public class DamageSystem implements System {
 	public DamageSystem(Registry registry) {
 		this.registry = registry;
 
-		EventBus.getInstance().register(CollisionEvent.class, event -> {
+		EventBus.getInstance().register(BeginCollisionEvent.class, event -> {
 			if (event.getEntityA().hasComponent(ProjectileComponent.class) && event.getEntityB().hasComponent(HealthComponent.class)) {
 				applyDamage(event.getEntityA(), event.getEntityB());
 			} else if (event.getEntityB().hasComponent(ProjectileComponent.class) && event.getEntityA().hasComponent(HealthComponent.class)) {
