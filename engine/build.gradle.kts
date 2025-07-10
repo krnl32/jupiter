@@ -1,6 +1,7 @@
 val lwjglVersion = "3.3.6"
 val jomlVersion = "1.10.7"
 val lwjglNatives = "natives-windows"
+val imguiVersion = "1.89.0"
 
 dependencies {
 	testImplementation(platform("org.junit:junit-bom:5.10.0"))
@@ -13,7 +14,7 @@ dependencies {
 
 	implementation("org.lwjgl:lwjgl")
 	implementation("org.lwjgl:lwjgl-assimp")
-	implementation("org.lwjgl:lwjgl-glfw")
+	api("org.lwjgl:lwjgl-glfw")
 	implementation("org.lwjgl:lwjgl-nfd")
 	implementation("org.lwjgl:lwjgl-openal")
 	implementation("org.lwjgl:lwjgl-opengl")
@@ -30,6 +31,9 @@ dependencies {
 
 	api("org.joml:joml:$jomlVersion")
 	api("org.json:json:20250517")
+	api("io.github.spair:imgui-java-binding:$imguiVersion")
+	api("io.github.spair:imgui-java-lwjgl3:$imguiVersion")
+	api("io.github.spair:imgui-java-${lwjglNatives}:${imguiVersion}")
 }
 
 tasks.test {

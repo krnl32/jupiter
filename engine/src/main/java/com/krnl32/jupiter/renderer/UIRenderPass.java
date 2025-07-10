@@ -1,7 +1,7 @@
 package com.krnl32.jupiter.renderer;
 
 import com.krnl32.jupiter.event.EventBus;
-import com.krnl32.jupiter.events.window.WindowResizeEvent;
+import com.krnl32.jupiter.events.scene.ViewportResizeEvent;
 import org.joml.Matrix4f;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class UIRenderPass implements RenderPass {
 		this.screenHeight = screenHeight;
 		this.projectionMatrix = new Matrix4f().ortho(0.0f, screenWidth, screenHeight, 0.0f, 0.1f, 100.0f);
 
-		EventBus.getInstance().register(WindowResizeEvent.class, event -> {
+		EventBus.getInstance().register(ViewportResizeEvent.class, event -> {
 			this.screenWidth = event.getWidth();
 			this.screenHeight = event.getHeight();
 			this.projectionMatrix.setOrtho(0.0f, screenWidth, screenHeight, 0.0f, 0.1f, 100.0f);

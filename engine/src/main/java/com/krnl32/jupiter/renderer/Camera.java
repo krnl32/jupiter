@@ -1,7 +1,7 @@
 package com.krnl32.jupiter.renderer;
 
 import com.krnl32.jupiter.event.EventBus;
-import com.krnl32.jupiter.events.window.WindowResizeEvent;
+import com.krnl32.jupiter.events.scene.ViewportResizeEvent;
 import com.krnl32.jupiter.input.Input;
 import com.krnl32.jupiter.input.KeyCode;
 import org.joml.Matrix4f;
@@ -54,7 +54,7 @@ public class Camera {
 
 		this.mouseEnabled = mouseEnabled;
 
-		EventBus.getInstance().register(WindowResizeEvent.class, event -> {
+		EventBus.getInstance().register(ViewportResizeEvent.class, event -> {
 			setViewport(event.getWidth(), event.getHeight());
 		});
 	}

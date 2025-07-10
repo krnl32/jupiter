@@ -92,6 +92,8 @@ public class Window {
 		});
 
 		glfwSetWindowSizeCallback(window, (window, width, height) -> {
+			this.width = width;
+			this.height = height;
 			EventBus.getInstance().emit(new WindowResizeEvent(width, height));
 		});
 

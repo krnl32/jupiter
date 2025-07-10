@@ -1,7 +1,7 @@
 package com.krnl32.jupiter.renderer;
 
 import com.krnl32.jupiter.event.EventBus;
-import com.krnl32.jupiter.events.window.WindowResizeEvent;
+import com.krnl32.jupiter.events.scene.ViewportResizeEvent;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
@@ -11,30 +11,52 @@ import java.util.List;
 import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.opengl.GL11.glViewport;
 import static org.lwjgl.opengl.GL15.*;
+import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER;
+import static org.lwjgl.opengl.GL30.glBindFramebuffer;
 
 public class Renderer {
 	private final List<RenderPass> renderPasses;
 	private final Vector2f viewport;
+	private final Vector4f clearColor;
 	private Camera activeCamera;
+	private Framebuffer framebuffer;
 
 	public Renderer() {
 		renderPasses = new ArrayList<>();
 		viewport = new Vector2f();
+		clearColor = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
 
-		EventBus.getInstance().register(WindowResizeEvent.class, event -> {
-			viewport.set(event.getWidth(), event.getHeight());
+		EventBus.getInstance().register(ViewportResizeEvent.class, event -> {
+			if (framebuffer != null) {
+				framebuffer.resize(event.getWidth(), event.getHeight());
+			}
 			setViewPort(0, 0, event.getWidth(), event.getHeight());
 		});
 	}
 
 	public void beginFrame() {
+		if (framebuffer != null) {
+			framebuffer.bind();
+			glViewport(0, 0, framebuffer.getWidth(), framebuffer.getHeight());
+		} else {
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		}
+
 		for (RenderPass renderPass : renderPasses)
 			renderPass.beginFrame(activeCamera);
 	}
 
 	public void endFrame() {
+		setClearColor(clearColor);
+		clear();
+
 		for (RenderPass renderPass : renderPasses)
 			renderPass.endFrame();
+
+		if (framebuffer != null) {
+			framebuffer.unbind();
+			glViewport(0, 0, (int) viewport.x, (int) viewport.y);
+		}
 	}
 
 	public void submit(RenderCommand cmd) {
@@ -51,7 +73,8 @@ public class Renderer {
 	}
 
 	public void setClearColor(Vector4f color) {
-		glClearColor(color.x, color.y, color.z, color.w);
+		clearColor.set(color);
+		glClearColor(clearColor.x, clearColor.y, clearColor.z, clearColor.w);
 	}
 
 	public void clear() {
@@ -81,5 +104,9 @@ public class Renderer {
 		} else {
 			glDisable(GL_BLEND);
 		}
+	}
+
+	public void setFramebuffer(Framebuffer framebuffer) {
+		this.framebuffer = framebuffer;
 	}
 }

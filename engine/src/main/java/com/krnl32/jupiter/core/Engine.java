@@ -69,6 +69,10 @@ public abstract class Engine {
 		return window;
 	}
 
+	protected Renderer getRenderer() {
+		return renderer;
+	}
+
 	private void initRenderPass(Renderer renderer) {
 		int[] shaderSamplers = new int[32];
 		for (int i = 0; i < 32; i++)
