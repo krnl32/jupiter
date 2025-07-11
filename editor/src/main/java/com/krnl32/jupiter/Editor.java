@@ -3,6 +3,7 @@ package com.krnl32.jupiter;
 import com.krnl32.jupiter.components.*;
 import com.krnl32.jupiter.core.Engine;
 import com.krnl32.jupiter.editor.EditorUI;
+import com.krnl32.jupiter.panels.SceneHierarchyPanel;
 import com.krnl32.jupiter.renderer.FrameBufferAttachmentFormat;
 import com.krnl32.jupiter.renderer.Framebuffer;
 import com.krnl32.jupiter.renderer.Renderer;
@@ -51,6 +52,7 @@ public class Editor extends Engine {
 		// Editor
 		editorUI = new EditorUI(getWindow());
 		editorUI.addEditorPanel(new ViewportPanel(framebuffer));
+		editorUI.addEditorPanel(new SceneHierarchyPanel(sceneManager.getScene()));
 
 		return true;
 	}

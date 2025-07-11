@@ -58,6 +58,15 @@ public class Entity {
 		return hasComponent(TagComponent.class) ? getComponent(TagComponent.class).tag : String.valueOf(id);
 	}
 
+	public void setTag(String tag) {
+		TagComponent tagComponent = getComponent(TagComponent.class);
+		if (tagComponent == null) {
+			addComponent(new TagComponent(tag));
+		} else {
+			tagComponent.tag = tag;
+		}
+	}
+
 	@Override
 	public String toString() {
 		return "Entity{" +

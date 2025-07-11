@@ -47,6 +47,10 @@ public class SceneManager {
 		currentScene.load();
 	}
 
+	public Scene getScene() {
+		return currentScene;
+	}
+
 	public void setScene(Scene scene) {
 		if (currentScene != null)
 			currentScene.onUnload();

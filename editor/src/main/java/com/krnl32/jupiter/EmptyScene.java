@@ -16,6 +16,7 @@ public class EmptyScene extends Scene {
 	@Override
 	public void onActivate() {
 		Entity cameraEntity = createEntity();
+		cameraEntity.addComponent(new TagComponent("Camera"));
 		cameraEntity.addComponent(new UUIDComponent());
 		cameraEntity.addComponent(new TransformComponent(new Vector3f(0.0f, 0.0f, 1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(1.0f, 1.0f, 1.0f)));
 		cameraEntity.addComponent(new CameraComponent(new Camera(new Vector3f(0.0f, 0.0f, -1.0f), new Vector3f(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 0.0f, 50.0f, 1.0f, 45.0f, 10.0f, false), true));
@@ -25,7 +26,7 @@ public class EmptyScene extends Scene {
 
 		Entity entity = createEntity();
 		entity.addComponent(new UUIDComponent());
-		entity.addComponent(new TagComponent("entity"));
+		entity.addComponent(new TagComponent("redBox"));
 		entity.addComponent(new TransformComponent(new Vector3f(0.0f, 0.0f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(1.0f, 1.0f, 1.0f)));
 		entity.addComponent(new SpriteRendererComponent(-1, new Vector4f(1.0f, 0.0f, 0.0f, 1.0f), null));
 	}
