@@ -1,8 +1,7 @@
 package com.krnl32.jupiter.editor;
 
 import com.krnl32.jupiter.core.Window;
-import imgui.ImGui;
-import imgui.ImVec2;
+import imgui.*;
 import imgui.flag.ImGuiConfigFlags;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
@@ -23,6 +22,16 @@ public class ImGuiWrapper {
 		ImGui.getIO().addConfigFlags(ImGuiConfigFlags.NavEnableKeyboard);
 		ImGui.getIO().addConfigFlags(ImGuiConfigFlags.DockingEnable);
 		ImGui.getIO().addConfigFlags(ImGuiConfigFlags.ViewportsEnable);
+
+		// Setup Fonts
+		ImFontAtlas fonts = ImGui.getIO().getFonts();
+		ImFontConfig config = new ImFontConfig();
+		config.setMergeMode(false);
+		ImFont JetBrainsMonoRegularFont = fonts.addFontFromFileTTF(System.getProperty("user.dir") + "/assets/fonts/" + "JetBrainsMono-Regular.ttf", 16, config);
+		config.setMergeMode(true);
+		 fonts.addFontFromFileTTF(System.getProperty("user.dir") + "/assets/fonts/" + "fa-solid-900.ttf", 16, config, fonts.getGlyphRangesDefault());
+		ImGui.getIO().setFontDefault(JetBrainsMonoRegularFont);
+		fonts.build();
 
 		ImGui.styleColorsDark();
 		imGuiImplGlfw.init(window.getNativeWindow(), true);

@@ -3,14 +3,19 @@ package com.krnl32.jupiter;
 import com.krnl32.jupiter.components.*;
 import com.krnl32.jupiter.core.Engine;
 import com.krnl32.jupiter.editor.EditorUI;
+import com.krnl32.jupiter.factory.FactoryRegistry;
+import com.krnl32.jupiter.factory.components.TransformComponentFactory;
+import com.krnl32.jupiter.panels.InspectorPanel;
 import com.krnl32.jupiter.panels.SceneHierarchyPanel;
+import com.krnl32.jupiter.panels.ViewportPanel;
 import com.krnl32.jupiter.renderer.FrameBufferAttachmentFormat;
 import com.krnl32.jupiter.renderer.Framebuffer;
 import com.krnl32.jupiter.renderer.Renderer;
+import com.krnl32.jupiter.renderer.RendererRegistry;
+import com.krnl32.jupiter.renderer.components.TransformComponentRenderer;
 import com.krnl32.jupiter.scene.SceneManager;
 import com.krnl32.jupiter.serializer.SerializerRegistry;
 import com.krnl32.jupiter.serializer.components.*;
-import com.krnl32.jupiter.panels.ViewportPanel;
 import org.joml.Vector4f;
 
 import java.util.List;
@@ -42,6 +47,12 @@ public class Editor extends Engine {
 		SerializerRegistry.registerComponentSerializer(ProjectileComponent.class, new ProjectileComponentSerializer());
 		SerializerRegistry.registerComponentSerializer(ProjectileEmitterComponent.class, new ProjectileEmitterComponentSerializer());
 
+		// Register Component Renderers
+		RendererRegistry.registerComponentRenderer(TransformComponent.class, new TransformComponentRenderer());
+
+		// Register Component Factories
+		FactoryRegistry.registerComponentFactory(TransformComponent.class, new TransformComponentFactory());
+
 		sceneManager = new SceneManager();
 		sceneManager.addScene("empty", new EmptyScene());
 		sceneManager.switchScene("empty");
@@ -53,6 +64,7 @@ public class Editor extends Engine {
 		editorUI = new EditorUI(getWindow());
 		editorUI.addEditorPanel(new ViewportPanel(framebuffer));
 		editorUI.addEditorPanel(new SceneHierarchyPanel(sceneManager.getScene()));
+		editorUI.addEditorPanel(new InspectorPanel());
 
 		return true;
 	}

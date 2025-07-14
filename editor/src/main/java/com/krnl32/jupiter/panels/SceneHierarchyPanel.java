@@ -3,6 +3,9 @@ package com.krnl32.jupiter.panels;
 import com.krnl32.jupiter.components.DestroyComponent;
 import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.editor.EditorPanel;
+import com.krnl32.jupiter.event.EventBus;
+import com.krnl32.jupiter.events.entity.EntityDestroyedEvent;
+import com.krnl32.jupiter.events.scene.EntitySelectedEvent;
 import com.krnl32.jupiter.scene.Scene;
 import imgui.ImGui;
 import imgui.flag.*;
@@ -25,6 +28,10 @@ public class SceneHierarchyPanel implements EditorPanel {
 		this.renaming = false;
 		this.renameRequestedEntity = null;
 		this.renameInputActiveLastFrame = false;
+
+		EventBus.getInstance().register(EntityDestroyedEvent.class, event -> {
+			setSelectedEntity(null);
+		});
 	}
 
 	@Override
@@ -42,7 +49,7 @@ public class SceneHierarchyPanel implements EditorPanel {
 
 		// Clear selection if clicking empty space
 		if (ImGui.isWindowHovered() && ImGui.isMouseClicked(ImGuiMouseButton.Left) && !ImGui.isAnyItemHovered()) {
-			selectedEntity = null;
+			setSelectedEntity(null);
 			renaming = false;
 		}
 
@@ -66,7 +73,7 @@ public class SceneHierarchyPanel implements EditorPanel {
 			if (ImGui.menuItem("Create Entity")) {
 				Entity newEntity = scene.createEntity();
 				newEntity.setTag("New Entity");
-				selectedEntity = newEntity;
+				setSelectedEntity(newEntity);
 				renaming = true;
 				renameBuffer.set(newEntity.getTagOrId());
 			}
@@ -96,7 +103,7 @@ public class SceneHierarchyPanel implements EditorPanel {
 
 		// Click to select entity
 		if (ImGui.isItemClicked()) {
-			selectedEntity = entity;
+			setSelectedEntity(entity);
 			renaming = false;
 		}
 
@@ -105,9 +112,9 @@ public class SceneHierarchyPanel implements EditorPanel {
 			ImGui.openPopup("EntityContextMenu" + entity.getId());
 		}
 
-		// Double-click to rename
+		// Double click to rename
 		if (ImGui.isItemHovered() && ImGui.isMouseDoubleClicked(ImGuiMouseButton.Left)) {
-			selectedEntity = entity;
+			setSelectedEntity(entity);
 			renaming = true;
 			renameBuffer.set(entity.getTagOrId());
 		}
@@ -121,7 +128,7 @@ public class SceneHierarchyPanel implements EditorPanel {
 			}
 			if (ImGui.menuItem("Delete")) {
 				if (entity.equals(selectedEntity)) {
-					selectedEntity = null;
+					setSelectedEntity(null);
 				}
 				entity.addComponent(new DestroyComponent());
 				ImGui.endPopup();
@@ -133,7 +140,7 @@ public class SceneHierarchyPanel implements EditorPanel {
 		// Activate rename mode if requested (after popup closes)
 		if (renameRequestedEntity != null) {
 			renaming = true;
-			selectedEntity = renameRequestedEntity;
+			setSelectedEntity(renameRequestedEntity);
 			renameBuffer.set(selectedEntity.getTagOrId());
 			renameRequestedEntity = null;
 		}
@@ -179,5 +186,12 @@ public class SceneHierarchyPanel implements EditorPanel {
 		}
 
 		ImGui.spacing();
+	}
+
+	private void setSelectedEntity(Entity entity) {
+		if ((selectedEntity == null && entity == null) || (selectedEntity != null && selectedEntity.equals(entity)))
+			return;
+		selectedEntity = entity;
+		EventBus.getInstance().emit(new EntitySelectedEvent(selectedEntity));
 	}
 }
