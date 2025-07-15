@@ -4,8 +4,20 @@ import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.ecs.Registry;
 import com.krnl32.jupiter.ecs.System;
 import com.krnl32.jupiter.renderer.Renderer;
-import com.krnl32.jupiter.systems.*;
+import com.krnl32.jupiter.systems.effects.BlinkSystem;
+import com.krnl32.jupiter.systems.effects.DeathEffectSystem;
+import com.krnl32.jupiter.systems.effects.ParticleSystem;
+import com.krnl32.jupiter.systems.gameplay.DamageSystem;
+import com.krnl32.jupiter.systems.gameplay.ForceMovementSystem;
+import com.krnl32.jupiter.systems.gameplay.HealthSystem;
+import com.krnl32.jupiter.systems.input.KeyboardControlSystem;
+import com.krnl32.jupiter.systems.physics.Physics2DSystem;
+import com.krnl32.jupiter.systems.projectile.ProjectileEmitterSystem;
+import com.krnl32.jupiter.systems.renderer.CameraSystem;
+import com.krnl32.jupiter.systems.renderer.RenderSystem;
 import com.krnl32.jupiter.systems.ui.*;
+import com.krnl32.jupiter.systems.utility.DestroySystem;
+import com.krnl32.jupiter.systems.utility.LifetimeSystem;
 
 public abstract class Scene {
 	private final Registry registry = new Registry();

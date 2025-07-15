@@ -1,6 +1,6 @@
 package com.krnl32.jupiter.serializer;
 
-import com.krnl32.jupiter.components.UUIDComponent;
+import com.krnl32.jupiter.components.utility.UUIDComponent;
 import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.ecs.Component;
 import com.krnl32.jupiter.ecs.Entity;

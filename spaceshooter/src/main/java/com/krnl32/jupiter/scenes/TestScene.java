@@ -1,8 +1,17 @@
 package com.krnl32.jupiter.scenes;
 
 import com.krnl32.jupiter.asset.*;
-import com.krnl32.jupiter.components.*;
+import com.krnl32.jupiter.components.effects.DeathEffectComponent;
+import com.krnl32.jupiter.components.gameplay.*;
+import com.krnl32.jupiter.components.input.KeyboardControlComponent;
+import com.krnl32.jupiter.components.physics.BoxCollider2DComponent;
+import com.krnl32.jupiter.components.physics.RigidBody2DComponent;
+import com.krnl32.jupiter.components.projectile.ProjectileEmitterComponent;
+import com.krnl32.jupiter.components.renderer.CameraComponent;
+import com.krnl32.jupiter.components.renderer.SpriteRendererComponent;
 import com.krnl32.jupiter.components.ui.*;
+import com.krnl32.jupiter.components.utility.TagComponent;
+import com.krnl32.jupiter.components.utility.UUIDComponent;
 import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.input.KeyCode;

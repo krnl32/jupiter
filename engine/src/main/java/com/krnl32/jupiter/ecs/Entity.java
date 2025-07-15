@@ -1,6 +1,6 @@
 package com.krnl32.jupiter.ecs;
 
-import com.krnl32.jupiter.components.TagComponent;
+import com.krnl32.jupiter.components.utility.TagComponent;
 
 import java.util.Objects;
 import java.util.Set;

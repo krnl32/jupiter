@@ -1,6 +1,6 @@
 package com.krnl32.jupiter.panels;
 
-import com.krnl32.jupiter.components.DestroyComponent;
+import com.krnl32.jupiter.components.utility.DestroyComponent;
 import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.editor.EditorPanel;
 import com.krnl32.jupiter.event.EventBus;

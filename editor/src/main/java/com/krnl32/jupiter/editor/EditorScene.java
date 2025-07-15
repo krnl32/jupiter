@@ -1,6 +1,12 @@
 package com.krnl32.jupiter.editor;
 
-import com.krnl32.jupiter.components.*;
+import com.krnl32.jupiter.components.gameplay.TransformComponent;
+import com.krnl32.jupiter.components.physics.BoxCollider2DComponent;
+import com.krnl32.jupiter.components.physics.RigidBody2DComponent;
+import com.krnl32.jupiter.components.renderer.CameraComponent;
+import com.krnl32.jupiter.components.renderer.SpriteRendererComponent;
+import com.krnl32.jupiter.components.utility.TagComponent;
+import com.krnl32.jupiter.components.utility.UUIDComponent;
 import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.physics.BodyType;
 import com.krnl32.jupiter.renderer.Camera;

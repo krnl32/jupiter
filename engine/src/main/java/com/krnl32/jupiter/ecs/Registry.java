@@ -1,6 +1,6 @@
 package com.krnl32.jupiter.ecs;
 
-import com.krnl32.jupiter.components.UUIDComponent;
+import com.krnl32.jupiter.components.utility.UUIDComponent;
 import com.krnl32.jupiter.renderer.Renderer;
 
 import java.util.*;
