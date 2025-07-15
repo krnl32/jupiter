@@ -1,6 +1,6 @@
 {"entities": [
     {"components": {
-        "UUIDComponent": {"uuid": "3aa13963-4deb-408f-8469-fa6e00196cda"},
+        "UUIDComponent": {"uuid": "a1064421-7b18-4118-8e55-3684b017b10b"},
         "CameraComponent": {
             "rollSpeed": 45,
             "worldUp": {
@@ -22,7 +22,7 @@
             "position": {
                 "x": 0,
                 "y": 0,
-                "z": -1
+                "z": 3
             },
             "pitch": 0,
             "projectionFOV": 45,
@@ -35,9 +35,9 @@
                 "z": 1
             },
             "translation": {
-                "x": 1,
-                "y": 1,
-                "z": 1
+                "x": 0,
+                "y": 0,
+                "z": 3
             },
             "scale": {
                 "x": 1,
@@ -68,10 +68,6 @@
             "textureAssetID": "textures/players/spaceshipRed.png"
         },
         "TeamComponent": {"teamID": 1},
-        "HealthComponent": {
-            "currentHealth": 100,
-            "maxHealth": 100
-        },
         "KeyboardControlComponent": {
             "upKey": 87,
             "downKey": 83,
@@ -84,6 +80,11 @@
             "jumpKey": 32,
             "forwardKey": 0
         },
+        "HealthComponent": {
+            "currentHealth": 100,
+            "maxHealth": 100
+        },
+        "UUIDComponent": {"uuid": "2a1580de-894a-4c33-9320-780be4f4bb00"},
         "DeathEffectComponent": {
             "particleSprite": {
                 "color": {
@@ -97,7 +98,6 @@
             },
             "particleCount": 20
         },
-        "UUIDComponent": {"uuid": "8cbdf199-daa0-4c33-a043-03d127deb367"},
         "TransformComponent": {
             "rotation": {
                 "x": 0,
@@ -134,7 +134,7 @@
         }
     }},
     {"components": {
-        "UUIDComponent": {"uuid": "b1361919-3c3e-4efd-894d-d116c11ef511"},
+        "UUIDComponent": {"uuid": "c177e3bd-b271-44b0-b9d1-40e3c51e4ecd"},
         "TransformComponent": {
             "rotation": {
                 "x": 0,
@@ -144,7 +144,7 @@
             "translation": {
                 "x": -3,
                 "y": -2.5,
-                "z": -1
+                "z": 1
             },
             "scale": {
                 "x": 1,
@@ -193,7 +193,7 @@
             },
             "particleCount": 20
         },
-        "UUIDComponent": {"uuid": "2b2ef3d5-9450-4830-864a-5df02a9ab9dc"},
+        "UUIDComponent": {"uuid": "5b2cb2a2-61ea-48b9-a6f6-57c91297d24b"},
         "TransformComponent": {
             "rotation": {
                 "x": 0,

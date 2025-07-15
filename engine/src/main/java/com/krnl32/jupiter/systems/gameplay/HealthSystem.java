@@ -7,7 +7,7 @@ import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.ecs.Registry;
 import com.krnl32.jupiter.ecs.System;
 import com.krnl32.jupiter.event.EventBus;
-import com.krnl32.jupiter.events.game.EntityDeathEvent;
+import com.krnl32.jupiter.events.gameplay.EntityDeathEvent;
 import com.krnl32.jupiter.renderer.Renderer;
 
 public class HealthSystem implements System {

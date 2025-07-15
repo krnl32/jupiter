@@ -28,7 +28,7 @@ public class Camera {
 	private float projectionSize;
 	private float aspectRatio;
 
-	private final boolean mouseEnabled;
+	private boolean mouseEnabled;
 
 	public Camera(Vector3f position, Vector3f worldUp, float yaw, float pitch, float roll, float zoom, float turnSpeed, float rollSpeed, float zoomSpeed, boolean mouseEnabled) {
 		this.position = position;
@@ -134,6 +134,10 @@ public class Camera {
 
 	public boolean isMouseEnabled() {
 		return mouseEnabled;
+	}
+
+	public void setMouseEnabled(boolean state) {
+		mouseEnabled = state;
 	}
 
 	public Matrix4f getProjectionMatrix() {

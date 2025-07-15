@@ -1,6 +1,7 @@
 package com.krnl32.jupiter.renderer;
 
 import com.krnl32.jupiter.event.EventBus;
+import com.krnl32.jupiter.events.renderer.SwitchRendererCameraEvent;
 import com.krnl32.jupiter.events.scene.ViewportResizeEvent;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -31,6 +32,10 @@ public class Renderer {
 				framebuffer.resize(event.getWidth(), event.getHeight());
 			}
 			setViewPort(0, 0, event.getWidth(), event.getHeight());
+		});
+
+		EventBus.getInstance().register(SwitchRendererCameraEvent.class, event -> {
+			this.activeCamera = event.getCamera();
 		});
 	}
 
@@ -66,6 +71,10 @@ public class Renderer {
 
 	public void addRenderPass(RenderPass renderPass) {
 		renderPasses.add(renderPass);
+	}
+
+	public Camera getActiveCamera() {
+		return activeCamera;
 	}
 
 	public void setActiveCamera(Camera activeCamera) {

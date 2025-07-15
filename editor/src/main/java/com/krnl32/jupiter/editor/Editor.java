@@ -37,10 +37,7 @@ import com.krnl32.jupiter.factory.components.utility.TagComponentFactory;
 import com.krnl32.jupiter.panels.InspectorPanel;
 import com.krnl32.jupiter.panels.SceneHierarchyPanel;
 import com.krnl32.jupiter.panels.ViewportPanel;
-import com.krnl32.jupiter.renderer.FrameBufferAttachmentFormat;
-import com.krnl32.jupiter.renderer.Framebuffer;
-import com.krnl32.jupiter.renderer.Renderer;
-import com.krnl32.jupiter.renderer.RendererRegistry;
+import com.krnl32.jupiter.renderer.*;
 import com.krnl32.jupiter.renderer.components.effects.BlinkComponentRenderer;
 import com.krnl32.jupiter.renderer.components.gameplay.HealthComponentRenderer;
 import com.krnl32.jupiter.renderer.components.gameplay.TeamComponentRenderer;
@@ -77,6 +74,7 @@ public class Editor extends Engine {
 	private SceneManager sceneManager;
 	private EditorState editorState;
 	private SceneSerializer sceneSerializer;
+	private EditorCamera editorCamera;
 
 	public Editor(String name, int width, int height) {
 		super(name, width, height);
@@ -155,6 +153,8 @@ public class Editor extends Engine {
 		framebuffer = new Framebuffer(getWindow().getWidth(), getWindow().getHeight(), List.of(FrameBufferAttachmentFormat.RGBA8, FrameBufferAttachmentFormat.RED_INTEGER));
 		getRenderer().setFramebuffer(framebuffer);
 
+		editorCamera = new EditorCamera(ProjectionType.ORTHOGRAPHIC, 10.0f);
+
 		// Editor
 		editorUI = new EditorUI(getWindow());
 		editorUI.addEditorPanel(new ViewportPanel(framebuffer));
@@ -168,7 +168,10 @@ public class Editor extends Engine {
 	public void onUpdate(float dt) {
 		if (editorState == EditorState.PLAY) {
 			sceneManager.onUpdate(dt);
+		} else {
+			editorCamera.onUpdate(dt);
 		}
+
 		editorUI.onUpdate(dt);
 		editorUI.onRender(dt);
 	}
@@ -176,6 +179,11 @@ public class Editor extends Engine {
 	@Override
 	public void onRender(float dt, Renderer renderer) {
 		renderer.setClearColor(new Vector4f(0.07f, 0.13f, 0.17f, 1.0f));
+
+		if (editorState != EditorState.PLAY && renderer.getActiveCamera() != editorCamera.getCamera()) {
+			renderer.setActiveCamera(editorCamera.getCamera());
+		}
+
 		sceneManager.onRender(dt, renderer);
 	}
 

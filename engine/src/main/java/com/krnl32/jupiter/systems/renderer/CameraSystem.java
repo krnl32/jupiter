@@ -5,6 +5,8 @@ import com.krnl32.jupiter.components.gameplay.TransformComponent;
 import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.ecs.Registry;
 import com.krnl32.jupiter.ecs.System;
+import com.krnl32.jupiter.event.EventBus;
+import com.krnl32.jupiter.events.renderer.SwitchRendererCameraEvent;
 import com.krnl32.jupiter.renderer.Renderer;
 
 public class CameraSystem implements System {
@@ -22,15 +24,13 @@ public class CameraSystem implements System {
 
 			camera.camera.setPosition(transform.translation);
 			camera.camera.onUpdate(dt);
+
+			if (camera.primary)
+				EventBus.getInstance().emit(new SwitchRendererCameraEvent(camera.camera));
 		}
 	}
 
 	@Override
 	public void onRender(float dt, Renderer renderer) {
-		for (Entity entity: registry.getEntitiesWith(CameraComponent.class)) {
-			CameraComponent camera = entity.getComponent(CameraComponent.class);
-			if (camera.primary)
-				renderer.setActiveCamera(camera.camera);
-		}
 	}
 }
