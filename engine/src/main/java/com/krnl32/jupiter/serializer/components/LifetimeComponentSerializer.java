@@ -15,4 +15,9 @@ public class LifetimeComponentSerializer implements ComponentSerializer<Lifetime
 	public LifetimeComponent deserialize(JSONObject data, EntityResolver resolver) {
 		return new LifetimeComponent(data.getFloat("remainingTime"));
 	}
+
+	@Override
+	public LifetimeComponent clone(LifetimeComponent component) {
+		return new LifetimeComponent(component.remainingTime);
+	}
 }

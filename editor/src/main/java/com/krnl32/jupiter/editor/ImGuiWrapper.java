@@ -29,7 +29,7 @@ public class ImGuiWrapper {
 		config.setMergeMode(false);
 		ImFont JetBrainsMonoRegularFont = fonts.addFontFromFileTTF(System.getProperty("user.dir") + "/assets/fonts/" + "JetBrainsMono-Regular.ttf", 16, config);
 		config.setMergeMode(true);
-		 fonts.addFontFromFileTTF(System.getProperty("user.dir") + "/assets/fonts/" + "fa-solid-900.ttf", 16, config, fonts.getGlyphRangesDefault());
+		fonts.addFontFromFileTTF(System.getProperty("user.dir") + "/assets/fonts/" + "fa-solid-900.ttf", 16, config, fonts.getGlyphRangesDefault());
 		ImGui.getIO().setFontDefault(JetBrainsMonoRegularFont);
 		fonts.build();
 
@@ -45,8 +45,8 @@ public class ImGuiWrapper {
 	}
 
 	public void beginFrame() {
-		imGuiImplGl3.newFrame();
 		imGuiImplGlfw.newFrame();
+		imGuiImplGl3.newFrame();
 		ImGui.newFrame();
 	}
 

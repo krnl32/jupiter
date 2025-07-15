@@ -7,7 +7,7 @@ public class Sprite {
 	private final int index;
 	private final Vector4f color;
 	private final AssetID textureAssetID;
-	public final float[] textureUV;
+	private final float[] textureUV;
 
 	public Sprite(int index, Vector4f color, AssetID textureAssetID) {
 		this.index = index;

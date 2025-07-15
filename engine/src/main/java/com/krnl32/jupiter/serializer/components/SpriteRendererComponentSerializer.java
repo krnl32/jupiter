@@ -8,6 +8,7 @@ import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.serializer.ComponentSerializer;
 import com.krnl32.jupiter.serializer.resolvers.EntityResolver;
 import com.krnl32.jupiter.serializer.utility.JOMLSerializerUtils;
+import org.joml.Vector4f;
 import org.json.JSONObject;
 
 public class SpriteRendererComponentSerializer implements ComponentSerializer<SpriteRendererComponent> {
@@ -48,6 +49,16 @@ public class SpriteRendererComponentSerializer implements ComponentSerializer<Sp
 				data.getJSONArray("textureUV").getFloat(6),
 				data.getJSONArray("textureUV").getFloat(7),
 			}
+		);
+	}
+
+	@Override
+	public SpriteRendererComponent clone(SpriteRendererComponent component) {
+		return new SpriteRendererComponent(
+			component.index,
+			new Vector4f(component.color),
+			component.textureAssetID != null ? new AssetID(component.textureAssetID.getId()) : null,
+			component.textureUV.clone()
 		);
 	}
 }

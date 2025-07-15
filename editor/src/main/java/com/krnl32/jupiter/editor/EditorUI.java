@@ -1,12 +1,15 @@
 package com.krnl32.jupiter.editor;
 
+import com.krnl32.jupiter.asset.AssetManager;
+import com.krnl32.jupiter.asset.TextureAsset;
 import com.krnl32.jupiter.core.Window;
+import com.krnl32.jupiter.event.EventBus;
+import com.krnl32.jupiter.events.editor.EditorPauseEvent;
+import com.krnl32.jupiter.events.editor.EditorPlayEvent;
+import com.krnl32.jupiter.events.editor.EditorStopEvent;
 import imgui.ImGui;
 import imgui.ImVec2;
-import imgui.flag.ImGuiConfigFlags;
-import imgui.flag.ImGuiDockNodeFlags;
-import imgui.flag.ImGuiStyleVar;
-import imgui.flag.ImGuiWindowFlags;
+import imgui.flag.*;
 import imgui.type.ImBoolean;
 
 import java.util.ArrayList;
@@ -15,10 +18,22 @@ import java.util.List;
 public class EditorUI {
 	private final ImGuiWrapper imGuiWrapper;
 	private final List<EditorPanel> editorPanels;
+	private EditorState editorState;
 
 	public EditorUI(Window window) {
 		this.imGuiWrapper = new ImGuiWrapper(window);
 		this.editorPanels = new ArrayList<>();
+		this.editorState = EditorState.STOP;
+
+		EventBus.getInstance().register(EditorPlayEvent.class, event -> {
+			editorState = EditorState.PLAY;
+		});
+		EventBus.getInstance().register(EditorPauseEvent.class, event -> {
+			editorState = EditorState.PAUSE;
+		});
+		EventBus.getInstance().register(EditorStopEvent.class, event -> {
+			editorState = EditorState.STOP;
+		});
 	}
 
 	public void onUpdate(float dt) {
@@ -46,6 +61,77 @@ public class EditorUI {
 	public void addEditorPanel(EditorPanel editorPanel) {
 		editorPanels.add(editorPanel);
 	}
+
+	private void renderToolBar() {
+		float toolbarHeight = 48.0f;
+		float iconSize = 32.0f;
+		float spacing = 16.0f;
+
+		ImGui.pushStyleVar(ImGuiStyleVar.FramePadding, 6, 6);
+		ImGui.pushStyleVar(ImGuiStyleVar.ItemSpacing, spacing, 0);
+		ImGui.pushStyleVar(ImGuiStyleVar.FrameRounding, 4.0f);
+
+		ImGui.pushStyleColor(ImGuiCol.Button, 0.25f, 0.25f, 0.25f, 1.0f);
+		ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0.35f, 0.35f, 0.35f, 1.0f);
+		ImGui.pushStyleColor(ImGuiCol.ButtonActive, 0.45f, 0.45f, 0.45f, 1.0f);
+
+		ImGui.beginChild("##toolbar", new ImVec2(0, toolbarHeight), false, ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse);
+		float totalWidth = iconSize * 3 + spacing * 2;
+		float startX = (ImGui.getContentRegionAvailX() - totalWidth) * 0.5f;
+		ImGui.setCursorPosX(startX);
+
+		int playIcon = ((TextureAsset) AssetManager.getInstance().getAsset("editorPlayButton")).getTexture().getTextureID();
+		int pauseIcon = ((TextureAsset) AssetManager.getInstance().getAsset("editorPauseButton")).getTexture().getTextureID();
+		int stopIcon = ((TextureAsset) AssetManager.getInstance().getAsset("editorStopButton")).getTexture().getTextureID();
+
+		// Play
+		if (editorState == EditorState.PLAY) {
+			ImGui.beginDisabled();
+			ImGui.imageButton("##play", playIcon, iconSize, iconSize);
+			ImGui.endDisabled();
+		} else {
+			if (ImGui.imageButton("##play", playIcon, iconSize, iconSize)) {
+				EventBus.getInstance().emit(new EditorPlayEvent());
+			}
+		}
+		if (ImGui.isItemHovered())
+			ImGui.setTooltip("Play");
+
+		ImGui.sameLine();
+
+		// Pause
+		if (editorState == EditorState.PLAY) {
+			if (ImGui.imageButton("##pause", pauseIcon, iconSize, iconSize)) {
+				EventBus.getInstance().emit(new EditorPauseEvent());
+			}
+		} else {
+			ImGui.beginDisabled();
+			ImGui.imageButton("##pause", pauseIcon, iconSize, iconSize);
+			ImGui.endDisabled();
+		}
+		if (ImGui.isItemHovered())
+			ImGui.setTooltip("Pause");
+
+		ImGui.sameLine();
+
+		// Stop
+		if (editorState == EditorState.PLAY || editorState == EditorState.PAUSE) {
+			if (ImGui.imageButton("##stop", stopIcon, iconSize, iconSize)) {
+				EventBus.getInstance().emit(new EditorStopEvent());
+			}
+		} else {
+			ImGui.beginDisabled();
+			ImGui.imageButton("##stop", stopIcon, iconSize, iconSize);
+			ImGui.endDisabled();
+		}
+		if (ImGui.isItemHovered())
+			ImGui.setTooltip("Stop");
+
+		ImGui.endChild();
+		ImGui.popStyleColor(3);
+		ImGui.popStyleVar(3);
+	}
+
 
 	private void dockspaceBegin() {
 		boolean dockspaceOpen = true;
@@ -76,6 +162,7 @@ public class EditorUI {
 		}
 
 		ImGui.begin("Dockspace", new ImBoolean(dockspaceOpen), windowFlags);
+		renderToolBar();
 
 		if (!optPadding)
 			ImGui.popStyleVar();

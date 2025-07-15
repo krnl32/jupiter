@@ -2,7 +2,8 @@ package com.krnl32.jupiter.scene;
 
 import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.event.EventBus;
-import com.krnl32.jupiter.events.scene.SceneSwitchEvent;
+import com.krnl32.jupiter.events.scene.SceneSwitchedEvent;
+import com.krnl32.jupiter.events.scene.SwitchSceneEvent;
 import com.krnl32.jupiter.renderer.Renderer;
 
 import java.util.HashMap;
@@ -16,7 +17,7 @@ public class SceneManager {
 		this.scenes = new HashMap<>();
 		this.currentScene = null;
 
-		EventBus.getInstance().register(SceneSwitchEvent.class, event -> {
+		EventBus.getInstance().register(SwitchSceneEvent.class, event -> {
 			switchScene(event.getSceneName());
 		});
 	}
@@ -45,6 +46,8 @@ public class SceneManager {
 			return;
 		}
 		currentScene.load();
+
+		EventBus.getInstance().emit(new SceneSwitchedEvent(currentScene));
 	}
 
 	public Scene getScene() {

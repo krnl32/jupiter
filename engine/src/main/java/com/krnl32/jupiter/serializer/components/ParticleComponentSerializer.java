@@ -4,6 +4,7 @@ import com.krnl32.jupiter.components.ParticleComponent;
 import com.krnl32.jupiter.serializer.ComponentSerializer;
 import com.krnl32.jupiter.serializer.resolvers.EntityResolver;
 import com.krnl32.jupiter.serializer.utility.JOMLSerializerUtils;
+import org.joml.Vector3f;
 import org.json.JSONObject;
 
 public class ParticleComponentSerializer implements ComponentSerializer<ParticleComponent> {
@@ -21,6 +22,15 @@ public class ParticleComponentSerializer implements ComponentSerializer<Particle
 			JOMLSerializerUtils.deserializeVector3f(data.getJSONObject("velocity")),
 			data.getFloat("duration"),
 			data.getFloat("remainingTime")
+		);
+	}
+
+	@Override
+	public ParticleComponent clone(ParticleComponent component) {
+		return new ParticleComponent(
+			new Vector3f(component.velocity),
+			component.duration,
+			component.remainingTime
 		);
 	}
 }

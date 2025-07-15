@@ -15,4 +15,9 @@ public class TagComponentSerializer implements ComponentSerializer<TagComponent>
 	public TagComponent deserialize(JSONObject data, EntityResolver resolver) {
 		return new TagComponent(data.getString("tag"));
 	}
+
+	@Override
+	public TagComponent clone(TagComponent component) {
+		return new TagComponent(component.tag);
+	}
 }

@@ -6,6 +6,7 @@ import com.krnl32.jupiter.editor.EditorPanel;
 import com.krnl32.jupiter.event.EventBus;
 import com.krnl32.jupiter.events.entity.EntityDestroyedEvent;
 import com.krnl32.jupiter.events.scene.EntitySelectedEvent;
+import com.krnl32.jupiter.events.scene.SceneSwitchedEvent;
 import com.krnl32.jupiter.scene.Scene;
 import imgui.ImGui;
 import imgui.flag.*;
@@ -30,6 +31,11 @@ public class SceneHierarchyPanel implements EditorPanel {
 		this.renameInputActiveLastFrame = false;
 
 		EventBus.getInstance().register(EntityDestroyedEvent.class, event -> {
+			setSelectedEntity(null);
+		});
+
+		EventBus.getInstance().register(SceneSwitchedEvent.class, event -> {
+			this.scene = event.getScene();
 			setSelectedEntity(null);
 		});
 	}

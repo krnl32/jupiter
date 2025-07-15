@@ -26,4 +26,15 @@ public class BlinkComponentSerializer implements ComponentSerializer<BlinkCompon
 			data.getBoolean("visible")
 		);
 	}
+
+	@Override
+	public BlinkComponent clone(BlinkComponent component) {
+		return new BlinkComponent(
+			component.duration,
+			component.interval,
+			component.elapsedTime,
+			component.blinkTime,
+			component.visible
+		);
+	}
 }

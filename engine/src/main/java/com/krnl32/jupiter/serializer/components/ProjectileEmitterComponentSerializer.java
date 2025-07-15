@@ -1,10 +1,13 @@
 package com.krnl32.jupiter.serializer.components;
 
+import com.krnl32.jupiter.asset.AssetID;
 import com.krnl32.jupiter.components.ProjectileEmitterComponent;
 import com.krnl32.jupiter.input.KeyCode;
+import com.krnl32.jupiter.model.Sprite;
 import com.krnl32.jupiter.serializer.ComponentSerializer;
 import com.krnl32.jupiter.serializer.resolvers.EntityResolver;
 import com.krnl32.jupiter.serializer.utility.JupiterSerializerUtils;
+import org.joml.Vector4f;
 import org.json.JSONObject;
 
 public class ProjectileEmitterComponentSerializer implements ComponentSerializer<ProjectileEmitterComponent> {
@@ -26,6 +29,16 @@ public class ProjectileEmitterComponentSerializer implements ComponentSerializer
 			data.getFloat("projectileSpeed"),
 			data.getFloat("lastEmissionTime"),
 			JupiterSerializerUtils.deserializeSprite(data.getJSONObject("sprite"))
+		);
+	}
+
+	@Override
+	public ProjectileEmitterComponent clone(ProjectileEmitterComponent component) {
+		return new	ProjectileEmitterComponent(
+			component.shootKey,
+			component.fireRate,
+			component.projectileSpeed,
+			new Sprite(component.sprite.getIndex(), new Vector4f(component.sprite.getColor()), new AssetID(component.sprite.getTextureAssetID().getId()), component.sprite.getTextureUV().clone())
 		);
 	}
 }

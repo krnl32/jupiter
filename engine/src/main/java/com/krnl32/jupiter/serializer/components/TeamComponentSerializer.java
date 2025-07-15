@@ -15,4 +15,9 @@ public class TeamComponentSerializer implements ComponentSerializer<TeamComponen
 	public TeamComponent deserialize(JSONObject data, EntityResolver resolver) {
 		return new TeamComponent(data.getInt("teamID"));
 	}
+
+	@Override
+	public TeamComponent clone(TeamComponent component) {
+		return new TeamComponent(component.teamID);
+	}
 }

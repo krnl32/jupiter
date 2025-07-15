@@ -55,4 +55,12 @@ public class CameraComponentSerializer implements ComponentSerializer<CameraComp
 
 		return new CameraComponent(camera, data.getBoolean("primary"));
 	}
+
+	@Override
+	public CameraComponent clone(CameraComponent component) {
+		return new CameraComponent(
+			new Camera(component.camera.getPosition(), component.camera.getWorldUp(), component.camera.getYaw(), component.camera.getPitch(), component.camera.getRoll(), component.camera.getZoom(), component.camera.getTurnSpeed(), component.camera.getRollSpeed(), component.camera.getZoomSpeed(), component.camera.isMouseEnabled()),
+			component.primary
+		);
+	}
 }

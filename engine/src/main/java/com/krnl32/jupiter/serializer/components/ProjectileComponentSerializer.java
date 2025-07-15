@@ -3,6 +3,7 @@ package com.krnl32.jupiter.serializer.components;
 import com.krnl32.jupiter.components.UUIDComponent;
 import com.krnl32.jupiter.components.ProjectileComponent;
 import com.krnl32.jupiter.core.Logger;
+import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.serializer.ComponentSerializer;
 import com.krnl32.jupiter.serializer.resolvers.EntityResolver;
 import org.json.JSONObject;
@@ -30,6 +31,15 @@ public class ProjectileComponentSerializer implements ComponentSerializer<Projec
 			resolver.resolve(UUID.fromString(data.getString("owner"))),
 			data.getFloat("damage"),
 			data.getBoolean("canHitOwner")
+		);
+	}
+
+	@Override
+	public ProjectileComponent clone(ProjectileComponent component) {
+		return new ProjectileComponent(
+			new Entity(component.owner.getId(), component.owner.getRegistry()),
+			component.damage,
+			component.canHitOwner
 		);
 	}
 }

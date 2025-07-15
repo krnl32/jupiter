@@ -18,6 +18,10 @@ public class Entity {
 		return id;
 	}
 
+	public Registry getRegistry() {
+		return registry;
+	}
+
 	public <T extends Component> void addComponent(T component) {
 		registry.addComponent(this, component);
 	}

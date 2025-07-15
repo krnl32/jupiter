@@ -54,6 +54,61 @@ public class SceneSerializer {
 		}
 	}
 
+	public Scene clone(Scene scene, boolean regenUUID) {
+		Scene clone;
+		try {
+			clone = scene.getClass().getDeclaredConstructor().newInstance();
+		} catch (Exception e) {
+			System.out.println("SceneSerialized Clone Failed " + e.getMessage());
+			return null;
+		}
+
+		Map<UUID, UUID> originalUUIDToNewUUID = new HashMap<>();
+		Map<UUID, Entity> cloneUUIDToEntity = new HashMap<>();
+
+		// Create Entities
+		for (Entity entity : scene.getRegistry().getEntities()) {
+			UUIDComponent uuidComp = entity.getComponent(UUIDComponent.class);
+			if (uuidComp == null) {
+				Logger.warn("Skipping entity without UUIDComponent during scene clone.");
+				continue;
+			}
+
+			UUID originalUUID = uuidComp.uuid;
+			UUID newUUID = regenUUID ? UUID.randomUUID() : originalUUID;
+
+			Entity newEntity = clone.createEntity();
+			newEntity.addComponent(new UUIDComponent(newUUID));
+
+			originalUUIDToNewUUID.put(originalUUID, newUUID);
+			cloneUUIDToEntity.put(newUUID, newEntity);
+		}
+
+		// Clone Components
+		for (Entity entity : scene.getRegistry().getEntities()) {
+			UUIDComponent uuidComp = entity.getComponent(UUIDComponent.class);
+			if (uuidComp == null)
+				continue;
+
+			UUID originalUUID = uuidComp.uuid;
+			UUID clonedUUID = originalUUIDToNewUUID.get(originalUUID);
+			Entity clonedEntity = cloneUUIDToEntity.get(clonedUUID);
+
+			for (Component component : entity.getComponents()) {
+				if (component instanceof UUIDComponent)
+					continue;
+
+				ComponentSerializer componentSerializer = SerializerRegistry.getComponentSerializer(component.getClass());
+				if (componentSerializer != null) {
+					Component clonedComponent = componentSerializer.clone(component);
+					clonedEntity.addComponent(clonedComponent);
+				}
+			}
+		}
+
+		return clone;
+	}
+
 	private JSONObject serializeEntity(Entity entity) {
 		JSONObject componentsObj = new JSONObject();
 		for(Component component: entity.getComponents()) {

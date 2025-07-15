@@ -7,4 +7,5 @@ import org.json.JSONObject;
 public interface ComponentSerializer<T extends Component> {
 	JSONObject serialize(T component);
 	T deserialize(JSONObject data, EntityResolver resolver);
+	T clone(T component);
 }

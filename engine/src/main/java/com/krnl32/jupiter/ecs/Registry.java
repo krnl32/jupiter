@@ -1,11 +1,9 @@
 package com.krnl32.jupiter.ecs;
 
+import com.krnl32.jupiter.components.UUIDComponent;
 import com.krnl32.jupiter.renderer.Renderer;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Registry {
 	private final EntityManager entityManager = new EntityManager();
@@ -69,6 +67,15 @@ public class Registry {
 		for (int id : result)
 			entities.add(new Entity(id, this));
 		return entities;
+	}
+
+	public Entity getEntityByUUID(UUID uuid) {
+		for (Entity entity : getEntities()) {
+			UUIDComponent uuidComponent = entity.getComponent(UUIDComponent.class);
+			if (uuidComponent != null && uuidComponent.uuid.equals(uuid))
+				return entity;
+		}
+		return null;
 	}
 
 	@SuppressWarnings("unchecked")

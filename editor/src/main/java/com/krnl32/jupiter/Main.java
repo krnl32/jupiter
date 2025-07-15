@@ -1,6 +1,7 @@
 package com.krnl32.jupiter;
 
 import com.krnl32.jupiter.core.Logger;
+import com.krnl32.jupiter.editor.Editor;
 
 public class Main {
 	public static void main(String[] args) {

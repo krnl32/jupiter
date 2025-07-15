@@ -20,4 +20,12 @@ public class HealthComponentSerializer implements ComponentSerializer<HealthComp
 			data.getFloat("currentHealth")
 		);
 	}
+
+	@Override
+	public HealthComponent clone(HealthComponent component) {
+		return new HealthComponent(
+			component.maxHealth,
+			component.currentHealth
+		);
+	}
 }

@@ -1,9 +1,12 @@
 package com.krnl32.jupiter.serializer.components;
 
+import com.krnl32.jupiter.asset.AssetID;
 import com.krnl32.jupiter.components.DeathEffectComponent;
+import com.krnl32.jupiter.model.Sprite;
 import com.krnl32.jupiter.serializer.ComponentSerializer;
 import com.krnl32.jupiter.serializer.resolvers.EntityResolver;
 import com.krnl32.jupiter.serializer.utility.JupiterSerializerUtils;
+import org.joml.Vector4f;
 import org.json.JSONObject;
 
 public class DeathEffectComponentSerializer implements ComponentSerializer<DeathEffectComponent> {
@@ -19,6 +22,19 @@ public class DeathEffectComponentSerializer implements ComponentSerializer<Death
 		return new DeathEffectComponent(
 			data.getInt("particleCount"),
 			JupiterSerializerUtils.deserializeSprite(data.getJSONObject("particleSprite"))
+		);
+	}
+
+	@Override
+	public DeathEffectComponent clone(DeathEffectComponent component) {
+		return new DeathEffectComponent(
+			component.particleCount,
+			new Sprite(
+				component.particleSprite.getIndex(),
+				new Vector4f(component.particleSprite.getColor()),
+				new AssetID(component.particleSprite.getTextureAssetID().getId()),
+				component.particleSprite.getTextureUV().clone()
+			)
 		);
 	}
 }

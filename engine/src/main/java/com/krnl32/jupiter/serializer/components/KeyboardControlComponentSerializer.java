@@ -36,4 +36,20 @@ public class KeyboardControlComponentSerializer implements ComponentSerializer<K
 			KeyCode.fromCode(data.getInt("jumpKey")),
 			KeyCode.fromCode(data.getInt("sprintKey")));
 	}
+
+	@Override
+	public KeyboardControlComponent clone(KeyboardControlComponent component) {
+		return new KeyboardControlComponent(
+			component.upKey,
+			component.downKey,
+			component.forwardKey,
+			component.backwardKey,
+			component.leftKey,
+			component.rightKey,
+			component.rotateLeftKey,
+			component.rotateRightKey,
+			component.jumpKey,
+			component.sprintKey
+		);
+	}
 }

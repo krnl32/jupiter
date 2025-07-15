@@ -11,13 +11,11 @@ import com.krnl32.jupiter.components.ui.*;
 import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.event.EventBus;
-import com.krnl32.jupiter.events.scene.SceneSwitchEvent;
+import com.krnl32.jupiter.events.scene.SwitchSceneEvent;
 import com.krnl32.jupiter.events.window.WindowCloseEvent;
 import com.krnl32.jupiter.events.window.WindowResizeEvent;
 import com.krnl32.jupiter.renderer.Camera;
 import com.krnl32.jupiter.scene.Scene;
-import com.krnl32.jupiter.systems.*;
-import com.krnl32.jupiter.systems.ui.*;
 import com.krnl32.jupiter.ui.UIHierarchyManager;
 import com.krnl32.jupiter.ui.layout.LayoutOverflow;
 import com.krnl32.jupiter.ui.layout.LayoutType;
@@ -111,7 +109,7 @@ public class MainMenuScene extends Scene {
 		playButton.addComponent(new UITransformComponent(new Vector3f(0.0f, 0.0f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(222.0f, 39.0f, 1.0f)));
 		playButton.addComponent(new UIRenderComponent(-1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), buttonBlueID));
 		playButton.addComponent(new UIButtonComponent((entity) -> {
-			EventBus.getInstance().emit(new SceneSwitchEvent("level1"));
+			EventBus.getInstance().emit(new SwitchSceneEvent("level1"));
 		}));
 		playButton.addComponent(new UITextComponent("Play", new Vector4f(0.705f, 0.118f, 0.118f, 1.0f), arialFontID, TextHorizontalAlign.CENTER, TextVerticalAlign.CENTER, TextOverflow.SCALE));
 		UIHierarchyManager.attach(mainMenuButtonList, playButton);

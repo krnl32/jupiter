@@ -17,4 +17,9 @@ public class UUIDComponentSerializer implements ComponentSerializer<UUIDComponen
 	public UUIDComponent deserialize(JSONObject data, EntityResolver resolver) {
 		return new UUIDComponent(UUID.fromString(data.getString("uuid")));
 	}
+
+	@Override
+	public UUIDComponent clone(UUIDComponent component) {
+		return new UUIDComponent(component.uuid);
+	}
 }
