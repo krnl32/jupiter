@@ -2,8 +2,10 @@ package com.krnl32.jupiter;
 
 import com.krnl32.jupiter.components.*;
 import com.krnl32.jupiter.ecs.Entity;
+import com.krnl32.jupiter.physics.BodyType;
 import com.krnl32.jupiter.renderer.Camera;
 import com.krnl32.jupiter.scene.Scene;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
@@ -29,6 +31,16 @@ public class EmptyScene extends Scene {
 		entity.addComponent(new TagComponent("redBox"));
 		entity.addComponent(new TransformComponent(new Vector3f(0.0f, 0.0f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(1.0f, 1.0f, 1.0f)));
 		entity.addComponent(new SpriteRendererComponent(-1, new Vector4f(1.0f, 0.0f, 0.0f, 1.0f), null));
+
+		for (int i = 0; i < 7; i++) {
+			Entity floor = createEntity();
+			floor.addComponent(new UUIDComponent());
+			floor.addComponent(new TagComponent("floor" + i));
+			floor.addComponent(new TransformComponent(new Vector3f(-3.0f + i, -3.5f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(1.0f, 1.0f, 1.0f)));
+			floor.addComponent(new SpriteRendererComponent(-1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), null));
+			floor.addComponent(new BoxCollider2DComponent(new Vector2f(1.0f, 1.0f)));
+			floor.addComponent(new RigidBody2DComponent(BodyType.STATIC));
+		}
 	}
 
 	@Override

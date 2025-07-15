@@ -109,7 +109,7 @@ public class TestScene extends Scene {
 		staticFloor.addComponent(new TagComponent("staticFloor"));
 		staticFloor.addComponent(new TransformComponent(new Vector3f(-3.0f, -2.5f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(1.0f, 1.0f, 1.0f)));
 		staticFloor.addComponent(new SpriteRendererComponent(-2, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), null));
-		RigidBody2DComponent staticFloorRigidBody2D = new RigidBody2DComponent();
+		RigidBody2DComponent staticFloorRigidBody2D = new RigidBody2DComponent(BodyType.STATIC);
 		staticFloorRigidBody2D.bodyType = BodyType.STATIC;
 		staticFloor.addComponent(staticFloorRigidBody2D);
 		staticFloor.addComponent(new BoxCollider2DComponent(new Vector2f(1.0f, 1.0f)));

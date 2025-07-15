@@ -4,7 +4,6 @@ import com.krnl32.jupiter.ecs.Component;
 import com.krnl32.jupiter.physics.BodyType;
 import org.jbox2d.dynamics.Body;
 import org.joml.Vector2f;
-import org.joml.Vector3f;
 
 public class RigidBody2DComponent implements Component {
 	public BodyType bodyType;
@@ -17,8 +16,8 @@ public class RigidBody2DComponent implements Component {
 	public boolean continuousCollision;
 	public Body rawBody;
 
-	public RigidBody2DComponent() {
-		this.bodyType = BodyType.DYNAMIC;
+	public RigidBody2DComponent(BodyType bodyType) {
+		this.bodyType = bodyType;
 		this.initialVelocity = new Vector2f();
 		this.angularDamping = 0.8f;
 		this.linearDamping = 0.9f;
@@ -29,8 +28,8 @@ public class RigidBody2DComponent implements Component {
 		this.rawBody = null;
 	}
 
-	public RigidBody2DComponent(Vector2f initialVelocity) {
-		this.bodyType = BodyType.DYNAMIC;
+	public RigidBody2DComponent(BodyType bodyType, Vector2f initialVelocity) {
+		this.bodyType = bodyType;
 		this.initialVelocity = initialVelocity;
 		this.angularDamping = 0.8f;
 		this.linearDamping = 0.9f;
