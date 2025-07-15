@@ -22,6 +22,19 @@ public class Entity {
 		return registry;
 	}
 
+	public String getTagOrId() {
+		return hasComponent(TagComponent.class) ? getComponent(TagComponent.class).tag : String.valueOf(id);
+	}
+
+	public void setTag(String tag) {
+		TagComponent tagComponent = getComponent(TagComponent.class);
+		if (tagComponent == null) {
+			addComponent(new TagComponent(tag));
+		} else {
+			tagComponent.tag = tag;
+		}
+	}
+
 	public <T extends Component> void addComponent(T component) {
 		registry.addComponent(this, component);
 	}
@@ -42,10 +55,6 @@ public class Entity {
 		return registry.hasComponent(this, component);
 	}
 
-	public void destroy() {
-		registry.destroyEntity(this);
-	}
-
 	@Override
 	public boolean equals(Object o) {
 		if (o == null || getClass() != o.getClass()) return false;
@@ -56,19 +65,6 @@ public class Entity {
 	@Override
 	public int hashCode() {
 		return Objects.hashCode(id);
-	}
-
-	public String getTagOrId() {
-		return hasComponent(TagComponent.class) ? getComponent(TagComponent.class).tag : String.valueOf(id);
-	}
-
-	public void setTag(String tag) {
-		TagComponent tagComponent = getComponent(TagComponent.class);
-		if (tagComponent == null) {
-			addComponent(new TagComponent(tag));
-		} else {
-			tagComponent.tag = tag;
-		}
 	}
 
 	@Override

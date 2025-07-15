@@ -59,5 +59,7 @@ public class SceneManager {
 			currentScene.onUnload();
 		currentScene = scene;
 		currentScene.load();
+
+		EventBus.getInstance().emit(new SceneSwitchedEvent(currentScene));
 	}
 }

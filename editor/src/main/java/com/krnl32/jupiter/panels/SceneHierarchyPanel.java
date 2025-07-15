@@ -37,6 +37,10 @@ public class SceneHierarchyPanel implements EditorPanel {
 		EventBus.getInstance().register(SceneSwitchedEvent.class, event -> {
 			this.scene = event.getScene();
 			setSelectedEntity(null);
+			this.renaming = false;
+			this.renameRequestedEntity = null;
+			this.renameBuffer.set("");
+			this.renameInputActiveLastFrame = false;
 		});
 	}
 

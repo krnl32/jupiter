@@ -2,6 +2,7 @@ package com.krnl32.jupiter.panels;
 
 import com.krnl32.jupiter.editor.EditorPanel;
 import com.krnl32.jupiter.event.EventBus;
+import com.krnl32.jupiter.events.scene.SceneSwitchedEvent;
 import com.krnl32.jupiter.events.scene.ViewportResizeEvent;
 import com.krnl32.jupiter.renderer.Framebuffer;
 import imgui.ImGui;
@@ -18,6 +19,10 @@ public class ViewportPanel implements EditorPanel {
 		this.framebuffer = framebuffer;
 		this.viewport = new Vector2f();
 		this.viewportFocused = false;
+
+		EventBus.getInstance().register(SceneSwitchedEvent.class, event -> {
+			EventBus.getInstance().emit(new ViewportResizeEvent((int) viewport.x, (int) viewport.y));
+		});
 	}
 
 	@Override

@@ -20,7 +20,7 @@ public class DestroySystem implements System {
 		for (Entity entity: registry.getEntitiesWith(DestroyComponent.class)) {
 			EventBus.getInstance().emit(new EntityDestroyedEvent(entity));
 			//Logger.info("Destroying Entity({})", entity.getTagOrId());
-			entity.destroy();
+			registry.destroyEntity(entity);
 		}
 	}
 

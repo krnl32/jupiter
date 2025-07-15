@@ -46,10 +46,12 @@ public class CameraComponentSerializer implements ComponentSerializer<CameraComp
 			data.getBoolean("mouseEnabled"));
 
 		ProjectionType projectionType = ProjectionType.valueOf(data.getString("projectionType"));
-		if (projectionType == ProjectionType.ORTHOGRAPHIC)
+		if (projectionType == ProjectionType.ORTHOGRAPHIC) {
 			camera.setOrthographic(data.getFloat("projectionSize"), data.getFloat("projectionNear"), data.getFloat("projectionFar"));
-		else if(projectionType == ProjectionType.PERSPECTIVE)
+		}
+		else if(projectionType == ProjectionType.PERSPECTIVE) {
 			camera.setPerspective(data.getFloat("projectionFOV"), data.getFloat("projectionNear"), data.getFloat("projectionFar"));
+		}
 
 		camera.setAspectRatio(data.getFloat("aspectRatio"));
 
@@ -58,9 +60,15 @@ public class CameraComponentSerializer implements ComponentSerializer<CameraComp
 
 	@Override
 	public CameraComponent clone(CameraComponent component) {
-		return new CameraComponent(
-			new Camera(component.camera.getPosition(), component.camera.getWorldUp(), component.camera.getYaw(), component.camera.getPitch(), component.camera.getRoll(), component.camera.getZoom(), component.camera.getTurnSpeed(), component.camera.getRollSpeed(), component.camera.getZoomSpeed(), component.camera.isMouseEnabled()),
-			component.primary
-		);
+		Camera camera = new Camera(component.camera.getPosition(), component.camera.getWorldUp(), component.camera.getYaw(), component.camera.getPitch(), component.camera.getRoll(), component.camera.getZoom(), component.camera.getTurnSpeed(), component.camera.getRollSpeed(), component.camera.getZoomSpeed(), component.camera.isMouseEnabled());
+
+		if (component.camera.getProjectionType() == ProjectionType.ORTHOGRAPHIC) {
+			camera.setOrthographic(component.camera.getProjectionSize(), component.camera.getProjectionNear(), component.camera.getProjectionFar());
+		}
+		else if(component.camera.getProjectionType() == ProjectionType.PERSPECTIVE) {
+			camera.setPerspective(component.camera.getProjectionFOV(), component.camera.getProjectionNear(), component.camera.getProjectionFar());
+		}
+
+		return new CameraComponent(camera, component.primary);
 	}
 }

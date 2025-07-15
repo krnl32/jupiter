@@ -55,13 +55,19 @@ public class SceneSerializer {
 	}
 
 	public Scene clone(Scene scene, boolean regenUUID) {
-		Scene clone;
-		try {
-			clone = scene.getClass().getDeclaredConstructor().newInstance();
-		} catch (Exception e) {
-			System.out.println("SceneSerialized Clone Failed " + e.getMessage());
-			return null;
-		}
+		Scene clone = new Scene() {
+			@Override
+			public void onCreate() {
+			}
+
+			@Override
+			public void onActivate() {
+			}
+
+			@Override
+			public void onUnload() {
+			}
+		};
 
 		Map<UUID, UUID> originalUUIDToNewUUID = new HashMap<>();
 		Map<UUID, Entity> cloneUUIDToEntity = new HashMap<>();
@@ -70,7 +76,7 @@ public class SceneSerializer {
 		for (Entity entity : scene.getRegistry().getEntities()) {
 			UUIDComponent uuidComp = entity.getComponent(UUIDComponent.class);
 			if (uuidComp == null) {
-				Logger.warn("Skipping entity without UUIDComponent during scene clone.");
+				Logger.warn("SceneSerializer Clone Skipping Entity({}) without UUIDComponent", entity.getTagOrId());
 				continue;
 			}
 
