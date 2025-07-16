@@ -14,7 +14,7 @@ import com.krnl32.jupiter.components.utility.TagComponent;
 import com.krnl32.jupiter.components.utility.UUIDComponent;
 import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.ecs.Entity;
-import com.krnl32.jupiter.input.KeyCode;
+import com.krnl32.jupiter.input.devices.KeyCode;
 import com.krnl32.jupiter.model.Sprite;
 import com.krnl32.jupiter.physics.BodyType;
 import com.krnl32.jupiter.renderer.Camera;

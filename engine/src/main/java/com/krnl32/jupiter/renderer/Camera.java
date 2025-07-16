@@ -2,8 +2,8 @@ package com.krnl32.jupiter.renderer;
 
 import com.krnl32.jupiter.event.EventBus;
 import com.krnl32.jupiter.events.scene.ViewportResizeEvent;
-import com.krnl32.jupiter.input.Input;
-import com.krnl32.jupiter.input.KeyCode;
+import com.krnl32.jupiter.input.InputDeviceSystem;
+import com.krnl32.jupiter.input.devices.KeyCode;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -62,14 +62,14 @@ public class Camera {
 	public void onUpdate(float dt) {
 		if (mouseEnabled) {
 			// Mouse
-			Vector2f mouseCursorDelta = Input.getInstance().getMouseCursorDelta();
+			Vector2f mouseCursorDelta = InputDeviceSystem.getInstance().getMouseCursorDelta();
 			yaw += (mouseCursorDelta.x * turnSpeed);
 			pitch += (mouseCursorDelta.y * turnSpeed);
 			pitch = clamp(pitch, -89.0f, 89.0f);
 
-			if (Input.getInstance().isKeyDown(KeyCode.Q))
+			if (InputDeviceSystem.getInstance().isKeyDown(KeyCode.Q))
 				roll += rollSpeed * dt;
-			if (Input.getInstance().isKeyDown(KeyCode.E))
+			if (InputDeviceSystem.getInstance().isKeyDown(KeyCode.E))
 				roll -= rollSpeed * dt;
 
 			if (roll > 180.0f)
@@ -77,9 +77,9 @@ public class Camera {
 			else if (roll < -180.0f)
 				roll += 360.0f;
 
-			if (Input.getInstance().isMouseScrollingUp())
+			if (InputDeviceSystem.getInstance().isMouseScrollingUp())
 				zoom(zoom * zoomSpeed * dt);
-			if (Input.getInstance().isMouseScrollingDown())
+			if (InputDeviceSystem.getInstance().isMouseScrollingDown())
 				zoom(-zoom * zoomSpeed * dt);
 		}
 

@@ -2,7 +2,7 @@ package com.krnl32.jupiter.serializer.components.projectile;
 
 import com.krnl32.jupiter.asset.AssetID;
 import com.krnl32.jupiter.components.projectile.ProjectileEmitterComponent;
-import com.krnl32.jupiter.input.KeyCode;
+import com.krnl32.jupiter.input.devices.KeyCode;
 import com.krnl32.jupiter.model.Sprite;
 import com.krnl32.jupiter.serializer.ComponentSerializer;
 import com.krnl32.jupiter.serializer.resolvers.EntityResolver;

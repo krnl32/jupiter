@@ -8,8 +8,8 @@ import com.krnl32.jupiter.ecs.Registry;
 import com.krnl32.jupiter.ecs.System;
 import com.krnl32.jupiter.event.EventBus;
 import com.krnl32.jupiter.events.entity.EntityDestroyedEvent;
-import com.krnl32.jupiter.input.Input;
-import com.krnl32.jupiter.input.MouseCode;
+import com.krnl32.jupiter.input.InputDeviceSystem;
+import com.krnl32.jupiter.input.devices.MouseCode;
 import com.krnl32.jupiter.renderer.Renderer;
 import com.krnl32.jupiter.utility.UIUtils;
 import org.joml.Vector2f;
@@ -38,7 +38,7 @@ public class UIFocusSystem implements System {
 
 	@Override
 	public void onUpdate(float dt) {
-		Vector2f mousePosition = Input.getInstance().getMouseCursorPosition();
+		Vector2f mousePosition = InputDeviceSystem.getInstance().getMouseCursorPosition();
 
 		boolean mouseInUI = false;
 		for (Entity entity : registry.getEntitiesWith(UIFocusComponent.class, UITransformComponent.class)) {
@@ -49,7 +49,7 @@ public class UIFocusSystem implements System {
 				mouseInUI = true;
 			}
 
-			if (Input.getInstance().isMouseButtonReleased(MouseCode.BUTTON_LEFT)) {
+			if (InputDeviceSystem.getInstance().isMouseButtonReleased(MouseCode.BUTTON_LEFT)) {
 				if (inside && entity != focusedEntity) {
 					// Blur old entity
 					if (focusedEntity != null) {
@@ -73,7 +73,7 @@ public class UIFocusSystem implements System {
 		}
 
 		// Handle Click Outside
-		if (!mouseInUI && focusedEntity != null && Input.getInstance().isMouseButtonReleased(MouseCode.BUTTON_LEFT)) {
+		if (!mouseInUI && focusedEntity != null && InputDeviceSystem.getInstance().isMouseButtonReleased(MouseCode.BUTTON_LEFT)) {
 			UIFocusComponent focusedFocus = focusedEntity.getComponent(UIFocusComponent.class);
 			if (focusedFocus != null) {
 				focusedFocus.isFocused = false;

@@ -5,7 +5,7 @@ import com.krnl32.jupiter.components.gameplay.MovementIntentComponent;
 import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.ecs.Registry;
 import com.krnl32.jupiter.ecs.System;
-import com.krnl32.jupiter.input.Input;
+import com.krnl32.jupiter.input.InputDeviceSystem;
 import com.krnl32.jupiter.renderer.Renderer;
 
 public class KeyboardControlSystem implements System {
@@ -26,31 +26,31 @@ public class KeyboardControlSystem implements System {
 			movementIntent.jump = false;
 			movementIntent.sprint = false;
 
-			if (Input.getInstance().isKeyDown(keyboardControl.upKey))
+			if (InputDeviceSystem.getInstance().isKeyDown(keyboardControl.upKey))
 				movementIntent.translation.y += 1;
 
-			if (Input.getInstance().isKeyDown(keyboardControl.downKey))
+			if (InputDeviceSystem.getInstance().isKeyDown(keyboardControl.downKey))
 				movementIntent.translation.y -= 1;
 
-			if (Input.getInstance().isKeyDown(keyboardControl.leftKey))
+			if (InputDeviceSystem.getInstance().isKeyDown(keyboardControl.leftKey))
 				movementIntent.translation.x -= 1;
 
-			if (Input.getInstance().isKeyDown(keyboardControl.rightKey))
+			if (InputDeviceSystem.getInstance().isKeyDown(keyboardControl.rightKey))
 				movementIntent.translation.x += 1;
 
 			if (movementIntent.translation.lengthSquared() > 0.001f)
 				movementIntent.translation.normalize();
 
-			if (Input.getInstance().isKeyDown(keyboardControl.rotateLeftKey))
+			if (InputDeviceSystem.getInstance().isKeyDown(keyboardControl.rotateLeftKey))
 				movementIntent.rotation.z += 1;
 
-			if (Input.getInstance().isKeyDown(keyboardControl.rotateRightKey))
+			if (InputDeviceSystem.getInstance().isKeyDown(keyboardControl.rotateRightKey))
 				movementIntent.rotation.z -= 1;
 
-			if (Input.getInstance().isKeyDown(keyboardControl.jumpKey))
+			if (InputDeviceSystem.getInstance().isKeyDown(keyboardControl.jumpKey))
 				movementIntent.jump = true;
 
-			if (Input.getInstance().isKeyDown(keyboardControl.sprintKey))
+			if (InputDeviceSystem.getInstance().isKeyDown(keyboardControl.sprintKey))
 				movementIntent.sprint = true;
 		}
 	}

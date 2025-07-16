@@ -1,4 +1,4 @@
-package com.krnl32.jupiter.input;
+package com.krnl32.jupiter.input.devices;
 
 import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.event.EventBus;

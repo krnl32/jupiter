@@ -1,4 +1,4 @@
-package com.krnl32.jupiter.input;
+package com.krnl32.jupiter.input.devices;
 
 public enum KeyCode {
 	// Keys

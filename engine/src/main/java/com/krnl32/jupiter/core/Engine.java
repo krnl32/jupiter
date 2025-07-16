@@ -5,7 +5,8 @@ import com.krnl32.jupiter.asset.AssetManager;
 import com.krnl32.jupiter.asset.ShaderAsset;
 import com.krnl32.jupiter.event.EventBus;
 import com.krnl32.jupiter.events.window.WindowCloseEvent;
-import com.krnl32.jupiter.input.Input;
+import com.krnl32.jupiter.input.InputActionSystem;
+import com.krnl32.jupiter.input.InputDeviceSystem;
 import com.krnl32.jupiter.renderer.*;
 import com.krnl32.jupiter.utility.Timer;
 import org.joml.Matrix4f;
@@ -45,6 +46,8 @@ public abstract class Engine {
 			float dt = time - lastTime;
 			lastTime = time;
 
+			InputActionSystem.getInstance().onUpdate();
+
 			if(dt > 0) {
 				//System.out.printf("FPS: %f\n", (1/dt));
 				onUpdate(dt);
@@ -54,7 +57,7 @@ public abstract class Engine {
 				renderer.endFrame();
 			}
 
-			Input.getInstance().reset();
+			InputDeviceSystem.getInstance().reset();
 			window.update();
 		}
 

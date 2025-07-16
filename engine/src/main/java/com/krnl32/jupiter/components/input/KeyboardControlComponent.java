@@ -1,7 +1,7 @@
 package com.krnl32.jupiter.components.input;
 
 import com.krnl32.jupiter.ecs.Component;
-import com.krnl32.jupiter.input.KeyCode;
+import com.krnl32.jupiter.input.devices.KeyCode;
 
 public class KeyboardControlComponent implements Component {
 	public KeyCode upKey, downKey, forwardKey, backwardKey, leftKey, rightKey;

@@ -1,18 +1,22 @@
 package com.krnl32.jupiter.input;
 
+import com.krnl32.jupiter.input.devices.KeyCode;
+import com.krnl32.jupiter.input.devices.Keyboard;
+import com.krnl32.jupiter.input.devices.Mouse;
+import com.krnl32.jupiter.input.devices.MouseCode;
 import org.joml.Vector2f;
 
-public class Input {
-	private static Input instance;
+public class InputDeviceSystem {
+	private static InputDeviceSystem instance;
 	private final Keyboard keyboard = new Keyboard();
 	private final Mouse mouse = new Mouse();
 
-	private Input() {
+	private InputDeviceSystem() {
 	}
 
-	public static Input getInstance() {
+	public static InputDeviceSystem getInstance() {
 		if (instance == null)
-			instance = new Input();
+			instance = new InputDeviceSystem();
 		return instance;
 	}
 

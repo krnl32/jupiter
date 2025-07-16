@@ -9,8 +9,8 @@ import com.krnl32.jupiter.ecs.Registry;
 import com.krnl32.jupiter.ecs.System;
 import com.krnl32.jupiter.event.EventBus;
 import com.krnl32.jupiter.events.entity.EntityDestroyedEvent;
-import com.krnl32.jupiter.input.Input;
-import com.krnl32.jupiter.input.MouseCode;
+import com.krnl32.jupiter.input.InputDeviceSystem;
+import com.krnl32.jupiter.input.devices.MouseCode;
 import com.krnl32.jupiter.renderer.Renderer;
 import com.krnl32.jupiter.utility.UIUtils;
 import org.joml.Vector2f;
@@ -40,7 +40,7 @@ public class UIInputSystem implements System {
 
 	@Override
 	public void onUpdate(float dt) {
-		Vector2f mousePosition = Input.getInstance().getMouseCursorPosition();
+		Vector2f mousePosition = InputDeviceSystem.getInstance().getMouseCursorPosition();
 
 		boolean mouseInUI = false;
 		for (Entity entity : registry.getEntitiesWith(UIInputStateComponent.class, UIInputEventComponent.class, UITransformComponent.class)) {
@@ -66,12 +66,12 @@ public class UIInputSystem implements System {
 			}
 
 			// Handle Click
-			if (inside && Input.getInstance().isMouseButtonDown(MouseCode.BUTTON_LEFT)) {
+			if (inside && InputDeviceSystem.getInstance().isMouseButtonDown(MouseCode.BUTTON_LEFT)) {
 				inputState.isPressed = true;
 			}
 
 			// Handle Release
-			if (inputState.isPressed && Input.getInstance().isMouseButtonReleased(MouseCode.BUTTON_LEFT)) {
+			if (inputState.isPressed && InputDeviceSystem.getInstance().isMouseButtonReleased(MouseCode.BUTTON_LEFT)) {
 				inputState.isPressed = false;
 
 				if (inside && inputEvent.onClick != null) {
@@ -103,7 +103,7 @@ public class UIInputSystem implements System {
 		}
 
 		// Handle Click Outside
-		if (!mouseInUI && focusedEntity != null && Input.getInstance().isMouseButtonReleased(MouseCode.BUTTON_LEFT)) {
+		if (!mouseInUI && focusedEntity != null && InputDeviceSystem.getInstance().isMouseButtonReleased(MouseCode.BUTTON_LEFT)) {
 			UIInputStateComponent focusedInputState = focusedEntity.getComponent(UIInputStateComponent.class);
 			UIInputEventComponent focusedInputEvent = focusedEntity.getComponent(UIInputEventComponent.class);
 			if (focusedInputState != null) {

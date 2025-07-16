@@ -1,7 +1,7 @@
 package com.krnl32.jupiter.events.input;
 
 import com.krnl32.jupiter.event.Event;
-import com.krnl32.jupiter.input.MouseCode;
+import com.krnl32.jupiter.input.devices.MouseCode;
 
 public class MouseButtonReleaseEvent implements Event {
 	private final MouseCode mouseCode;

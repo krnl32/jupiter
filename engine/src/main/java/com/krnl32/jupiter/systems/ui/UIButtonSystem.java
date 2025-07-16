@@ -6,8 +6,8 @@ import com.krnl32.jupiter.components.ui.UITransformComponent;
 import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.ecs.Registry;
 import com.krnl32.jupiter.ecs.System;
-import com.krnl32.jupiter.input.Input;
-import com.krnl32.jupiter.input.MouseCode;
+import com.krnl32.jupiter.input.InputDeviceSystem;
+import com.krnl32.jupiter.input.devices.MouseCode;
 import com.krnl32.jupiter.renderer.Renderer;
 import com.krnl32.jupiter.utility.UIUtils;
 import org.joml.Vector2f;
@@ -21,7 +21,7 @@ public class UIButtonSystem implements System {
 
 	@Override
 	public void onUpdate(float dt) {
-		Vector2f mousePosition = Input.getInstance().getMouseCursorPosition();
+		Vector2f mousePosition = InputDeviceSystem.getInstance().getMouseCursorPosition();
 
 		for (Entity entity : registry.getEntitiesWith(UITransformComponent.class, UIButtonComponent.class)) {
 			UIButtonComponent buttonComponent = entity.getComponent(UIButtonComponent.class);
@@ -36,11 +36,11 @@ public class UIButtonSystem implements System {
 			}
 
 			// Handle Click
-			if (inside && Input.getInstance().isMouseButtonDown(MouseCode.BUTTON_LEFT)) {
+			if (inside && InputDeviceSystem.getInstance().isMouseButtonDown(MouseCode.BUTTON_LEFT)) {
 				buttonComponent.isPressed = true;
 			}
 
-			if (buttonComponent.isPressed && Input.getInstance().isMouseButtonReleased(MouseCode.BUTTON_LEFT)) {
+			if (buttonComponent.isPressed && InputDeviceSystem.getInstance().isMouseButtonReleased(MouseCode.BUTTON_LEFT)) {
 				buttonComponent.isPressed = false;
 				if (inside && buttonComponent.onClick != null) {
 					buttonComponent.onClick.accept(entity);

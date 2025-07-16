@@ -11,7 +11,7 @@ import com.krnl32.jupiter.components.utility.LifetimeComponent;
 import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.ecs.Registry;
 import com.krnl32.jupiter.ecs.System;
-import com.krnl32.jupiter.input.Input;
+import com.krnl32.jupiter.input.InputDeviceSystem;
 import com.krnl32.jupiter.physics.BodyType;
 import com.krnl32.jupiter.renderer.Renderer;
 import com.krnl32.jupiter.utility.Timer;
@@ -40,7 +40,7 @@ public class ProjectileEmitterSystem implements System {
 					fire = true;
 			}
 
-			if (emitter.shootKey != null && Input.getInstance().isKeyDown(emitter.shootKey))
+			if (emitter.shootKey != null && InputDeviceSystem.getInstance().isKeyDown(emitter.shootKey))
 				fire = true;
 
 			if (fire && currentTime - emitter.lastEmissionTime >= 1.0f / emitter.fireRate) {

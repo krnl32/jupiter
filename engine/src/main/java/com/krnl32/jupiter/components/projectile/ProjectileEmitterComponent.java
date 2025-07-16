@@ -1,7 +1,7 @@
 package com.krnl32.jupiter.components.projectile;
 
 import com.krnl32.jupiter.ecs.Component;
-import com.krnl32.jupiter.input.KeyCode;
+import com.krnl32.jupiter.input.devices.KeyCode;
 import com.krnl32.jupiter.model.Sprite;
 
 public class ProjectileEmitterComponent implements Component {

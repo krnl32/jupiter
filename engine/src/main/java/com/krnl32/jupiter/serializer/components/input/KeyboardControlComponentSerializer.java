@@ -1,7 +1,7 @@
 package com.krnl32.jupiter.serializer.components.input;
 
 import com.krnl32.jupiter.components.input.KeyboardControlComponent;
-import com.krnl32.jupiter.input.KeyCode;
+import com.krnl32.jupiter.input.devices.KeyCode;
 import com.krnl32.jupiter.serializer.ComponentSerializer;
 import com.krnl32.jupiter.serializer.resolvers.EntityResolver;
 import org.json.JSONObject;
