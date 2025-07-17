@@ -32,7 +32,7 @@ public class DeathEffectComponentSerializer implements ComponentSerializer<Death
 			new Sprite(
 				component.particleSprite.getIndex(),
 				new Vector4f(component.particleSprite.getColor()),
-				new AssetID(component.particleSprite.getTextureAssetID().getId()),
+				component.particleSprite.getTextureAssetID() != null ? new AssetID(component.particleSprite.getTextureAssetID().getId()) : null,
 				component.particleSprite.getTextureUV().clone()
 			)
 		);

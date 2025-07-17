@@ -13,7 +13,7 @@ public class EditorCamera {
 	private final float moveSpeed;
 
 	public EditorCamera(ProjectionType projectionType, float moveSpeed) {
-		this.camera = new Camera(new Vector3f(0.0f, 0.0f, 3.0f), new Vector3f(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 0.0f, 50.0f, 1.0f, 45.0f, 10.0f, true);
+		this.camera = new Camera(new Vector3f(0.0f, 0.0f, 3.0f), new Vector3f(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, 0.0f, 50.0f, 1.0f, 45.0f, 10.0f, false);
 		if (projectionType == ProjectionType.ORTHOGRAPHIC) {
 			this.camera.setOrthographic(10.0f, 0.1f, 100.0f);
 		} else if (projectionType == ProjectionType.PERSPECTIVE) {

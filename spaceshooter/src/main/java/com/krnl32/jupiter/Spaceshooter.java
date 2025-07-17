@@ -3,20 +3,6 @@ package com.krnl32.jupiter;
 import com.krnl32.jupiter.asset.AssetID;
 import com.krnl32.jupiter.asset.AssetManager;
 import com.krnl32.jupiter.asset.SceneAsset;
-import com.krnl32.jupiter.components.effects.BlinkComponent;
-import com.krnl32.jupiter.components.effects.DeathEffectComponent;
-import com.krnl32.jupiter.components.effects.ParticleComponent;
-import com.krnl32.jupiter.components.gameplay.HealthComponent;
-import com.krnl32.jupiter.components.gameplay.TeamComponent;
-import com.krnl32.jupiter.components.gameplay.TransformComponent;
-import com.krnl32.jupiter.components.input.KeyboardControlComponent;
-import com.krnl32.jupiter.components.projectile.ProjectileComponent;
-import com.krnl32.jupiter.components.projectile.ProjectileEmitterComponent;
-import com.krnl32.jupiter.components.renderer.CameraComponent;
-import com.krnl32.jupiter.components.renderer.SpriteRendererComponent;
-import com.krnl32.jupiter.components.utility.LifetimeComponent;
-import com.krnl32.jupiter.components.utility.TagComponent;
-import com.krnl32.jupiter.components.utility.UUIDComponent;
 import com.krnl32.jupiter.core.Engine;
 import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.event.EventBus;
@@ -27,21 +13,6 @@ import com.krnl32.jupiter.scene.SceneManager;
 import com.krnl32.jupiter.scenes.TestScene;
 import com.krnl32.jupiter.scenes.levels.Level1Scene;
 import com.krnl32.jupiter.scenes.menu.MainMenuScene;
-import com.krnl32.jupiter.serializer.SerializerRegistry;
-import com.krnl32.jupiter.serializer.components.effects.BlinkComponentSerializer;
-import com.krnl32.jupiter.serializer.components.effects.DeathEffectComponentSerializer;
-import com.krnl32.jupiter.serializer.components.effects.ParticleComponentSerializer;
-import com.krnl32.jupiter.serializer.components.gameplay.HealthComponentSerializer;
-import com.krnl32.jupiter.serializer.components.gameplay.TeamComponentSerializer;
-import com.krnl32.jupiter.serializer.components.gameplay.TransformComponentSerializer;
-import com.krnl32.jupiter.serializer.components.input.KeyboardControlComponentSerializer;
-import com.krnl32.jupiter.serializer.components.projectile.ProjectileComponentSerializer;
-import com.krnl32.jupiter.serializer.components.projectile.ProjectileEmitterComponentSerializer;
-import com.krnl32.jupiter.serializer.components.renderer.CameraComponentSerializer;
-import com.krnl32.jupiter.serializer.components.renderer.SpriteRendererComponentSerializer;
-import com.krnl32.jupiter.serializer.components.utility.LifetimeComponentSerializer;
-import com.krnl32.jupiter.serializer.components.utility.TagComponentSerializer;
-import com.krnl32.jupiter.serializer.components.utility.UUIDComponentSerializer;
 import org.joml.Vector4f;
 
 public class Spaceshooter extends Engine {
@@ -57,22 +28,6 @@ public class Spaceshooter extends Engine {
 
 	@Override
 	public boolean onInit() {
-		// Register Component Serializers
-		SerializerRegistry.registerComponentSerializer(UUIDComponent.class, new UUIDComponentSerializer());
-		SerializerRegistry.registerComponentSerializer(TagComponent.class, new TagComponentSerializer());
-		SerializerRegistry.registerComponentSerializer(TransformComponent.class, new TransformComponentSerializer());
-		SerializerRegistry.registerComponentSerializer(SpriteRendererComponent.class, new SpriteRendererComponentSerializer());
-		SerializerRegistry.registerComponentSerializer(CameraComponent.class, new CameraComponentSerializer());
-		SerializerRegistry.registerComponentSerializer(KeyboardControlComponent.class, new KeyboardControlComponentSerializer());
-		SerializerRegistry.registerComponentSerializer(TeamComponent.class, new TeamComponentSerializer());
-		SerializerRegistry.registerComponentSerializer(HealthComponent.class, new HealthComponentSerializer());
-		SerializerRegistry.registerComponentSerializer(LifetimeComponent.class, new LifetimeComponentSerializer());
-		SerializerRegistry.registerComponentSerializer(ParticleComponent.class, new ParticleComponentSerializer());
-		SerializerRegistry.registerComponentSerializer(BlinkComponent.class, new BlinkComponentSerializer());
-		SerializerRegistry.registerComponentSerializer(DeathEffectComponent.class, new DeathEffectComponentSerializer());
-		SerializerRegistry.registerComponentSerializer(ProjectileComponent.class, new ProjectileComponentSerializer());
-		SerializerRegistry.registerComponentSerializer(ProjectileEmitterComponent.class, new ProjectileEmitterComponentSerializer());
-
 		// Scene
 		AssetID level1AssetID = AssetManager.getInstance().register("scenes/level1.json", () -> new SceneAsset("scenes/level1.json"));
 		if (level1AssetID == null)

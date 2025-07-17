@@ -101,7 +101,7 @@ public class Camera {
 	}
 
 	public Vector3f getWorldUp() {
-		return worldUp;
+		return new Vector3f(worldUp);
 	}
 
 	public float getYaw() {

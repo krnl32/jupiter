@@ -14,25 +14,24 @@ import org.json.JSONObject;
 public class SpriteRendererComponentSerializer implements ComponentSerializer<SpriteRendererComponent> {
 	@Override
 	public JSONObject serialize(SpriteRendererComponent component) {
-		TextureAsset textureAsset = AssetManager.getInstance().getAsset(component.textureAssetID);
-		if (textureAsset == null) {
-			Logger.error("SpriteRendererComponentSerializer Serialize Failed, Invalid Texture AssetID({})", component.textureAssetID);
-			return null;
-		}
+		TextureAsset textureAsset = component.textureAssetID != null ? AssetManager.getInstance().getAsset(component.textureAssetID) : null;
 
 		return new JSONObject()
 			.put("index", component.index)
 			.put("color", JOMLSerializerUtils.serializeVector4f(component.color))
-			.put("textureAssetID", textureAsset.getTexturePath())
+			.put("textureAssetID", (textureAsset != null ? textureAsset.getTexturePath() : JSONObject.NULL))
 			.put("textureUV", component.textureUV);
 	}
 
 	@Override
 	public SpriteRendererComponent deserialize(JSONObject data, EntityResolver resolver) {
-		AssetID textureAssetID = AssetManager.getInstance().registerAndLoad(data.getString("textureAssetID"), () -> new TextureAsset(data.getString("textureAssetID")));
-		if (textureAssetID == null) {
-			Logger.error("SpriteRendererComponentSerializer Deserialize Failed, Invalid Texture textureAssetID Path({})", data.getString("textureAssetID"));
-			return null;
+		AssetID textureAssetID = null;
+		if (!data.isNull("textureAssetID")) {
+			textureAssetID = AssetManager.getInstance().registerAndLoad(data.getString("textureAssetID"), () -> new TextureAsset(data.getString("textureAssetID")));
+			if (textureAssetID == null) {
+				Logger.error("SpriteRendererComponentSerializer Failed, Invalid Texture textureAssetID Path({})", data.getString("textureAssetID"));
+				return null;
+			}
 		}
 
 		return new SpriteRendererComponent(

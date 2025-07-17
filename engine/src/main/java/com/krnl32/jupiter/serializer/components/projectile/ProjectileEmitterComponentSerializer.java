@@ -34,11 +34,17 @@ public class ProjectileEmitterComponentSerializer implements ComponentSerializer
 
 	@Override
 	public ProjectileEmitterComponent clone(ProjectileEmitterComponent component) {
+
 		return new	ProjectileEmitterComponent(
 			component.shootKey,
 			component.fireRate,
 			component.projectileSpeed,
-			new Sprite(component.sprite.getIndex(), new Vector4f(component.sprite.getColor()), new AssetID(component.sprite.getTextureAssetID().getId()), component.sprite.getTextureUV().clone())
+			new Sprite(
+				component.sprite.getIndex(),
+				new Vector4f(component.sprite.getColor()),
+				component.sprite.getTextureAssetID() != null ? new AssetID(component.sprite.getTextureAssetID().getId()) : null,
+				component.sprite.getTextureUV().clone()
+			)
 		);
 	}
 }

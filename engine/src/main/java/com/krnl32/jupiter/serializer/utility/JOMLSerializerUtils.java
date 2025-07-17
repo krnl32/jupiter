@@ -1,10 +1,19 @@
 package com.krnl32.jupiter.serializer.utility;
 
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 import org.json.JSONObject;
 
 public class JOMLSerializerUtils {
+	public static JSONObject serializeVector2f(Vector2f vec) {
+		return new JSONObject().put("x", vec.x).put("y", vec.y);
+	}
+
+	public static Vector2f deserializeVector2f(JSONObject obj) {
+		return new Vector2f(obj.getFloat("x"), obj.getFloat("y"));
+	}
+
 	public static JSONObject serializeVector3f(Vector3f vec) {
 		return new JSONObject().put("x", vec.x).put("y", vec.y).put("z", vec.z);
 	}

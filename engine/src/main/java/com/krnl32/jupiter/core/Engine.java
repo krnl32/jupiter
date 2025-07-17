@@ -8,6 +8,7 @@ import com.krnl32.jupiter.events.window.WindowCloseEvent;
 import com.krnl32.jupiter.input.InputActionSystem;
 import com.krnl32.jupiter.input.InputDeviceSystem;
 import com.krnl32.jupiter.renderer.*;
+import com.krnl32.jupiter.serializer.utility.DefaultComponentSerializers;
 import com.krnl32.jupiter.utility.Timer;
 import org.joml.Matrix4f;
 
@@ -35,6 +36,8 @@ public abstract class Engine {
 	}
 
 	public void run() {
+		DefaultComponentSerializers.registerAll();
+
 		if(!onInit())
 			Logger.critical("Failed to run onInit");
 

@@ -22,7 +22,7 @@ public class CameraComponentSerializer implements ComponentSerializer<CameraComp
 			.put("rollSpeed", component.camera.getRollSpeed())
 			.put("zoomSpeed", component.camera.getZoomSpeed())
 			.put("mouseEnabled", component.camera.isMouseEnabled())
-			.put("projectionType", component.camera.getProjectionType().name())
+			.put("projectionType", component.camera.getProjectionType())
 			.put("projectionFOV", component.camera.getProjectionFOV())
 			.put("projectionNear", component.camera.getProjectionNear())
 			.put("projectionFar", component.camera.getProjectionFar())
