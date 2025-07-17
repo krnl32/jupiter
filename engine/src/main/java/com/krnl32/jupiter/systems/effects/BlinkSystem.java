@@ -25,8 +25,8 @@ public class BlinkSystem implements System {
 				blink.blinkTime = 0.0f;
 			}
 
-			//if (blink.elapsedTime >= blink.duration)
-				//entity.removeComponent(BlinkComponent.class);
+			if (blink.elapsedTime >= blink.duration)
+				entity.removeComponent(BlinkComponent.class);
 		}
 	}
 

@@ -3,22 +3,13 @@ package com.krnl32.jupiter.editor;
 import com.krnl32.jupiter.asset.AssetManager;
 import com.krnl32.jupiter.asset.TextureAsset;
 import com.krnl32.jupiter.components.effects.BlinkComponent;
-import com.krnl32.jupiter.components.effects.DeathEffectComponent;
-import com.krnl32.jupiter.components.effects.ParticleComponent;
 import com.krnl32.jupiter.components.gameplay.HealthComponent;
 import com.krnl32.jupiter.components.gameplay.TeamComponent;
 import com.krnl32.jupiter.components.gameplay.TransformComponent;
-import com.krnl32.jupiter.components.input.KeyboardControlComponent;
 import com.krnl32.jupiter.components.physics.BoxCollider2DComponent;
 import com.krnl32.jupiter.components.physics.CircleCollider2DComponent;
 import com.krnl32.jupiter.components.physics.RigidBody2DComponent;
-import com.krnl32.jupiter.components.projectile.ProjectileComponent;
-import com.krnl32.jupiter.components.projectile.ProjectileEmitterComponent;
-import com.krnl32.jupiter.components.renderer.CameraComponent;
-import com.krnl32.jupiter.components.renderer.SpriteRendererComponent;
-import com.krnl32.jupiter.components.utility.LifetimeComponent;
 import com.krnl32.jupiter.components.utility.TagComponent;
-import com.krnl32.jupiter.components.utility.UUIDComponent;
 import com.krnl32.jupiter.core.Engine;
 import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.event.EventBus;
@@ -49,21 +40,6 @@ import com.krnl32.jupiter.renderer.components.utility.TagComponentRenderer;
 import com.krnl32.jupiter.scene.Scene;
 import com.krnl32.jupiter.scene.SceneManager;
 import com.krnl32.jupiter.serializer.SceneSerializer;
-import com.krnl32.jupiter.serializer.SerializerRegistry;
-import com.krnl32.jupiter.serializer.components.effects.BlinkComponentSerializer;
-import com.krnl32.jupiter.serializer.components.effects.DeathEffectComponentSerializer;
-import com.krnl32.jupiter.serializer.components.effects.ParticleComponentSerializer;
-import com.krnl32.jupiter.serializer.components.gameplay.HealthComponentSerializer;
-import com.krnl32.jupiter.serializer.components.gameplay.TeamComponentSerializer;
-import com.krnl32.jupiter.serializer.components.gameplay.TransformComponentSerializer;
-import com.krnl32.jupiter.serializer.components.input.KeyboardControlComponentSerializer;
-import com.krnl32.jupiter.serializer.components.projectile.ProjectileComponentSerializer;
-import com.krnl32.jupiter.serializer.components.projectile.ProjectileEmitterComponentSerializer;
-import com.krnl32.jupiter.serializer.components.renderer.CameraComponentSerializer;
-import com.krnl32.jupiter.serializer.components.renderer.SpriteRendererComponentSerializer;
-import com.krnl32.jupiter.serializer.components.utility.LifetimeComponentSerializer;
-import com.krnl32.jupiter.serializer.components.utility.TagComponentSerializer;
-import com.krnl32.jupiter.serializer.components.utility.UUIDComponentSerializer;
 import org.joml.Vector4f;
 
 import java.util.List;
@@ -106,38 +82,26 @@ public class Editor extends Engine {
 		if (AssetManager.getInstance().registerAndLoad("editorStopButton", () -> new TextureAsset("textures/ui/buttons/stop.png")) == null)
 			Logger.critical("Editor Failed to Load Texture Asset({})", "textures/ui/buttons/stop.png");
 
-		// Register Component Serializers
-		SerializerRegistry.registerComponentSerializer(UUIDComponent.class, new UUIDComponentSerializer());
-		SerializerRegistry.registerComponentSerializer(TagComponent.class, new TagComponentSerializer());
-		SerializerRegistry.registerComponentSerializer(TransformComponent.class, new TransformComponentSerializer());
-		SerializerRegistry.registerComponentSerializer(SpriteRendererComponent.class, new SpriteRendererComponentSerializer());
-		SerializerRegistry.registerComponentSerializer(CameraComponent.class, new CameraComponentSerializer());
-		SerializerRegistry.registerComponentSerializer(KeyboardControlComponent.class, new KeyboardControlComponentSerializer());
-		SerializerRegistry.registerComponentSerializer(TeamComponent.class, new TeamComponentSerializer());
-		SerializerRegistry.registerComponentSerializer(HealthComponent.class, new HealthComponentSerializer());
-		SerializerRegistry.registerComponentSerializer(LifetimeComponent.class, new LifetimeComponentSerializer());
-		SerializerRegistry.registerComponentSerializer(ParticleComponent.class, new ParticleComponentSerializer());
-		SerializerRegistry.registerComponentSerializer(BlinkComponent.class, new BlinkComponentSerializer());
-		SerializerRegistry.registerComponentSerializer(DeathEffectComponent.class, new DeathEffectComponentSerializer());
-		SerializerRegistry.registerComponentSerializer(ProjectileComponent.class, new ProjectileComponentSerializer());
-		SerializerRegistry.registerComponentSerializer(ProjectileEmitterComponent.class, new ProjectileEmitterComponentSerializer());
-
 		// Register Component Factories
+		// Effects
+		FactoryRegistry.registerComponentFactory(BlinkComponent.class, new BlinkComponentFactory());
+
 		FactoryRegistry.registerComponentFactory(TransformComponent.class, new TransformComponentFactory());
 		FactoryRegistry.registerComponentFactory(TagComponent.class, new TagComponentFactory());
 		FactoryRegistry.registerComponentFactory(TeamComponent.class, new TeamComponentFactory());
 		FactoryRegistry.registerComponentFactory(HealthComponent.class, new HealthComponentFactory());
-		FactoryRegistry.registerComponentFactory(BlinkComponent.class, new BlinkComponentFactory());
 		FactoryRegistry.registerComponentFactory(BoxCollider2DComponent.class, new BoxCollider2DComponentFactory());
 		FactoryRegistry.registerComponentFactory(CircleCollider2DComponent.class, new CircleCollider2DComponentFactory());
 		FactoryRegistry.registerComponentFactory(RigidBody2DComponent.class, new Rigidbody2DComponentFactory());
 
 		// Register Component Renderers
+		// Effects
+		RendererRegistry.registerComponentRenderer(BlinkComponent.class, new BlinkComponentRenderer());
+
 		RendererRegistry.registerComponentRenderer(TransformComponent.class, new TransformComponentRenderer());
 		RendererRegistry.registerComponentRenderer(TagComponent.class, new TagComponentRenderer());
 		RendererRegistry.registerComponentRenderer(TeamComponent.class, new TeamComponentRenderer());
 		RendererRegistry.registerComponentRenderer(HealthComponent.class, new HealthComponentRenderer());
-		RendererRegistry.registerComponentRenderer(BlinkComponent.class, new BlinkComponentRenderer());
 		RendererRegistry.registerComponentRenderer(BoxCollider2DComponent.class, new BoxCollider2DComponentRenderer());
 		RendererRegistry.registerComponentRenderer(CircleCollider2DComponent.class, new CircleCollider2DComponentRenderer());
 		RendererRegistry.registerComponentRenderer(RigidBody2DComponent.class, new RigidBody2DComponentRenderer());
@@ -188,7 +152,7 @@ public class Editor extends Engine {
 	}
 
 	private void play() {
-		Scene clone = sceneSerializer.clone(sceneManager.getScene(), true);
+		Scene clone = sceneSerializer.clone(sceneManager.getScene(), false);
 		sceneManager.setScene(clone);
 		editorState = EditorState.PLAY;
 	}

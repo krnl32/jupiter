@@ -1,6 +1,7 @@
 package com.krnl32.jupiter.panels;
 
 import com.krnl32.jupiter.components.utility.DestroyComponent;
+import com.krnl32.jupiter.components.utility.UUIDComponent;
 import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.editor.EditorPanel;
 import com.krnl32.jupiter.event.EventBus;
@@ -36,11 +37,19 @@ public class SceneHierarchyPanel implements EditorPanel {
 
 		EventBus.getInstance().register(SceneSwitchedEvent.class, event -> {
 			this.scene = event.getScene();
-			setSelectedEntity(null);
 			this.renaming = false;
 			this.renameRequestedEntity = null;
 			this.renameBuffer.set("");
 			this.renameInputActiveLastFrame = false;
+
+			// If Simulation Mode
+			if (selectedEntity != null && selectedEntity.hasComponent(UUIDComponent.class)) {
+				UUIDComponent uuidComponent = selectedEntity.getComponent(UUIDComponent.class);
+				selectedEntity = event.getScene().getRegistry().getEntityByUUID(uuidComponent.uuid);
+				EventBus.getInstance().emit(new EntitySelectedEvent(selectedEntity));
+			} else {
+				setSelectedEntity(null);
+			}
 		});
 	}
 

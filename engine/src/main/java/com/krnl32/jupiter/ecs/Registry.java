@@ -72,8 +72,9 @@ public class Registry {
 	public Entity getEntityByUUID(UUID uuid) {
 		for (Entity entity : getEntities()) {
 			UUIDComponent uuidComponent = entity.getComponent(UUIDComponent.class);
-			if (uuidComponent != null && uuidComponent.uuid.equals(uuid))
+			if (uuidComponent != null && uuidComponent.uuid.equals(uuid)) {
 				return entity;
+			}
 		}
 		return null;
 	}
