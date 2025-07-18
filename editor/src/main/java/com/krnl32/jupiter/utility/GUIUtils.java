@@ -4,6 +4,7 @@ import imgui.ImGui;
 import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiColorEditFlags;
 import imgui.flag.ImGuiStyleVar;
+import imgui.type.ImBoolean;
 import imgui.type.ImFloat;
 import imgui.type.ImInt;
 import imgui.type.ImString;
@@ -416,5 +417,45 @@ public class GUIUtils {
 		if (changed) {
 			color.set(rgba[0], rgba[1], rgba[2], rgba[3]);
 		}
+	}
+
+	public static <T extends Enum<T>> boolean renderEnumCombo(String label, T[] values, ImInt selectedIndex) {
+		ImGui.pushID(label);
+		ImGui.columns(2, "Columns_" + label, false);
+		ImGui.setColumnWidth(0, 110);
+		ImGui.text(label);
+		ImGui.nextColumn();
+
+		boolean changed = false;
+		String[] items = new String[values.length];
+		for (int i = 0; i < values.length; i++) {
+			items[i] = values[i].name();
+		}
+
+		ImGui.pushItemWidth(ImGui.getContentRegionAvailX());
+		if (ImGui.combo("##" + label, selectedIndex, items)) {
+			changed = true;
+		}
+		ImGui.popItemWidth();
+
+		ImGui.columns(1);
+		ImGui.popID();
+
+		return changed;
+	}
+
+	public static boolean renderCheckbox(String label, ImBoolean value) {
+		ImGui.pushID(label);
+		ImGui.columns(2, "Columns_" + label, false);
+		ImGui.setColumnWidth(0, 110);
+		ImGui.text(label);
+		ImGui.nextColumn();
+
+		boolean changed = ImGui.checkbox("##" + label, value);
+
+		ImGui.columns(1);
+		ImGui.popID();
+
+		return changed;
 	}
 }

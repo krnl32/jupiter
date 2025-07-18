@@ -13,13 +13,8 @@ public class RigidBody2DComponentRenderer implements ComponentRenderer<RigidBody
 	@Override
 	public void render(RigidBody2DComponent component) {
 		BodyType[] types = BodyType.values();
-		String[] labels = new String[types.length];
-		for (int i = 0; i < types.length; i++) {
-			labels[i] = types[i].name();
-		}
-
 		ImInt selected = new ImInt(component.bodyType.ordinal());
-		if (ImGui.combo("Body Type", selected, labels)) {
+		if (GUIUtils.renderEnumCombo("Body Type", types, selected)) {
 			component.bodyType = types[selected.get()];
 		}
 
