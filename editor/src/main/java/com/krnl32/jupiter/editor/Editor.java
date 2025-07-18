@@ -3,13 +3,20 @@ package com.krnl32.jupiter.editor;
 import com.krnl32.jupiter.asset.AssetManager;
 import com.krnl32.jupiter.asset.TextureAsset;
 import com.krnl32.jupiter.components.effects.BlinkComponent;
-import com.krnl32.jupiter.components.gameplay.HealthComponent;
-import com.krnl32.jupiter.components.gameplay.TeamComponent;
-import com.krnl32.jupiter.components.gameplay.TransformComponent;
+import com.krnl32.jupiter.components.effects.DeathEffectComponent;
+import com.krnl32.jupiter.components.effects.ParticleComponent;
+import com.krnl32.jupiter.components.gameplay.*;
+import com.krnl32.jupiter.components.input.KeyboardControlComponent;
 import com.krnl32.jupiter.components.physics.BoxCollider2DComponent;
 import com.krnl32.jupiter.components.physics.CircleCollider2DComponent;
 import com.krnl32.jupiter.components.physics.RigidBody2DComponent;
+import com.krnl32.jupiter.components.projectile.ProjectileComponent;
+import com.krnl32.jupiter.components.projectile.ProjectileEmitterComponent;
+import com.krnl32.jupiter.components.renderer.CameraComponent;
+import com.krnl32.jupiter.components.renderer.SpriteRendererComponent;
+import com.krnl32.jupiter.components.utility.LifetimeComponent;
 import com.krnl32.jupiter.components.utility.TagComponent;
+import com.krnl32.jupiter.components.utility.UUIDComponent;
 import com.krnl32.jupiter.core.Engine;
 import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.event.EventBus;
@@ -18,13 +25,20 @@ import com.krnl32.jupiter.events.editor.EditorPlayEvent;
 import com.krnl32.jupiter.events.editor.EditorStopEvent;
 import com.krnl32.jupiter.factory.FactoryRegistry;
 import com.krnl32.jupiter.factory.components.effects.BlinkComponentFactory;
-import com.krnl32.jupiter.factory.components.gameplay.HealthComponentFactory;
-import com.krnl32.jupiter.factory.components.gameplay.TeamComponentFactory;
-import com.krnl32.jupiter.factory.components.gameplay.TransformComponentFactory;
+import com.krnl32.jupiter.factory.components.effects.DeathEffectComponentFactory;
+import com.krnl32.jupiter.factory.components.effects.ParticleComponentFactory;
+import com.krnl32.jupiter.factory.components.gameplay.*;
+import com.krnl32.jupiter.factory.components.input.KeyboardControlComponentFactory;
 import com.krnl32.jupiter.factory.components.physics.BoxCollider2DComponentFactory;
 import com.krnl32.jupiter.factory.components.physics.CircleCollider2DComponentFactory;
 import com.krnl32.jupiter.factory.components.physics.Rigidbody2DComponentFactory;
+import com.krnl32.jupiter.factory.components.projectile.ProjectileComponentFactory;
+import com.krnl32.jupiter.factory.components.projectile.ProjectileEmitterComponentFactory;
+import com.krnl32.jupiter.factory.components.renderer.CameraComponentFactory;
+import com.krnl32.jupiter.factory.components.renderer.SpriteRendererComponentFactory;
+import com.krnl32.jupiter.factory.components.utility.LifetimeComponentFactory;
 import com.krnl32.jupiter.factory.components.utility.TagComponentFactory;
+import com.krnl32.jupiter.factory.components.utility.UUIDComponentFactory;
 import com.krnl32.jupiter.panels.InspectorPanel;
 import com.krnl32.jupiter.panels.SceneHierarchyPanel;
 import com.krnl32.jupiter.panels.ViewportPanel;
@@ -36,6 +50,7 @@ import com.krnl32.jupiter.renderer.components.gameplay.TransformComponentRendere
 import com.krnl32.jupiter.renderer.components.physics.BoxCollider2DComponentRenderer;
 import com.krnl32.jupiter.renderer.components.physics.CircleCollider2DComponentRenderer;
 import com.krnl32.jupiter.renderer.components.physics.RigidBody2DComponentRenderer;
+import com.krnl32.jupiter.renderer.components.renderer.SpriteRendererComponentRenderer;
 import com.krnl32.jupiter.renderer.components.utility.TagComponentRenderer;
 import com.krnl32.jupiter.scene.Scene;
 import com.krnl32.jupiter.scene.SceneManager;
@@ -82,21 +97,15 @@ public class Editor extends Engine {
 		if (AssetManager.getInstance().registerAndLoad("editorStopButton", () -> new TextureAsset("textures/ui/buttons/stop.png")) == null)
 			Logger.critical("Editor Failed to Load Texture Asset({})", "textures/ui/buttons/stop.png");
 
-		// Register Component Factories
-		// Effects
-		FactoryRegistry.registerComponentFactory(BlinkComponent.class, new BlinkComponentFactory());
-
-		FactoryRegistry.registerComponentFactory(TransformComponent.class, new TransformComponentFactory());
-		FactoryRegistry.registerComponentFactory(TagComponent.class, new TagComponentFactory());
-		FactoryRegistry.registerComponentFactory(TeamComponent.class, new TeamComponentFactory());
-		FactoryRegistry.registerComponentFactory(HealthComponent.class, new HealthComponentFactory());
-		FactoryRegistry.registerComponentFactory(BoxCollider2DComponent.class, new BoxCollider2DComponentFactory());
-		FactoryRegistry.registerComponentFactory(CircleCollider2DComponent.class, new CircleCollider2DComponentFactory());
-		FactoryRegistry.registerComponentFactory(RigidBody2DComponent.class, new Rigidbody2DComponentFactory());
+		// Register Editor Components
+		registerComponentFactories();
 
 		// Register Component Renderers
 		// Effects
 		RendererRegistry.registerComponentRenderer(BlinkComponent.class, new BlinkComponentRenderer());
+
+		// Renderer
+		RendererRegistry.registerComponentRenderer(SpriteRendererComponent.class, new SpriteRendererComponentRenderer());
 
 		RendererRegistry.registerComponentRenderer(TransformComponent.class, new TransformComponentRenderer());
 		RendererRegistry.registerComponentRenderer(TagComponent.class, new TagComponentRenderer());
@@ -164,5 +173,40 @@ public class Editor extends Engine {
 	private void stop() {
 		sceneManager.switchScene("editor");
 		editorState = EditorState.STOP;
+	}
+
+	private void registerComponentFactories() {
+		// Effects
+		FactoryRegistry.registerComponentFactory(BlinkComponent.class, new BlinkComponentFactory());
+		FactoryRegistry.registerComponentFactory(DeathEffectComponent.class, new DeathEffectComponentFactory());
+		FactoryRegistry.registerComponentFactory(ParticleComponent.class, new ParticleComponentFactory());
+
+		// Gameplay
+		FactoryRegistry.registerComponentFactory(TransformComponent.class, new TransformComponentFactory());
+		FactoryRegistry.registerComponentFactory(TeamComponent.class, new TeamComponentFactory());
+		FactoryRegistry.registerComponentFactory(HealthComponent.class, new HealthComponentFactory());
+		FactoryRegistry.registerComponentFactory(MovementIntentComponent.class, new MovementIntentComponentFactory());
+		FactoryRegistry.registerComponentFactory(ForceMovementComponent.class, new ForceMovementComponentFactory());
+
+		// Input
+		FactoryRegistry.registerComponentFactory(KeyboardControlComponent.class, new KeyboardControlComponentFactory());
+
+		// Physics
+		FactoryRegistry.registerComponentFactory(RigidBody2DComponent.class, new Rigidbody2DComponentFactory());
+		FactoryRegistry.registerComponentFactory(BoxCollider2DComponent.class, new BoxCollider2DComponentFactory());
+		FactoryRegistry.registerComponentFactory(CircleCollider2DComponent.class, new CircleCollider2DComponentFactory());
+
+		// Projectile
+		FactoryRegistry.registerComponentFactory(ProjectileComponent.class, new ProjectileComponentFactory());
+		FactoryRegistry.registerComponentFactory(ProjectileEmitterComponent.class, new ProjectileEmitterComponentFactory());
+
+		// Renderer
+		FactoryRegistry.registerComponentFactory(CameraComponent.class, new CameraComponentFactory());
+		FactoryRegistry.registerComponentFactory(SpriteRendererComponent.class, new SpriteRendererComponentFactory());
+
+		// Utility
+		FactoryRegistry.registerComponentFactory(UUIDComponent.class, new UUIDComponentFactory());
+		FactoryRegistry.registerComponentFactory(TagComponent.class, new TagComponentFactory());
+		FactoryRegistry.registerComponentFactory(LifetimeComponent.class, new LifetimeComponentFactory());
 	}
 }

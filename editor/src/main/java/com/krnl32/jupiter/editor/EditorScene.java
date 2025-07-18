@@ -32,6 +32,8 @@ public class EditorScene extends Scene {
 		entity.addComponent(new TagComponent("redBox"));
 		entity.addComponent(new TransformComponent(new Vector3f(0.0f, 0.0f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(1.0f, 1.0f, 1.0f)));
 		entity.addComponent(new SpriteRendererComponent(-1, new Vector4f(1.0f, 0.0f, 0.0f, 1.0f), null));
+		entity.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC));
+		entity.addComponent(new BoxCollider2DComponent(new Vector2f(1.0f, 1.0f)));
 
 		for (int i = 0; i < 7; i++) {
 			Entity floor = createEntity();
