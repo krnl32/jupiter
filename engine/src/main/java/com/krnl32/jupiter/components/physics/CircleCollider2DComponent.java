@@ -10,7 +10,6 @@ public class CircleCollider2DComponent implements Component {
 	public float density;
 	public boolean sensor;
 
-
 	public CircleCollider2DComponent(float radius) {
 		this.radius = radius;
 		this.offset = new Vector2f(0.0f, 0.0f);

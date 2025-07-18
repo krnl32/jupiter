@@ -2,6 +2,7 @@ package com.krnl32.jupiter.editor;
 
 import com.krnl32.jupiter.components.gameplay.TransformComponent;
 import com.krnl32.jupiter.components.physics.BoxCollider2DComponent;
+import com.krnl32.jupiter.components.physics.CircleCollider2DComponent;
 import com.krnl32.jupiter.components.physics.RigidBody2DComponent;
 import com.krnl32.jupiter.components.renderer.CameraComponent;
 import com.krnl32.jupiter.components.renderer.SpriteRendererComponent;
@@ -18,6 +19,7 @@ import org.joml.Vector4f;
 public class EditorScene extends Scene {
 	@Override
 	public void onCreate() {
+		// Sample Code....
 		Entity cameraEntity = createEntity();
 		cameraEntity.addComponent(new TagComponent("Camera"));
 		cameraEntity.addComponent(new UUIDComponent());
@@ -35,22 +37,27 @@ public class EditorScene extends Scene {
 		entity.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC));
 		entity.addComponent(new BoxCollider2DComponent(new Vector2f(1.0f, 1.0f)));
 
-
 		for (int i = 0; i < 7; i++) {
 			Entity box = createEntity();
 			box.addComponent(new UUIDComponent());
 			box.addComponent(new TagComponent("box" + i));
-			box.addComponent(new TransformComponent(new Vector3f(-3.0f + ((float) (i * 1.5f + Math.random() * 0.5f)), 3.5f + ((float) (Math.random() * 1.5f)), -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(1.0f, 1.0f, 1.0f)));
-			box.addComponent(new SpriteRendererComponent(-1, new Vector4f((float) Math.random(), (float) Math.random(), (float) Math.random(), 1.0f), null));
-			box.addComponent(new BoxCollider2DComponent(new Vector2f(1.0f, 1.0f)));
-			box.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC));
+
+			// Position and Scale
+			float posX = -3.0f + (i * 1.5f) + (float)(Math.random() * 0.5f);
+			float posY = 3.5f + (float)(Math.random() * 1.5f);
+			float scale = 0.8f + (float)(Math.random() * 0.4f);
+
+			box.addComponent(new TransformComponent(new Vector3f(posX, posY, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(scale, scale, 1.0f)));
+			box.addComponent(new SpriteRendererComponent(-1, new Vector4f((float)Math.random(), (float)Math.random(), (float)Math.random(), 1.0f), null));
+			box.addComponent(new CircleCollider2DComponent(0.5f * scale, new Vector2f(0.0f, 0.0f), 0.2f, 1.0f, false));
+			box.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC, new Vector2f((float)(Math.random() * 2 - 1), (float)(Math.random() * 2)), 0.05f, 0.1f, 1.0f, 1.0f, false, true));
 
 			Entity floor = createEntity();
 			floor.addComponent(new UUIDComponent());
 			floor.addComponent(new TagComponent("floor" + i));
 			floor.addComponent(new TransformComponent(new Vector3f(-3.0f + i, -3.5f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(1.0f, 1.0f, 1.0f)));
 			floor.addComponent(new SpriteRendererComponent(-1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), null));
-			floor.addComponent(new BoxCollider2DComponent(new Vector2f(1.0f, 1.0f)));
+			floor.addComponent(new BoxCollider2DComponent(new Vector2f(1.0f, 1.0f), new Vector2f(0.0f, 0.0f), 0.8f, 1.0f, false));
 			floor.addComponent(new RigidBody2DComponent(BodyType.STATIC));
 		}
 	}
