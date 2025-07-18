@@ -149,6 +149,17 @@ public class GUIUtils {
 		ImGui.popID();
 	}
 
+	public static void renderStringReadOnly(String label, String value) {
+		ImGui.pushID(label);
+		ImGui.columns(2, "Columns_" + label, false);
+		ImGui.setColumnWidth(0, 100);
+		ImGui.text(label);
+		ImGui.nextColumn();
+		ImGui.text(value);
+		ImGui.columns(1);
+		ImGui.popID();
+	}
+
 	public static boolean renderStringInputWithClearButton(String label, ImString value) {
 		ImGui.pushID(label);
 
@@ -176,6 +187,17 @@ public class GUIUtils {
 		ImGui.popID();
 
 		return changed;
+	}
+
+	public static void renderIntReadOnly(String label, int value) {
+		ImGui.pushID(label);
+		ImGui.columns(2, "Columns_" + label, false);
+		ImGui.setColumnWidth(0, 100);
+		ImGui.text(label);
+		ImGui.nextColumn();
+		ImGui.text(String.format("%d", value));
+		ImGui.columns(1);
+		ImGui.popID();
 	}
 
 	public static boolean renderIntInput(String label, ImInt value) {

@@ -44,14 +44,15 @@ import com.krnl32.jupiter.panels.SceneHierarchyPanel;
 import com.krnl32.jupiter.panels.ViewportPanel;
 import com.krnl32.jupiter.renderer.*;
 import com.krnl32.jupiter.renderer.components.effects.BlinkComponentRenderer;
-import com.krnl32.jupiter.renderer.components.gameplay.HealthComponentRenderer;
-import com.krnl32.jupiter.renderer.components.gameplay.TeamComponentRenderer;
-import com.krnl32.jupiter.renderer.components.gameplay.TransformComponentRenderer;
+import com.krnl32.jupiter.renderer.components.effects.ParticleComponentRenderer;
+import com.krnl32.jupiter.renderer.components.gameplay.*;
 import com.krnl32.jupiter.renderer.components.physics.BoxCollider2DComponentRenderer;
 import com.krnl32.jupiter.renderer.components.physics.CircleCollider2DComponentRenderer;
 import com.krnl32.jupiter.renderer.components.physics.RigidBody2DComponentRenderer;
 import com.krnl32.jupiter.renderer.components.renderer.SpriteRendererComponentRenderer;
+import com.krnl32.jupiter.renderer.components.utility.LifetimeComponentRenderer;
 import com.krnl32.jupiter.renderer.components.utility.TagComponentRenderer;
+import com.krnl32.jupiter.renderer.components.utility.UUIDComponentRenderer;
 import com.krnl32.jupiter.scene.Scene;
 import com.krnl32.jupiter.scene.SceneManager;
 import com.krnl32.jupiter.serializer.SceneSerializer;
@@ -99,21 +100,7 @@ public class Editor extends Engine {
 
 		// Register Editor Components
 		registerComponentFactories();
-
-		// Register Component Renderers
-		// Effects
-		RendererRegistry.registerComponentRenderer(BlinkComponent.class, new BlinkComponentRenderer());
-
-		// Renderer
-		RendererRegistry.registerComponentRenderer(SpriteRendererComponent.class, new SpriteRendererComponentRenderer());
-
-		RendererRegistry.registerComponentRenderer(TransformComponent.class, new TransformComponentRenderer());
-		RendererRegistry.registerComponentRenderer(TagComponent.class, new TagComponentRenderer());
-		RendererRegistry.registerComponentRenderer(TeamComponent.class, new TeamComponentRenderer());
-		RendererRegistry.registerComponentRenderer(HealthComponent.class, new HealthComponentRenderer());
-		RendererRegistry.registerComponentRenderer(BoxCollider2DComponent.class, new BoxCollider2DComponentRenderer());
-		RendererRegistry.registerComponentRenderer(CircleCollider2DComponent.class, new CircleCollider2DComponentRenderer());
-		RendererRegistry.registerComponentRenderer(RigidBody2DComponent.class, new RigidBody2DComponentRenderer());
+		registerComponentRenderers();
 
 		// Setup Scene
 		sceneSerializer = new SceneSerializer();
@@ -208,5 +195,35 @@ public class Editor extends Engine {
 		FactoryRegistry.registerComponentFactory(UUIDComponent.class, new UUIDComponentFactory());
 		FactoryRegistry.registerComponentFactory(TagComponent.class, new TagComponentFactory());
 		FactoryRegistry.registerComponentFactory(LifetimeComponent.class, new LifetimeComponentFactory());
+	}
+
+	private void registerComponentRenderers() {
+		// Effects
+		RendererRegistry.registerComponentRenderer(BlinkComponent.class, new BlinkComponentRenderer());
+		RendererRegistry.registerComponentRenderer(ParticleComponent.class, new ParticleComponentRenderer());
+
+		// Gameplay
+		RendererRegistry.registerComponentRenderer(TransformComponent.class, new TransformComponentRenderer());
+		RendererRegistry.registerComponentRenderer(TeamComponent.class, new TeamComponentRenderer());
+		RendererRegistry.registerComponentRenderer(HealthComponent.class, new HealthComponentRenderer());
+		RendererRegistry.registerComponentRenderer(MovementIntentComponent.class, new MovementIntentComponentRenderer());
+		RendererRegistry.registerComponentRenderer(ForceMovementComponent.class, new ForceMovementComponentRenderer());
+
+		// Input
+
+		// Physics
+		RendererRegistry.registerComponentRenderer(RigidBody2DComponent.class, new RigidBody2DComponentRenderer());
+		RendererRegistry.registerComponentRenderer(BoxCollider2DComponent.class, new BoxCollider2DComponentRenderer());
+		RendererRegistry.registerComponentRenderer(CircleCollider2DComponent.class, new CircleCollider2DComponentRenderer());
+
+		// Projectile
+
+		// Renderer
+		RendererRegistry.registerComponentRenderer(SpriteRendererComponent.class, new SpriteRendererComponentRenderer());
+
+		// Utility
+		RendererRegistry.registerComponentRenderer(UUIDComponent.class, new UUIDComponentRenderer());
+		RendererRegistry.registerComponentRenderer(TagComponent.class, new TagComponentRenderer());
+		RendererRegistry.registerComponentRenderer(LifetimeComponent.class, new LifetimeComponentRenderer());
 	}
 }
