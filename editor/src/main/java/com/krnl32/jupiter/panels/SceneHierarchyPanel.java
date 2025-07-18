@@ -1,6 +1,5 @@
 package com.krnl32.jupiter.panels;
 
-import com.krnl32.jupiter.components.utility.DestroyComponent;
 import com.krnl32.jupiter.components.utility.UUIDComponent;
 import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.editor.EditorPanel;
@@ -149,7 +148,7 @@ public class SceneHierarchyPanel implements EditorPanel {
 				if (entity.equals(selectedEntity)) {
 					setSelectedEntity(null);
 				}
-				entity.addComponent(new DestroyComponent());
+				scene.destroyEntity(entity);
 				ImGui.endPopup();
 				return;
 			}
