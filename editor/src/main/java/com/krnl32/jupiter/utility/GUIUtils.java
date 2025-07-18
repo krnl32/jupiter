@@ -14,9 +14,10 @@ import org.joml.Vector4f;
 
 public class GUIUtils {
 	public static void renderVector2f(String label, Vector2f vec) {
-		ImGui.pushID(label);
+		int uniqueID = System.identityHashCode(vec);
+		ImGui.pushID(label + "_" + uniqueID);
 
-		ImGui.columns(2, "vec2columns" + label, false);
+		ImGui.columns(2, "vec2columns" + label + "_" + uniqueID, false);
 		ImGui.setColumnWidth(0, 100);
 		ImGui.text(label);
 		ImGui.nextColumn();
@@ -42,7 +43,7 @@ public class GUIUtils {
 		ImGui.sameLine(0, 2);
 
 		ImGui.pushItemWidth(dragWidth);
-		if (ImGui.dragFloat("##X_" + label, xVal, dragSpeed, -Float.MAX_VALUE, Float.MAX_VALUE, "%.3f")) {
+		if (ImGui.dragFloat("##X_" + label + "_" + uniqueID, xVal, dragSpeed, -Float.MAX_VALUE, Float.MAX_VALUE, "%.3f")) {
 			vec.x = xVal[0];
 		}
 		ImGui.popItemWidth();
@@ -60,7 +61,7 @@ public class GUIUtils {
 		ImGui.sameLine(0, 2);
 
 		ImGui.pushItemWidth(dragWidth);
-		if (ImGui.dragFloat("##Y_" + label, yVal, dragSpeed, -Float.MAX_VALUE, Float.MAX_VALUE, "%.3f")) {
+		if (ImGui.dragFloat("##Y_" + label + "_" + uniqueID, yVal, dragSpeed, -Float.MAX_VALUE, Float.MAX_VALUE, "%.3f")) {
 			vec.y = yVal[0];
 		}
 		ImGui.popItemWidth();
@@ -73,9 +74,10 @@ public class GUIUtils {
 	}
 
 	public static void renderVector3f(String label, Vector3f vec) {
-		ImGui.pushID(label);
+		int uniqueID = System.identityHashCode(vec);
+		ImGui.pushID(label + "_" + uniqueID);
 
-		ImGui.columns(2, "vec3columns" + label, false);
+		ImGui.columns(2, "vec3columns" + label + "_" + uniqueID, false);
 		ImGui.setColumnWidth(0, 100);
 		ImGui.text(label);
 		ImGui.nextColumn();
@@ -102,7 +104,7 @@ public class GUIUtils {
 		ImGui.sameLine(0, 2);
 
 		ImGui.pushItemWidth(dragWidth);
-		if (ImGui.dragFloat("##X_" + label, xVal, dragSpeed, -Float.MAX_VALUE, Float.MAX_VALUE, "%.3f")) {
+		if (ImGui.dragFloat("##X_" + label + "_" + uniqueID, xVal, dragSpeed, -Float.MAX_VALUE, Float.MAX_VALUE, "%.3f")) {
 			vec.x = xVal[0];
 		}
 		ImGui.popItemWidth();
@@ -120,7 +122,7 @@ public class GUIUtils {
 		ImGui.sameLine(0, 2);
 
 		ImGui.pushItemWidth(dragWidth);
-		if (ImGui.dragFloat("##Y_" + label, yVal, dragSpeed, -Float.MAX_VALUE, Float.MAX_VALUE, "%.3f")) {
+		if (ImGui.dragFloat("##Y_" + label + "_" + uniqueID, yVal, dragSpeed, -Float.MAX_VALUE, Float.MAX_VALUE, "%.3f")) {
 			vec.y = yVal[0];
 		}
 		ImGui.popItemWidth();
@@ -138,7 +140,7 @@ public class GUIUtils {
 		ImGui.sameLine(0, 2);
 
 		ImGui.pushItemWidth(dragWidth);
-		if (ImGui.dragFloat("##Z_" + label, zVal, dragSpeed, -Float.MAX_VALUE, Float.MAX_VALUE, "%.3f")) {
+		if (ImGui.dragFloat("##Z_" + label + "_" + uniqueID, zVal, dragSpeed, -Float.MAX_VALUE, Float.MAX_VALUE, "%.3f")) {
 			vec.z = zVal[0];
 		}
 		ImGui.popItemWidth();
@@ -322,9 +324,10 @@ public class GUIUtils {
 	}
 
 	public static void renderColorPicker(String label, Vector4f color) {
-		ImGui.pushID(label);
+		int uniqueID = System.identityHashCode(color);
+		ImGui.pushID(label + "_" + uniqueID);
 
-		ImGui.columns(2, "Columns_" + label, false);
+		ImGui.columns(2, "Columns_" + label + "_" + uniqueID, false);
 		ImGui.setColumnWidth(0, 100);
 		ImGui.text(label);
 		ImGui.nextColumn();
@@ -336,16 +339,26 @@ public class GUIUtils {
 		float buttonSize = 27f;
 		float dragWidth = 37f;
 
-		float[] rgba = { color.x, color.y, color.z, color.w };
+		// RGBA
+		float[] r = { color.x };
+		float[] g = { color.y };
+		float[] b = { color.z };
+		float[] a = { color.w };
+
 		boolean changed = false;
+
+		float[] rgba = { r[0], g[0], b[0], a[0] };
 
 		// Color Picker
 		float currentX = ImGui.getCursorPosX();
 		ImGui.setCursorPosX(currentX - 8);
 		ImGui.pushItemWidth(25);
-		if (ImGui.colorEdit4("##ColorPreview_" + label, rgba,
-			ImGuiColorEditFlags.NoInputs | ImGuiColorEditFlags.Float)) {
+		if (ImGui.colorEdit4("##ColorPreview_" + label + "_" + uniqueID, rgba, ImGuiColorEditFlags.NoInputs | ImGuiColorEditFlags.Float)) {
 			changed = true;
+			r[0] = rgba[0];
+			g[0] = rgba[1];
+			b[0] = rgba[2];
+			a[0] = rgba[3];
 		}
 		ImGui.popItemWidth();
 		ImGui.setCursorPosX(currentX + 28 + 6);
@@ -357,13 +370,16 @@ public class GUIUtils {
 		ImGui.pushStyleColor(ImGuiCol.Button, 0.8f, 0.1f, 0.1f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 1f, 0.3f, 0.3f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonActive, 1f, 0.2f, 0.2f, 1f);
-		if (ImGui.button("R", buttonSize, buttonSize))
-			rgba[0] = 0f;
+		if (ImGui.button("R", buttonSize, buttonSize)) {
+			r[0] = 0f;
+			changed = true;
+		}
 		ImGui.popStyleColor(3);
 		ImGui.sameLine();
 		ImGui.pushItemWidth(dragWidth);
-		if (ImGui.dragFloat("##R_" + label, rgba, dragSpeed, 0f, 1f, "%.2f"))
+		if (ImGui.dragFloat("##R_" + label + "_" + uniqueID, r, dragSpeed, 0f, 1f, "%.2f")) {
 			changed = true;
+		}
 		ImGui.popItemWidth();
 		ImGui.sameLine();
 
@@ -371,13 +387,16 @@ public class GUIUtils {
 		ImGui.pushStyleColor(ImGuiCol.Button, 0.1f, 0.8f, 0.1f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0.3f, 1f, 0.3f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonActive, 0.2f, 1f, 0.2f, 1f);
-		if (ImGui.button("G", buttonSize, buttonSize))
-			rgba[1] = 0f;
+		if (ImGui.button("G", buttonSize, buttonSize)) {
+			g[0] = 0f;
+			changed = true;
+		}
 		ImGui.popStyleColor(3);
 		ImGui.sameLine();
 		ImGui.pushItemWidth(dragWidth);
-		if (ImGui.dragFloat("##G_" + label, rgba, dragSpeed, 0f, 1f, "%.2f"))
+		if (ImGui.dragFloat("##G_" + label + "_" + uniqueID, g, dragSpeed, 0f, 1f, "%.2f")) {
 			changed = true;
+		}
 		ImGui.popItemWidth();
 		ImGui.sameLine();
 
@@ -385,13 +404,16 @@ public class GUIUtils {
 		ImGui.pushStyleColor(ImGuiCol.Button, 0.1f, 0.1f, 0.8f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0.3f, 0.3f, 1f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonActive, 0.2f, 0.2f, 1f, 1f);
-		if (ImGui.button("B", buttonSize, buttonSize))
-			rgba[2] = 0f;
+		if (ImGui.button("B", buttonSize, buttonSize)) {
+			b[0] = 0f;
+			changed = true;
+		}
 		ImGui.popStyleColor(3);
 		ImGui.sameLine();
 		ImGui.pushItemWidth(dragWidth);
-		if (ImGui.dragFloat("##B_" + label, rgba, dragSpeed, 0f, 1f, "%.2f"))
+		if (ImGui.dragFloat("##B_" + label + "_" + uniqueID, b, dragSpeed, 0f, 1f, "%.2f")) {
 			changed = true;
+		}
 		ImGui.popItemWidth();
 		ImGui.sameLine();
 
@@ -399,13 +421,16 @@ public class GUIUtils {
 		ImGui.pushStyleColor(ImGuiCol.Button, 0.6f, 0.6f, 0.6f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0.8f, 0.8f, 0.8f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonActive, 0.7f, 0.7f, 0.7f, 1f);
-		if (ImGui.button("A", buttonSize, buttonSize))
-			rgba[3] = 1f;
+		if (ImGui.button("A", buttonSize, buttonSize)) {
+			a[0] = 1f;
+			changed = true;
+		}
 		ImGui.popStyleColor(3);
 		ImGui.sameLine();
 		ImGui.pushItemWidth(dragWidth);
-		if (ImGui.dragFloat("##A_" + label, rgba, dragSpeed, 0f, 1f, "%.2f"))
+		if (ImGui.dragFloat("##A_" + label + "_" + uniqueID, a, dragSpeed, 0f, 1f, "%.2f")) {
 			changed = true;
+		}
 		ImGui.popItemWidth();
 
 		ImGui.endGroup();
@@ -415,7 +440,7 @@ public class GUIUtils {
 		ImGui.popID();
 
 		if (changed) {
-			color.set(rgba[0], rgba[1], rgba[2], rgba[3]);
+			color.set(r[0], g[0], b[0], a[0]);
 		}
 	}
 
