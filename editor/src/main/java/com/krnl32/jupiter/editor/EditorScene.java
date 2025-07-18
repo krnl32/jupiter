@@ -35,7 +35,16 @@ public class EditorScene extends Scene {
 		entity.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC));
 		entity.addComponent(new BoxCollider2DComponent(new Vector2f(1.0f, 1.0f)));
 
+
 		for (int i = 0; i < 7; i++) {
+			Entity box = createEntity();
+			box.addComponent(new UUIDComponent());
+			box.addComponent(new TagComponent("box" + i));
+			box.addComponent(new TransformComponent(new Vector3f(-3.0f + ((float) (i * 1.5f + Math.random() * 0.5f)), 3.5f + ((float) (Math.random() * 1.5f)), -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(1.0f, 1.0f, 1.0f)));
+			box.addComponent(new SpriteRendererComponent(-1, new Vector4f((float) Math.random(), (float) Math.random(), (float) Math.random(), 1.0f), null));
+			box.addComponent(new BoxCollider2DComponent(new Vector2f(1.0f, 1.0f)));
+			box.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC));
+
 			Entity floor = createEntity();
 			floor.addComponent(new UUIDComponent());
 			floor.addComponent(new TagComponent("floor" + i));

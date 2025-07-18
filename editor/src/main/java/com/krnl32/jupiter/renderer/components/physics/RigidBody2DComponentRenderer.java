@@ -24,10 +24,26 @@ public class RigidBody2DComponentRenderer implements ComponentRenderer<RigidBody
 		}
 
 		GUIUtils.renderVector2f("Initial Velocity", component.initialVelocity);
-		GUIUtils.renderFloatInputWithResetButton("Mass", new ImFloat(component.mass), 1.0f);
-		GUIUtils.renderFloatInputWithResetButton("Gravity Scale", new ImFloat(component.gravityScale), 1.0f);
-		GUIUtils.renderFloatInputWithResetButton("Angular Damping", new ImFloat(component.angularDamping), 0.8f);
-		GUIUtils.renderFloatInputWithResetButton("Linear Damping", new ImFloat(component.linearDamping), 0.9f);
+
+		ImFloat mass = new ImFloat(component.mass);
+		if (GUIUtils.renderFloatInputWithResetButton("Mass", mass, 1.0f)) {
+			component.mass = mass.get();
+		}
+
+		ImFloat gravityScale = new ImFloat(component.gravityScale);
+		if (GUIUtils.renderFloatInputWithResetButton("Gravity Scale", gravityScale, 1.0f)) {
+			component.gravityScale = gravityScale.get();
+		}
+
+		ImFloat angularDamping = new ImFloat(component.angularDamping);
+		if (GUIUtils.renderFloatInputWithResetButton("Angular Damping", angularDamping, 0.8f)) {
+			component.angularDamping = angularDamping.get();
+		}
+
+		ImFloat linearDamping = new ImFloat(component.linearDamping);
+		if (GUIUtils.renderFloatInputWithResetButton("Linear Damping", linearDamping, 0.9f)) {
+			component.linearDamping = linearDamping.get();
+		}
 
 		ImBoolean fixedRotation = new ImBoolean(component.fixedRotation);
 		if (ImGui.checkbox("Fixed Rotation", fixedRotation)) {
