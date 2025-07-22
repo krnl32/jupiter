@@ -7,60 +7,65 @@ import org.joml.Vector2f;
 
 public class RigidBody2DComponent implements Component {
 	public BodyType bodyType;
-	public Vector2f initialVelocity;
-	public float angularDamping;
+	public Vector2f velocity;
 	public float linearDamping;
+	public float angularDamping;
 	public float mass;
 	public float gravityScale;
 	public boolean fixedRotation;
 	public boolean continuousCollision;
 	public Body rawBody;
+	public boolean resync;
 
 	public RigidBody2DComponent(BodyType bodyType) {
 		this.bodyType = bodyType;
-		this.initialVelocity = new Vector2f();
-		this.angularDamping = 0.8f;
+		this.velocity = new Vector2f();
 		this.linearDamping = 0.9f;
+		this.angularDamping = 0.8f;
 		this.mass = 1.0f;
 		this.gravityScale = 1.0f;
 		this.fixedRotation = false;
 		this.continuousCollision = true;
 		this.rawBody = null;
+		this.resync = false;
 	}
 
-	public RigidBody2DComponent(BodyType bodyType, Vector2f initialVelocity) {
+	public RigidBody2DComponent(BodyType bodyType, Vector2f velocity) {
 		this.bodyType = bodyType;
-		this.initialVelocity = initialVelocity;
-		this.angularDamping = 0.8f;
+		this.velocity = velocity;
 		this.linearDamping = 0.9f;
+		this.angularDamping = 0.8f;
 		this.mass = 1.0f;
 		this.gravityScale = 1.0f;
 		this.fixedRotation = false;
 		this.continuousCollision = true;
 		this.rawBody = null;
+		this.resync = false;
 	}
 
-	public RigidBody2DComponent(BodyType bodyType, Vector2f initialVelocity, float angularDamping, float linearDamping, float mass, float gravityScale, boolean fixedRotation, boolean continuousCollision) {
+	public RigidBody2DComponent(BodyType bodyType, Vector2f velocity, float linearDamping, float angularDamping, float mass, float gravityScale, boolean fixedRotation, boolean continuousCollision) {
 		this.bodyType = bodyType;
-		this.initialVelocity = initialVelocity;
-		this.angularDamping = angularDamping;
+		this.velocity = velocity;
 		this.linearDamping = linearDamping;
+		this.angularDamping = angularDamping;
 		this.mass = mass;
 		this.gravityScale = gravityScale;
 		this.fixedRotation = fixedRotation;
 		this.continuousCollision = continuousCollision;
 		this.rawBody = null;
+		this.resync = false;
 	}
 
-	public RigidBody2DComponent(BodyType bodyType, Vector2f initialVelocity, float angularDamping, float linearDamping, float mass, float gravityScale, boolean fixedRotation, boolean continuousCollision, Body rawBody) {
+	public RigidBody2DComponent(BodyType bodyType, Vector2f velocity, float linearDamping, float angularDamping, float mass, float gravityScale, boolean fixedRotation, boolean continuousCollision, Body rawBody) {
 		this.bodyType = bodyType;
-		this.initialVelocity = initialVelocity;
-		this.angularDamping = angularDamping;
+		this.velocity = velocity;
 		this.linearDamping = linearDamping;
+		this.angularDamping = angularDamping;
 		this.mass = mass;
 		this.gravityScale = gravityScale;
 		this.fixedRotation = fixedRotation;
 		this.continuousCollision = continuousCollision;
 		this.rawBody = rawBody;
+		this.resync = false;
 	}
 }

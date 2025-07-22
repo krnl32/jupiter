@@ -1,9 +1,9 @@
 package com.krnl32.jupiter.systems.physics;
 
+import com.krnl32.jupiter.components.gameplay.TransformComponent;
 import com.krnl32.jupiter.components.physics.BoxCollider2DComponent;
 import com.krnl32.jupiter.components.physics.CircleCollider2DComponent;
 import com.krnl32.jupiter.components.physics.RigidBody2DComponent;
-import com.krnl32.jupiter.components.gameplay.TransformComponent;
 import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.ecs.Registry;
 import com.krnl32.jupiter.ecs.System;
@@ -53,55 +53,13 @@ public class Physics2DSystem implements System {
 
 			// Register with Physics World (Maybe listen for EntityCreatedEvent?)
 			if (rigidBody2D.rawBody == null) {
-				// Create Raw Body
-				BodyDef bodyDef = new BodyDef();
-				bodyDef.type = switch (rigidBody2D.bodyType) {
-					case STATIC -> BodyType.STATIC;
-					case DYNAMIC -> BodyType.DYNAMIC;
-					case KINEMATIC -> BodyType.KINEMATIC;
-				};
-				bodyDef.userData = entity;
-				bodyDef.position.set(transform.translation.x, transform.translation.y);
-				bodyDef.angle = transform.rotation.z;
-				bodyDef.linearVelocity.set(rigidBody2D.initialVelocity.x, rigidBody2D.initialVelocity.y);
-				bodyDef.linearDamping = rigidBody2D.linearDamping;
-				bodyDef.angularDamping = rigidBody2D.angularDamping;
-				bodyDef.fixedRotation = rigidBody2D.fixedRotation;
-				bodyDef.bullet = rigidBody2D.continuousCollision;
-				bodyDef.gravityScale = rigidBody2D.gravityScale;
-				rigidBody2D.rawBody = physics2D.getWorld().createBody(bodyDef);
-				rigidBody2D.rawBody.m_mass = rigidBody2D.mass;
+				createPhysicsBody(entity, rigidBody2D, transform);
+			}
 
-				// Setup Colliders
-				CircleCollider2DComponent circleCollider2D = entity.getComponent(CircleCollider2DComponent.class);
-				if (circleCollider2D != null) {
-					CircleShape circleShape = new CircleShape();
-					circleShape.setRadius(circleCollider2D.radius);
-					circleShape.m_p.set(circleCollider2D.offset.x, circleCollider2D.offset.y);
-
-					FixtureDef fixtureDef = new FixtureDef();
-					fixtureDef.shape = circleShape;
-					fixtureDef.userData = entity;
-					fixtureDef.friction = circleCollider2D.friction;
-					fixtureDef.density = circleCollider2D.density;
-					fixtureDef.isSensor = circleCollider2D.sensor;
-					rigidBody2D.rawBody.createFixture(fixtureDef);
-				}
-
-				BoxCollider2DComponent boxCollider2D = entity.getComponent(BoxCollider2DComponent.class);
-				if (boxCollider2D != null) {
-					PolygonShape boxShape = new PolygonShape();
-					Vector2f halfSize = boxCollider2D.getHalfSize();
-					boxShape.setAsBox(halfSize.x, halfSize.y, new Vec2(boxCollider2D.offset.x, boxCollider2D.offset.y), 0);
-
-					FixtureDef fixtureDef = new FixtureDef();
-					fixtureDef.shape = boxShape;
-					fixtureDef.userData = entity;
-					fixtureDef.friction = boxCollider2D.friction;
-					fixtureDef.density = boxCollider2D.density;
-					fixtureDef.isSensor = boxCollider2D.sensor;
-					rigidBody2D.rawBody.createFixture(fixtureDef);
-				}
+			// ReSync Physics Body
+			if (rigidBody2D.rawBody != null && rigidBody2D.resync) {
+				resyncBody(rigidBody2D);
+				rigidBody2D.resync = false;
 			}
 
 			// Update Physics
@@ -114,6 +72,7 @@ public class Physics2DSystem implements System {
 
 		physics2D.onUpdate(dt);
 
+		// Handle Destruction
 		for (Body body : bodiesToDestroy) {
 			if (body.m_world != null) {
 				physics2D.getWorld().destroyBody(body);
@@ -128,5 +87,85 @@ public class Physics2DSystem implements System {
 
 	public void setCollisionRule(CollisionRule collisionRule) {
 		this.physics2D.getWorld().setContactFilter(new DelegatingContactFilter(collisionRule));
+	}
+
+	private void createPhysicsBody(Entity entity, RigidBody2DComponent rigidBody2D, TransformComponent transform) {
+		// Create Raw Body
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.type = switch (rigidBody2D.bodyType) {
+			case STATIC -> BodyType.STATIC;
+			case DYNAMIC -> BodyType.DYNAMIC;
+			case KINEMATIC -> BodyType.KINEMATIC;
+		};
+		bodyDef.userData = entity;
+		bodyDef.position.set(transform.translation.x, transform.translation.y);
+		bodyDef.angle = transform.rotation.z;
+		bodyDef.linearVelocity.set(rigidBody2D.velocity.x, rigidBody2D.velocity.y);
+		bodyDef.linearDamping = rigidBody2D.linearDamping;
+		bodyDef.angularDamping = rigidBody2D.angularDamping;
+		bodyDef.fixedRotation = rigidBody2D.fixedRotation;
+		bodyDef.bullet = rigidBody2D.continuousCollision;
+		bodyDef.gravityScale = rigidBody2D.gravityScale;
+		rigidBody2D.rawBody = physics2D.getWorld().createBody(bodyDef);
+
+		addFixtures(entity, rigidBody2D);
+		rigidBody2D.rawBody.resetMassData();
+	}
+
+	private void addFixtures(Entity entity, RigidBody2DComponent rigidBody2D) {
+		// Setup Colliders
+		CircleCollider2DComponent circleCollider2D = entity.getComponent(CircleCollider2DComponent.class);
+		if (circleCollider2D != null) {
+			CircleShape circleShape = new CircleShape();
+			circleShape.setRadius(circleCollider2D.radius);
+			circleShape.m_p.set(circleCollider2D.offset.x, circleCollider2D.offset.y);
+
+			FixtureDef fixtureDef = new FixtureDef();
+			fixtureDef.shape = circleShape;
+			fixtureDef.userData = entity;
+			fixtureDef.friction = circleCollider2D.friction;
+			fixtureDef.density = circleCollider2D.density;
+			fixtureDef.isSensor = circleCollider2D.sensor;
+			rigidBody2D.rawBody.createFixture(fixtureDef);
+		}
+
+		BoxCollider2DComponent boxCollider2D = entity.getComponent(BoxCollider2DComponent.class);
+		if (boxCollider2D != null) {
+			PolygonShape boxShape = new PolygonShape();
+			Vector2f halfSize = boxCollider2D.getHalfSize();
+			boxShape.setAsBox(halfSize.x, halfSize.y, new Vec2(boxCollider2D.offset.x, boxCollider2D.offset.y), 0);
+
+			FixtureDef fixtureDef = new FixtureDef();
+			fixtureDef.shape = boxShape;
+			fixtureDef.userData = entity;
+			fixtureDef.friction = boxCollider2D.friction;
+			fixtureDef.density = boxCollider2D.density;
+			fixtureDef.isSensor = boxCollider2D.sensor;
+			rigidBody2D.rawBody.createFixture(fixtureDef);
+		}
+	}
+
+	private void resyncBody(RigidBody2DComponent rigidBody2D) {
+		Body body = rigidBody2D.rawBody;
+
+		BodyType newBodyType = switch (rigidBody2D.bodyType) {
+			case STATIC -> BodyType.STATIC;
+			case DYNAMIC -> BodyType.DYNAMIC;
+			case KINEMATIC -> BodyType.KINEMATIC;
+		};
+		if (body.getType() != newBodyType) {
+			body.setType(newBodyType);
+		}
+
+		body.setLinearDamping(rigidBody2D.linearDamping);
+		body.setAngularDamping(rigidBody2D.angularDamping);
+		body.setFixedRotation(rigidBody2D.fixedRotation);
+		body.setBullet(rigidBody2D.continuousCollision);
+		body.setGravityScale(rigidBody2D.gravityScale);
+
+		for (var fixture = body.getFixtureList(); fixture != null; fixture = fixture.getNext()) {
+			fixture.setDensity(rigidBody2D.mass);
+		}
+		body.resetMassData();
 	}
 }

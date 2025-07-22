@@ -108,7 +108,7 @@ public class TestScene extends Scene {
 		spaceshipRedEntity.addComponent(new HealthComponent(100, 100));
 		spaceshipRedEntity.addComponent(new TeamComponent(1));
 		spaceshipRedEntity.addComponent(new DeathEffectComponent(20, new Sprite(0, new Vector4f(1.0f, 0.45f, 0.0f, 0.95f), starParticleID)));
-		spaceshipRedEntity.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC, new Vector2f(0.0f, 0.0f), 6.0f, 1.5f, 1.0f, 1.0f, false, false));
+		spaceshipRedEntity.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC, new Vector2f(0.0f, 0.0f), 1.5f, 6.0f, 1.0f, 1.0f, false, false));
 		spaceshipRedEntity.addComponent(new BoxCollider2DComponent(new Vector2f(1.0f, 1.0f)));
 		spaceshipRedEntity.addComponent(new MovementIntentComponent());
 		spaceshipRedEntity.addComponent(new ForceMovementComponent());
@@ -131,7 +131,7 @@ public class TestScene extends Scene {
 		spaceshipBlueEntity.addComponent(new HealthComponent(100, 100));
 		spaceshipBlueEntity.addComponent(new TeamComponent(2));
 		spaceshipBlueEntity.addComponent(new DeathEffectComponent(20, new Sprite(0, new Vector4f(1.0f, 0.45f, 0.0f, 0.95f), starParticleID)));
-		spaceshipBlueEntity.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC, new Vector2f(0.0f, 0.0f), 6.0f, 1.5f, 1.0f, 1.0f, false, false));
+		spaceshipBlueEntity.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC, new Vector2f(0.0f, 0.0f), 1.5f, 6.0f, 1.0f, 1.0f, false, false));
 		spaceshipBlueEntity.addComponent(new BoxCollider2DComponent(new Vector2f(1.0f, 1.0f)));
 
 		// UI
@@ -153,7 +153,7 @@ public class TestScene extends Scene {
 			spaceship.addComponent(new TeamComponent(2));
 			spaceship.addComponent(new DeathEffectComponent(20, new Sprite(0, new Vector4f(1.0f, 0.45f, 0.0f, 0.95f), starParticleID)));
 			spaceship.addComponent(new ProjectileEmitterComponent(null, 15.55f, 10.0f, new Sprite(1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), laserBlueID)));
-			spaceship.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC, new Vector2f(0.0f, 0.0f), 6.0f, 1.5f, 1.0f, 1.0f, false, false));
+			spaceship.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC, new Vector2f(0.0f, 0.0f), 1.5f, 6.0f, 1.0f, 1.0f, false, false));
 			spaceship.addComponent(new BoxCollider2DComponent(new Vector2f(1.0f, 1.0f)));
 		}));
 		button.addComponent(new UITextComponent("Spawn Enemy Blue", new Vector4f(0.118f, 0.118f, 0.705f, 1.0f), arialFontID, TextHorizontalAlign.CENTER, TextVerticalAlign.CENTER, TextOverflow.SCALE));
@@ -172,7 +172,7 @@ public class TestScene extends Scene {
 			spaceship.addComponent(new TeamComponent(2));
 			spaceship.addComponent(new DeathEffectComponent(20, new Sprite(0, new Vector4f(1.0f, 0.45f, 0.0f, 0.95f), starParticleID)));
 			spaceship.addComponent(new ProjectileEmitterComponent(null, 15.55f, 10.0f, new Sprite(1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), laserBlueID)));
-			spaceship.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC, new Vector2f(0.0f, 0.0f), 6.0f, 1.5f, 1.0f, 1.0f, false, false));
+			spaceship.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC, new Vector2f(0.0f, 0.0f), 1.5f, 6.0f, 1.0f, 1.0f, false, false));
 			spaceship.addComponent(new BoxCollider2DComponent(new Vector2f(1.0f, 1.0f)));
 		}));
 		button2.addComponent(new UITextComponent("Spawn Enemy Red", new Vector4f(0.705f, 0.118f, 0.118f, 1.0f), arialFontID, TextHorizontalAlign.CENTER, TextVerticalAlign.CENTER, TextOverflow.SCALE));

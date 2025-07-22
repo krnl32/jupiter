@@ -173,7 +173,7 @@
             "linearDamping": 1.5,
             "angularDamping": 6,
             "mass": 1,
-            "initialVelocity": {
+            "velocity": {
                 "x": 0,
                 "y": 0
             },
@@ -240,7 +240,7 @@
             "linearDamping": 0.9,
             "angularDamping": 0.8,
             "mass": 1,
-            "initialVelocity": {
+            "velocity": {
                 "x": 0,
                 "y": 0
             },
@@ -325,7 +325,7 @@
             "linearDamping": 1.5,
             "angularDamping": 6,
             "mass": 1,
-            "initialVelocity": {
+            "velocity": {
                 "x": 0,
                 "y": 0
             },

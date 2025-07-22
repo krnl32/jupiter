@@ -1,6 +1,7 @@
 package com.krnl32.jupiter.script.types;
 
 import com.krnl32.jupiter.components.gameplay.ScriptComponent;
+import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.ecs.Component;
 import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.script.BinderRegistry;
@@ -22,6 +23,27 @@ public class LuaEntity extends LuaValue {
 	@Override
 	public LuaValue get(LuaValue key) {
 		return switch (key.checkjstring()) {
+			case "addComponent" -> new VarArgFunction() {
+				@Override
+				public Varargs invoke(Varargs args) {
+					LuaValue componentName = args.arg(2);
+					LuaValue componentData = args.arg(3);
+					for (var entry : BinderRegistry.getComponentBinders().entrySet()) {
+						if (entry.getKey().getSimpleName().equals(componentName.checkjstring())) {
+							if (entity.hasComponent(entry.getKey())) {
+								Logger.warn("LuaEntity Failed to AddComponent({}) for Entity({}), Already Exists!", componentName.checkjstring(), entity.getTagOrId());
+								return LuaValue.NIL;
+							}
+
+							ComponentBinder<? extends Component> binder = entry.getValue();
+							Component component = binder.fromLua(componentData);
+							entity.addComponent(component);
+							break;
+						}
+					}
+					return LuaValue.NIL;
+				}
+			};
 			case "setComponent" -> new VarArgFunction() {
 				@Override
 				public Varargs invoke(Varargs args) {
@@ -29,8 +51,14 @@ public class LuaEntity extends LuaValue {
 					LuaValue componentData = args.arg(3);
 					for (var entry : BinderRegistry.getComponentBinders().entrySet()) {
 						if (entry.getKey().getSimpleName().equals(componentName.checkjstring())) {
-							ComponentBinder<? extends Component> binder = entry.getValue();
-							Component component = binder.fromLua(componentData);
+							ComponentBinder binder = entry.getValue();
+							Component component = entity.getComponent(entry.getKey());
+							if (component == null) {
+								Logger.warn("LuaEntity Failed to SetComponent({}) for Entity({}), Component Doesn't Exist!", componentName.checkjstring(), entity.getTagOrId());
+								return LuaValue.NIL;
+							}
+
+							binder.updateFromLua(component, componentData);
 							entity.addComponent(component);
 							break;
 						}

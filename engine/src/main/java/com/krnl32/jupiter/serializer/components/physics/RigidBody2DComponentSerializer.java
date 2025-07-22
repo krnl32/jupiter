@@ -13,9 +13,9 @@ public class RigidBody2DComponentSerializer implements ComponentSerializer<Rigid
 	public JSONObject serialize(RigidBody2DComponent component) {
 		return new JSONObject()
 			.put("bodyType", component.bodyType)
-			.put("initialVelocity", JOMLSerializerUtils.serializeVector2f(component.initialVelocity))
-			.put("angularDamping", component.angularDamping)
+			.put("velocity", JOMLSerializerUtils.serializeVector2f(component.velocity))
 			.put("linearDamping", component.linearDamping)
+			.put("angularDamping", component.angularDamping)
 			.put("mass", component.mass)
 			.put("gravityScale", component.gravityScale)
 			.put("fixedRotation", component.fixedRotation)
@@ -26,9 +26,9 @@ public class RigidBody2DComponentSerializer implements ComponentSerializer<Rigid
 	public RigidBody2DComponent deserialize(JSONObject data, EntityResolver resolver) {
 		return new RigidBody2DComponent(
 			BodyType.valueOf(data.getString("bodyType")),
-			JOMLSerializerUtils.deserializeVector2f(data.getJSONObject("initialVelocity")),
-			data.getFloat("angularDamping"),
+			JOMLSerializerUtils.deserializeVector2f(data.getJSONObject("velocity")),
 			data.getFloat("linearDamping"),
+			data.getFloat("angularDamping"),
 			data.getFloat("mass"),
 			data.getFloat("gravityScale"),
 			data.getBoolean("fixedRotation"),
@@ -40,9 +40,9 @@ public class RigidBody2DComponentSerializer implements ComponentSerializer<Rigid
 	public RigidBody2DComponent clone(RigidBody2DComponent component) {
 		return new RigidBody2DComponent(
 			component.bodyType,
-			new Vector2f(component.initialVelocity),
-			component.angularDamping,
+			new Vector2f(component.velocity),
 			component.linearDamping,
+			component.angularDamping,
 			component.mass,
 			component.gravityScale,
 			component.fixedRotation,

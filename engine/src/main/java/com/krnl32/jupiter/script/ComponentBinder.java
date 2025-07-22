@@ -6,4 +6,5 @@ import org.luaj.vm2.LuaValue;
 public interface ComponentBinder <T extends Component> {
 	LuaValue toLua(T component);
 	T fromLua(LuaValue table);
+	void updateFromLua(T component, LuaValue table);
 }

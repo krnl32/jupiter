@@ -92,7 +92,7 @@ public class Level1Scene extends Scene {
 		playerSpaceship.addComponent(new HealthComponent(100, 100));
 		playerSpaceship.addComponent(new TeamComponent(1));
 		playerSpaceship.addComponent(new DeathEffectComponent(20, new Sprite(0, new Vector4f(1.0f, 0.45f, 0.0f, 0.95f), starParticleID)));
-		playerSpaceship.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC, new Vector2f(0.0f, 0.0f), 6.0f, 1.5f, 1.0f, 1.0f, false, false));
+		playerSpaceship.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC, new Vector2f(0.0f, 0.0f), 1.5f, 6.0f, 1.0f, 1.0f, false, false));
 		playerSpaceship.addComponent(new BoxCollider2DComponent(new Vector2f(1.0f, 1.0f)));
 		playerSpaceship.addComponent(new ForceMovementComponent());
 		playerSpaceship.addComponent(new MovementIntentComponent());
@@ -105,7 +105,7 @@ public class Level1Scene extends Scene {
 			enemySpaceship.addComponent(new TagComponent("enemySpaceship" + i));
 			enemySpaceship.addComponent(new TransformComponent(new Vector3f(-3.0f * i, 5.0f, -1.0f), new Vector3f(0.0f, 0.0f, toRadians(180.0f)), new Vector3f(1.0f, 1.0f, 1.0f)));
 			enemySpaceship.addComponent(new SpriteRendererComponent(-1, new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), spaceshipSpritesheetAsset.getSprite("playerShip1_blue.png").getTextureAssetID(), spaceshipSpritesheetAsset.getSprite("playerShip1_blue.png").getTextureUV()));
-			enemySpaceship.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC, new Vector2f(0.0f, 0.0f), 6.0f, 1.5f, 1.0f, 1.0f, false, false));
+			enemySpaceship.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC, new Vector2f(0.0f, 0.0f), 1.5f, 6.0f, 1.0f, 1.0f, false, false));
 			enemySpaceship.addComponent(new BoxCollider2DComponent(new Vector2f(1.0f, 1.0f)));
 			enemySpaceship.addComponent(new HealthComponent(100, 100));
 			enemySpaceship.addComponent(new TeamComponent(2));

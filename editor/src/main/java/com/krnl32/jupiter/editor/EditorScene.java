@@ -50,7 +50,7 @@ public class EditorScene extends Scene {
 			box.addComponent(new TransformComponent(new Vector3f(posX, posY, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(scale, scale, 1.0f)));
 			box.addComponent(new SpriteRendererComponent(-1, new Vector4f((float)Math.random(), (float)Math.random(), (float)Math.random(), 1.0f), null));
 			box.addComponent(new CircleCollider2DComponent(0.5f * scale, new Vector2f(0.0f, 0.0f), 0.2f, 1.0f, false));
-			box.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC, new Vector2f((float)(Math.random() * 2 - 1), (float)(Math.random() * 2)), 0.05f, 0.1f, 1.0f, 1.0f, false, true));
+			box.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC, new Vector2f((float)(Math.random() * 2 - 1), (float)(Math.random() * 2)), 0.1f, 0.05f, 1.0f, 1.0f, false, true));
 
 			Entity floor = createEntity();
 			floor.addComponent(new UUIDComponent());
