@@ -1,0 +1,49 @@
+package com.krnl32.jupiter.asset.types;
+
+import com.krnl32.jupiter.asset.Asset;
+import com.krnl32.jupiter.asset.AssetState;
+import com.krnl32.jupiter.asset.AssetType;
+import com.krnl32.jupiter.core.Logger;
+import com.krnl32.jupiter.script.utility.ScriptDefinition;
+
+import java.io.File;
+
+public class ScriptAsset extends Asset {
+	private final String scriptPath;
+	private ScriptDefinition scriptDefinition;
+
+	public ScriptAsset(String scriptPath) {
+		super(AssetType.SCRIPT);
+		this.scriptPath = scriptPath;
+	}
+
+	public ScriptDefinition getScriptDefinition() {
+		return scriptDefinition;
+	}
+
+	@Override
+	protected boolean load() {
+		File scriptFile = new File(getRootPath() + scriptPath);
+		if (!scriptFile.exists()) {
+			setState(AssetState.MISSING);
+			Logger.error("ScriptAsset Failed to Load, File({}) Doesn't Exist", scriptPath);
+			return false;
+		}
+
+		scriptDefinition = new ScriptDefinition(getId(), getRootPath() + scriptPath);
+		setState(AssetState.LOADED);
+		return true;
+	}
+
+	@Override
+	protected boolean reload() {
+		unload();
+		return load();
+	}
+
+	@Override
+	protected void unload() {
+		scriptDefinition = null;
+		setState(AssetState.UNLOADED);
+	}
+}

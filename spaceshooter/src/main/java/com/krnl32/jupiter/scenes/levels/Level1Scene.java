@@ -1,6 +1,9 @@
 package com.krnl32.jupiter.scenes.levels;
 
 import com.krnl32.jupiter.asset.*;
+import com.krnl32.jupiter.asset.types.FontAsset;
+import com.krnl32.jupiter.asset.types.SpritesheetAsset;
+import com.krnl32.jupiter.asset.types.TextureAsset;
 import com.krnl32.jupiter.components.effects.DeathEffectComponent;
 import com.krnl32.jupiter.components.gameplay.*;
 import com.krnl32.jupiter.components.input.KeyboardControlComponent;

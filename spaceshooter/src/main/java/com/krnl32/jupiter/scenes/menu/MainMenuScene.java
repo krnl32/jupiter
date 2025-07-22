@@ -2,8 +2,8 @@ package com.krnl32.jupiter.scenes.menu;
 
 import com.krnl32.jupiter.asset.AssetID;
 import com.krnl32.jupiter.asset.AssetManager;
-import com.krnl32.jupiter.asset.FontAsset;
-import com.krnl32.jupiter.asset.TextureAsset;
+import com.krnl32.jupiter.asset.types.FontAsset;
+import com.krnl32.jupiter.asset.types.TextureAsset;
 import com.krnl32.jupiter.components.renderer.CameraComponent;
 import com.krnl32.jupiter.components.gameplay.TransformComponent;
 import com.krnl32.jupiter.components.utility.UUIDComponent;

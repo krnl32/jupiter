@@ -2,7 +2,7 @@ package com.krnl32.jupiter;
 
 import com.krnl32.jupiter.asset.AssetID;
 import com.krnl32.jupiter.asset.AssetManager;
-import com.krnl32.jupiter.asset.SceneAsset;
+import com.krnl32.jupiter.asset.types.SceneAsset;
 import com.krnl32.jupiter.core.Engine;
 import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.event.EventBus;

@@ -1,5 +1,6 @@
-package com.krnl32.jupiter.asset;
+package com.krnl32.jupiter.asset.types;
 
+import com.krnl32.jupiter.asset.*;
 import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.model.Sprite;
 import com.krnl32.jupiter.utility.FileIO;

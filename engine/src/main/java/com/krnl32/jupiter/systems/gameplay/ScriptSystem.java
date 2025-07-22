@@ -1,5 +1,7 @@
 package com.krnl32.jupiter.systems.gameplay;
 
+import com.krnl32.jupiter.asset.AssetManager;
+import com.krnl32.jupiter.asset.types.ScriptAsset;
 import com.krnl32.jupiter.components.gameplay.ScriptComponent;
 import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.ecs.Entity;
@@ -9,7 +11,6 @@ import com.krnl32.jupiter.event.EventBus;
 import com.krnl32.jupiter.events.entity.EntityDestroyedEvent;
 import com.krnl32.jupiter.renderer.Renderer;
 import com.krnl32.jupiter.script.utility.DefaultComponentBinders;
-import com.krnl32.jupiter.script.utility.ScriptLoader;
 import org.luaj.vm2.LuaValue;
 
 import java.io.File;
@@ -40,19 +41,21 @@ public class ScriptSystem implements System {
 			ScriptComponent script = entity.getComponent(ScriptComponent.class);
 
 			// Hot Reloadable Scripts
-			File scriptFile = new File(script.scriptPath);
-			if (scriptFile.exists()) {
-				long lastModified = scriptFile.lastModified();
-				if (lastModified != script.lastModified) {
-					Logger.info("Hot Reloading Script({}) for Entity({})", script.scriptPath, entity.getTagOrId());
-
-					ScriptComponent reloaded = ScriptLoader.loadScript(script.scriptPath, entity);
-					script.onInit = reloaded.onInit;
-					script.onUpdate = reloaded.onUpdate;
-					script.onDestroy = reloaded.onDestroy;
-					script.initialized = false;
-					script.disabled = false;
-					script.lastModified = lastModified;
+			ScriptAsset scriptAsset = AssetManager.getInstance().getAsset(script.scriptAssetID);
+			if (scriptAsset != null) {
+				File scriptFile = new File(scriptAsset.getScriptDefinition().getScriptPath());
+				if (scriptFile.exists()) {
+					long lastModified = scriptFile.lastModified();
+					if (lastModified != script.lastModified) {
+						Logger.info("ScriptSystem: Hot Reloading Script({}) for Entity({})", scriptAsset.getScriptDefinition().getScriptPath(), entity.getTagOrId());
+						ScriptComponent reloaded = scriptAsset.getScriptDefinition().createComponent(entity);
+						script.onInit = reloaded.onInit;
+						script.onUpdate = reloaded.onUpdate;
+						script.onDestroy = reloaded.onDestroy;
+						script.lastModified = reloaded.lastModified;
+						script.initialized = false;
+						script.disabled = false;
+					}
 				}
 			}
 

@@ -1,17 +1,16 @@
 package com.krnl32.jupiter.script.types;
 
+import com.krnl32.jupiter.asset.AssetManager;
+import com.krnl32.jupiter.asset.types.ScriptAsset;
 import com.krnl32.jupiter.components.gameplay.ScriptComponent;
 import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.ecs.Component;
 import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.script.BinderRegistry;
 import com.krnl32.jupiter.script.ComponentBinder;
-import com.krnl32.jupiter.script.utility.ScriptLoader;
 import org.luaj.vm2.LuaValue;
 import org.luaj.vm2.Varargs;
 import org.luaj.vm2.lib.VarArgFunction;
-
-import java.io.File;
 
 public class LuaEntity extends LuaValue {
 	private final Entity entity;
@@ -131,13 +130,16 @@ public class LuaEntity extends LuaValue {
 				public Varargs invoke(Varargs args) {
 					ScriptComponent script = entity.getComponent(ScriptComponent.class);
 					if (script != null) {
-						ScriptComponent reloaded = ScriptLoader.loadScript(script.scriptPath, entity);
-						script.onInit = reloaded.onInit;
-						script.onUpdate = reloaded.onUpdate;
-						script.onDestroy = reloaded.onDestroy;
-						script.initialized = false;
-						script.disabled = false;
-						script.lastModified = new File(script.scriptPath).lastModified();
+						ScriptAsset scriptAsset = AssetManager.getInstance().getAsset(script.scriptAssetID);
+						if (scriptAsset != null) {
+							ScriptComponent reloaded = scriptAsset.getScriptDefinition().createComponent(entity);
+							script.onInit = reloaded.onInit;
+							script.onUpdate = reloaded.onUpdate;
+							script.onDestroy = reloaded.onDestroy;
+							script.initialized = false;
+							script.disabled = false;
+							script.lastModified = reloaded.lastModified;
+						}
 					}
 					return LuaValue.NIL;
 				}

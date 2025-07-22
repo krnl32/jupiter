@@ -7,4 +7,5 @@ public enum AssetType {
 	SCENE,
 	SPRITESHEET,
 	FONT,
+	SCRIPT,
 }

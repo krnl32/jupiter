@@ -1,18 +1,19 @@
 package com.krnl32.jupiter.components.gameplay;
 
+import com.krnl32.jupiter.asset.AssetID;
 import com.krnl32.jupiter.ecs.Component;
 import org.luaj.vm2.LuaFunction;
 
 public class ScriptComponent implements Component {
-	public String scriptPath;
+	public AssetID scriptAssetID;
 	public LuaFunction onInit;
 	public LuaFunction onUpdate;
 	public LuaFunction onDestroy;
 	public boolean initialized, disabled;
 	public long lastModified;
 
-	public ScriptComponent(String scriptPath) {
-		this.scriptPath = scriptPath;
+	public ScriptComponent(AssetID scriptAssetID) {
+		this.scriptAssetID = scriptAssetID;
 		this.onInit = null;
 		this.onUpdate = null;
 		this.onDestroy = null;
@@ -21,8 +22,8 @@ public class ScriptComponent implements Component {
 		this.lastModified = 0;
 	}
 
-	public ScriptComponent(String scriptPath, LuaFunction onInit, LuaFunction onUpdate, LuaFunction onDestroy, boolean initialized, boolean disabled, long lastModified) {
-		this.scriptPath = scriptPath;
+	public ScriptComponent(AssetID scriptAssetID, LuaFunction onInit, LuaFunction onUpdate, LuaFunction onDestroy, boolean initialized, boolean disabled, long lastModified) {
+		this.scriptAssetID = scriptAssetID;
 		this.onInit = onInit;
 		this.onUpdate = onUpdate;
 		this.onDestroy = onDestroy;

@@ -8,9 +8,9 @@ end
 
 function onUpdate(dt)
 	--print("Running Test Script: ".. dt)
-	local rb = entity:getComponent("RigidBody2DComponent")
-	rb.mass = rb.mass + dt
-	entity:setComponent("RigidBody2DComponent", rb)
+	--local rb = entity:getComponent("RigidBody2DComponent")
+	--rb.mass = rb.mass - dt
+	--entity:setComponent("RigidBody2DComponent", rb)
 end
 
 function onDestroy()

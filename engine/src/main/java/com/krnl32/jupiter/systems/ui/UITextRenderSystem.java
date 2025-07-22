@@ -1,7 +1,7 @@
 package com.krnl32.jupiter.systems.ui;
 
 import com.krnl32.jupiter.asset.AssetManager;
-import com.krnl32.jupiter.asset.FontAsset;
+import com.krnl32.jupiter.asset.types.FontAsset;
 import com.krnl32.jupiter.components.ui.UIClipComponent;
 import com.krnl32.jupiter.components.ui.UIHierarchyComponent;
 import com.krnl32.jupiter.components.ui.UITextComponent;

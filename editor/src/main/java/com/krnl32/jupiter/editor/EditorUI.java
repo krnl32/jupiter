@@ -1,7 +1,7 @@
 package com.krnl32.jupiter.editor;
 
 import com.krnl32.jupiter.asset.AssetManager;
-import com.krnl32.jupiter.asset.TextureAsset;
+import com.krnl32.jupiter.asset.types.TextureAsset;
 import com.krnl32.jupiter.core.Window;
 import com.krnl32.jupiter.event.EventBus;
 import com.krnl32.jupiter.events.editor.EditorPauseEvent;

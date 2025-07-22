@@ -1,7 +1,7 @@
 package com.krnl32.jupiter.editor;
 
 import com.krnl32.jupiter.asset.AssetManager;
-import com.krnl32.jupiter.asset.TextureAsset;
+import com.krnl32.jupiter.asset.types.TextureAsset;
 import com.krnl32.jupiter.components.effects.BlinkComponent;
 import com.krnl32.jupiter.components.effects.DeathEffectComponent;
 import com.krnl32.jupiter.components.effects.ParticleComponent;

@@ -1,7 +1,7 @@
 package com.krnl32.jupiter.systems.renderer;
 
 import com.krnl32.jupiter.asset.AssetManager;
-import com.krnl32.jupiter.asset.TextureAsset;
+import com.krnl32.jupiter.asset.types.TextureAsset;
 import com.krnl32.jupiter.components.effects.BlinkComponent;
 import com.krnl32.jupiter.components.renderer.SpriteRendererComponent;
 import com.krnl32.jupiter.components.gameplay.TransformComponent;

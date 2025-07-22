@@ -1,8 +1,11 @@
-package com.krnl32.jupiter.asset;
+package com.krnl32.jupiter.asset.types;
 
+import com.krnl32.jupiter.asset.Asset;
+import com.krnl32.jupiter.asset.AssetState;
+import com.krnl32.jupiter.asset.AssetType;
 import com.krnl32.jupiter.renderer.Shader;
 
-public class ShaderAsset extends Asset{
+public class ShaderAsset extends Asset {
 	private final String vertexFilePath;
 	private final String fragmentFilePath;
 	private Shader shader;

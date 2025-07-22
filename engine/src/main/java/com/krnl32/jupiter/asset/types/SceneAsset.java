@@ -1,5 +1,8 @@
-package com.krnl32.jupiter.asset;
+package com.krnl32.jupiter.asset.types;
 
+import com.krnl32.jupiter.asset.Asset;
+import com.krnl32.jupiter.asset.AssetState;
+import com.krnl32.jupiter.asset.AssetType;
 import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.utility.FileIO;
 import org.json.JSONException;

@@ -2,7 +2,7 @@ package com.krnl32.jupiter.core;
 
 import com.krnl32.jupiter.asset.AssetID;
 import com.krnl32.jupiter.asset.AssetManager;
-import com.krnl32.jupiter.asset.ShaderAsset;
+import com.krnl32.jupiter.asset.types.ShaderAsset;
 import com.krnl32.jupiter.event.EventBus;
 import com.krnl32.jupiter.events.window.WindowCloseEvent;
 import com.krnl32.jupiter.input.InputActionSystem;
