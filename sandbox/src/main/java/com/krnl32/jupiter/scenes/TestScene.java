@@ -17,6 +17,7 @@ import com.krnl32.jupiter.input.devices.KeyCode;
 import com.krnl32.jupiter.physics.BodyType;
 import com.krnl32.jupiter.renderer.Camera;
 import com.krnl32.jupiter.scene.Scene;
+import com.krnl32.jupiter.script.utility.ScriptLoader;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -60,11 +61,11 @@ public class TestScene extends Scene {
 		spaceshipRedEntity.addComponent(new HealthComponent(100, 100));
 		spaceshipRedEntity.addComponent(new TeamComponent(1));
 		//spaceshipRedEntity.addComponent(new DeathEffectComponent(20, new Sprite(0, new Vector4f(1.0f, 0.45f, 0.0f, 0.95f), starParticleID)));
-		spaceshipRedEntity.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC, new Vector2f(0.0f, 0.0f), 6.0f, 1.5f, 1.0f, 0.0f, false, false));
+		spaceshipRedEntity.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC, new Vector2f(0.0f, 0.0f), 6.0f, 1.5f, 1.0f, 1.0f, false, false));
 		spaceshipRedEntity.addComponent(new BoxCollider2DComponent(new Vector2f(1.0f, 1.0f)));
 		spaceshipRedEntity.addComponent(new MovementIntentComponent());
 		spaceshipRedEntity.addComponent(new ForceMovementComponent());
-		spaceshipRedEntity.addComponent(new ScriptComponent(System.getProperty("user.dir") + "/assets/scripts/test.lua"));
+		spaceshipRedEntity.addComponent(ScriptLoader.loadScript(System.getProperty("user.dir") + "/assets/scripts/test.lua", spaceshipRedEntity));
 	}
 
 	@Override

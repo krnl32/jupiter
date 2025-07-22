@@ -5,41 +5,76 @@ import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.ecs.Registry;
 import com.krnl32.jupiter.ecs.System;
+import com.krnl32.jupiter.event.EventBus;
+import com.krnl32.jupiter.events.entity.EntityDestroyedEvent;
 import com.krnl32.jupiter.renderer.Renderer;
-import org.luaj.vm2.Globals;
+import com.krnl32.jupiter.script.utility.DefaultComponentBinders;
+import com.krnl32.jupiter.script.utility.ScriptLoader;
 import org.luaj.vm2.LuaValue;
-import org.luaj.vm2.lib.jse.JsePlatform;
+
+import java.io.File;
 
 public class ScriptSystem implements System {
 	private final Registry registry;
-	private final Globals luaGlobals;
 
 	public ScriptSystem(Registry registry) {
 		this.registry = registry;
-		this.luaGlobals = JsePlatform.standardGlobals();
+		DefaultComponentBinders.registerAll();
+
+		// Handle onDestroy
+		EventBus.getInstance().register(EntityDestroyedEvent.class, event -> {
+			ScriptComponent script = event.getEntity().getComponent(ScriptComponent.class);
+			if (script != null) {
+				try {
+					script.onDestroy.call();
+				} catch (Exception e) {
+					Logger.warn("ScriptEngine onDestroy Error on Entity({}): {}", event.getEntity().getTagOrId(), e.getMessage());
+				}
+			}
+		});
 	}
 
 	@Override
 	public void onUpdate(float dt) {
 		for (Entity entity : registry.getEntitiesWith(ScriptComponent.class)) {
 			ScriptComponent script = entity.getComponent(ScriptComponent.class);
-			if (script.onUpdate == null) {
-				try {
-					luaGlobals.loadfile(script.scriptPath).call();
-					script.onInit = luaGlobals.get("onInit").isfunction() ? luaGlobals.get("onInit").checkfunction() : null;
-					script.onUpdate = luaGlobals.get("onUpdate").isfunction() ? luaGlobals.get("onUpdate").checkfunction() : null;
 
-					script.onInit.call();
-				} catch (Exception e) {
-					Logger.error("ScriptSystem Failed to Load Script: " + script.scriptPath);
+			// Hot Reloadable Scripts
+			File scriptFile = new File(script.scriptPath);
+			if (scriptFile.exists()) {
+				long lastModified = scriptFile.lastModified();
+				if (lastModified != script.lastModified) {
+					Logger.info("Hot Reloading Script({}) for Entity({})", script.scriptPath, entity.getTagOrId());
+
+					ScriptComponent reloaded = ScriptLoader.loadScript(script.scriptPath, entity);
+					script.onInit = reloaded.onInit;
+					script.onUpdate = reloaded.onUpdate;
+					script.onDestroy = reloaded.onDestroy;
+					script.initialized = false;
+					script.disabled = false;
+					script.lastModified = lastModified;
 				}
 			}
 
-			try {
-				script.onUpdate.call(LuaValue.valueOf(dt));
-			} catch (Exception e) {
-				Logger.error("ScriptEngine Lua Script Error on Entity({}): {}", entity.getTagOrId(), e.getMessage());
-				// disable script or mark for reload
+			// Handle Script onInit
+			if (script.onInit != null && !script.initialized && !script.disabled) {
+				try {
+					script.onInit.call();
+					script.initialized = true;
+				} catch (Exception e) {
+					Logger.error("ScriptEngine onInit Error on Entity({}): {}, disabling script...", entity.getTagOrId(), e.getMessage());
+					script.disabled = true;
+				}
+			}
+
+			// Handle onUpdate
+			if (!script.disabled && script.onUpdate != null) {
+				try {
+					script.onUpdate.call(LuaValue.valueOf(dt));
+				} catch (Exception e) {
+					Logger.error("ScriptEngine onUpdate Error on Entity({}): {}, Disabling Script...", entity.getTagOrId(), e.getMessage());
+					script.disabled = true;
+				}
 			}
 		}
 	}
