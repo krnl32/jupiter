@@ -1,6 +1,7 @@
 package com.krnl32.jupiter.editor;
 
 import com.krnl32.jupiter.input.InputActionSystem;
+import com.krnl32.jupiter.input.action.InputAction;
 import com.krnl32.jupiter.input.action.InputActionMap;
 import com.krnl32.jupiter.input.action.InputBinding;
 import com.krnl32.jupiter.input.devices.KeyCode;
@@ -24,25 +25,25 @@ public class EditorCamera {
 		// Setup Input
 		InputActionMap editorCameraControls = new InputActionMap("EditorCameraControls");
 
-		com.krnl32.jupiter.input.action.InputAction moveUp = new com.krnl32.jupiter.input.action.InputAction("MoveUp");
+		InputAction moveUp = new InputAction("MoveUp");
 		moveUp.addBinding(new InputBinding(KeyCode.SPACE));
 
-		com.krnl32.jupiter.input.action.InputAction moveDown = new com.krnl32.jupiter.input.action.InputAction("MoveDown");
+		InputAction moveDown = new InputAction("MoveDown");
 		moveDown.addBinding(new InputBinding(KeyCode.LEFT_CONTROL));
 
-		com.krnl32.jupiter.input.action.InputAction moveLeft = new com.krnl32.jupiter.input.action.InputAction("MoveLeft");
+		InputAction moveLeft = new InputAction("MoveLeft");
 		moveLeft.addBinding(new InputBinding(KeyCode.A));
 
-		com.krnl32.jupiter.input.action.InputAction moveRight = new com.krnl32.jupiter.input.action.InputAction("MoveRight");
+		InputAction moveRight = new InputAction("MoveRight");
 		moveRight.addBinding(new InputBinding(KeyCode.D));
 
-		com.krnl32.jupiter.input.action.InputAction moveForward = new com.krnl32.jupiter.input.action.InputAction("MoveForward");
+		InputAction moveForward = new InputAction("MoveForward");
 		moveForward.addBinding(new InputBinding(KeyCode.W));
 
-		com.krnl32.jupiter.input.action.InputAction moveBackward = new com.krnl32.jupiter.input.action.InputAction("MoveBackward");
+		InputAction moveBackward = new InputAction("MoveBackward");
 		moveBackward.addBinding(new InputBinding(KeyCode.S));
 
-		com.krnl32.jupiter.input.action.InputAction toggleMouse = new com.krnl32.jupiter.input.action.InputAction("ToggleMouse");
+		InputAction toggleMouse = new InputAction("ToggleMouse");
 		toggleMouse.addBinding(new InputBinding(KeyCode.X));
 
 		editorCameraControls.addAction(moveUp);
@@ -66,7 +67,7 @@ public class EditorCamera {
 			if (editorCameraControls.getAction("MoveForward").isActive()) {
 				move.add(0.0f, 0.0f, -1.0f);
 			}
-			if (editorCameraControls.getAction("MoveDown").isActive()) {
+			if (editorCameraControls.getAction("MoveBackward").isActive()) {
 				move.add(0.0f, 0.0f, 1.0f);
 			}
 			if (editorCameraControls.getAction("MoveLeft").isActive()) {
