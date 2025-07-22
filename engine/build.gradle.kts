@@ -19,6 +19,9 @@ dependencies {
 	implementation("org.lwjgl:lwjgl-openal")
 	implementation("org.lwjgl:lwjgl-opengl")
 	implementation("org.lwjgl:lwjgl-stb")
+
+	api("org.luaj:luaj-jse:3.0.1")
+
 	implementation(files("${rootProject.projectDir}/thirdparty/jbox2d-library.jar"))
 
 	runtimeOnly("org.lwjgl:lwjgl::$lwjglNatives")
@@ -31,6 +34,7 @@ dependencies {
 
 	api("org.joml:joml:$jomlVersion")
 	api("org.json:json:20250517")
+
 	api("io.github.spair:imgui-java-binding:$imguiVersion")
 	api("io.github.spair:imgui-java-lwjgl3:$imguiVersion")
 	api("io.github.spair:imgui-java-${lwjglNatives}:${imguiVersion}")

@@ -64,6 +64,7 @@ public class TestScene extends Scene {
 		spaceshipRedEntity.addComponent(new BoxCollider2DComponent(new Vector2f(1.0f, 1.0f)));
 		spaceshipRedEntity.addComponent(new MovementIntentComponent());
 		spaceshipRedEntity.addComponent(new ForceMovementComponent());
+		spaceshipRedEntity.addComponent(new ScriptComponent(System.getProperty("user.dir") + "/assets/scripts/test.lua"));
 	}
 
 	@Override

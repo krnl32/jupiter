@@ -10,6 +10,7 @@ import com.krnl32.jupiter.systems.effects.ParticleSystem;
 import com.krnl32.jupiter.systems.gameplay.DamageSystem;
 import com.krnl32.jupiter.systems.gameplay.ForceMovementSystem;
 import com.krnl32.jupiter.systems.gameplay.HealthSystem;
+import com.krnl32.jupiter.systems.gameplay.ScriptSystem;
 import com.krnl32.jupiter.systems.input.KeyboardControlSystem;
 import com.krnl32.jupiter.systems.physics.Physics2DSystem;
 import com.krnl32.jupiter.systems.projectile.ProjectileEmitterSystem;
@@ -75,6 +76,7 @@ public abstract class Scene {
 	protected void registerDefaultSystems() {
 		addSystem(new KeyboardControlSystem(getRegistry()), 1, true);
 		addSystem(new UIInputSystem(getRegistry()), 2, true);
+		addSystem(new ScriptSystem(getRegistry()));
 		addSystem(new UIButtonSystem(getRegistry()));
 		addSystem(new ForceMovementSystem(getRegistry()));
 		addSystem(new Physics2DSystem(getRegistry()));
