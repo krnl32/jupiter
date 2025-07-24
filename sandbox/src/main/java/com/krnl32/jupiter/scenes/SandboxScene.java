@@ -18,20 +18,24 @@ import com.krnl32.jupiter.input.devices.KeyCode;
 import com.krnl32.jupiter.physics.BodyType;
 import com.krnl32.jupiter.renderer.Camera;
 import com.krnl32.jupiter.scene.Scene;
+import com.krnl32.jupiter.serializer.SceneSerializer;
+import com.krnl32.jupiter.utility.FileIO;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
+import org.json.JSONObject;
 
-public class TestScene extends Scene {
+import java.io.IOException;
+
+public class SandboxScene extends Scene {
 	private final int width, height;
 
 	private AssetID redWarriorIdleSpritesheet;
 	private SpritesheetAsset redWarriorIdleSpritesheetAsset;
 
 	private AssetID testScriptID;
-	private ScriptAsset testScript;
 
-	public TestScene(int width, int height) {
+	public SandboxScene(int width, int height) {
 		this.width = width;
 		this.height = height;
 	}
@@ -46,7 +50,6 @@ public class TestScene extends Scene {
 		testScriptID = AssetManager.getInstance().register("scripts/test.lua", () -> new ScriptAsset("scripts/test.lua"));
 		if (testScriptID == null)
 			Logger.critical("Game Failed to Load Script Asset({})", "scripts/test.lua");
-		testScript = AssetManager.getInstance().getAsset(testScriptID);
 	}
 
 	@Override
@@ -74,7 +77,15 @@ public class TestScene extends Scene {
 		spaceshipRedEntity.addComponent(new MovementIntentComponent());
 		spaceshipRedEntity.addComponent(new ForceMovementComponent());
 		//spaceshipRedEntity.addComponent(ScriptLoader.loadScript(System.getProperty("user.dir") + "/assets/scripts/test.lua", spaceshipRedEntity));
-		spaceshipRedEntity.addComponent(testScript.getScriptDefinition().createComponent(spaceshipRedEntity));
+		spaceshipRedEntity.addComponent(new ScriptComponent(testScriptID));
+
+		SceneSerializer sceneSerializer = new SceneSerializer();
+		try {
+			FileIO.writeFileContent(System.getProperty("user.dir") + "/assets/scenes/sandbox2.json", sceneSerializer.serialize(this).toString(4));
+			//sceneSerializer.deserialize(new JSONObject(FileIO.readFileContent(System.getProperty("user.dir") + "/assets/scenes/sandbox.json")), this);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override

@@ -1,9 +1,9 @@
-package com.krnl32.jupiter.script.components;
+package com.krnl32.jupiter.script.binder.components;
 
 import com.krnl32.jupiter.components.physics.RigidBody2DComponent;
 import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.physics.BodyType;
-import com.krnl32.jupiter.script.ComponentBinder;
+import com.krnl32.jupiter.script.binder.ComponentBinder;
 import org.joml.Vector2f;
 import org.luaj.vm2.LuaTable;
 import org.luaj.vm2.LuaValue;

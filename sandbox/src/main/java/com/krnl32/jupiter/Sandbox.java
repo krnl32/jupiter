@@ -6,7 +6,7 @@ import com.krnl32.jupiter.events.scene.ViewportResizeEvent;
 import com.krnl32.jupiter.events.window.WindowResizeEvent;
 import com.krnl32.jupiter.renderer.Renderer;
 import com.krnl32.jupiter.scene.SceneManager;
-import com.krnl32.jupiter.scenes.TestScene;
+import com.krnl32.jupiter.scenes.SandboxScene;
 import org.joml.Vector4f;
 
 public class Sandbox extends Engine {
@@ -24,8 +24,8 @@ public class Sandbox extends Engine {
 	public boolean onInit() {
 		// Scene
 		sceneManager = new SceneManager();
-		sceneManager.addScene("test", new TestScene(getWindow().getWidth(), getWindow().getHeight()));
-		sceneManager.switchScene("test");
+		sceneManager.addScene("sandbox", new SandboxScene(getWindow().getWidth(), getWindow().getHeight()));
+		sceneManager.switchScene("sandbox");
 		return true;
 	}
 

@@ -1,4 +1,4 @@
-package com.krnl32.jupiter.script;
+package com.krnl32.jupiter.script.binder;
 
 import com.krnl32.jupiter.ecs.Component;
 import org.luaj.vm2.LuaValue;

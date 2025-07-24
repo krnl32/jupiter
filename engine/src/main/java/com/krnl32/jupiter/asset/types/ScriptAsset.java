@@ -4,7 +4,7 @@ import com.krnl32.jupiter.asset.Asset;
 import com.krnl32.jupiter.asset.AssetState;
 import com.krnl32.jupiter.asset.AssetType;
 import com.krnl32.jupiter.core.Logger;
-import com.krnl32.jupiter.script.utility.ScriptDefinition;
+import com.krnl32.jupiter.script.ScriptDefinition;
 
 import java.io.File;
 
@@ -15,6 +15,14 @@ public class ScriptAsset extends Asset {
 	public ScriptAsset(String scriptPath) {
 		super(AssetType.SCRIPT);
 		this.scriptPath = scriptPath;
+	}
+
+	public String getRelativePath() {
+		return scriptPath;
+	}
+
+	public String getAbsolutePath() {
+		return getRootPath() + scriptPath;
 	}
 
 	public ScriptDefinition getScriptDefinition() {
@@ -30,7 +38,7 @@ public class ScriptAsset extends Asset {
 			return false;
 		}
 
-		scriptDefinition = new ScriptDefinition(getId(), getRootPath() + scriptPath);
+		scriptDefinition = new ScriptDefinition(getAbsolutePath());
 		setState(AssetState.LOADED);
 		return true;
 	}

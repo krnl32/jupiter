@@ -50,7 +50,7 @@ public class SceneSerializer {
 		};
 
 		for (int i = 0; i < entities.length(); i++) {
-			deserializeEntity(entities.getJSONObject(i), scene, resolver);
+			deserializeEntity(entities.getJSONObject(i), resolver);
 		}
 	}
 
@@ -127,7 +127,7 @@ public class SceneSerializer {
 		return new JSONObject().put("components", componentsObj);
 	}
 
-	private void deserializeEntity(JSONObject data, Scene scene, EntityResolver resolver) {
+	private void deserializeEntity(JSONObject data, EntityResolver resolver) {
 		JSONObject components = data.getJSONObject("components");
 		UUID uuid = UUID.fromString(components.getJSONObject("UUIDComponent").getString("uuid"));
 		Entity entity = uuidToEntity.get(uuid);

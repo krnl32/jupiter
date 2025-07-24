@@ -315,7 +315,7 @@ public class AssetManager {
 			Logger.error("GetAsset(AssetID={}) Key Not Found", assetID);
 			return null;
 		}
-		return getAsset(key); // reuse
+		return getAsset(key);
 	}
 
 	public boolean isRegistered(String key) {
@@ -337,8 +337,9 @@ public class AssetManager {
 		return asset != null && asset.isLoaded();
 	}
 
-	public List<Asset> getAssetsByType(AssetType assetType) {
-		return loadedAssets.values().stream()
+	@SuppressWarnings("unchecked")
+	public <T extends Asset> List<T> getAssetsByType(AssetType assetType) {
+		return (List<T>) loadedAssets.values().stream()
 			.filter(a -> a.getType() == assetType)
 			.collect(Collectors.toList());
 	}
