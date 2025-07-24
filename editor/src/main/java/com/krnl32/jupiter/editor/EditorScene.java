@@ -1,5 +1,9 @@
 package com.krnl32.jupiter.editor;
 
+import com.krnl32.jupiter.asset.AssetID;
+import com.krnl32.jupiter.asset.AssetManager;
+import com.krnl32.jupiter.asset.types.ScriptAsset;
+import com.krnl32.jupiter.components.gameplay.ScriptComponent;
 import com.krnl32.jupiter.components.gameplay.TransformComponent;
 import com.krnl32.jupiter.components.physics.BoxCollider2DComponent;
 import com.krnl32.jupiter.components.physics.CircleCollider2DComponent;
@@ -8,6 +12,7 @@ import com.krnl32.jupiter.components.renderer.CameraComponent;
 import com.krnl32.jupiter.components.renderer.SpriteRendererComponent;
 import com.krnl32.jupiter.components.utility.TagComponent;
 import com.krnl32.jupiter.components.utility.UUIDComponent;
+import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.physics.BodyType;
 import com.krnl32.jupiter.renderer.Camera;
@@ -17,9 +22,22 @@ import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 public class EditorScene extends Scene {
+	private AssetID testScriptID, test2ScriptID;
+
 	@Override
 	public void onCreate() {
 		// Sample Code....
+
+		// Assets
+		testScriptID = AssetManager.getInstance().register("scripts/test.lua", () -> new ScriptAsset("scripts/test.lua"));
+		if (testScriptID == null)
+			Logger.critical("Game Failed to Load Script Asset({})", "scripts/test.lua");
+
+		test2ScriptID = AssetManager.getInstance().register("scripts/test2.lua", () -> new ScriptAsset("scripts/test2.lua"));
+		if (test2ScriptID == null)
+			Logger.critical("Game Failed to Load Script Asset({})", "scripts/test2.lua");
+
+		// Entities
 		Entity cameraEntity = createEntity();
 		cameraEntity.addComponent(new TagComponent("Camera"));
 		cameraEntity.addComponent(new UUIDComponent());
@@ -36,6 +54,7 @@ public class EditorScene extends Scene {
 		entity.addComponent(new SpriteRendererComponent(-1, new Vector4f(1.0f, 0.0f, 0.0f, 1.0f), null));
 		entity.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC));
 		entity.addComponent(new BoxCollider2DComponent(new Vector2f(1.0f, 1.0f)));
+		entity.addComponent(new ScriptComponent(testScriptID));
 
 		for (int i = 0; i < 7; i++) {
 			Entity box = createEntity();

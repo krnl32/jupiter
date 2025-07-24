@@ -59,6 +59,11 @@ public class ScriptSystem implements System {
 			if (bindings == null || script.lastModified != scriptFile.lastModified()) {
 				Logger.info("ScriptSystem Hot Reloading Script({}) for Entity({})", scriptAsset.getRelativePath(), entity.getTagOrId());
 				bindings = scriptAsset.getScriptDefinition().createBindings(entity);
+				if (bindings == null) {
+					Logger.error("ScriptSystem Loading Error for Entity({}): Failed to Create Bindings, disabling script...", entity.getTagOrId());
+					script.disabled = true;
+					continue;
+				}
 				scriptBindings.put(entity, bindings);
 				script.lastModified = scriptFile.lastModified();
 				script.initialized = false;

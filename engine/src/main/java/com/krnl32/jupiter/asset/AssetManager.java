@@ -338,7 +338,14 @@ public class AssetManager {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T extends Asset> List<T> getAssetsByType(AssetType assetType) {
+	public <T extends Asset> List<T> getRegisteredAssetsByType(AssetType assetType) {
+		return (List<T>) registeredAssets.values().stream()
+			.filter(a -> a.getType() == assetType)
+			.collect(Collectors.toList());
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T extends Asset> List<T> getLoadedAssetsByType(AssetType assetType) {
 		return (List<T>) loadedAssets.values().stream()
 			.filter(a -> a.getType() == assetType)
 			.collect(Collectors.toList());

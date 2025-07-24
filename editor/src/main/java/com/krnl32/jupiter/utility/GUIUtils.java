@@ -1,5 +1,8 @@
 package com.krnl32.jupiter.utility;
 
+import com.krnl32.jupiter.asset.Asset;
+import com.krnl32.jupiter.asset.AssetID;
+import com.krnl32.jupiter.asset.types.ScriptAsset;
 import imgui.ImGui;
 import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiColorEditFlags;
@@ -11,6 +14,9 @@ import imgui.type.ImString;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
+
+import java.util.List;
+import java.util.function.Consumer;
 
 public class GUIUtils {
 	public static void renderVector2f(String label, Vector2f vec) {
@@ -252,6 +258,17 @@ public class GUIUtils {
 		return changed;
 	}
 
+	public static void renderLongReadOnly(String label, long value) {
+		ImGui.pushID(label);
+		ImGui.columns(2, "Columns_" + label, false);
+		ImGui.setColumnWidth(0, 100);
+		ImGui.text(label);
+		ImGui.nextColumn();
+		ImGui.text(String.format("%d", value));
+		ImGui.columns(1);
+		ImGui.popID();
+	}
+
 	public static boolean renderFloatInput(String label, ImFloat value) {
 		ImGui.pushID(label);
 
@@ -477,6 +494,38 @@ public class GUIUtils {
 		ImGui.nextColumn();
 
 		boolean changed = ImGui.checkbox("##" + label, value);
+
+		ImGui.columns(1);
+		ImGui.popID();
+
+		return changed;
+	}
+
+	public static <T extends Asset> boolean renderAssetCombo(List<T> assets, String label, String currentAssetLabel, AssetID currentAssetID, Consumer<AssetID> onSelect) {
+		ImGui.pushID(label);
+		ImGui.columns(2, "Columns_" + label, false);
+		ImGui.setColumnWidth(0, 100);
+		ImGui.text(label);
+		ImGui.nextColumn();
+
+		boolean changed = false;
+		ImGui.pushItemWidth(ImGui.getContentRegionAvailX());
+		if (ImGui.beginCombo("##" + label, currentAssetLabel)) {
+			for (T asset : assets) {
+				String selectableLabel = (asset instanceof ScriptAsset) ? ((ScriptAsset) asset).getRelativePath() : asset.getId().toString();
+
+				boolean selected = asset.getId().equals(currentAssetID);
+				if (ImGui.selectable(selectableLabel, selected)) {
+					onSelect.accept(asset.getId());
+					changed = true;
+				}
+
+				if (selected) {
+					ImGui.setItemDefaultFocus();
+				}
+			}
+			ImGui.endCombo();
+		}
 
 		ImGui.columns(1);
 		ImGui.popID();
