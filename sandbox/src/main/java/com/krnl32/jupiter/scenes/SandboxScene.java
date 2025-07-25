@@ -23,7 +23,6 @@ import com.krnl32.jupiter.utility.FileIO;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
-import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -33,7 +32,7 @@ public class SandboxScene extends Scene {
 	private AssetID redWarriorIdleSpritesheet;
 	private SpritesheetAsset redWarriorIdleSpritesheetAsset;
 
-	private AssetID testScriptID;
+	private AssetID testScriptID, test2ScriptID;
 
 	public SandboxScene(int width, int height) {
 		this.width = width;
@@ -50,6 +49,10 @@ public class SandboxScene extends Scene {
 		testScriptID = AssetManager.getInstance().register("scripts/test.lua", () -> new ScriptAsset("scripts/test.lua"));
 		if (testScriptID == null)
 			Logger.critical("Game Failed to Load Script Asset({})", "scripts/test.lua");
+
+		test2ScriptID = AssetManager.getInstance().register("scripts/test2.lua", () -> new ScriptAsset("scripts/test2.lua"));
+		if (test2ScriptID == null)
+			Logger.critical("Game Failed to Load Script Asset({})", "scripts/test2.lua");
 	}
 
 	@Override
@@ -77,7 +80,7 @@ public class SandboxScene extends Scene {
 		spaceshipRedEntity.addComponent(new MovementIntentComponent());
 		spaceshipRedEntity.addComponent(new ForceMovementComponent());
 		//spaceshipRedEntity.addComponent(ScriptLoader.loadScript(System.getProperty("user.dir") + "/assets/scripts/test.lua", spaceshipRedEntity));
-		spaceshipRedEntity.addComponent(new ScriptComponent(testScriptID));
+		spaceshipRedEntity.addComponent(new ScriptsComponent(new ScriptComponent(testScriptID), new ScriptComponent(test2ScriptID)));
 
 		SceneSerializer sceneSerializer = new SceneSerializer();
 		try {

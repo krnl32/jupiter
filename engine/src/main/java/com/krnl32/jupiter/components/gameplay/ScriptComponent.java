@@ -3,6 +3,8 @@ package com.krnl32.jupiter.components.gameplay;
 import com.krnl32.jupiter.asset.AssetID;
 import com.krnl32.jupiter.ecs.Component;
 
+import java.util.Objects;
+
 public class ScriptComponent implements Component {
 	public AssetID scriptAssetID;
 	public boolean initialized;
@@ -28,5 +30,17 @@ public class ScriptComponent implements Component {
 		this.initialized = initialized;
 		this.disabled = disabled;
 		this.lastModified = lastModified;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == null || getClass() != o.getClass()) return false;
+		ScriptComponent that = (ScriptComponent) o;
+		return initialized == that.initialized && disabled == that.disabled && lastModified == that.lastModified && Objects.equals(scriptAssetID, that.scriptAssetID);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(scriptAssetID, initialized, disabled, lastModified);
 	}
 }

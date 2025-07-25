@@ -174,7 +174,7 @@ public class Editor extends Engine {
 		FactoryRegistry.registerComponentFactory(HealthComponent.class, new HealthComponentFactory());
 		FactoryRegistry.registerComponentFactory(MovementIntentComponent.class, new MovementIntentComponentFactory());
 		FactoryRegistry.registerComponentFactory(ForceMovementComponent.class, new ForceMovementComponentFactory());
-		FactoryRegistry.registerComponentFactory(ScriptComponent.class, new ScriptComponentFactory());
+		FactoryRegistry.registerComponentFactory(ScriptsComponent.class, new ScriptsComponentFactory());
 
 		// Input
 		FactoryRegistry.registerComponentFactory(KeyboardControlComponent.class, new KeyboardControlComponentFactory());
@@ -209,7 +209,7 @@ public class Editor extends Engine {
 		RendererRegistry.registerComponentRenderer(HealthComponent.class, new HealthComponentRenderer());
 		RendererRegistry.registerComponentRenderer(MovementIntentComponent.class, new MovementIntentComponentRenderer());
 		RendererRegistry.registerComponentRenderer(ForceMovementComponent.class, new ForceMovementComponentRenderer());
-		RendererRegistry.registerComponentRenderer(ScriptComponent.class, new ScriptComponentRenderer());
+		RendererRegistry.registerComponentRenderer(ScriptsComponent.class, new ScriptsComponentRenderer());
 
 		// Input
 

@@ -501,8 +501,18 @@ public class GUIUtils {
 		return changed;
 	}
 
+	public static boolean renderButton(String label) {
+		ImGui.pushStyleColor(ImGuiCol.Button, 0.8f, 0.1f, 0.1f, 1f);
+		ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 1f, 0.3f, 0.3f, 1f);
+		ImGui.pushStyleColor(ImGuiCol.ButtonActive, 1f, 0.2f, 0.2f, 1f);
+		boolean clicked = ImGui.button(label);
+		ImGui.popStyleColor(3);
+		return clicked;
+	}
+
 	public static <T extends Asset> boolean renderAssetCombo(List<T> assets, String label, String currentAssetLabel, AssetID currentAssetID, Consumer<AssetID> onSelect) {
-		ImGui.pushID(label);
+		int uniqueID = System.identityHashCode(currentAssetID);
+		ImGui.pushID(label + "_" + uniqueID);
 		ImGui.columns(2, "Columns_" + label, false);
 		ImGui.setColumnWidth(0, 100);
 		ImGui.text(label);

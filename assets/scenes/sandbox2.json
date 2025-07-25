@@ -1,6 +1,6 @@
 {"entities": [
     {"components": {
-        "UUIDComponent": {"uuid": "5e02b150-3a08-457e-be1a-6a36c10dff33"},
+        "UUIDComponent": {"uuid": "11f14293-5962-4d75-b32e-50cc3d1a882d"},
         "CameraComponent": {
             "rollSpeed": 45,
             "worldUp": {
@@ -82,10 +82,6 @@
             },
             "jump": false
         },
-        "HealthComponent": {
-            "currentHealth": 100,
-            "maxHealth": 100
-        },
         "KeyboardControlComponent": {
             "upKey": 87,
             "downKey": 83,
@@ -98,11 +94,21 @@
             "jumpKey": 32,
             "forwardKey": 0
         },
-        "UUIDComponent": {"uuid": "099a8009-5130-4d57-9551-6e57e05bfd7b"},
-        "ScriptComponent": {
-            "scriptAssetID": "scripts/test.lua",
-            "disabled": false
+        "HealthComponent": {
+            "currentHealth": 100,
+            "maxHealth": 100
         },
+        "UUIDComponent": {"uuid": "17a8cdd5-049b-47b7-80b7-d8807d2cf750"},
+        "ScriptsComponent": {"scripts": [
+            {
+                "scriptAssetID": "scripts/test.lua",
+                "disabled": false
+            },
+            {
+                "scriptAssetID": "scripts/test2.lua",
+                "disabled": false
+            }
+        ]},
         "TransformComponent": {
             "rotation": {
                 "x": 0,
