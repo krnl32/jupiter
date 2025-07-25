@@ -2,9 +2,11 @@ package com.krnl32.jupiter.serializer.utility;
 
 import com.krnl32.jupiter.asset.AssetID;
 import com.krnl32.jupiter.asset.AssetManager;
+import com.krnl32.jupiter.asset.types.ScriptAsset;
 import com.krnl32.jupiter.asset.types.TextureAsset;
 import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.model.Sprite;
+import com.krnl32.jupiter.script.ScriptInstance;
 import org.json.JSONObject;
 
 public class JupiterSerializerUtils {
@@ -32,5 +34,27 @@ public class JupiterSerializerUtils {
 			JOMLSerializerUtils.deserializeVector4f(data.getJSONObject("color")),
 			textureAssetID
 		);
+	}
+
+	public static JSONObject serializeScriptInstance(ScriptInstance scriptInstance) {
+		ScriptAsset scriptAsset = AssetManager.getInstance().getAsset(scriptInstance.getScriptAssetID());
+		if (scriptAsset == null) {
+			Logger.error("serializeScriptInstance Failed, Invalid Script AssetID({})", scriptInstance.getScriptAssetID());
+			return null;
+		}
+
+		return new JSONObject()
+			.put("scriptAssetID", scriptAsset.getRelativePath())
+			.put("disabled", scriptInstance.isDisabled());
+	}
+
+	public static ScriptInstance deserializeScriptInstance(JSONObject data) {
+		AssetID scriptAssetID = AssetManager.getInstance().registerAndLoad(data.getString("scriptAssetID"), () -> new ScriptAsset(data.getString("scriptAssetID")));
+		if (scriptAssetID == null) {
+			Logger.error("deserializeScriptInstance Failed, Invalid Script AssetPath({})", data.getString("scriptAssetID"));
+			return null;
+		}
+
+		return new ScriptInstance(scriptAssetID, data.getBoolean("disabled"));
 	}
 }

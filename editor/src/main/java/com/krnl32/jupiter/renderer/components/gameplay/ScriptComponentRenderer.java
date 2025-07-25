@@ -3,8 +3,8 @@ package com.krnl32.jupiter.renderer.components.gameplay;
 import com.krnl32.jupiter.asset.AssetManager;
 import com.krnl32.jupiter.asset.AssetType;
 import com.krnl32.jupiter.asset.types.ScriptAsset;
+import com.krnl32.jupiter.script.ScriptInstance;
 import com.krnl32.jupiter.components.gameplay.ScriptComponent;
-import com.krnl32.jupiter.components.gameplay.ScriptsComponent;
 import com.krnl32.jupiter.renderer.ComponentRenderer;
 import com.krnl32.jupiter.utility.GUIUtils;
 import imgui.ImGui;
@@ -15,14 +15,14 @@ import imgui.type.ImString;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ScriptsComponentRenderer implements ComponentRenderer<ScriptsComponent> {
+public class ScriptComponentRenderer implements ComponentRenderer<ScriptComponent> {
 
 	private final ImString addScriptFilter = new ImString(256);
-	private ScriptComponent scriptToRemove = null;
+	private ScriptInstance scriptToRemove = null;
 
 	@Override
-	public void render(ScriptsComponent component) {
-		renderScriptsComponent(component);
+	public void render(ScriptComponent component) {
+		renderScriptComponent(component);
 
 		ImGui.spacing();
 		ImGui.separator();
@@ -36,9 +36,9 @@ public class ScriptsComponentRenderer implements ComponentRenderer<ScriptsCompon
 		}
 	}
 
-	private void renderScriptsComponent(ScriptsComponent scriptsComponent) {
-		for (int i = 0; i < scriptsComponent.scripts.size(); i++) {
-			ScriptComponent script = scriptsComponent.scripts.get(i);
+	private void renderScriptComponent(ScriptComponent scriptComponent) {
+		for (int i = 0; i < scriptComponent.scripts.size(); i++) {
+			ScriptInstance script = scriptComponent.scripts.get(i);
 			ImGui.pushID(i);
 
 			// Remove Button
@@ -56,49 +56,49 @@ public class ScriptsComponentRenderer implements ComponentRenderer<ScriptsCompon
 			ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0.3f, 0.7f, 1f, 1f);
 			ImGui.pushStyleColor(ImGuiCol.ButtonActive, 0.1f, 0.5f, 0.8f, 1f);
 			if (ImGui.button("R##Reload" + i, 27, 27)) {
-				script.lastModified = 0;
+				script.setLastModified(0);
 			}
 			ImGui.popStyleColor(3);
 			ImGui.sameLine();
 
 			String headerLabel = "\uf121 Script " + (i + 1);
 			if (ImGui.collapsingHeader(headerLabel, ImGuiTreeNodeFlags.DefaultOpen)) {
-				renderScript(script, scriptsComponent);
+				renderScript(script, scriptComponent);
 			}
 
 			ImGui.popID();
 		}
 	}
 
-	private void renderScript(ScriptComponent script, ScriptsComponent scriptsComponent) {
+	private void renderScript(ScriptInstance script, ScriptComponent scriptComponent) {
 		List<ScriptAsset> filteredScripts = AssetManager.getInstance().getRegisteredAssetsByType(AssetType.SCRIPT)
 			.stream()
 			.map(asset -> (ScriptAsset) asset)
-			.filter(scriptAsset -> scriptsComponent.scripts.stream()
+			.filter(scriptAsset -> scriptComponent.scripts.stream()
 				.filter(existing -> !existing.equals(script))
-				.noneMatch(existing -> existing.scriptAssetID != null && existing.scriptAssetID.equals(scriptAsset.getId())))
+				.noneMatch(existing -> existing.getScriptAssetID() != null && existing.getScriptAssetID().equals(scriptAsset.getId())))
 			.collect(Collectors.toList());
 
-		ScriptAsset scriptAsset = (script.scriptAssetID != null) ? AssetManager.getInstance().getAsset(script.scriptAssetID) : null;
+		ScriptAsset scriptAsset = (script.getScriptAssetID() != null) ? AssetManager.getInstance().getAsset(script.getScriptAssetID()) : null;
 		String scriptPath = (scriptAsset != null) ? scriptAsset.getRelativePath() : "<None>";
 
 		GUIUtils.renderAssetCombo(
 			filteredScripts,
 			"Script",
 			scriptPath,
-			script.scriptAssetID,
+			script.getScriptAssetID(),
 			newID -> {
-				script.scriptAssetID = newID;
-				script.lastModified = 0;
+				script.setScriptAssetID(newID);
+				script.setLastModified(0);
 			});
 
-		if (script.scriptAssetID != null) {
-			GUIUtils.renderLongReadOnly("Last Modified", script.lastModified);
-			GUIUtils.renderStringReadOnly("Status", script.disabled ? "Disabled" : (script.initialized ? "Active" : "Pending Init"));
+		if (script.getScriptAssetID() != null) {
+			GUIUtils.renderLongReadOnly("Last Modified", script.getLastModified());
+			GUIUtils.renderStringReadOnly("Status", script.isDisabled() ? "Disabled" : (script.isInitialized() ? "Active" : "Pending Init"));
 		}
 	}
 
-	private void renderAddScriptSection(ScriptsComponent scriptsComponent) {
+	private void renderAddScriptSection(ScriptComponent scriptComponent) {
 		ImGui.spacing();
 
 		ImGui.pushStyleColor(ImGuiCol.Button, 0.2f, 0.6f, 0.9f, 1f);
@@ -114,10 +114,10 @@ public class ScriptsComponentRenderer implements ComponentRenderer<ScriptsCompon
 
 		ImGui.popStyleColor(3);
 
-		renderAddScriptPopup(scriptsComponent);
+		renderAddScriptPopup(scriptComponent);
 	}
 
-	private void renderAddScriptPopup(ScriptsComponent scriptsComponent) {
+	private void renderAddScriptPopup(ScriptComponent scriptComponent) {
 		if (!ImGui.beginPopup("AddScriptPopup"))
 			return;
 
@@ -138,16 +138,16 @@ public class ScriptsComponentRenderer implements ComponentRenderer<ScriptsCompon
 			.filter(script -> {
 				String scriptPathLower = script.getRelativePath().toLowerCase();
 				boolean matchesSearch = filterLower.isEmpty() || scriptPathLower.contains(filterLower);
-				boolean alreadyAdded = scriptsComponent.scripts.stream()
-					.anyMatch(existing -> existing.scriptAssetID != null && existing.scriptAssetID.equals(script.getId()));
+				boolean alreadyAdded = scriptComponent.scripts.stream()
+					.anyMatch(existing -> existing.getScriptAssetID() != null && existing.getScriptAssetID().equals(script.getId()));
 				return matchesSearch && !alreadyAdded;
 			})
 			.forEach(script -> {
 				if (ImGui.menuItem(script.getRelativePath())) {
-					ScriptComponent newScript = new ScriptComponent(script.getId());
-					newScript.scriptAssetID = script.getId();
-					newScript.lastModified = 0;
-					scriptsComponent.scripts.add(newScript);
+					ScriptInstance newScript = new ScriptInstance(script.getId());
+					newScript.setScriptAssetID(script.getId());
+					newScript.setLastModified(0);
+					scriptComponent.scripts.add(newScript);
 					ImGui.closeCurrentPopup();
 					addScriptFilter.set("");
 				}

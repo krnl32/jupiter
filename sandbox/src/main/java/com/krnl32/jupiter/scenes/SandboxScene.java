@@ -18,6 +18,7 @@ import com.krnl32.jupiter.input.devices.KeyCode;
 import com.krnl32.jupiter.physics.BodyType;
 import com.krnl32.jupiter.renderer.Camera;
 import com.krnl32.jupiter.scene.Scene;
+import com.krnl32.jupiter.script.ScriptInstance;
 import com.krnl32.jupiter.serializer.SceneSerializer;
 import com.krnl32.jupiter.utility.FileIO;
 import org.joml.Vector2f;
@@ -80,7 +81,8 @@ public class SandboxScene extends Scene {
 		spaceshipRedEntity.addComponent(new MovementIntentComponent());
 		spaceshipRedEntity.addComponent(new ForceMovementComponent());
 		//spaceshipRedEntity.addComponent(ScriptLoader.loadScript(System.getProperty("user.dir") + "/assets/scripts/test.lua", spaceshipRedEntity));
-		spaceshipRedEntity.addComponent(new ScriptsComponent(new ScriptComponent(testScriptID), new ScriptComponent(test2ScriptID)));
+		//spaceshipRedEntity.addComponent(new ScriptComponent(new ScriptComponent(testScriptID), new ScriptComponent(test2ScriptID)));
+		spaceshipRedEntity.addComponent(new ScriptComponent(new ScriptInstance(testScriptID)));
 
 		SceneSerializer sceneSerializer = new SceneSerializer();
 		try {

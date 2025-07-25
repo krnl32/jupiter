@@ -3,8 +3,8 @@ package com.krnl32.jupiter.editor;
 import com.krnl32.jupiter.asset.AssetID;
 import com.krnl32.jupiter.asset.AssetManager;
 import com.krnl32.jupiter.asset.types.ScriptAsset;
+import com.krnl32.jupiter.script.ScriptInstance;
 import com.krnl32.jupiter.components.gameplay.ScriptComponent;
-import com.krnl32.jupiter.components.gameplay.ScriptsComponent;
 import com.krnl32.jupiter.components.gameplay.TransformComponent;
 import com.krnl32.jupiter.components.physics.BoxCollider2DComponent;
 import com.krnl32.jupiter.components.physics.CircleCollider2DComponent;
@@ -55,7 +55,7 @@ public class EditorScene extends Scene {
 		entity.addComponent(new SpriteRendererComponent(-1, new Vector4f(1.0f, 0.0f, 0.0f, 1.0f), null));
 		entity.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC));
 		entity.addComponent(new BoxCollider2DComponent(new Vector2f(1.0f, 1.0f)));
-		entity.addComponent(new ScriptsComponent(new ScriptComponent(testScriptID), new ScriptComponent(test2ScriptID)));
+		entity.addComponent(new ScriptComponent(new ScriptInstance(testScriptID), new ScriptInstance(test2ScriptID)));
 
 		for (int i = 0; i < 7; i++) {
 			Entity box = createEntity();

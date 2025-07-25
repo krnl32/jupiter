@@ -1,11 +1,8 @@
 package com.krnl32.jupiter.script.types;
 
-import com.krnl32.jupiter.asset.AssetManager;
-import com.krnl32.jupiter.asset.types.ScriptAsset;
-import com.krnl32.jupiter.components.gameplay.ScriptComponent;
 import com.krnl32.jupiter.core.Logger;
 import com.krnl32.jupiter.ecs.Component;
-import com.krnl32.jupiter.ecs.Entity;
+import com.krnl32.jupiter.script.ScriptContext;
 import com.krnl32.jupiter.script.binder.BinderRegistry;
 import com.krnl32.jupiter.script.binder.ComponentBinder;
 import org.luaj.vm2.LuaValue;
@@ -13,10 +10,10 @@ import org.luaj.vm2.Varargs;
 import org.luaj.vm2.lib.VarArgFunction;
 
 public class LuaEntity extends LuaValue {
-	private final Entity entity;
+	private final ScriptContext scriptContext;
 
-	public LuaEntity(Entity entity) {
-		this.entity = entity;
+	public LuaEntity(ScriptContext scriptContext) {
+		this.scriptContext = scriptContext;
 	}
 
 	@Override
@@ -29,14 +26,14 @@ public class LuaEntity extends LuaValue {
 					LuaValue componentData = args.arg(3);
 					for (var entry : BinderRegistry.getComponentBinders().entrySet()) {
 						if (entry.getKey().getSimpleName().equals(componentName.checkjstring())) {
-							if (entity.hasComponent(entry.getKey())) {
-								Logger.warn("LuaEntity Failed to AddComponent({}) for Entity({}), Already Exists!", componentName.checkjstring(), entity.getTagOrId());
+							if (scriptContext.getEntity().hasComponent(entry.getKey())) {
+								Logger.warn("LuaEntity Failed to AddComponent({}) for Entity({}), Already Exists!", componentName.checkjstring(), scriptContext.getEntity().getTagOrId());
 								return LuaValue.NIL;
 							}
 
 							ComponentBinder<? extends Component> binder = entry.getValue();
 							Component component = binder.fromLua(componentData);
-							entity.addComponent(component);
+							scriptContext.getEntity().addComponent(component);
 							break;
 						}
 					}
@@ -51,14 +48,14 @@ public class LuaEntity extends LuaValue {
 					for (var entry : BinderRegistry.getComponentBinders().entrySet()) {
 						if (entry.getKey().getSimpleName().equals(componentName.checkjstring())) {
 							ComponentBinder binder = entry.getValue();
-							Component component = entity.getComponent(entry.getKey());
+							Component component = scriptContext.getEntity().getComponent(entry.getKey());
 							if (component == null) {
-								Logger.warn("LuaEntity Failed to SetComponent({}) for Entity({}), Component Doesn't Exist!", componentName.checkjstring(), entity.getTagOrId());
+								Logger.warn("LuaEntity Failed to SetComponent({}) for Entity({}), Component Doesn't Exist!", componentName.checkjstring(), scriptContext.getEntity().getTagOrId());
 								return LuaValue.NIL;
 							}
 
 							binder.updateFromLua(component, componentData);
-							entity.addComponent(component);
+							scriptContext.getEntity().addComponent(component);
 							break;
 						}
 					}
@@ -71,7 +68,7 @@ public class LuaEntity extends LuaValue {
 					LuaValue componentName = args.arg(2);
 					for (var entry : BinderRegistry.getComponentBinders().entrySet()) {
 						if (entry.getKey().getSimpleName().equals(componentName.checkjstring())) {
-							entity.removeComponent(entry.getKey());
+							scriptContext.getEntity().removeComponent(entry.getKey());
 							break;
 						}
 					}
@@ -85,7 +82,7 @@ public class LuaEntity extends LuaValue {
 					for (var entry : BinderRegistry.getComponentBinders().entrySet()) {
 						if (entry.getKey().getSimpleName().equals(componentName.checkjstring())) {
 							ComponentBinder binder = entry.getValue();
-							Component component = entity.getComponent(entry.getKey());
+							Component component = scriptContext.getEntity().getComponent(entry.getKey());
 							return component != null ? binder.toLua(component) : LuaValue.NIL;
 						}
 					}
@@ -98,7 +95,7 @@ public class LuaEntity extends LuaValue {
 					LuaValue componentName = args.arg(2);
 					for (var entry : BinderRegistry.getComponentBinders().entrySet()) {
 						if (entry.getKey().getSimpleName().equals(componentName.checkjstring())) {
-							return entity.hasComponent(entry.getKey()) ? LuaValue.TRUE : LuaValue.FALSE;
+							return scriptContext.getEntity().hasComponent(entry.getKey()) ? LuaValue.TRUE : LuaValue.FALSE;
 						}
 					}
 					return LuaValue.FALSE;
@@ -108,41 +105,29 @@ public class LuaEntity extends LuaValue {
 			case "enableScript" -> new VarArgFunction() {
 				@Override
 				public Varargs invoke(Varargs args) {
-					ScriptComponent script = entity.getComponent(ScriptComponent.class);
-					if (script != null) {
-						script.disabled = false;
-					}
+					scriptContext.setDisabled(false);
 					return LuaValue.NIL;
 				}
 			};
 			case "disableScript" -> new VarArgFunction() {
 				@Override
 				public Varargs invoke(Varargs args) {
-					ScriptComponent script = entity.getComponent(ScriptComponent.class);
-					if (script != null) {
-						script.disabled = true;
-					}
+					scriptContext.setDisabled(true);
 					return LuaValue.NIL;
 				}
 			};
 			case "reloadScript" -> new VarArgFunction() {
 				@Override
 				public Varargs invoke(Varargs args) {
-					ScriptComponent script = entity.getComponent(ScriptComponent.class);
-					if (script != null) {
-						script.initialized = false;
-						script.disabled = false;
-					}
+					scriptContext.setInitialized(false);
+					scriptContext.setDisabled(false);
 					return LuaValue.NIL;
 				}
 			};
 			case "forceReloadScript" -> new VarArgFunction() {
 				@Override
 				public Varargs invoke(Varargs args) {
-					ScriptComponent script = entity.getComponent(ScriptComponent.class);
-					if (script != null) {
-						script.lastModified = -1;
-					}
+					scriptContext.setLastModified(0);
 					return LuaValue.NIL;
 				}
 			};

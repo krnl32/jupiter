@@ -1,7 +1,6 @@
 package com.krnl32.jupiter.script;
 
 import com.krnl32.jupiter.core.Logger;
-import com.krnl32.jupiter.ecs.Entity;
 import com.krnl32.jupiter.script.types.LuaEntity;
 import org.luaj.vm2.Globals;
 import org.luaj.vm2.LuaValue;
@@ -14,9 +13,9 @@ public class ScriptDefinition {
 		this.scriptPath = scriptPath;
 	}
 
-	public ScriptBindings createBindings(Entity entity) {
+	public ScriptBindings createBindings(ScriptContext scriptContext) {
 		Globals globals = JsePlatform.standardGlobals();
-		globals.set("entity", new LuaEntity(entity));
+		globals.set("entity", new LuaEntity(scriptContext));
 
 		try {
 			LuaValue chunk = globals.loadfile(scriptPath);
