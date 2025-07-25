@@ -2,8 +2,8 @@ package com.krnl32.jupiter.engine.systems.effects;
 
 import com.krnl32.jupiter.engine.components.effects.DeathEffectComponent;
 import com.krnl32.jupiter.engine.components.effects.ParticleComponent;
-import com.krnl32.jupiter.engine.components.renderer.SpriteRendererComponent;
 import com.krnl32.jupiter.engine.components.gameplay.TransformComponent;
+import com.krnl32.jupiter.engine.components.renderer.SpriteRendererComponent;
 import com.krnl32.jupiter.engine.ecs.Entity;
 import com.krnl32.jupiter.engine.ecs.Registry;
 import com.krnl32.jupiter.engine.ecs.System;

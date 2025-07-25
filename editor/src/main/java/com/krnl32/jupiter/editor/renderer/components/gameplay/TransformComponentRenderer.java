@@ -1,8 +1,8 @@
 package com.krnl32.jupiter.editor.renderer.components.gameplay;
 
-import com.krnl32.jupiter.engine.components.gameplay.TransformComponent;
 import com.krnl32.jupiter.editor.renderer.ComponentRenderer;
 import com.krnl32.jupiter.editor.utility.GUIUtils;
+import com.krnl32.jupiter.engine.components.gameplay.TransformComponent;
 
 public class TransformComponentRenderer implements ComponentRenderer<TransformComponent> {
 

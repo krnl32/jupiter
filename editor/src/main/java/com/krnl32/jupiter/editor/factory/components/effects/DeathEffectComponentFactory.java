@@ -1,7 +1,7 @@
 package com.krnl32.jupiter.editor.factory.components.effects;
 
-import com.krnl32.jupiter.engine.components.effects.DeathEffectComponent;
 import com.krnl32.jupiter.editor.factory.ComponentFactory;
+import com.krnl32.jupiter.engine.components.effects.DeathEffectComponent;
 import com.krnl32.jupiter.engine.model.Sprite;
 import org.joml.Vector4f;
 

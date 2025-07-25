@@ -1,11 +1,11 @@
 package com.krnl32.jupiter.editor.panels;
 
+import com.krnl32.jupiter.editor.editor.EditorPanel;
+import com.krnl32.jupiter.editor.events.scene.EntitySelectedEvent;
 import com.krnl32.jupiter.engine.components.utility.UUIDComponent;
 import com.krnl32.jupiter.engine.ecs.Entity;
-import com.krnl32.jupiter.editor.editor.EditorPanel;
 import com.krnl32.jupiter.engine.event.EventBus;
 import com.krnl32.jupiter.engine.events.entity.EntityDestroyedEvent;
-import com.krnl32.jupiter.editor.events.scene.EntitySelectedEvent;
 import com.krnl32.jupiter.engine.events.scene.SceneSwitchedEvent;
 import com.krnl32.jupiter.engine.scene.Scene;
 import imgui.ImGui;

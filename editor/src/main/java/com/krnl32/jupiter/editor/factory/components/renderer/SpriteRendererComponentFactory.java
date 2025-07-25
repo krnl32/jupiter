@@ -1,7 +1,7 @@
 package com.krnl32.jupiter.editor.factory.components.renderer;
 
-import com.krnl32.jupiter.engine.components.renderer.SpriteRendererComponent;
 import com.krnl32.jupiter.editor.factory.ComponentFactory;
+import com.krnl32.jupiter.engine.components.renderer.SpriteRendererComponent;
 import org.joml.Vector4f;
 
 public class SpriteRendererComponentFactory implements ComponentFactory<SpriteRendererComponent> {

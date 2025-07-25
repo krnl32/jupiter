@@ -1,7 +1,7 @@
 package com.krnl32.jupiter.editor.factory.components.renderer;
 
-import com.krnl32.jupiter.engine.components.renderer.CameraComponent;
 import com.krnl32.jupiter.editor.factory.ComponentFactory;
+import com.krnl32.jupiter.engine.components.renderer.CameraComponent;
 import com.krnl32.jupiter.engine.renderer.Camera;
 import org.joml.Vector3f;
 

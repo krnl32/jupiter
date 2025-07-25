@@ -1,8 +1,8 @@
 package com.krnl32.jupiter.editor.renderer.components.gameplay;
 
-import com.krnl32.jupiter.engine.components.gameplay.MovementIntentComponent;
 import com.krnl32.jupiter.editor.renderer.ComponentRenderer;
 import com.krnl32.jupiter.editor.utility.GUIUtils;
+import com.krnl32.jupiter.engine.components.gameplay.MovementIntentComponent;
 import imgui.ImGui;
 import imgui.type.ImBoolean;
 

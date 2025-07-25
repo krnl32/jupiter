@@ -1,7 +1,7 @@
 package com.krnl32.jupiter.engine.systems.input;
 
-import com.krnl32.jupiter.engine.components.input.KeyboardControlComponent;
 import com.krnl32.jupiter.engine.components.gameplay.MovementIntentComponent;
+import com.krnl32.jupiter.engine.components.input.KeyboardControlComponent;
 import com.krnl32.jupiter.engine.ecs.Entity;
 import com.krnl32.jupiter.engine.ecs.Registry;
 import com.krnl32.jupiter.engine.ecs.System;

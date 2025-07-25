@@ -1,7 +1,7 @@
 package com.krnl32.jupiter.editor.factory.components.effects;
 
-import com.krnl32.jupiter.engine.components.effects.ParticleComponent;
 import com.krnl32.jupiter.editor.factory.ComponentFactory;
+import com.krnl32.jupiter.engine.components.effects.ParticleComponent;
 import org.joml.Vector3f;
 
 public class ParticleComponentFactory implements ComponentFactory<ParticleComponent> {

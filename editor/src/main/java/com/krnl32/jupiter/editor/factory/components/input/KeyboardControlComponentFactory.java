@@ -1,7 +1,7 @@
 package com.krnl32.jupiter.editor.factory.components.input;
 
-import com.krnl32.jupiter.engine.components.input.KeyboardControlComponent;
 import com.krnl32.jupiter.editor.factory.ComponentFactory;
+import com.krnl32.jupiter.engine.components.input.KeyboardControlComponent;
 import com.krnl32.jupiter.engine.input.devices.KeyCode;
 
 public class KeyboardControlComponentFactory implements ComponentFactory<KeyboardControlComponent> {

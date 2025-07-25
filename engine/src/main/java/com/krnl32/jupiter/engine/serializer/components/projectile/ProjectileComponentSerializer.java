@@ -1,7 +1,7 @@
 package com.krnl32.jupiter.engine.serializer.components.projectile;
 
-import com.krnl32.jupiter.engine.components.utility.UUIDComponent;
 import com.krnl32.jupiter.engine.components.projectile.ProjectileComponent;
+import com.krnl32.jupiter.engine.components.utility.UUIDComponent;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.ecs.Entity;
 import com.krnl32.jupiter.engine.serializer.ComponentSerializer;

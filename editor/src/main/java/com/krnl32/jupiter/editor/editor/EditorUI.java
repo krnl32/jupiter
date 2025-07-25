@@ -1,12 +1,12 @@
 package com.krnl32.jupiter.editor.editor;
 
+import com.krnl32.jupiter.editor.events.editor.EditorPauseEvent;
+import com.krnl32.jupiter.editor.events.editor.EditorPlayEvent;
+import com.krnl32.jupiter.editor.events.editor.EditorStopEvent;
 import com.krnl32.jupiter.engine.asset.AssetManager;
 import com.krnl32.jupiter.engine.asset.types.TextureAsset;
 import com.krnl32.jupiter.engine.core.Window;
 import com.krnl32.jupiter.engine.event.EventBus;
-import com.krnl32.jupiter.editor.events.editor.EditorPauseEvent;
-import com.krnl32.jupiter.editor.events.editor.EditorPlayEvent;
-import com.krnl32.jupiter.editor.events.editor.EditorStopEvent;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.*;

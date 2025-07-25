@@ -1,8 +1,8 @@
 package com.krnl32.jupiter.editor.renderer.components.effects;
 
-import com.krnl32.jupiter.engine.components.effects.ParticleComponent;
 import com.krnl32.jupiter.editor.renderer.ComponentRenderer;
 import com.krnl32.jupiter.editor.utility.GUIUtils;
+import com.krnl32.jupiter.engine.components.effects.ParticleComponent;
 import imgui.type.ImFloat;
 
 public class ParticleComponentRenderer implements ComponentRenderer<ParticleComponent> {

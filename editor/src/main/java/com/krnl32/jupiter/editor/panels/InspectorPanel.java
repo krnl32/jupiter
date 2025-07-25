@@ -1,16 +1,16 @@
 package com.krnl32.jupiter.editor.panels;
 
-import com.krnl32.jupiter.engine.core.Logger;
-import com.krnl32.jupiter.engine.ecs.Component;
-import com.krnl32.jupiter.engine.ecs.Entity;
 import com.krnl32.jupiter.editor.editor.EditorPanel;
-import com.krnl32.jupiter.engine.event.EventBus;
-import com.krnl32.jupiter.engine.events.entity.EntityDestroyedEvent;
 import com.krnl32.jupiter.editor.events.scene.EntitySelectedEvent;
 import com.krnl32.jupiter.editor.factory.ComponentFactory;
 import com.krnl32.jupiter.editor.factory.FactoryRegistry;
 import com.krnl32.jupiter.editor.renderer.ComponentRenderer;
 import com.krnl32.jupiter.editor.renderer.RendererRegistry;
+import com.krnl32.jupiter.engine.core.Logger;
+import com.krnl32.jupiter.engine.ecs.Component;
+import com.krnl32.jupiter.engine.ecs.Entity;
+import com.krnl32.jupiter.engine.event.EventBus;
+import com.krnl32.jupiter.engine.events.entity.EntityDestroyedEvent;
 import imgui.ImGui;
 import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiStyleVar;

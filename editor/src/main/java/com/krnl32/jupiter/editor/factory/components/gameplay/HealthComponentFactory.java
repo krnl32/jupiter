@@ -1,7 +1,7 @@
 package com.krnl32.jupiter.editor.factory.components.gameplay;
 
-import com.krnl32.jupiter.engine.components.gameplay.HealthComponent;
 import com.krnl32.jupiter.editor.factory.ComponentFactory;
+import com.krnl32.jupiter.engine.components.gameplay.HealthComponent;
 
 public class HealthComponentFactory implements ComponentFactory<HealthComponent> {
 	@Override

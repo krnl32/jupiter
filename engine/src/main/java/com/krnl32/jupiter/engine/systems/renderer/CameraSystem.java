@@ -1,7 +1,7 @@
 package com.krnl32.jupiter.engine.systems.renderer;
 
-import com.krnl32.jupiter.engine.components.renderer.CameraComponent;
 import com.krnl32.jupiter.engine.components.gameplay.TransformComponent;
+import com.krnl32.jupiter.engine.components.renderer.CameraComponent;
 import com.krnl32.jupiter.engine.ecs.Entity;
 import com.krnl32.jupiter.engine.ecs.Registry;
 import com.krnl32.jupiter.engine.ecs.System;

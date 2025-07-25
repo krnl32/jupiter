@@ -1,7 +1,7 @@
 package com.krnl32.jupiter.editor.factory.components.gameplay;
 
-import com.krnl32.jupiter.engine.components.gameplay.MovementIntentComponent;
 import com.krnl32.jupiter.editor.factory.ComponentFactory;
+import com.krnl32.jupiter.engine.components.gameplay.MovementIntentComponent;
 
 public class MovementIntentComponentFactory implements ComponentFactory<MovementIntentComponent> {
 	@Override

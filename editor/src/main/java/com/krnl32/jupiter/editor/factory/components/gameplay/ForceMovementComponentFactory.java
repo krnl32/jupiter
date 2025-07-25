@@ -1,7 +1,7 @@
 package com.krnl32.jupiter.editor.factory.components.gameplay;
 
-import com.krnl32.jupiter.engine.components.gameplay.ForceMovementComponent;
 import com.krnl32.jupiter.editor.factory.ComponentFactory;
+import com.krnl32.jupiter.engine.components.gameplay.ForceMovementComponent;
 
 public class ForceMovementComponentFactory implements ComponentFactory<ForceMovementComponent> {
 	@Override

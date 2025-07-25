@@ -1,7 +1,7 @@
 package com.krnl32.jupiter.editor.factory.components.physics;
 
-import com.krnl32.jupiter.engine.components.physics.BoxCollider2DComponent;
 import com.krnl32.jupiter.editor.factory.ComponentFactory;
+import com.krnl32.jupiter.engine.components.physics.BoxCollider2DComponent;
 import org.joml.Vector2f;
 
 public class BoxCollider2DComponentFactory implements ComponentFactory<BoxCollider2DComponent> {

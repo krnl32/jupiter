@@ -1,8 +1,8 @@
 package com.krnl32.jupiter.editor.renderer.components.physics;
 
-import com.krnl32.jupiter.engine.components.physics.BoxCollider2DComponent;
 import com.krnl32.jupiter.editor.renderer.ComponentRenderer;
 import com.krnl32.jupiter.editor.utility.GUIUtils;
+import com.krnl32.jupiter.engine.components.physics.BoxCollider2DComponent;
 import imgui.ImGui;
 import imgui.type.ImBoolean;
 import imgui.type.ImFloat;

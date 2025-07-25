@@ -1,7 +1,7 @@
 package com.krnl32.jupiter.editor.factory.components.gameplay;
 
-import com.krnl32.jupiter.engine.components.gameplay.TransformComponent;
 import com.krnl32.jupiter.editor.factory.ComponentFactory;
+import com.krnl32.jupiter.engine.components.gameplay.TransformComponent;
 import org.joml.Vector3f;
 
 public class TransformComponentFactory implements ComponentFactory<TransformComponent> {

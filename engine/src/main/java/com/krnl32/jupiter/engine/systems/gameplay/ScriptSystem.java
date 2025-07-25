@@ -2,8 +2,6 @@ package com.krnl32.jupiter.engine.systems.gameplay;
 
 import com.krnl32.jupiter.engine.asset.AssetManager;
 import com.krnl32.jupiter.engine.asset.types.ScriptAsset;
-import com.krnl32.jupiter.engine.script.ScriptContext;
-import com.krnl32.jupiter.engine.script.ScriptInstance;
 import com.krnl32.jupiter.engine.components.gameplay.ScriptComponent;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.ecs.Entity;
@@ -13,6 +11,8 @@ import com.krnl32.jupiter.engine.event.EventBus;
 import com.krnl32.jupiter.engine.events.entity.EntityDestroyedEvent;
 import com.krnl32.jupiter.engine.renderer.Renderer;
 import com.krnl32.jupiter.engine.script.ScriptBindings;
+import com.krnl32.jupiter.engine.script.ScriptContext;
+import com.krnl32.jupiter.engine.script.ScriptInstance;
 import com.krnl32.jupiter.engine.script.utility.DefaultComponentBinders;
 import org.luaj.vm2.LuaValue;
 
