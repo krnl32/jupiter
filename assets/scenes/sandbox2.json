@@ -1,6 +1,6 @@
 {"entities": [
     {"components": {
-        "UUIDComponent": {"uuid": "cdb37882-eb4a-4e3f-87a2-3792be22690c"},
+        "UUIDComponent": {"uuid": "59c408d2-01e2-488d-a8d5-37b7273bf32e"},
         "CameraComponent": {
             "rollSpeed": 45,
             "worldUp": {
@@ -98,7 +98,7 @@
             "currentHealth": 100,
             "maxHealth": 100
         },
-        "UUIDComponent": {"uuid": "975cd8cd-8aa3-4c93-9a8a-1438fbe31688"},
+        "UUIDComponent": {"uuid": "f479df17-7f19-4b99-9c2c-b3bcb11a7f2f"},
         "ScriptComponent": {"scripts": [{
             "scriptAssetID": "scripts/test.lua",
             "disabled": false
