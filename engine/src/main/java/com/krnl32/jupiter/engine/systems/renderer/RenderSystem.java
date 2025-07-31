@@ -1,6 +1,5 @@
 package com.krnl32.jupiter.engine.systems.renderer;
 
-import com.krnl32.jupiter.engine.asset.AssetManager;
 import com.krnl32.jupiter.engine.asset.types.TextureAsset;
 import com.krnl32.jupiter.engine.components.effects.BlinkComponent;
 import com.krnl32.jupiter.engine.components.gameplay.TransformComponent;
@@ -9,6 +8,7 @@ import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.ecs.Entity;
 import com.krnl32.jupiter.engine.ecs.Registry;
 import com.krnl32.jupiter.engine.ecs.System;
+import com.krnl32.jupiter.engine.project.ProjectContext;
 import com.krnl32.jupiter.engine.renderer.RenderPacket;
 import com.krnl32.jupiter.engine.renderer.RenderSpriteCommand;
 import com.krnl32.jupiter.engine.renderer.Renderer;
@@ -38,7 +38,7 @@ public class RenderSystem implements System {
 			TransformComponent transform = entity.getComponent(TransformComponent.class);
 			SpriteRendererComponent spriteRenderer = entity.getComponent(SpriteRendererComponent.class);
 
-			TextureAsset textureAsset = AssetManager.getInstance().getAsset(spriteRenderer.textureAssetID);
+			TextureAsset textureAsset = ProjectContext.getAssetManager().getAsset(spriteRenderer.textureAssetID);
 			if (spriteRenderer.textureAssetID != null && (textureAsset == null || !textureAsset.isLoaded()))
 				Logger.error("RenderSystem Failed to get Texture Asset({})\n", spriteRenderer.textureAssetID);
 

@@ -53,6 +53,9 @@ import com.krnl32.jupiter.engine.components.utility.UUIDComponent;
 import com.krnl32.jupiter.engine.core.Engine;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.event.EventBus;
+import com.krnl32.jupiter.engine.project.ProjectContext;
+import com.krnl32.jupiter.engine.project.ProjectLoader;
+import com.krnl32.jupiter.engine.project.model.Project;
 import com.krnl32.jupiter.engine.renderer.FrameBufferAttachmentFormat;
 import com.krnl32.jupiter.engine.renderer.Framebuffer;
 import com.krnl32.jupiter.engine.renderer.ProjectionType;
@@ -71,10 +74,12 @@ public class Editor extends Engine {
 	private EditorState editorState;
 	private SceneSerializer sceneSerializer;
 	private EditorCamera editorCamera;
+	private final String projectPath;
 
-	public Editor(String name, int width, int height) {
+	public Editor(String name, int width, int height, String projectPath) {
 		super(name, width, height);
-		editorState = EditorState.STOP;
+		this.editorState = EditorState.STOP;
+		this.projectPath = projectPath;
 
 		EventBus.getInstance().register(EditorPlayEvent.class, event -> {
 			play();
@@ -89,18 +94,30 @@ public class Editor extends Engine {
 
 	@Override
 	public boolean onInit() {
+		// Load Project
+		if (!loadProject(projectPath)) {
+			Logger.critical("Editor Failed to Initialize Project({})", projectPath);
+			return false;
+		}
+
 		// Register Assets
-		AssetManager.getInstance().registerAndLoad("editorPlayButton", () -> new TextureAsset("textures/ui/buttons/play.png"));
-		if (AssetManager.getInstance().registerAndLoad("editorPlayButton", () -> new TextureAsset("textures/ui/buttons/play.png")) == null)
-			Logger.critical("Editor Failed to Load Texture Asset({})", "textures/ui/buttons/play.png");
+		ProjectContext.getAssetManager().registerAndLoad("EditorPlayButton", () -> new TextureAsset("Textures/UI/Buttons/Play.png"));
+		if (ProjectContext.getAssetManager().registerAndLoad("EditorPlayButton", () -> new TextureAsset("Textures/UI/Buttons/Play.png")) == null) {
+			Logger.critical("Editor Failed to Load Texture Asset({})", "Textures/UI/Buttons/Play.png");
+			return false;
+		}
 
-		AssetManager.getInstance().registerAndLoad("editorPauseButton", () -> new TextureAsset("textures/ui/buttons/pause.png"));
-		if (AssetManager.getInstance().registerAndLoad("editorPauseButton", () -> new TextureAsset("textures/ui/buttons/pause.png")) == null)
-			Logger.critical("Editor Failed to Load Texture Asset({})", "textures/ui/buttons/pause.png");
+		ProjectContext.getAssetManager().registerAndLoad("EditorPauseButton", () -> new TextureAsset("Textures/UI/Buttons/Pause.png"));
+		if (ProjectContext.getAssetManager().registerAndLoad("EditorPauseButton", () -> new TextureAsset("Textures/UI/Buttons/Pause.png")) == null) {
+			Logger.critical("Editor Failed to Load Texture Asset({})", "Textures/UI/Buttons/Pause.png");
+			return false;
+		}
 
-		AssetManager.getInstance().registerAndLoad("editorStopButton", () -> new TextureAsset("textures/ui/buttons/stop.png"));
-		if (AssetManager.getInstance().registerAndLoad("editorStopButton", () -> new TextureAsset("textures/ui/buttons/stop.png")) == null)
-			Logger.critical("Editor Failed to Load Texture Asset({})", "textures/ui/buttons/stop.png");
+		ProjectContext.getAssetManager().registerAndLoad("EditorStopButton", () -> new TextureAsset("Textures/UI/Buttons/Stop.png"));
+		if (ProjectContext.getAssetManager().registerAndLoad("EditorStopButton", () -> new TextureAsset("Textures/UI/Buttons/Stop.png")) == null) {
+			Logger.critical("Editor Failed to Load Texture Asset({})", "Textures/UI/Buttons/Stop.png");
+			return false;
+		}
 
 		// Register Editor Components
 		registerComponentFactories();
@@ -231,5 +248,18 @@ public class Editor extends Engine {
 		RendererRegistry.registerComponentRenderer(UUIDComponent.class, new UUIDComponentRenderer());
 		RendererRegistry.registerComponentRenderer(TagComponent.class, new TagComponentRenderer());
 		RendererRegistry.registerComponentRenderer(LifetimeComponent.class, new LifetimeComponentRenderer());
+	}
+
+	private boolean loadProject(String projectPath) {
+		Project project = ProjectLoader.load(projectPath);
+		if (project == null) {
+			Logger.error("Editor Failed to Load Project({})", projectPath);
+			return false;
+		}
+
+		ProjectContext.setProjectDirectory(projectPath);
+		ProjectContext.setProject(project);
+		ProjectContext.setAssetManager(new AssetManager());
+		return true;
 	}
 }

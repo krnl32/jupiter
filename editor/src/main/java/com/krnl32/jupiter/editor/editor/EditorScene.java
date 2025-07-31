@@ -1,7 +1,6 @@
 package com.krnl32.jupiter.editor.editor;
 
 import com.krnl32.jupiter.engine.asset.AssetID;
-import com.krnl32.jupiter.engine.asset.AssetManager;
 import com.krnl32.jupiter.engine.asset.types.ScriptAsset;
 import com.krnl32.jupiter.engine.components.gameplay.ScriptComponent;
 import com.krnl32.jupiter.engine.components.gameplay.TransformComponent;
@@ -15,6 +14,7 @@ import com.krnl32.jupiter.engine.components.utility.UUIDComponent;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.ecs.Entity;
 import com.krnl32.jupiter.engine.physics.BodyType;
+import com.krnl32.jupiter.engine.project.ProjectContext;
 import com.krnl32.jupiter.engine.renderer.Camera;
 import com.krnl32.jupiter.engine.scene.Scene;
 import com.krnl32.jupiter.engine.script.ScriptInstance;
@@ -30,13 +30,13 @@ public class EditorScene extends Scene {
 		// Sample Code....
 
 		// Assets
-		testScriptID = AssetManager.getInstance().register("scripts/test.lua", () -> new ScriptAsset("scripts/test.lua"));
+		testScriptID = ProjectContext.getAssetManager().register("Scripts/Test.lua", () -> new ScriptAsset("Scripts/Test.lua"));
 		if (testScriptID == null)
-			Logger.critical("Game Failed to Load Script Asset({})", "scripts/test.lua");
+			Logger.critical("Game Failed to Load Script Asset({})", "Scripts/Test.lua");
 
-		test2ScriptID = AssetManager.getInstance().register("scripts/test2.lua", () -> new ScriptAsset("scripts/test2.lua"));
+		test2ScriptID = ProjectContext.getAssetManager().register("Scripts/Test2.lua", () -> new ScriptAsset("Scripts/Test2.lua"));
 		if (test2ScriptID == null)
-			Logger.critical("Game Failed to Load Script Asset({})", "scripts/test2.lua");
+			Logger.critical("Game Failed to Load Script Asset({})", "Scripts/Test2.lua");
 
 		// Entities
 		Entity cameraEntity = createEntity();

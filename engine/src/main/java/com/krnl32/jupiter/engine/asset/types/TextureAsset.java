@@ -3,6 +3,7 @@ package com.krnl32.jupiter.engine.asset.types;
 import com.krnl32.jupiter.engine.asset.Asset;
 import com.krnl32.jupiter.engine.asset.AssetState;
 import com.krnl32.jupiter.engine.asset.AssetType;
+import com.krnl32.jupiter.engine.project.ProjectContext;
 import com.krnl32.jupiter.engine.renderer.Texture2D;
 
 public class TextureAsset extends Asset {
@@ -24,7 +25,7 @@ public class TextureAsset extends Asset {
 
 	@Override
 	protected boolean load() {
-		texture = new Texture2D(getRootPath() + texturePath);
+		texture = new Texture2D(ProjectContext.getAssetDirectory() + "/" + texturePath);
 		setState(AssetState.LOADED);
 		return true;
 	}

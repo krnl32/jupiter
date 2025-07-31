@@ -3,10 +3,10 @@ package com.krnl32.jupiter.editor.editor;
 import com.krnl32.jupiter.editor.events.editor.EditorPauseEvent;
 import com.krnl32.jupiter.editor.events.editor.EditorPlayEvent;
 import com.krnl32.jupiter.editor.events.editor.EditorStopEvent;
-import com.krnl32.jupiter.engine.asset.AssetManager;
 import com.krnl32.jupiter.engine.asset.types.TextureAsset;
 import com.krnl32.jupiter.engine.core.Window;
 import com.krnl32.jupiter.engine.event.EventBus;
+import com.krnl32.jupiter.engine.project.ProjectContext;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.*;
@@ -80,9 +80,9 @@ public class EditorUI {
 		float startX = (ImGui.getContentRegionAvailX() - totalWidth) * 0.5f;
 		ImGui.setCursorPosX(startX);
 
-		int playIcon = ((TextureAsset) AssetManager.getInstance().getAsset("editorPlayButton")).getTexture().getTextureID();
-		int pauseIcon = ((TextureAsset) AssetManager.getInstance().getAsset("editorPauseButton")).getTexture().getTextureID();
-		int stopIcon = ((TextureAsset) AssetManager.getInstance().getAsset("editorStopButton")).getTexture().getTextureID();
+		int playIcon = ((TextureAsset) ProjectContext.getAssetManager().getAsset("EditorPlayButton")).getTexture().getTextureID();
+		int pauseIcon = ((TextureAsset) ProjectContext.getAssetManager().getAsset("EditorPauseButton")).getTexture().getTextureID();
+		int stopIcon = ((TextureAsset) ProjectContext.getAssetManager().getAsset("EditorStopButton")).getTexture().getTextureID();
 
 		// Play
 		if (editorState == EditorState.PLAY) {

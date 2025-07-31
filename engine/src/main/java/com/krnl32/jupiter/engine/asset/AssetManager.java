@@ -10,8 +10,6 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class AssetManager {
-	private static AssetManager instance;
-
 	private final Map<String, AssetID> keyToAssetId = new HashMap<>();
 	private final Map<AssetID, String> assetIdToKey = new HashMap<>();
 
@@ -20,15 +18,6 @@ public class AssetManager {
 
 	private final Map<AssetID, Integer> refCounter = new HashMap<>();
 	private final Map<String, Supplier<? extends Asset>> assetSuppliers = new HashMap<>();
-
-	private AssetManager() {
-	}
-
-	public static AssetManager getInstance() {
-		if (instance == null)
-			instance = new AssetManager();
-		return instance;
-	}
 
 	public <T extends Asset> AssetID register(String key, Supplier<T> assetSupplier) {
 		if (keyToAssetId.containsKey(key))

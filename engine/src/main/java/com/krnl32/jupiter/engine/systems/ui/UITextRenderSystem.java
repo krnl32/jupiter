@@ -1,6 +1,5 @@
 package com.krnl32.jupiter.engine.systems.ui;
 
-import com.krnl32.jupiter.engine.asset.AssetManager;
 import com.krnl32.jupiter.engine.asset.types.FontAsset;
 import com.krnl32.jupiter.engine.components.ui.UIClipComponent;
 import com.krnl32.jupiter.engine.components.ui.UIHierarchyComponent;
@@ -10,6 +9,7 @@ import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.ecs.Entity;
 import com.krnl32.jupiter.engine.ecs.Registry;
 import com.krnl32.jupiter.engine.ecs.System;
+import com.krnl32.jupiter.engine.project.ProjectContext;
 import com.krnl32.jupiter.engine.renderer.ClipRect;
 import com.krnl32.jupiter.engine.renderer.RenderPacket;
 import com.krnl32.jupiter.engine.renderer.RenderTextCommand;
@@ -89,7 +89,7 @@ public class UITextRenderSystem implements System {
 	}
 
 	private void renderTextClipped(Renderer renderer, UITextComponent textComponent, UITransformComponent transformComponent, Matrix4f worldTransform, ClipRect clipRect) {
-		FontAsset fontAsset = AssetManager.getInstance().getAsset(textComponent.fontAssetID);
+		FontAsset fontAsset = ProjectContext.getAssetManager().getAsset(textComponent.fontAssetID);
 		if (fontAsset == null || !fontAsset.isLoaded()) {
 			Logger.error("UITextRenderSystem Failed to get Font Asset({})", textComponent.fontAssetID);
 			return;
@@ -173,7 +173,7 @@ public class UITextRenderSystem implements System {
 	}
 
 	private void renderTextEllipsis(Renderer renderer, UITextComponent textComponent, UITransformComponent transformComponent, Matrix4f worldTransform, ClipRect clipRect) {
-		FontAsset fontAsset = AssetManager.getInstance().getAsset(textComponent.fontAssetID);
+		FontAsset fontAsset = ProjectContext.getAssetManager().getAsset(textComponent.fontAssetID);
 		if (fontAsset == null || !fontAsset.isLoaded()) {
 			Logger.error("UITextRenderSystem Failed to get Font Asset({})", textComponent.fontAssetID);
 			return;
@@ -287,7 +287,7 @@ public class UITextRenderSystem implements System {
 	}
 
 	private void renderTextScaled(Renderer renderer, UITextComponent textComponent, UITransformComponent transformComponent, Matrix4f worldTransform, ClipRect clipRect) {
-		FontAsset fontAsset = AssetManager.getInstance().getAsset(textComponent.fontAssetID);
+		FontAsset fontAsset = ProjectContext.getAssetManager().getAsset(textComponent.fontAssetID);
 		if (fontAsset == null || !fontAsset.isLoaded()) {
 			Logger.error("UITextRenderSystem Failed to get Font Asset({})", textComponent.fontAssetID);
 			return;
@@ -367,7 +367,7 @@ public class UITextRenderSystem implements System {
 	}
 
 	private void renderTextWrapped(Renderer renderer, UITextComponent textComponent, UITransformComponent transformComponent, Matrix4f worldTransform, ClipRect clipRect) {
-		FontAsset fontAsset = AssetManager.getInstance().getAsset(textComponent.fontAssetID);
+		FontAsset fontAsset = ProjectContext.getAssetManager().getAsset(textComponent.fontAssetID);
 		if (fontAsset == null || !fontAsset.isLoaded()) {
 			Logger.error("UITextRenderSystem Failed to get Font Asset({})", textComponent.fontAssetID);
 			return;

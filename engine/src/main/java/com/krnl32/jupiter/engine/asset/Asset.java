@@ -6,13 +6,11 @@ public abstract class Asset {
 	private final AssetID id;
 	private final AssetType type;
 	private AssetState state;
-	private final String rootPath;
 
 	public Asset(AssetType type) {
 		id = new AssetID(UUID.randomUUID());
 		this.type = type;
 		this.state = AssetState.UNLOADED;
-		this.rootPath = System.getProperty("user.dir") + "/assets/";
 	}
 
 	public AssetID getId() {
@@ -29,10 +27,6 @@ public abstract class Asset {
 
 	protected void setState(AssetState state) {
 		this.state = state;
-	}
-
-	public String getRootPath() {
-		return rootPath;
 	}
 
 	public boolean isValid() {

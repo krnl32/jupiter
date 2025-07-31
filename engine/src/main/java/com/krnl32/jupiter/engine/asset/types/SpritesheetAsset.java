@@ -3,6 +3,7 @@ package com.krnl32.jupiter.engine.asset.types;
 import com.krnl32.jupiter.engine.asset.*;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.model.Sprite;
+import com.krnl32.jupiter.engine.project.ProjectContext;
 import com.krnl32.jupiter.engine.utility.FileIO;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -38,7 +39,7 @@ public class SpritesheetAsset extends Asset {
 		sprites = new HashMap<>();
 
 		try {
-			JSONObject root = new JSONObject(FileIO.readFileContent(getRootPath() + atlasMetadataPath));
+			JSONObject root = new JSONObject(FileIO.readFileContent(ProjectContext.getAssetDirectory() + "/" + atlasMetadataPath));
 			JSONObject spritesheet = root.getJSONObject("spritesheet");
 			imagePath = spritesheet.getString("imagePath");
 			atlasWidth = spritesheet.getJSONObject("size").getInt("width");
@@ -46,7 +47,7 @@ public class SpritesheetAsset extends Asset {
 			scale = spritesheet.optFloat("scale", 1.0f);
 
 			// Load Texture
-			textureAssetID = AssetManager.getInstance().registerAndLoad(imagePath, () -> new TextureAsset(imagePath));
+			textureAssetID = ProjectContext.getAssetManager().registerAndLoad(imagePath, () -> new TextureAsset(imagePath));
 			if (textureAssetID == null) {
 				Logger.error("SpritesheetAsset Failed to Load Texture Asset({})", imagePath);
 				setState(AssetState.MISSING);
@@ -117,7 +118,7 @@ public class SpritesheetAsset extends Asset {
 	protected void unload() {
 		sprites = null;
 		if (textureAssetID != null) {
-			AssetManager.getInstance().unregister(textureAssetID);
+			ProjectContext.getAssetManager().unregister(textureAssetID);
 			textureAssetID = null;
 		}
 		setState(AssetState.UNLOADED);

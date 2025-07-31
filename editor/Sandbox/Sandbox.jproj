@@ -1,0 +1,29 @@
+{
+	"info": {
+		"projectName": "EditorSandbox",
+		"engineVersion": "0.0.1",
+		"createdWith": "Jupiter Game Engine",
+		"description": "A Sandbox For Editor"
+	},
+	"author": {
+		"name": "krnl32",
+		"email": "krnl32@protonmail.com",
+		"organization": "JupiterEngine"
+	},
+	"paths": {
+		"asset": "Assets",
+		"texture": "Assets/Textures",
+		"shader": "Assets/Shaders",
+		"scene": "Assets/Scenes",
+		"spritesheet": "Assets/Spritesheets",
+		"font": "Assets/Fonts",
+		"script": "Assets/Scripts"
+	},
+	"startup": {
+		"scene": "Sandbox.jscene"
+	},
+	"metadata": {
+		"uuid": "375987eb-8d8a-48b7-9223-e44ad050707f",
+		"lastModified": "0"
+	}
+}

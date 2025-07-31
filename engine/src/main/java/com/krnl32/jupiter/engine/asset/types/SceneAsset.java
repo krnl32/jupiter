@@ -4,6 +4,7 @@ import com.krnl32.jupiter.engine.asset.Asset;
 import com.krnl32.jupiter.engine.asset.AssetState;
 import com.krnl32.jupiter.engine.asset.AssetType;
 import com.krnl32.jupiter.engine.core.Logger;
+import com.krnl32.jupiter.engine.project.ProjectContext;
 import com.krnl32.jupiter.engine.utility.FileIO;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,7 +17,7 @@ public class SceneAsset extends Asset {
 
 	public SceneAsset(String scenePath) {
 		super(AssetType.SCENE);
-		this.scenePath = getRootPath() + scenePath;
+		this.scenePath = ProjectContext.getAssetDirectory() + "/" + scenePath;
 	}
 
 	public JSONObject getSceneData() {

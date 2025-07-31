@@ -1,6 +1,5 @@
 package com.krnl32.jupiter.engine.systems.gameplay;
 
-import com.krnl32.jupiter.engine.asset.AssetManager;
 import com.krnl32.jupiter.engine.asset.types.ScriptAsset;
 import com.krnl32.jupiter.engine.components.gameplay.ScriptComponent;
 import com.krnl32.jupiter.engine.core.Logger;
@@ -9,6 +8,7 @@ import com.krnl32.jupiter.engine.ecs.Registry;
 import com.krnl32.jupiter.engine.ecs.System;
 import com.krnl32.jupiter.engine.event.EventBus;
 import com.krnl32.jupiter.engine.events.entity.EntityDestroyedEvent;
+import com.krnl32.jupiter.engine.project.ProjectContext;
 import com.krnl32.jupiter.engine.renderer.Renderer;
 import com.krnl32.jupiter.engine.script.ScriptBindings;
 import com.krnl32.jupiter.engine.script.ScriptContext;
@@ -56,7 +56,7 @@ public class ScriptSystem implements System {
 			ScriptComponent scriptComponent = entity.getComponent(ScriptComponent.class);
 
 			for (ScriptInstance script : scriptComponent.scripts) {
-				ScriptAsset scriptAsset = AssetManager.getInstance().getAsset(script.getScriptAssetID());
+				ScriptAsset scriptAsset = ProjectContext.getAssetManager().getAsset(script.getScriptAssetID());
 				if (scriptAsset == null)
 					continue;
 

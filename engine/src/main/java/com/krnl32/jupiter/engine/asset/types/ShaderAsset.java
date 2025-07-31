@@ -3,17 +3,18 @@ package com.krnl32.jupiter.engine.asset.types;
 import com.krnl32.jupiter.engine.asset.Asset;
 import com.krnl32.jupiter.engine.asset.AssetState;
 import com.krnl32.jupiter.engine.asset.AssetType;
+import com.krnl32.jupiter.engine.project.ProjectContext;
 import com.krnl32.jupiter.engine.renderer.Shader;
 
 public class ShaderAsset extends Asset {
-	private final String vertexFilePath;
-	private final String fragmentFilePath;
+	private final String vertexShaderFilePath;
+	private final String fragmentShaderFilePath;
 	private Shader shader;
 
-	public ShaderAsset(String vertexFileName, String fragmentFileName) {
+	public ShaderAsset(String vertexShaderFilePath, String fragmentShaderFilePath) {
 		super(AssetType.SHADER);
-		this.vertexFilePath = getRootPath() + vertexFileName;
-		this.fragmentFilePath = getRootPath() + fragmentFileName;
+		this.vertexShaderFilePath = ProjectContext.getAssetDirectory() + "/" + vertexShaderFilePath;
+		this.fragmentShaderFilePath = ProjectContext.getAssetDirectory() + "/" + fragmentShaderFilePath;
 	}
 
 	public Shader getShader() {
@@ -22,7 +23,7 @@ public class ShaderAsset extends Asset {
 
 	@Override
 	protected boolean load() {
-		shader = new Shader(vertexFilePath, fragmentFilePath);
+		shader = new Shader(vertexShaderFilePath, fragmentShaderFilePath);
 		setState(AssetState.LOADED);
 		return true;
 	}

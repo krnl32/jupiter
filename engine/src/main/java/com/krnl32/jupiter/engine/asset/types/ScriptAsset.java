@@ -4,6 +4,7 @@ import com.krnl32.jupiter.engine.asset.Asset;
 import com.krnl32.jupiter.engine.asset.AssetState;
 import com.krnl32.jupiter.engine.asset.AssetType;
 import com.krnl32.jupiter.engine.core.Logger;
+import com.krnl32.jupiter.engine.project.ProjectContext;
 import com.krnl32.jupiter.engine.script.ScriptDefinition;
 
 import java.io.File;
@@ -22,7 +23,7 @@ public class ScriptAsset extends Asset {
 	}
 
 	public String getAbsolutePath() {
-		return getRootPath() + scriptPath;
+		return ProjectContext.getAssetDirectory() + "/" + scriptPath;
 	}
 
 	public ScriptDefinition getScriptDefinition() {
@@ -31,7 +32,7 @@ public class ScriptAsset extends Asset {
 
 	@Override
 	protected boolean load() {
-		File scriptFile = new File(getRootPath() + scriptPath);
+		File scriptFile = new File(getAbsolutePath());
 		if (!scriptFile.exists()) {
 			setState(AssetState.MISSING);
 			Logger.error("ScriptAsset Failed to Load, File({}) Doesn't Exist", scriptPath);
