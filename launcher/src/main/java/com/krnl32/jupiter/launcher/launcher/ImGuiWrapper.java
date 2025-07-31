@@ -1,10 +1,14 @@
 package com.krnl32.jupiter.launcher.launcher;
 
+import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.core.Window;
+import com.krnl32.jupiter.engine.utility.FileIO;
 import imgui.*;
 import imgui.flag.ImGuiConfigFlags;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
+
+import java.nio.file.Path;
 
 import static org.lwjgl.glfw.GLFW.glfwGetCurrentContext;
 import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
@@ -15,6 +19,13 @@ public class ImGuiWrapper {
 
 	public ImGuiWrapper(Window window) {
 		ImGui.createContext();
+
+		// Load imgui.ini (Temporary, Instead -> Create User Data Config)
+		String imguiINIPath = Path.of((System.getProperty("project.resource") != null) ? System.getProperty("project.resource") + "/Settings/imgui.ini" : System.getProperty("user.dir") + "/launcher/src/main/resources/Settings/imgui.ini").toString();
+
+		System.out.println(imguiINIPath);
+		ImGui.getIO().setIniFilename(imguiINIPath);
+
 		imGuiImplGlfw = new ImGuiImplGlfw();
 		imGuiImplGl3 = new ImGuiImplGl3();
 
@@ -25,12 +36,17 @@ public class ImGuiWrapper {
 
 		// Setup Fonts
 		ImFontAtlas fonts = ImGui.getIO().getFonts();
-		ImFontConfig config = new ImFontConfig();
-		config.setMergeMode(false);
-		ImFont JetBrainsMonoRegularFont = fonts.addFontFromFileTTF(System.getProperty("user.dir") + "/assets/fonts/" + "JetBrainsMono-Regular.ttf", 16, config);
-		config.setMergeMode(true);
-		fonts.addFontFromFileTTF(System.getProperty("user.dir") + "/assets/fonts/" + "fa-solid-900.ttf", 16, config, fonts.getGlyphRangesDefault());
-		ImGui.getIO().setFontDefault(JetBrainsMonoRegularFont);
+		try {
+			ImFontConfig config = new ImFontConfig();
+			config.setMergeMode(false);
+			ImFont JetBrainsMonoRegularFont = fonts.addFontFromMemoryTTF(FileIO.readResourceFileContentBytes("Assets/Fonts/JetBrainsMono-Regular.ttf"), 16, config);
+			config.setMergeMode(true);
+			fonts.addFontFromMemoryTTF(FileIO.readResourceFileContentBytes("Assets/Fonts/fa-solid-900.ttf"), 16, config, fonts.getGlyphRangesDefault());
+			ImGui.getIO().setFontDefault(JetBrainsMonoRegularFont);
+		} catch (Exception e) {
+			Logger.critical("ImGuiWrapper Failed to Load Fonts: {}", e.getMessage());
+			return;
+		}
 		fonts.build();
 
 		ImGui.styleColorsDark();

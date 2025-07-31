@@ -17,11 +17,20 @@ public class FileIO {
 	}
 
 	public static String readResourceFileContent(String resourcePath) throws IOException {
-		try (InputStream inputStream = FileIO.class.getClassLoader().getResourceAsStream(resourcePath)) {
+		try (InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourcePath)) {
 			if (inputStream == null) {
 				throw new FileNotFoundException("ResourcePath: " + resourcePath);
 			}
 			return new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
+		}
+	}
+
+	public static byte[] readResourceFileContentBytes(String resourcePath) throws IOException {
+		try (InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourcePath)) {
+			if (inputStream == null) {
+				throw new FileNotFoundException("ResourcePath: " + resourcePath);
+			}
+			return inputStream.readAllBytes();
 		}
 	}
 }
