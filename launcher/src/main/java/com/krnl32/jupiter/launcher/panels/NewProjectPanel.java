@@ -1,6 +1,7 @@
 package com.krnl32.jupiter.launcher.panels;
 
 import com.krnl32.jupiter.engine.event.EventBus;
+import com.krnl32.jupiter.engine.platform.FileDialog;
 import com.krnl32.jupiter.launcher.events.ui.NewProjectPanelEvent;
 import com.krnl32.jupiter.launcher.launcher.UIPanel;
 import com.krnl32.jupiter.launcher.project.Project;
@@ -46,9 +47,18 @@ public class NewProjectPanel implements UIPanel {
 		}
 
 		if (ImGui.beginPopupModal("Create New Project", ImGuiWindowFlags.AlwaysAutoResize)) {
+			ImGui.text("Project Name");
+			ImGui.inputText("##projectName", newProjectName);
 
-			ImGui.inputText("Project Name", newProjectName);
-			ImGui.inputText("Project Path", newProjectPath);
+			ImGui.text("Project Path");
+			ImGui.inputText("##projectPath", newProjectPath);
+			ImGui.sameLine();
+			if (ImGui.button("Browse")) {
+				String path = FileDialog.openFolder();
+				if (path != null && !path.isEmpty()) {
+					newProjectPath.set(path);
+				}
+			}
 
 			ImGui.text("Template");
 			ImGui.combo("##template", selectedTemplate, templates);
