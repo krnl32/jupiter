@@ -3,10 +3,7 @@ package com.krnl32.jupiter.launcher.launcher;
 import com.krnl32.jupiter.engine.core.Window;
 import imgui.ImGui;
 import imgui.ImVec2;
-import imgui.flag.ImGuiConfigFlags;
-import imgui.flag.ImGuiDockNodeFlags;
-import imgui.flag.ImGuiStyleVar;
-import imgui.flag.ImGuiWindowFlags;
+import imgui.flag.*;
 import imgui.type.ImBoolean;
 
 import java.util.ArrayList;
@@ -19,6 +16,7 @@ public class LauncherUI {
 	public LauncherUI(Window window) {
 		this.imGuiWrapper = new ImGuiWrapper(window);
 		this.uiPanels = new ArrayList<>();
+		setupTheme();
 	}
 
 	public void onUpdate(float dt) {
@@ -45,6 +43,17 @@ public class LauncherUI {
 
 	public void addUIPanel(UIPanel uiPanel) {
 		this.uiPanels.add(uiPanel);
+	}
+
+	private void setupTheme() {
+		ImGui.getStyle().setWindowRounding(6);
+		ImGui.getStyle().setFrameRounding(4);
+		ImGui.getStyle().setGrabRounding(3);
+		ImGui.getStyle().setWindowBorderSize(1.0f);
+
+		ImGui.getStyle().setColor(ImGuiCol.WindowBg, 0.1f, 0.1f, 0.1f, 1.0f);
+		ImGui.getStyle().setColor(ImGuiCol.Header, 0.25f, 0.25f, 0.25f, 1.0f);
+		ImGui.getStyle().setColor(ImGuiCol.Button, 0.2f, 0.4f, 0.6f, 1.0f);
 	}
 
 	private void dockspaceBegin() {

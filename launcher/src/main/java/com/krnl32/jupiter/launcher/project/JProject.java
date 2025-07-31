@@ -1,14 +1,16 @@
 package com.krnl32.jupiter.launcher.project;
 
-public class Project {
+public class JProject {
 	private final String name;
 	private final String path;
 	private final String engineVersion;
+	private final String template;
 
-	public Project(String name, String path, String engineVersion) {
+	public JProject(String name, String path, String engineVersion, String template) {
 		this.name = name;
 		this.path = path;
 		this.engineVersion = engineVersion;
+		this.template = template;
 	}
 
 	public String getName() {
@@ -21,5 +23,9 @@ public class Project {
 
 	public String getEngineVersion() {
 		return engineVersion;
+	}
+
+	public String getTemplate() {
+		return template;
 	}
 }

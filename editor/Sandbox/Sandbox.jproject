@@ -3,7 +3,8 @@
 		"projectName": "EditorSandbox",
 		"engineVersion": "0.0.1",
 		"createdWith": "Jupiter Game Engine",
-		"description": "A Sandbox For Editor"
+		"description": "A Sandbox For Editor",
+		"template": "2D"
 	},
 	"author": {
 		"name": "krnl32",

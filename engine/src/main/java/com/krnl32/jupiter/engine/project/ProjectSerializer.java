@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import java.util.UUID;
 
 public class ProjectSerializer {
-	public JSONObject serialize(Project project) {
+	public static JSONObject serialize(Project project) {
 		return new JSONObject()
 			.put("info", serializeProjectInfo(project.getInfo()))
 			.put("author", serializeProjectAuthor(project.getAuthor()))
@@ -16,7 +16,7 @@ public class ProjectSerializer {
 			.put("metadata", serializeProjectMetadata(project.getMetadata()));
 	}
 
-	public Project deserialize(JSONObject projectData) {
+	public static Project deserialize(JSONObject projectData) {
 		try {
 			return new Project(
 				deserializeProjectInfo(projectData.getJSONObject("info")),
@@ -31,31 +31,33 @@ public class ProjectSerializer {
 		}
 	}
 
-	private JSONObject serializeProjectInfo(ProjectInfo projectInfo) {
+	private static JSONObject serializeProjectInfo(ProjectInfo projectInfo) {
 		return new JSONObject()
 			.put("projectName", projectInfo.getProjectName())
 			.put("engineVersion", projectInfo.getEngineVersion())
 			.put("createdWith", projectInfo.getCreatedWith())
-			.put("description", projectInfo.getDescription());
+			.put("description", projectInfo.getDescription())
+			.put("template", projectInfo.getTemplate());
 	}
 
-	private ProjectInfo deserializeProjectInfo(JSONObject projectInfoData) {
+	private static ProjectInfo deserializeProjectInfo(JSONObject projectInfoData) {
 		return new ProjectInfo(
 			projectInfoData.getString("projectName"),
 			projectInfoData.getString("engineVersion"),
 			projectInfoData.getString("createdWith"),
-			projectInfoData.getString("description")
+			projectInfoData.getString("description"),
+			projectInfoData.getString("template")
 		);
 	}
 
-	private JSONObject serializeProjectAuthor(ProjectAuthor projectAuthor) {
+	private static JSONObject serializeProjectAuthor(ProjectAuthor projectAuthor) {
 		return new JSONObject()
 			.put("name", projectAuthor.getName())
 			.put("email", projectAuthor.getEmail())
 			.put("organization", projectAuthor.getOrganization());
 	}
 
-	private ProjectAuthor deserializeProjectAuthor(JSONObject projectAuthorData) {
+	private static ProjectAuthor deserializeProjectAuthor(JSONObject projectAuthorData) {
 		return new ProjectAuthor(
 			projectAuthorData.getString("name"),
 			projectAuthorData.getString("email"),
@@ -63,7 +65,7 @@ public class ProjectSerializer {
 		);
 	}
 
-	private JSONObject serializeProjectPaths(ProjectPaths projectPaths) {
+	private static JSONObject serializeProjectPaths(ProjectPaths projectPaths) {
 		return new JSONObject()
 			.put("asset", projectPaths.getAssetPath())
 			.put("texture", projectPaths.getTexturePath())
@@ -74,7 +76,7 @@ public class ProjectSerializer {
 			.put("script", projectPaths.getScriptPath());
 	}
 
-	private ProjectPaths deserializeProjectPaths(JSONObject projectPathsData) {
+	private static ProjectPaths deserializeProjectPaths(JSONObject projectPathsData) {
 		return new ProjectPaths(
 			projectPathsData.getString("asset"),
 			projectPathsData.getString("texture"),
@@ -86,24 +88,24 @@ public class ProjectSerializer {
 		);
 	}
 
-	private JSONObject serializeProjectStartup(ProjectStartup projectStartup) {
+	private static JSONObject serializeProjectStartup(ProjectStartup projectStartup) {
 		return new JSONObject()
 			.put("scene", projectStartup.getSceneName());
 	}
 
-	private ProjectStartup deserializeProjectStartup(JSONObject projectStartupData) {
+	private static ProjectStartup deserializeProjectStartup(JSONObject projectStartupData) {
 		return new ProjectStartup(
 			projectStartupData.getString("scene")
 		);
 	}
 
-	private JSONObject serializeProjectMetadata(ProjectMetadata projectMetadata) {
+	private static JSONObject serializeProjectMetadata(ProjectMetadata projectMetadata) {
 		return new JSONObject()
 			.put("uuid", projectMetadata.getUUID())
 			.put("lastModified", projectMetadata.getLastModified());
 	}
 
-	private ProjectMetadata deserializeProjectMetadata(JSONObject projectMetadataData) {
+	private static ProjectMetadata deserializeProjectMetadata(JSONObject projectMetadataData) {
 		return new ProjectMetadata(
 			UUID.fromString(projectMetadataData.getString("uuid")),
 			projectMetadataData.getLong("lastModified")

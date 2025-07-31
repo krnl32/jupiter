@@ -20,8 +20,7 @@ public class ProjectLoader {
 
 		Project project;
 		try {
-			ProjectSerializer projectSerializer = new ProjectSerializer();
-			project = projectSerializer.deserialize(new JSONObject(FileIO.readFileContent(projectFile.getAbsolutePath())));
+			project = ProjectSerializer.deserialize(new JSONObject(FileIO.readFileContent(projectFile.getAbsolutePath())));
 		} catch (IOException e) {
 			Logger.error(e.getMessage());
 			return null;

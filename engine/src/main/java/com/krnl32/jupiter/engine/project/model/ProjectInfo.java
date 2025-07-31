@@ -5,12 +5,14 @@ public final class ProjectInfo {
 	private final String engineVersion;
 	private final String createdWith;
 	private final String description;
+	private final String template;
 
-	public ProjectInfo(String projectName, String engineVersion, String createdWith, String description) {
+	public ProjectInfo(String projectName, String engineVersion, String createdWith, String description, String template) {
 		this.projectName = projectName;
 		this.engineVersion = engineVersion;
 		this.createdWith = createdWith;
 		this.description = description;
+		this.template = template;
 	}
 
 	public String getProjectName() {
@@ -29,6 +31,10 @@ public final class ProjectInfo {
 		return description;
 	}
 
+	public String getTemplate() {
+		return template;
+	}
+
 	@Override
 	public String toString() {
 		return "ProjectInfo{" +
@@ -36,6 +42,7 @@ public final class ProjectInfo {
 			", engineVersion='" + engineVersion + '\'' +
 			", createdWith='" + createdWith + '\'' +
 			", description='" + description + '\'' +
+			", template='" + template + '\'' +
 			'}';
 	}
 }

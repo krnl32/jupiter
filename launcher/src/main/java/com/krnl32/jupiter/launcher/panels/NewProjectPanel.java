@@ -1,10 +1,12 @@
 package com.krnl32.jupiter.launcher.panels;
 
+import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.event.EventBus;
 import com.krnl32.jupiter.engine.platform.FileDialog;
 import com.krnl32.jupiter.launcher.events.ui.NewProjectPanelEvent;
 import com.krnl32.jupiter.launcher.launcher.UIPanel;
-import com.krnl32.jupiter.launcher.project.Project;
+import com.krnl32.jupiter.launcher.project.JProject;
+import com.krnl32.jupiter.launcher.project.ProjectInitializer;
 import com.krnl32.jupiter.launcher.project.ProjectManager;
 import imgui.ImGui;
 import imgui.flag.ImGuiWindowFlags;
@@ -24,8 +26,8 @@ public class NewProjectPanel implements UIPanel {
 		this.projectManager = projectManager;
 		this.newProjectName = new ImString(256);
 		this.newProjectPath = new ImString(256);
-		this.engineVersions = new String[] {"0.0.1", "0.0.2"};
-		this.templates = new String[]{"2D", "3D"};
+		this.engineVersions = new String[] {"0.0.1"};
+		this.templates = new String[]{"2D"};
 		this.selectedEngineVersion = new ImInt(0);
 		this.selectedTemplate = new ImInt(0);
 
@@ -70,9 +72,12 @@ public class NewProjectPanel implements UIPanel {
 				String name = newProjectName.toString().trim();
 				String path = newProjectPath.toString().trim();
 				if (!name.isEmpty() && !path.isEmpty()) {
-					Project newProject = new Project(name, path, engineVersions[selectedEngineVersion.get()]);
-					projectManager.addProject(newProject);
-					generateProjectFiles(newProject, templates[selectedTemplate.get()]);
+					JProject newProject = ProjectInitializer.createProject(name, path, engineVersions[selectedEngineVersion.get()], templates[selectedTemplate.get()]);
+					if (newProject != null) {
+						projectManager.addProject(newProject);
+					} else {
+						Logger.error("NewProjectPanel failed to Create New Project({},{},{},{})", name, path, engineVersions[selectedEngineVersion.get()], templates[selectedTemplate.get()]);
+					}
 				}
 				ImGui.closeCurrentPopup();
 			}
@@ -84,9 +89,5 @@ public class NewProjectPanel implements UIPanel {
 
 			ImGui.endPopup();
 		}
-	}
-
-	private void generateProjectFiles(Project project, String template) {
-		// Generate Project Files
 	}
 }

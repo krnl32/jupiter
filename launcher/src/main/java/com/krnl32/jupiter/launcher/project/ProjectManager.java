@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectManager {
-	private final List<Project> projects;
+	private final List<JProject> projects;
 	private final String configPath;
 
 	public ProjectManager(String configPath) {
@@ -21,28 +21,28 @@ public class ProjectManager {
 		loadProjects();
 	}
 
-	public void addProject(Project project) {
+	public void addProject(JProject project) {
 		projects.add(project);
 		saveProjects();
 	}
 
-	public void removeProject(Project project) {
+	public void removeProject(JProject project) {
 		projects.remove(project);
 		saveProjects();
 	}
 
-	public List<Project> getProjects() {
+	public List<JProject> getProjects() {
 		return projects;
 	}
 
 	public void	reloadProjects() {
-		this.projects.clear();
-		this.loadProjects();
+		projects.clear();
+		loadProjects();
 	}
 
 	private void loadProjects() {
 		if (!Files.exists(Path.of(configPath))) {
-			Logger.error("ProjectManager Failed to Save Projects, ConfigFile({}) Doesn't Exist", configPath);
+			Logger.error("ProjectManager Failed to Load Projects, ConfigFile({}) Doesn't Exist", configPath);
 			return;
 		}
 
@@ -53,7 +53,7 @@ public class ProjectManager {
 			if (projectsData != null) {
 				for (int i = 0; i < projectsData.length(); i++) {
 					JSONObject projectData = projectsData.getJSONObject(i);
-					addProject(new Project(projectData.getString("name"), projectData.getString("path"), projectData.getString("engineVersion")));
+					addProject(new JProject(projectData.getString("name"), projectData.getString("path"), projectData.getString("engineVersion"), projectData.getString("template")));
 				}
 			}
 		} catch (Exception e) {
@@ -63,12 +63,13 @@ public class ProjectManager {
 
 	private void saveProjects() {
 		JSONArray projectsData = new JSONArray();
-		for (Project project : projects) {
+		for (JProject project : projects) {
 			JSONObject projectData =
 				new JSONObject()
 					.put("name", project.getName())
 					.put("path", project.getPath())
-					.put("engineVersion", project.getEngineVersion());
+					.put("engineVersion", project.getEngineVersion())
+					.put("template", project.getTemplate());
 			projectsData.put(projectData);
 		}
 
