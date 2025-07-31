@@ -23,7 +23,7 @@ public class ScriptAsset extends Asset {
 	}
 
 	public String getAbsolutePath() {
-		return ProjectContext.getAssetDirectory() + "/" + scriptPath;
+		return ProjectContext.getInstance().getAssetDirectory() + "/" + scriptPath;
 	}
 
 	public ScriptDefinition getScriptDefinition() {

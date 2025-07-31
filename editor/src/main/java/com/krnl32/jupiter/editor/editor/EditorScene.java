@@ -30,11 +30,11 @@ public class EditorScene extends Scene {
 		// Sample Code....
 
 		// Assets
-		testScriptID = ProjectContext.getAssetManager().register("Scripts/Test.lua", () -> new ScriptAsset("Scripts/Test.lua"));
+		testScriptID = ProjectContext.getInstance().getAssetManager().register("Scripts/Test.lua", () -> new ScriptAsset("Scripts/Test.lua"));
 		if (testScriptID == null)
 			Logger.critical("Game Failed to Load Script Asset({})", "Scripts/Test.lua");
 
-		test2ScriptID = ProjectContext.getAssetManager().register("Scripts/Test2.lua", () -> new ScriptAsset("Scripts/Test2.lua"));
+		test2ScriptID = ProjectContext.getInstance().getAssetManager().register("Scripts/Test2.lua", () -> new ScriptAsset("Scripts/Test2.lua"));
 		if (test2ScriptID == null)
 			Logger.critical("Game Failed to Load Script Asset({})", "Scripts/Test2.lua");
 

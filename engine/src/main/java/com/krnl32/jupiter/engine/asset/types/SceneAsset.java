@@ -17,7 +17,7 @@ public class SceneAsset extends Asset {
 
 	public SceneAsset(String scenePath) {
 		super(AssetType.SCENE);
-		this.scenePath = ProjectContext.getAssetDirectory() + "/" + scenePath;
+		this.scenePath = ProjectContext.getInstance().getAssetDirectory() + "/" + scenePath;
 	}
 
 	public JSONObject getSceneData() {

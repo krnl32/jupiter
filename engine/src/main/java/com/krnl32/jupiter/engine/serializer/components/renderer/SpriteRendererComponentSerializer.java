@@ -14,7 +14,7 @@ import org.json.JSONObject;
 public class SpriteRendererComponentSerializer implements ComponentSerializer<SpriteRendererComponent> {
 	@Override
 	public JSONObject serialize(SpriteRendererComponent component) {
-		TextureAsset textureAsset = component.textureAssetID != null ? ProjectContext.getAssetManager().getAsset(component.textureAssetID) : null;
+		TextureAsset textureAsset = component.textureAssetID != null ? ProjectContext.getInstance().getAssetManager().getAsset(component.textureAssetID) : null;
 
 		return new JSONObject()
 			.put("index", component.index)
@@ -27,7 +27,7 @@ public class SpriteRendererComponentSerializer implements ComponentSerializer<Sp
 	public SpriteRendererComponent deserialize(JSONObject data, EntityResolver resolver) {
 		AssetID textureAssetID = null;
 		if (!data.isNull("textureAssetID")) {
-			textureAssetID = ProjectContext.getAssetManager().registerAndLoad(data.getString("textureAssetID"), () -> new TextureAsset(data.getString("textureAssetID")));
+			textureAssetID = ProjectContext.getInstance().getAssetManager().registerAndLoad(data.getString("textureAssetID"), () -> new TextureAsset(data.getString("textureAssetID")));
 			if (textureAssetID == null) {
 				Logger.error("SpriteRendererComponentSerializer Failed, Invalid Texture textureAssetID Path({})", data.getString("textureAssetID"));
 				return null;

@@ -80,9 +80,9 @@ public class EditorUI {
 		float startX = (ImGui.getContentRegionAvailX() - totalWidth) * 0.5f;
 		ImGui.setCursorPosX(startX);
 
-		int playIcon = ((TextureAsset) ProjectContext.getAssetManager().getAsset("EditorPlayButton")).getTexture().getTextureID();
-		int pauseIcon = ((TextureAsset) ProjectContext.getAssetManager().getAsset("EditorPauseButton")).getTexture().getTextureID();
-		int stopIcon = ((TextureAsset) ProjectContext.getAssetManager().getAsset("EditorStopButton")).getTexture().getTextureID();
+		int playIcon = ((TextureAsset) ProjectContext.getInstance().getAssetManager().getAsset("EditorPlayButton")).getTexture().getTextureID();
+		int pauseIcon = ((TextureAsset) ProjectContext.getInstance().getAssetManager().getAsset("EditorPauseButton")).getTexture().getTextureID();
+		int stopIcon = ((TextureAsset) ProjectContext.getInstance().getAssetManager().getAsset("EditorStopButton")).getTexture().getTextureID();
 
 		// Play
 		if (editorState == EditorState.PLAY) {

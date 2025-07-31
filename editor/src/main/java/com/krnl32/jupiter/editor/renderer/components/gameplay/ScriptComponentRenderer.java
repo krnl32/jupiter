@@ -71,7 +71,7 @@ public class ScriptComponentRenderer implements ComponentRenderer<ScriptComponen
 	}
 
 	private void renderScript(ScriptInstance script, ScriptComponent scriptComponent) {
-		List<ScriptAsset> filteredScripts = ProjectContext.getAssetManager().getRegisteredAssetsByType(AssetType.SCRIPT)
+		List<ScriptAsset> filteredScripts = ProjectContext.getInstance().getAssetManager().getRegisteredAssetsByType(AssetType.SCRIPT)
 			.stream()
 			.map(asset -> (ScriptAsset) asset)
 			.filter(scriptAsset -> scriptComponent.scripts.stream()
@@ -79,7 +79,7 @@ public class ScriptComponentRenderer implements ComponentRenderer<ScriptComponen
 				.noneMatch(existing -> existing.getScriptAssetID() != null && existing.getScriptAssetID().equals(scriptAsset.getId())))
 			.collect(Collectors.toList());
 
-		ScriptAsset scriptAsset = (script.getScriptAssetID() != null) ? ProjectContext.getAssetManager().getAsset(script.getScriptAssetID()) : null;
+		ScriptAsset scriptAsset = (script.getScriptAssetID() != null) ? ProjectContext.getInstance().getAssetManager().getAsset(script.getScriptAssetID()) : null;
 		String scriptPath = (scriptAsset != null) ? scriptAsset.getRelativePath() : "<None>";
 
 		GUIUtils.renderAssetCombo(
@@ -133,7 +133,7 @@ public class ScriptComponentRenderer implements ComponentRenderer<ScriptComponen
 
 		String filterLower = addScriptFilter.get().toLowerCase();
 
-		ProjectContext.getAssetManager().getRegisteredAssetsByType(AssetType.SCRIPT).stream()
+		ProjectContext.getInstance().getAssetManager().getRegisteredAssetsByType(AssetType.SCRIPT).stream()
 			.map(asset -> (ScriptAsset) asset)
 			.filter(script -> {
 				String scriptPathLower = script.getRelativePath().toLowerCase();

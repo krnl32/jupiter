@@ -24,7 +24,7 @@ public class FontAsset extends Asset {
 
 	@Override
 	protected boolean load() {
-		font = FontLoader.loadFont(ProjectContext.getAssetDirectory() + "/" + fontPath, fontSize, 512, 512);
+		font = FontLoader.loadFont(ProjectContext.getInstance().getAssetDirectory() + "/" + fontPath, fontSize, 512, 512);
 		if (font == null) {
 			setState(AssetState.MISSING);
 			return false;

@@ -56,7 +56,7 @@ public class ScriptSystem implements System {
 			ScriptComponent scriptComponent = entity.getComponent(ScriptComponent.class);
 
 			for (ScriptInstance script : scriptComponent.scripts) {
-				ScriptAsset scriptAsset = ProjectContext.getAssetManager().getAsset(script.getScriptAssetID());
+				ScriptAsset scriptAsset = ProjectContext.getInstance().getAssetManager().getAsset(script.getScriptAssetID());
 				if (scriptAsset == null)
 					continue;
 

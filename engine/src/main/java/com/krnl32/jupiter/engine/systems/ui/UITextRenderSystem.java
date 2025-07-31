@@ -89,7 +89,7 @@ public class UITextRenderSystem implements System {
 	}
 
 	private void renderTextClipped(Renderer renderer, UITextComponent textComponent, UITransformComponent transformComponent, Matrix4f worldTransform, ClipRect clipRect) {
-		FontAsset fontAsset = ProjectContext.getAssetManager().getAsset(textComponent.fontAssetID);
+		FontAsset fontAsset = ProjectContext.getInstance().getAssetManager().getAsset(textComponent.fontAssetID);
 		if (fontAsset == null || !fontAsset.isLoaded()) {
 			Logger.error("UITextRenderSystem Failed to get Font Asset({})", textComponent.fontAssetID);
 			return;
@@ -173,7 +173,7 @@ public class UITextRenderSystem implements System {
 	}
 
 	private void renderTextEllipsis(Renderer renderer, UITextComponent textComponent, UITransformComponent transformComponent, Matrix4f worldTransform, ClipRect clipRect) {
-		FontAsset fontAsset = ProjectContext.getAssetManager().getAsset(textComponent.fontAssetID);
+		FontAsset fontAsset = ProjectContext.getInstance().getAssetManager().getAsset(textComponent.fontAssetID);
 		if (fontAsset == null || !fontAsset.isLoaded()) {
 			Logger.error("UITextRenderSystem Failed to get Font Asset({})", textComponent.fontAssetID);
 			return;
@@ -287,7 +287,7 @@ public class UITextRenderSystem implements System {
 	}
 
 	private void renderTextScaled(Renderer renderer, UITextComponent textComponent, UITransformComponent transformComponent, Matrix4f worldTransform, ClipRect clipRect) {
-		FontAsset fontAsset = ProjectContext.getAssetManager().getAsset(textComponent.fontAssetID);
+		FontAsset fontAsset = ProjectContext.getInstance().getAssetManager().getAsset(textComponent.fontAssetID);
 		if (fontAsset == null || !fontAsset.isLoaded()) {
 			Logger.error("UITextRenderSystem Failed to get Font Asset({})", textComponent.fontAssetID);
 			return;
@@ -367,7 +367,7 @@ public class UITextRenderSystem implements System {
 	}
 
 	private void renderTextWrapped(Renderer renderer, UITextComponent textComponent, UITransformComponent transformComponent, Matrix4f worldTransform, ClipRect clipRect) {
-		FontAsset fontAsset = ProjectContext.getAssetManager().getAsset(textComponent.fontAssetID);
+		FontAsset fontAsset = ProjectContext.getInstance().getAssetManager().getAsset(textComponent.fontAssetID);
 		if (fontAsset == null || !fontAsset.isLoaded()) {
 			Logger.error("UITextRenderSystem Failed to get Font Asset({})", textComponent.fontAssetID);
 			return;

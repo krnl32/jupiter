@@ -88,13 +88,13 @@ public abstract class Engine {
 			shaderSamplers[i] = i;
 
 		// Setup World Shader & WorldRenderPass
-		AssetID worldShaderID = ProjectContext.getAssetManager().registerAndLoad("shaders/world", () -> new ShaderAsset("Shaders/WorldVertex.glsl", "Shaders/WorldFragment.glsl"));
+		AssetID worldShaderID = ProjectContext.getInstance().getAssetManager().registerAndLoad("shaders/world", () -> new ShaderAsset("Shaders/WorldVertex.glsl", "Shaders/WorldFragment.glsl"));
 		if (worldShaderID == null) {
 			Logger.critical("Engine Failed to Load World Shader Asset({})", "shaders/world");
 			return;
 		}
 
-		ShaderAsset worldShaderAsset = ProjectContext.getAssetManager().getAsset(worldShaderID);
+		ShaderAsset worldShaderAsset = ProjectContext.getInstance().getAssetManager().getAsset(worldShaderID);
 		if (worldShaderAsset == null || !worldShaderAsset.isLoaded()) {
 			Logger.critical("Engine World Shader Null or Not LOADED");
 			return;
@@ -109,13 +109,13 @@ public abstract class Engine {
 		renderer.addRenderPass(new WorldRenderPass(worldShader));
 
 		// Setup UI Shader & UIRenderPass
-		AssetID uiShaderID = ProjectContext.getAssetManager().registerAndLoad("shaders/ui", () -> new ShaderAsset("Shaders/UIVertex.glsl", "Shaders/UIFragment.glsl"));
+		AssetID uiShaderID = ProjectContext.getInstance().getAssetManager().registerAndLoad("shaders/ui", () -> new ShaderAsset("Shaders/UIVertex.glsl", "Shaders/UIFragment.glsl"));
 		if (uiShaderID == null) {
 			Logger.critical("Engine Failed to Load UI Shader Asset({})", "shaders/ui");
 			return;
 		}
 
-		ShaderAsset uiShaderAsset = ProjectContext.getAssetManager().getAsset(uiShaderID);
+		ShaderAsset uiShaderAsset = ProjectContext.getInstance().getAssetManager().getAsset(uiShaderID);
 		if (uiShaderAsset == null || !uiShaderAsset.isLoaded()) {
 			Logger.critical("Engine UI Shader Null or Not LOADED");
 			return;
@@ -130,13 +130,13 @@ public abstract class Engine {
 		renderer.addRenderPass(new UIRenderPass(uiShader, getWindow().getWidth(), getWindow().getHeight()));
 
 		// Setup Text Shader & TextRenderPass
-		AssetID textShaderID = ProjectContext.getAssetManager().registerAndLoad("shaders/text", () -> new ShaderAsset("Shaders/TextVertex.glsl", "Shaders/TextFragment.glsl"));
+		AssetID textShaderID = ProjectContext.getInstance().getAssetManager().registerAndLoad("shaders/text", () -> new ShaderAsset("Shaders/TextVertex.glsl", "Shaders/TextFragment.glsl"));
 		if (textShaderID == null) {
 			Logger.critical("Engine Failed to Load UI Shader Asset({})", "shaders/text");
 			return;
 		}
 
-		ShaderAsset textShaderAsset = ProjectContext.getAssetManager().getAsset(textShaderID);
+		ShaderAsset textShaderAsset = ProjectContext.getInstance().getAssetManager().getAsset(textShaderID);
 		if (textShaderAsset == null || !textShaderAsset.isLoaded()) {
 			Logger.critical("Engine Text Shader Null or Not LOADED");
 			return;

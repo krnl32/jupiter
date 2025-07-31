@@ -105,20 +105,20 @@ public class Editor extends Engine {
 		}
 
 		// Register Assets
-		ProjectContext.getAssetManager().registerAndLoad("EditorPlayButton", () -> new TextureAsset("Textures/UI/Buttons/Play.png"));
-		if (ProjectContext.getAssetManager().registerAndLoad("EditorPlayButton", () -> new TextureAsset("Textures/UI/Buttons/Play.png")) == null) {
+		ProjectContext.getInstance().getAssetManager().registerAndLoad("EditorPlayButton", () -> new TextureAsset("Textures/UI/Buttons/Play.png"));
+		if (ProjectContext.getInstance().getAssetManager().registerAndLoad("EditorPlayButton", () -> new TextureAsset("Textures/UI/Buttons/Play.png")) == null) {
 			Logger.critical("Editor Failed to Load Texture Asset({})", "Textures/UI/Buttons/Play.png");
 			return false;
 		}
 
-		ProjectContext.getAssetManager().registerAndLoad("EditorPauseButton", () -> new TextureAsset("Textures/UI/Buttons/Pause.png"));
-		if (ProjectContext.getAssetManager().registerAndLoad("EditorPauseButton", () -> new TextureAsset("Textures/UI/Buttons/Pause.png")) == null) {
+		ProjectContext.getInstance().getAssetManager().registerAndLoad("EditorPauseButton", () -> new TextureAsset("Textures/UI/Buttons/Pause.png"));
+		if (ProjectContext.getInstance().getAssetManager().registerAndLoad("EditorPauseButton", () -> new TextureAsset("Textures/UI/Buttons/Pause.png")) == null) {
 			Logger.critical("Editor Failed to Load Texture Asset({})", "Textures/UI/Buttons/Pause.png");
 			return false;
 		}
 
-		ProjectContext.getAssetManager().registerAndLoad("EditorStopButton", () -> new TextureAsset("Textures/UI/Buttons/Stop.png"));
-		if (ProjectContext.getAssetManager().registerAndLoad("EditorStopButton", () -> new TextureAsset("Textures/UI/Buttons/Stop.png")) == null) {
+		ProjectContext.getInstance().getAssetManager().registerAndLoad("EditorStopButton", () -> new TextureAsset("Textures/UI/Buttons/Stop.png"));
+		if (ProjectContext.getInstance().getAssetManager().registerAndLoad("EditorStopButton", () -> new TextureAsset("Textures/UI/Buttons/Stop.png")) == null) {
 			Logger.critical("Editor Failed to Load Texture Asset({})", "Textures/UI/Buttons/Stop.png");
 			return false;
 		}
@@ -131,8 +131,8 @@ public class Editor extends Engine {
 		sceneSerializer = new SceneSerializer();
 		sceneManager = new SceneManager();
 
-		if (ProjectContext.getProject().getStartup().getSceneName() != null) {
-			String scenePath = ProjectContext.getProjectDirectory() + "/" + ProjectContext.getProject().getPaths().getScenePath() + "/" + ProjectContext.getProject().getStartup().getSceneName();
+		if (ProjectContext.getInstance().getProject().getStartup().getSceneName() != null) {
+			String scenePath = ProjectContext.getInstance().getProjectDirectory() + "/" + ProjectContext.getInstance().getProject().getPaths().getScenePath() + "/" + ProjectContext.getInstance().getProject().getStartup().getSceneName();
 
 			try {
 				Scene startupScene = sceneSerializer.deserialize(new JSONObject(FileIO.readFileContent(scenePath)));
@@ -141,7 +141,7 @@ public class Editor extends Engine {
 					return false;
 				}
 
-				currentSceneName = ProjectContext.getProject().getStartup().getSceneName();
+				currentSceneName = ProjectContext.getInstance().getProject().getStartup().getSceneName();
 				sceneManager.addScene(currentSceneName, startupScene);
 				sceneManager.switchScene(currentSceneName);
 			} catch (IOException e) {
@@ -281,9 +281,7 @@ public class Editor extends Engine {
 			return false;
 		}
 
-		ProjectContext.setProjectDirectory(projectPath);
-		ProjectContext.setProject(project);
-		ProjectContext.setAssetManager(new AssetManager());
+		ProjectContext.init(projectPath, project, new AssetManager());
 		return true;
 	}
 }

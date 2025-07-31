@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class ProjectLoader {
-	private static final String PROJECT_EXTENSION = ".jproj";
+	private static final String PROJECT_EXTENSION = ".jproject";
 
 	public static Project load(String projectPath) {
 		File projectFile = getProjectFile(projectPath);

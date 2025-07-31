@@ -65,7 +65,7 @@ public class UIRenderSystem implements System {
 		if (renderComponent != null) {
 			Texture2D texture = null;
 			if (renderComponent.textureAssetID != null) {
-				TextureAsset textureAsset = ProjectContext.getAssetManager().getAsset(renderComponent.textureAssetID);
+				TextureAsset textureAsset = ProjectContext.getInstance().getAssetManager().getAsset(renderComponent.textureAssetID);
 				if (textureAsset == null || !textureAsset.isLoaded())
 					Logger.error("UIRenderSystem Failed to get Texture Asset({})\n", renderComponent.textureAssetID);
 				texture = (textureAsset != null && textureAsset.isLoaded()) ? textureAsset.getTexture() : null;

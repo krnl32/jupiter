@@ -39,7 +39,7 @@ public class SpritesheetAsset extends Asset {
 		sprites = new HashMap<>();
 
 		try {
-			JSONObject root = new JSONObject(FileIO.readFileContent(ProjectContext.getAssetDirectory() + "/" + atlasMetadataPath));
+			JSONObject root = new JSONObject(FileIO.readFileContent(ProjectContext.getInstance().getAssetDirectory() + "/" + atlasMetadataPath));
 			JSONObject spritesheet = root.getJSONObject("spritesheet");
 			imagePath = spritesheet.getString("imagePath");
 			atlasWidth = spritesheet.getJSONObject("size").getInt("width");
@@ -47,7 +47,7 @@ public class SpritesheetAsset extends Asset {
 			scale = spritesheet.optFloat("scale", 1.0f);
 
 			// Load Texture
-			textureAssetID = ProjectContext.getAssetManager().registerAndLoad(imagePath, () -> new TextureAsset(imagePath));
+			textureAssetID = ProjectContext.getInstance().getAssetManager().registerAndLoad(imagePath, () -> new TextureAsset(imagePath));
 			if (textureAssetID == null) {
 				Logger.error("SpritesheetAsset Failed to Load Texture Asset({})", imagePath);
 				setState(AssetState.MISSING);
@@ -118,7 +118,7 @@ public class SpritesheetAsset extends Asset {
 	protected void unload() {
 		sprites = null;
 		if (textureAssetID != null) {
-			ProjectContext.getAssetManager().unregister(textureAssetID);
+			ProjectContext.getInstance().getAssetManager().unregister(textureAssetID);
 			textureAssetID = null;
 		}
 		setState(AssetState.UNLOADED);

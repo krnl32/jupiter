@@ -38,7 +38,7 @@ public class RenderSystem implements System {
 			TransformComponent transform = entity.getComponent(TransformComponent.class);
 			SpriteRendererComponent spriteRenderer = entity.getComponent(SpriteRendererComponent.class);
 
-			TextureAsset textureAsset = ProjectContext.getAssetManager().getAsset(spriteRenderer.textureAssetID);
+			TextureAsset textureAsset = ProjectContext.getInstance().getAssetManager().getAsset(spriteRenderer.textureAssetID);
 			if (spriteRenderer.textureAssetID != null && (textureAsset == null || !textureAsset.isLoaded()))
 				Logger.error("RenderSystem Failed to get Texture Asset({})\n", spriteRenderer.textureAssetID);
 
