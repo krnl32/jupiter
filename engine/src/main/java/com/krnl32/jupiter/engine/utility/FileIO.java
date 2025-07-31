@@ -1,6 +1,9 @@
 package com.krnl32.jupiter.engine.utility;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -11,5 +14,14 @@ public class FileIO {
 
 	public static void writeFileContent(String filePath, String data) throws IOException {
 		Files.write(Paths.get(filePath), data.getBytes());
+	}
+
+	public static String readResourceFileContent(String resourcePath) throws IOException {
+		try (InputStream inputStream = FileIO.class.getClassLoader().getResourceAsStream(resourcePath)) {
+			if (inputStream == null) {
+				throw new FileNotFoundException("ResourcePath: " + resourcePath);
+			}
+			return new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
+		}
 	}
 }

@@ -7,10 +7,7 @@ import org.joml.Vector3f;
 import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 
-import java.io.IOException;
 import java.nio.FloatBuffer;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,15 +17,10 @@ public class Shader {
 	private final int programID;
 	private final Map<String, Integer> uniformLocationCache = new HashMap<>();
 
-	public Shader(String vertexFilePath, String fragmentFilePath) {
-		try {
-			String vertexSrc = Files.readString(Paths.get(vertexFilePath));
-			String fragmentSrc = Files.readString(Paths.get(fragmentFilePath));
-			programID = createShader(vertexSrc, fragmentSrc);
-			if (programID == 0)
-				Logger.error("Failed to Create Shader for({}, {})", vertexFilePath, fragmentFilePath);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
+	public Shader(String vertexSource, String fragmentSource) {
+		programID = createShader(vertexSource, fragmentSource);
+		if (programID == 0) {
+			Logger.critical("Failed to Create Shader for({}, {})", vertexSource, fragmentSource);
 		}
 	}
 
