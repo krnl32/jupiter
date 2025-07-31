@@ -63,8 +63,11 @@ import com.krnl32.jupiter.engine.renderer.Renderer;
 import com.krnl32.jupiter.engine.scene.Scene;
 import com.krnl32.jupiter.engine.scene.SceneManager;
 import com.krnl32.jupiter.engine.serializer.SceneSerializer;
+import com.krnl32.jupiter.engine.utility.FileIO;
 import org.joml.Vector4f;
+import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.List;
 
 public class Editor extends Engine {
@@ -75,6 +78,7 @@ public class Editor extends Engine {
 	private SceneSerializer sceneSerializer;
 	private EditorCamera editorCamera;
 	private final String projectPath;
+	private String currentSceneName;
 
 	public Editor(String name, int width, int height, String projectPath) {
 		super(name, width, height);
@@ -125,10 +129,30 @@ public class Editor extends Engine {
 
 		// Setup Scene
 		sceneSerializer = new SceneSerializer();
-
 		sceneManager = new SceneManager();
-		sceneManager.addScene("editor", new EditorScene());
-		sceneManager.switchScene("editor");
+
+		if (ProjectContext.getProject().getStartup().getSceneName() != null) {
+			String scenePath = ProjectContext.getProjectDirectory() + "/" + ProjectContext.getProject().getPaths().getScenePath() + "/" + ProjectContext.getProject().getStartup().getSceneName();
+
+			try {
+				Scene startupScene = sceneSerializer.deserialize(new JSONObject(FileIO.readFileContent(scenePath)));
+				if (startupScene == null) {
+					Logger.critical("Editor Failed to Deserialize Startup Scene({})", scenePath);
+					return false;
+				}
+
+				currentSceneName = ProjectContext.getProject().getStartup().getSceneName();
+				sceneManager.addScene(currentSceneName, startupScene);
+				sceneManager.switchScene(currentSceneName);
+			} catch (IOException e) {
+				Logger.critical("Editor Failed to Deserialize Startup Scene({}), File Doesn't Exist", scenePath);
+				return false;
+			}
+		} else {
+			currentSceneName = "editor";
+			sceneManager.addScene(currentSceneName, new EditorScene());
+			sceneManager.switchScene(currentSceneName);
+		}
 
 		// FrameBuffer
 		framebuffer = new Framebuffer(getWindow().getWidth(), getWindow().getHeight(), List.of(FrameBufferAttachmentFormat.RGBA8, FrameBufferAttachmentFormat.RED_INTEGER));
@@ -179,7 +203,7 @@ public class Editor extends Engine {
 	}
 
 	private void stop() {
-		sceneManager.switchScene("editor");
+		sceneManager.switchScene(currentSceneName);
 		editorState = EditorState.STOP;
 	}
 

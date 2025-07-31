@@ -23,6 +23,53 @@ public class SceneSerializer {
 		return new JSONObject().put("entities", entities);
 	}
 
+	public Scene deserialize(JSONObject data) {
+		Scene scene = new Scene() {
+			@Override
+			public void onCreate() {
+			}
+
+			@Override
+			public void onActivate() {
+			}
+
+			@Override
+			public void onUnload() {
+			}
+		};
+
+		JSONArray entities = data.getJSONArray("entities");
+
+		// Create Entities with UUIDComponents
+		for (int i = 0; i < entities.length(); i++) {
+			JSONObject components = entities.getJSONObject(i).getJSONObject("components");
+			JSONObject uuidComponent = components.getJSONObject("UUIDComponent");
+			if (uuidComponent == null) {
+				Logger.error("SceneSerializer Deserialize Failed, UUIDComponent not Found for Entity({})", i);
+				return null;
+			}
+			UUID uuid = UUID.fromString(uuidComponent.getString("uuid"));
+
+			Entity entity = scene.createEntity();
+			entity.addComponent(new UUIDComponent(uuid));
+			uuidToEntity.put(uuid, entity);
+		}
+
+		// Resolve UUIDs
+		EntityResolver resolver = uuid -> {
+			Entity entity = uuidToEntity.get(uuid);
+			if (entity == null)
+				Logger.error("SceneSerializer Deserialize Failed, UUID Not Found for Entity({})");
+			return entity;
+		};
+
+		for (int i = 0; i < entities.length(); i++) {
+			deserializeEntity(entities.getJSONObject(i), resolver);
+		}
+
+		return scene;
+	}
+
 	public void deserialize(JSONObject data, Scene scene) {
 		JSONArray entities = data.getJSONArray("entities");
 

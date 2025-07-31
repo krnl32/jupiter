@@ -11,7 +11,7 @@ function onDestroy()
 end
 
 function onUpdate(dt)
-	print("Running Test2 Script: ".. dt)
+	--print("Running Test2 Script: ".. dt)
 	--local rb = entity:getComponent("RigidBody2DComponent")
 	--rb.mass = rb.mass - dt
 	--entity:setComponent("RigidBody2DComponent", rb)

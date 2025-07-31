@@ -27,6 +27,6 @@ public class JOMLSerializerUtils {
 	}
 
 	public static Vector4f deserializeVector4f(JSONObject obj) {
-		return new Vector4f(obj.getFloat("x"), obj.getFloat("y"), obj.getFloat("z"), obj.getFloat("z"));
+		return new Vector4f(obj.getFloat("x"), obj.getFloat("y"), obj.getFloat("z"), obj.getFloat("w"));
 	}
 }
