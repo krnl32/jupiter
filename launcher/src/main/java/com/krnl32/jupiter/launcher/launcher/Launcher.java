@@ -26,7 +26,7 @@ public class Launcher extends Engine {
 		getRenderer().setFramebuffer(framebuffer);
 
 		// Launcher UI
-		projectManager = new ProjectManager(System.getProperty("user.dir") + "/assets/projects/projects.json");
+		projectManager = new ProjectManager();
 		launcherUI = new LauncherUI(getWindow());
 		launcherUI.addUIPanel(new ProjectListPanel(projectManager));
 		launcherUI.addUIPanel(new NewProjectPanel(projectManager));
