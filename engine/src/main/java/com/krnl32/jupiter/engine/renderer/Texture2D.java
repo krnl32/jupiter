@@ -64,6 +64,25 @@ public class Texture2D {
 		stbi_image_free(buffer);
 	}
 
+	public Texture2D(byte[] data) {
+		ByteBuffer buffer = loadImage(data);
+		if (buffer == null)
+			return;
+
+		textureID = glGenTextures();
+		glBindTexture(GL_TEXTURE_2D, textureID);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+		glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, buffer);
+		glGenerateMipmap(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, 0);
+
+		stbi_image_free(buffer);
+	}
+
 	public void destroy() {
 		glDeleteTextures(textureID);
 	}
@@ -135,6 +154,38 @@ public class Texture2D {
 		} else {
 			stbi_image_free(buffer);
 			Logger.error("STBI_Load Invalid Channels({}) For({}), Reason: ", channels, filepath, stbi_failure_reason());
+			return null;
+		}
+
+		return buffer;
+	}
+
+	private ByteBuffer loadImage(byte[] data) {
+		stbi_set_flip_vertically_on_load(true);
+
+		IntBuffer imgWidth = BufferUtils.createIntBuffer(1);
+		IntBuffer imgHeight = BufferUtils.createIntBuffer(1);
+		IntBuffer imgChannels = BufferUtils.createIntBuffer(1);
+
+		ByteBuffer buffer = stbi_load_from_memory(BufferUtils.createByteBuffer(data.length).put(data).flip(), imgWidth, imgHeight, imgChannels, 0);
+		if (buffer == null) {
+			Logger.error("stbi_load_from_memory Failed, Reason: ", stbi_failure_reason());
+			return null;
+		}
+
+		width = imgWidth.get(0);
+		height = imgHeight.get(0);
+		channels = imgChannels.get(0);
+
+		if (channels == 4) {
+			internalFormat = GL_RGBA8;
+			format = GL_RGBA;
+		} else if (channels == 3) {
+			internalFormat = GL_RGB8;
+			format = GL_RGB;
+		} else {
+			stbi_image_free(buffer);
+			Logger.error("stbi_load_from_memory Invalid Channels({}), Reason: ", channels, stbi_failure_reason());
 			return null;
 		}
 

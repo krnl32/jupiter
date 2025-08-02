@@ -34,7 +34,6 @@ import com.krnl32.jupiter.editor.renderer.components.utility.LifetimeComponentRe
 import com.krnl32.jupiter.editor.renderer.components.utility.TagComponentRenderer;
 import com.krnl32.jupiter.editor.renderer.components.utility.UUIDComponentRenderer;
 import com.krnl32.jupiter.engine.asset.AssetManager;
-import com.krnl32.jupiter.engine.asset.types.TextureAsset;
 import com.krnl32.jupiter.engine.components.effects.BlinkComponent;
 import com.krnl32.jupiter.engine.components.effects.DeathEffectComponent;
 import com.krnl32.jupiter.engine.components.effects.ParticleComponent;
@@ -101,25 +100,6 @@ public class Editor extends Engine {
 		// Load Project
 		if (!loadProject(projectPath)) {
 			Logger.critical("Editor Failed to Initialize Project({})", projectPath);
-			return false;
-		}
-
-		// Register Assets
-		ProjectContext.getInstance().getAssetManager().registerAndLoad("EditorPlayButton", () -> new TextureAsset("Textures/UI/Buttons/Play.png"));
-		if (ProjectContext.getInstance().getAssetManager().registerAndLoad("EditorPlayButton", () -> new TextureAsset("Textures/UI/Buttons/Play.png")) == null) {
-			Logger.critical("Editor Failed to Load Texture Asset({})", "Textures/UI/Buttons/Play.png");
-			return false;
-		}
-
-		ProjectContext.getInstance().getAssetManager().registerAndLoad("EditorPauseButton", () -> new TextureAsset("Textures/UI/Buttons/Pause.png"));
-		if (ProjectContext.getInstance().getAssetManager().registerAndLoad("EditorPauseButton", () -> new TextureAsset("Textures/UI/Buttons/Pause.png")) == null) {
-			Logger.critical("Editor Failed to Load Texture Asset({})", "Textures/UI/Buttons/Pause.png");
-			return false;
-		}
-
-		ProjectContext.getInstance().getAssetManager().registerAndLoad("EditorStopButton", () -> new TextureAsset("Textures/UI/Buttons/Stop.png"));
-		if (ProjectContext.getInstance().getAssetManager().registerAndLoad("EditorStopButton", () -> new TextureAsset("Textures/UI/Buttons/Stop.png")) == null) {
-			Logger.critical("Editor Failed to Load Texture Asset({})", "Textures/UI/Buttons/Stop.png");
 			return false;
 		}
 

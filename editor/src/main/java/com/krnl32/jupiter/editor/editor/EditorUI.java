@@ -3,15 +3,17 @@ package com.krnl32.jupiter.editor.editor;
 import com.krnl32.jupiter.editor.events.editor.EditorPauseEvent;
 import com.krnl32.jupiter.editor.events.editor.EditorPlayEvent;
 import com.krnl32.jupiter.editor.events.editor.EditorStopEvent;
-import com.krnl32.jupiter.engine.asset.types.TextureAsset;
+import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.core.Window;
 import com.krnl32.jupiter.engine.event.EventBus;
-import com.krnl32.jupiter.engine.project.ProjectContext;
+import com.krnl32.jupiter.engine.renderer.Texture2D;
+import com.krnl32.jupiter.engine.utility.FileIO;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.*;
 import imgui.type.ImBoolean;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,17 +82,24 @@ public class EditorUI {
 		float startX = (ImGui.getContentRegionAvailX() - totalWidth) * 0.5f;
 		ImGui.setCursorPosX(startX);
 
-		int playIcon = ((TextureAsset) ProjectContext.getInstance().getAssetManager().getAsset("EditorPlayButton")).getTexture().getTextureID();
-		int pauseIcon = ((TextureAsset) ProjectContext.getInstance().getAssetManager().getAsset("EditorPauseButton")).getTexture().getTextureID();
-		int stopIcon = ((TextureAsset) ProjectContext.getInstance().getAssetManager().getAsset("EditorStopButton")).getTexture().getTextureID();
+		// Icons
+		int playIconId = -1, pauseIconId = -1, stopIconId = -1;
+		try {
+			playIconId = new Texture2D(FileIO.readResourceFileContentBytes("textures/ui/buttons/play.png")).getTextureID();
+			pauseIconId = new Texture2D(FileIO.readResourceFileContentBytes("textures/ui/buttons/pause.png")).getTextureID();
+			stopIconId = new Texture2D(FileIO.readResourceFileContentBytes("textures/ui/buttons/stop.png")).getTextureID();
+		} catch (IOException e) {
+			Logger.error("EditorUI Failed to Initialize Editor Icons({}, {}, {})", playIconId, pauseIconId, stopIconId);
+			return;
+		}
 
 		// Play
 		if (editorState == EditorState.PLAY) {
 			ImGui.beginDisabled();
-			ImGui.imageButton("##play", playIcon, iconSize, iconSize);
+			ImGui.imageButton("##play", playIconId, iconSize, iconSize);
 			ImGui.endDisabled();
 		} else {
-			if (ImGui.imageButton("##play", playIcon, iconSize, iconSize)) {
+			if (ImGui.imageButton("##play", playIconId, iconSize, iconSize)) {
 				EventBus.getInstance().emit(new EditorPlayEvent());
 			}
 		}
@@ -101,12 +110,12 @@ public class EditorUI {
 
 		// Pause
 		if (editorState == EditorState.PLAY) {
-			if (ImGui.imageButton("##pause", pauseIcon, iconSize, iconSize)) {
+			if (ImGui.imageButton("##pause", pauseIconId, iconSize, iconSize)) {
 				EventBus.getInstance().emit(new EditorPauseEvent());
 			}
 		} else {
 			ImGui.beginDisabled();
-			ImGui.imageButton("##pause", pauseIcon, iconSize, iconSize);
+			ImGui.imageButton("##pause", pauseIconId, iconSize, iconSize);
 			ImGui.endDisabled();
 		}
 		if (ImGui.isItemHovered())
@@ -116,12 +125,12 @@ public class EditorUI {
 
 		// Stop
 		if (editorState == EditorState.PLAY || editorState == EditorState.PAUSE) {
-			if (ImGui.imageButton("##stop", stopIcon, iconSize, iconSize)) {
+			if (ImGui.imageButton("##stop", stopIconId, iconSize, iconSize)) {
 				EventBus.getInstance().emit(new EditorStopEvent());
 			}
 		} else {
 			ImGui.beginDisabled();
-			ImGui.imageButton("##stop", stopIcon, iconSize, iconSize);
+			ImGui.imageButton("##stop", stopIconId, iconSize, iconSize);
 			ImGui.endDisabled();
 		}
 		if (ImGui.isItemHovered())
