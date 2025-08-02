@@ -21,7 +21,7 @@ public class ProjectManager {
 		this.configFilePath = Paths.get(System.getProperty("user.home"), ".jupiter", "launcher", "projects.json");
 
 		if (!initConfig()) {
-			Logger.error("ProjectManager Failed to Generate Config File({})", configFilePath);
+			Logger.error("ProjectManager Failed to Init Config");
 			return;
 		}
 
@@ -96,7 +96,7 @@ public class ProjectManager {
 				FileIO.writeFileContent(configFilePath.toString(), new JSONObject().put("projects", new JSONArray()).toString(4));
 			}
 		} catch (Exception e) {
-			Logger.error("ProjectManager Failed to InitConfig({})", configFilePath);
+			Logger.error("ProjectManager Failed to Generate ConfigFile({}): {}", configFilePath, e.getMessage());
 			return false;
 		}
 		return true;

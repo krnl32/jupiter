@@ -49,8 +49,8 @@ public class ProjectInitializer {
 			Files.createFile(Path.of(projectPath + "/Assets/Scenes/.keep"));
 			Files.createDirectories(Path.of(projectPath + "/Assets/Spritesheets"));
 			Files.createFile(Path.of(projectPath + "/Assets/Spritesheets/.keep"));
-			Files.createDirectories(Path.of(projectPath + "/Assets/Fonts"));
-			Files.createFile(Path.of(projectPath + "/Assets/Fonts/.keep"));
+			Files.createDirectories(Path.of(projectPath + "/t/fonts"));
+			Files.createFile(Path.of(projectPath + "/t/fonts/.keep"));
 			Files.createDirectories(Path.of(projectPath + "/Assets/Scripts"));
 			Files.createFile(Path.of(projectPath + "/Assets/Scripts/.keep"));
 			return true;
@@ -64,7 +64,7 @@ public class ProjectInitializer {
 		Project project = new Project(
 			new ProjectInfo(projectName, engineVersion, "JupiterEngine", "", template),
 			new ProjectAuthor("", "", ""),
-			new ProjectPaths("Assets", "Assets/Textures", "Assets/Shaders", "Assets/Scenes", "Assets/Spritesheets", "Assets/Fonts", "Assets/Scripts"),
+			new ProjectPaths("Assets", "Assets/Textures", "Assets/Shaders", "Assets/Scenes", "Assets/Spritesheets", "t/fonts", "Assets/Scripts"),
 			new ProjectStartup(""),
 			new ProjectMetadata(UUID.randomUUID(), System.currentTimeMillis())
 		);

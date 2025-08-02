@@ -8,7 +8,9 @@ import imgui.flag.ImGuiConfigFlags;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static org.lwjgl.glfw.GLFW.glfwGetCurrentContext;
 import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
@@ -20,11 +22,11 @@ public class ImGuiWrapper {
 	public ImGuiWrapper(Window window) {
 		ImGui.createContext();
 
-		// Load imgui.ini (Temporary, Instead -> Create User Data Config)
-		String imguiINIPath = Path.of((System.getProperty("project.resource") != null) ? System.getProperty("project.resource") + "/Settings/imgui.ini" : System.getProperty("user.dir") + "/launcher/src/main/resources/Settings/imgui.ini").toString();
-
-		System.out.println(imguiINIPath);
-		ImGui.getIO().setIniFilename(imguiINIPath);
+		if (!initConfig()) {
+			Logger.critical("ImGuiWrapper Failed to initConfig");
+			ImGui.destroyContext();
+			return;
+		}
 
 		imGuiImplGlfw = new ImGuiImplGlfw();
 		imGuiImplGl3 = new ImGuiImplGl3();
@@ -39,9 +41,9 @@ public class ImGuiWrapper {
 		try {
 			ImFontConfig config = new ImFontConfig();
 			config.setMergeMode(false);
-			ImFont JetBrainsMonoRegularFont = fonts.addFontFromMemoryTTF(FileIO.readResourceFileContentBytes("Assets/Fonts/JetBrainsMono-Regular.ttf"), 16, config);
+			ImFont JetBrainsMonoRegularFont = fonts.addFontFromMemoryTTF(FileIO.readResourceFileContentBytes("fonts/JetBrainsMono-Regular.ttf"), 16, config);
 			config.setMergeMode(true);
-			fonts.addFontFromMemoryTTF(FileIO.readResourceFileContentBytes("Assets/Fonts/fa-solid-900.ttf"), 16, config, fonts.getGlyphRangesDefault());
+			fonts.addFontFromMemoryTTF(FileIO.readResourceFileContentBytes("fonts/fa-solid-900.ttf"), 16, config, fonts.getGlyphRangesDefault());
 			ImGui.getIO().setFontDefault(JetBrainsMonoRegularFont);
 		} catch (Exception e) {
 			Logger.critical("ImGuiWrapper Failed to Load Fonts: {}", e.getMessage());
@@ -76,5 +78,22 @@ public class ImGuiWrapper {
 			ImGui.renderPlatformWindowsDefault();
 			glfwMakeContextCurrent(backupWindowPtr);
 		}
+	}
+
+	private boolean initConfig() {
+		Path imguiConfigFilePath = Paths.get(System.getProperty("user.home"), ".jupiter", "launcher", "settings", "imgui.ini");
+
+		try {
+			Files.createDirectories(imguiConfigFilePath.getParent());
+			if (Files.notExists(imguiConfigFilePath) || Files.size(imguiConfigFilePath) == 0) {
+				FileIO.writeFileContent(imguiConfigFilePath.toString(), FileIO.readResourceFileContent("settings/imgui.ini"));
+			}
+		} catch (Exception e) {
+			Logger.critical("ImGuiWrapper initProductionConfig Failed to Generate imguiConfigFile({}): {}", imguiConfigFilePath, e.getMessage());
+			return false;
+		}
+
+		ImGui.getIO().setIniFilename(imguiConfigFilePath.toString());
+		return true;
 	}
 }
