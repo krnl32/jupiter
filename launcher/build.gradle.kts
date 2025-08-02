@@ -14,7 +14,7 @@ dependencies {
 }
 
 tasks.named<ShadowJar>("shadowJar") {
-	archiveBaseName.set("launcher")
+	archiveBaseName.set("jupiter-launcher")
 	archiveVersion.set("")
-	//archiveClassifier.set("")
+	archiveClassifier.set("")
 }

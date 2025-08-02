@@ -1,6 +1,8 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.gradle.kotlin.dsl.named
 
+version = "0.0.1"
+
 plugins {
 	application
 	id("com.github.johnrengelman.shadow") version "8.1.1"
@@ -15,7 +17,7 @@ dependencies {
 }
 
 tasks.named<ShadowJar>("shadowJar") {
-	archiveBaseName.set("editor")
-	archiveVersion.set("")
-	//archiveClassifier.set("")
+	archiveBaseName.set("jupiter-editor")
+	archiveVersion.set("$version")
+	archiveClassifier.set("")
 }

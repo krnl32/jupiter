@@ -5,18 +5,23 @@ import com.krnl32.jupiter.engine.event.EventBus;
 import com.krnl32.jupiter.engine.platform.FileDialog;
 import com.krnl32.jupiter.engine.project.ProjectLoader;
 import com.krnl32.jupiter.engine.project.model.Project;
+import com.krnl32.jupiter.launcher.editor.EditorManager;
 import com.krnl32.jupiter.launcher.events.ui.NewProjectPanelEvent;
 import com.krnl32.jupiter.launcher.launcher.UIPanel;
 import com.krnl32.jupiter.launcher.project.JProject;
 import com.krnl32.jupiter.launcher.project.ProjectManager;
 import imgui.ImGui;
+import imgui.ImVec2;
+import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiTableFlags;
 
 public class ProjectListPanel implements UIPanel {
 	private final ProjectManager projectManager;
+	private final EditorManager editorManager;
 
-	public ProjectListPanel(ProjectManager projectManager) {
+	public ProjectListPanel(ProjectManager projectManager, EditorManager editorManager) {
 		this.projectManager = projectManager;
+		this.editorManager = editorManager;
 	}
 
 	@Override
@@ -89,10 +94,48 @@ public class ProjectListPanel implements UIPanel {
 			ImGui.endTable();
 		}
 
+		// Editor Selection Warning
+		float padding = 10.0f;
+		ImVec2 windowSize = ImGui.getWindowSize();
+		ImVec2 textSize;
+		String message;
+
+		if (editorManager.getSelectedEditorPath() == null) {
+			message = "No Editor Selected";
+			textSize = ImGui.calcTextSize(message);
+			ImGui.setCursorPos(new ImVec2(windowSize.x - textSize.x - padding, windowSize.y - textSize.y - padding));
+			ImGui.pushStyleColor(ImGuiCol.Text, 1.0f, 0.0f, 0.0f, 1.0f);
+			ImGui.text(message);
+			ImGui.popStyleColor();
+		} else {
+			String path = editorManager.getSelectedEditorPath();
+			String version = editorManager.getSelectedEditor().getVersion();
+			message = String.format("Editor: %s (v%s)", path, version);
+			textSize = ImGui.calcTextSize(message);
+			ImGui.setCursorPos(new ImVec2(windowSize.x - textSize.x - padding, windowSize.y - textSize.y - padding));
+			ImGui.pushStyleColor(ImGuiCol.Text, 0.0f, 1.0f, 0.0f, 1.0f); // 🟢 Green
+			ImGui.text(message);
+			ImGui.popStyleColor();
+		}
+
 		ImGui.end();
 	}
 
 	private void launchProject(JProject project) {
-		// launch editor with project path
+		if (editorManager.getSelectedEditorPath() == null) {
+			Logger.error("Launcher Failed to Launch Project({}): No Editor Selected", project.getName());
+			return;
+		}
+
+		String editorJar = editorManager.getSelectedEditorPath();
+		String projectPath = project.getPath();
+
+		try {
+			new ProcessBuilder("java", "-jar", editorJar, "--launch", projectPath)
+				.inheritIO()
+				.start();
+		} catch (Exception e) {
+			Logger.error("Launcher Failed to Launch Project({}): {}", project.getName(), e.getMessage());
+		}
 	}
 }

@@ -29,13 +29,17 @@ public class ProjectManager {
 	}
 
 	public void addProject(JProject project) {
-		projects.add(project);
-		saveProjects();
+		if (!projects.contains(project)) {
+			projects.add(project);
+			saveProjects();
+		}
 	}
 
 	public void removeProject(JProject project) {
-		projects.remove(project);
-		saveProjects();
+		if (projects.contains(project)) {
+			projects.remove(project);
+			saveProjects();
+		}
 	}
 
 	public List<JProject> getProjects() {

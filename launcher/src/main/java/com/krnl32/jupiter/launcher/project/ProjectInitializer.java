@@ -49,8 +49,8 @@ public class ProjectInitializer {
 			Files.createFile(Path.of(projectPath + "/Assets/Scenes/.keep"));
 			Files.createDirectories(Path.of(projectPath + "/Assets/Spritesheets"));
 			Files.createFile(Path.of(projectPath + "/Assets/Spritesheets/.keep"));
-			Files.createDirectories(Path.of(projectPath + "/t/fonts"));
-			Files.createFile(Path.of(projectPath + "/t/fonts/.keep"));
+			Files.createDirectories(Path.of(projectPath + "/Assets/Fonts"));
+			Files.createFile(Path.of(projectPath + "/Assets/Fonts/.keep"));
 			Files.createDirectories(Path.of(projectPath + "/Assets/Scripts"));
 			Files.createFile(Path.of(projectPath + "/Assets/Scripts/.keep"));
 			return true;

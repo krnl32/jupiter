@@ -1,5 +1,5 @@
 rootProject.name = "jupiter"
-include("engine", "editor", "spaceshooter")
+include("engine", "editor", "launcher")
 
 include("sandbox")
-include("launcher")
+include("spaceshooter")

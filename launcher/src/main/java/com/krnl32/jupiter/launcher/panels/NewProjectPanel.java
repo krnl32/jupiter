@@ -13,6 +13,9 @@ import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImInt;
 import imgui.type.ImString;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 public class NewProjectPanel implements UIPanel {
 	private final ProjectManager projectManager;
 	private final ImString newProjectName;
@@ -71,13 +74,15 @@ public class NewProjectPanel implements UIPanel {
 			if (ImGui.button("Create")) {
 				String name = newProjectName.toString().trim();
 				String path = newProjectPath.toString().trim();
-				if (!name.isEmpty() && !path.isEmpty()) {
+				if (!name.isEmpty() && !path.isEmpty() && Files.exists(Path.of(path))) {
 					JProject newProject = ProjectInitializer.createProject(name, path, engineVersions[selectedEngineVersion.get()], templates[selectedTemplate.get()]);
 					if (newProject != null) {
 						projectManager.addProject(newProject);
 					} else {
 						Logger.error("NewProjectPanel failed to Create New Project({},{},{},{})", name, path, engineVersions[selectedEngineVersion.get()], templates[selectedTemplate.get()]);
 					}
+				} else {
+					Logger.error("NewProjectPanel failed to Create New Project({},{},{},{}), Invalid Path", name, path, engineVersions[selectedEngineVersion.get()], templates[selectedTemplate.get()]);
 				}
 				ImGui.closeCurrentPopup();
 			}

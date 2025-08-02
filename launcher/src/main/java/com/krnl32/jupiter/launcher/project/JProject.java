@@ -1,6 +1,8 @@
 package com.krnl32.jupiter.launcher.project;
 
-public class JProject {
+import java.util.Objects;
+
+public final class JProject {
 	private final String name;
 	private final String path;
 	private final String engineVersion;
@@ -27,5 +29,27 @@ public class JProject {
 
 	public String getTemplate() {
 		return template;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == null || getClass() != o.getClass()) return false;
+		JProject jProject = (JProject) o;
+		return Objects.equals(name, jProject.name) && Objects.equals(path, jProject.path) && Objects.equals(engineVersion, jProject.engineVersion) && Objects.equals(template, jProject.template);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name, path, engineVersion, template);
+	}
+
+	@Override
+	public String toString() {
+		return "JProject{" +
+			"name='" + name + '\'' +
+			", path='" + path + '\'' +
+			", engineVersion='" + engineVersion + '\'' +
+			", template='" + template + '\'' +
+			'}';
 	}
 }
