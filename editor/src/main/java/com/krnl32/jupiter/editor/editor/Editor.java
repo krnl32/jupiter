@@ -131,7 +131,7 @@ public class Editor extends Engine {
 		sceneSerializer = new SceneSerializer();
 		sceneManager = new SceneManager();
 
-		if (ProjectContext.getInstance().getProject().getStartup().getSceneName() != null) {
+		if (ProjectContext.getInstance().getProject().getStartup().getSceneName() != null && !ProjectContext.getInstance().getProject().getStartup().getSceneName().isEmpty()) {
 			String scenePath = ProjectContext.getInstance().getProjectDirectory() + "/" + ProjectContext.getInstance().getProject().getPaths().getScenePath() + "/" + ProjectContext.getInstance().getProject().getStartup().getSceneName();
 
 			try {

@@ -1,8 +1,5 @@
 package com.krnl32.jupiter.editor.editor;
 
-import com.krnl32.jupiter.engine.asset.AssetID;
-import com.krnl32.jupiter.engine.asset.types.ScriptAsset;
-import com.krnl32.jupiter.engine.components.gameplay.ScriptComponent;
 import com.krnl32.jupiter.engine.components.gameplay.TransformComponent;
 import com.krnl32.jupiter.engine.components.physics.BoxCollider2DComponent;
 import com.krnl32.jupiter.engine.components.physics.CircleCollider2DComponent;
@@ -11,33 +8,18 @@ import com.krnl32.jupiter.engine.components.renderer.CameraComponent;
 import com.krnl32.jupiter.engine.components.renderer.SpriteRendererComponent;
 import com.krnl32.jupiter.engine.components.utility.TagComponent;
 import com.krnl32.jupiter.engine.components.utility.UUIDComponent;
-import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.ecs.Entity;
 import com.krnl32.jupiter.engine.physics.BodyType;
-import com.krnl32.jupiter.engine.project.ProjectContext;
 import com.krnl32.jupiter.engine.renderer.Camera;
 import com.krnl32.jupiter.engine.scene.Scene;
-import com.krnl32.jupiter.engine.script.ScriptInstance;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 public class EditorScene extends Scene {
-	private AssetID testScriptID, test2ScriptID;
-
 	@Override
 	public void onCreate() {
 		// Sample Code....
-
-		// Assets
-		testScriptID = ProjectContext.getInstance().getAssetManager().register("Scripts/Test.lua", () -> new ScriptAsset("Scripts/Test.lua"));
-		if (testScriptID == null)
-			Logger.critical("Game Failed to Load Script Asset({})", "Scripts/Test.lua");
-
-		test2ScriptID = ProjectContext.getInstance().getAssetManager().register("Scripts/Test2.lua", () -> new ScriptAsset("Scripts/Test2.lua"));
-		if (test2ScriptID == null)
-			Logger.critical("Game Failed to Load Script Asset({})", "Scripts/Test2.lua");
-
 		// Entities
 		Entity cameraEntity = createEntity();
 		cameraEntity.addComponent(new TagComponent("Camera"));
@@ -55,7 +37,6 @@ public class EditorScene extends Scene {
 		entity.addComponent(new SpriteRendererComponent(-1, new Vector4f(1.0f, 0.0f, 0.0f, 1.0f), null));
 		entity.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC));
 		entity.addComponent(new BoxCollider2DComponent(new Vector2f(1.0f, 1.0f)));
-		entity.addComponent(new ScriptComponent(new ScriptInstance(testScriptID), new ScriptInstance(test2ScriptID)));
 
 		for (int i = 0; i < 7; i++) {
 			Entity box = createEntity();

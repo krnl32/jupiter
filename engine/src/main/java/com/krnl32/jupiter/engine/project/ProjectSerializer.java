@@ -2,6 +2,7 @@ package com.krnl32.jupiter.engine.project;
 
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.project.model.*;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.UUID;
@@ -40,12 +41,12 @@ public class ProjectSerializer {
 			.put("template", projectInfo.getTemplate());
 	}
 
-	private static ProjectInfo deserializeProjectInfo(JSONObject projectInfoData) {
+	private static ProjectInfo deserializeProjectInfo(JSONObject projectInfoData) throws JSONException {
 		return new ProjectInfo(
 			projectInfoData.getString("projectName"),
 			projectInfoData.getString("engineVersion"),
 			projectInfoData.getString("createdWith"),
-			projectInfoData.getString("description"),
+			projectInfoData.optString("description", ""),
 			projectInfoData.getString("template")
 		);
 	}
@@ -59,9 +60,9 @@ public class ProjectSerializer {
 
 	private static ProjectAuthor deserializeProjectAuthor(JSONObject projectAuthorData) {
 		return new ProjectAuthor(
-			projectAuthorData.getString("name"),
-			projectAuthorData.getString("email"),
-			projectAuthorData.getString("organization")
+			projectAuthorData.optString("name", ""),
+			projectAuthorData.optString("email", ""),
+			projectAuthorData.optString("organization", "")
 		);
 	}
 
@@ -76,7 +77,7 @@ public class ProjectSerializer {
 			.put("script", projectPaths.getScriptPath());
 	}
 
-	private static ProjectPaths deserializeProjectPaths(JSONObject projectPathsData) {
+	private static ProjectPaths deserializeProjectPaths(JSONObject projectPathsData) throws JSONException {
 		return new ProjectPaths(
 			projectPathsData.getString("asset"),
 			projectPathsData.getString("texture"),
@@ -95,7 +96,7 @@ public class ProjectSerializer {
 
 	private static ProjectStartup deserializeProjectStartup(JSONObject projectStartupData) {
 		return new ProjectStartup(
-			projectStartupData.getString("scene")
+			projectStartupData.optString("scene", "")
 		);
 	}
 
@@ -105,7 +106,7 @@ public class ProjectSerializer {
 			.put("lastModified", projectMetadata.getLastModified());
 	}
 
-	private static ProjectMetadata deserializeProjectMetadata(JSONObject projectMetadataData) {
+	private static ProjectMetadata deserializeProjectMetadata(JSONObject projectMetadataData) throws JSONException {
 		return new ProjectMetadata(
 			UUID.fromString(projectMetadataData.getString("uuid")),
 			projectMetadataData.getLong("lastModified")
