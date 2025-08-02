@@ -1,6 +1,6 @@
 {
 	"spritesheet": {
-		"imagePath": "simple_format.png",
+		"imagePath": "Sandbox.png",
 		"size": { "width": 1024, "height": 1024 },
 		"scale": 1,
 		"sprites": [
@@ -16,9 +16,9 @@
 		]
 	},
 	"meta": {
-		"app": "simple_format",
+		"app": "Sandbox",
 		"version": "1.0",
 		"author": "",
-		"generated": "2025-06-26T11:59:00Z"
+		"generated": "2025-01-22T11:59:00Z"
 	}
 }
