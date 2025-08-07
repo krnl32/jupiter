@@ -16,11 +16,11 @@ public class AssetPersistence {
 	private static final String ASSET_METADATA_EXTENSION = ".jmeta";
 
 	private final Path assetRegistryPath;
-	private final Path assetMetadataPath;
+	private final Path assetDatabaseDirPath;
 
-	public AssetPersistence(Path assetRegistryPath, Path assetMetadataPath) {
+	public AssetPersistence(Path assetRegistryPath, Path assetDatabaseDirPath) {
 		this.assetRegistryPath = assetRegistryPath;
-		this.assetMetadataPath = assetMetadataPath;
+		this.assetDatabaseDirPath = assetDatabaseDirPath;
 	}
 
 	public AssetRegistry loadAssetRegistry() {
@@ -44,8 +44,18 @@ public class AssetPersistence {
 		}
 	}
 
+	public AssetDatabase loadAssetDatabase() {
+		if (!Files.exists(assetDatabaseDirPath)) {
+			return new AssetDatabase();
+		}
+
+		AssetDatabase assetDatabase = new AssetDatabase();
+		assetDatabase.loadFromDisk(assetDatabaseDirPath);
+		return assetDatabase;
+	}
+
 	public AssetMetadata getAssetMetadata(AssetId assetId) {
-		Path metadataFilePath = assetMetadataPath.resolve(assetId.getId() + ASSET_METADATA_EXTENSION);
+		Path metadataFilePath = assetDatabaseDirPath.resolve(assetId.getId() + ASSET_METADATA_EXTENSION);
 		if (!Files.exists(metadataFilePath)) {
 			Logger.error("AssetPersistence getAssetMetadata Failed to get Asset({}) MetadataFile({}): File Doesn't Exist", assetId, metadataFilePath.toString());
 			return null;
@@ -62,7 +72,7 @@ public class AssetPersistence {
 
 	public void saveAssetMetadata(AssetMetadata assetMetadata) {
 		try {
-			Path metadataFilePath = assetMetadataPath.resolve(assetMetadata.getAssetId().getId() + ASSET_METADATA_EXTENSION);
+			Path metadataFilePath = assetDatabaseDirPath.resolve(assetMetadata.getAssetId().getId() + ASSET_METADATA_EXTENSION);
 			FileIO.writeFileContent(metadataFilePath, AssetMetadataSerializer.serialize(assetMetadata).toString(4));
 		} catch (Exception e) {
 			Logger.error("AssetPersistence saveAssetMetadata Failed To Write Asset({}) Metadata: {}", assetMetadata.getAssetId().getId(), e.getMessage());

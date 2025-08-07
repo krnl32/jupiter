@@ -15,6 +15,8 @@ import imgui.ImVec2;
 import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiTableFlags;
 
+import java.nio.file.Path;
+
 public class ProjectListPanel implements UIPanel {
 	private final ProjectManager projectManager;
 	private final EditorManager editorManager;
@@ -40,7 +42,7 @@ public class ProjectListPanel implements UIPanel {
 		if (ImGui.button("Import Project")) {
 			String path = FileDialog.openFolder();
 			if (path != null && !path.isEmpty()) {
-				Project project = ProjectLoader.load(path);
+				Project project = ProjectLoader.load(Path.of(path));
 				if (project != null) {
 					projectManager.addProject(new JProject(project.getInfo().getProjectName(), path, project.getInfo().getEngineVersion(), project.getInfo().getTemplate()));
 				} else {

@@ -1,17 +1,23 @@
 package com.krnl32.jupiter.engine.project.model;
 
+import java.nio.file.Path;
+
 public final class ProjectPaths {
-	private final String assetPath;
-	private final String texturePath;
+	private final Path assetPath;
+	private final Path assetRegistryPath;
+	private final Path assetDatabasePath;
+
 	private final String shaderPath;
 	private final String scenePath;
 	private final String spritesheetPath;
 	private final String fontPath;
 	private final String scriptPath;
 
-	public ProjectPaths(String assetPath, String texturePath, String shaderPath, String scenePath, String spritesheetPath, String fontPath, String scriptPath) {
+	public ProjectPaths(Path assetPath, Path assetRegistryPath, Path assetDatabasePath, String shaderPath, String scenePath, String spritesheetPath, String fontPath, String scriptPath) {
 		this.assetPath = assetPath;
-		this.texturePath = texturePath;
+		this.assetRegistryPath = assetRegistryPath;
+		this.assetDatabasePath = assetDatabasePath;
+
 		this.shaderPath = shaderPath;
 		this.scenePath = scenePath;
 		this.spritesheetPath = spritesheetPath;
@@ -19,12 +25,16 @@ public final class ProjectPaths {
 		this.scriptPath = scriptPath;
 	}
 
-	public String getAssetPath() {
+	public Path getAssetPath() {
 		return assetPath;
 	}
 
-	public String getTexturePath() {
-		return texturePath;
+	public Path getAssetRegistryPath() {
+		return assetRegistryPath;
+	}
+
+	public Path getAssetDatabasePath() {
+		return assetDatabasePath;
 	}
 
 	public String getShaderPath() {
@@ -50,8 +60,9 @@ public final class ProjectPaths {
 	@Override
 	public String toString() {
 		return "ProjectPaths{" +
-			"assetPath='" + assetPath + '\'' +
-			", texturePath='" + texturePath + '\'' +
+			"assetPath=" + assetPath +
+			", assetRegistryPath=" + assetRegistryPath +
+			", assetDatabasePath=" + assetDatabasePath +
 			", shaderPath='" + shaderPath + '\'' +
 			", scenePath='" + scenePath + '\'' +
 			", spritesheetPath='" + spritesheetPath + '\'' +

@@ -13,7 +13,9 @@
 	},
 	"paths": {
 		"asset": "Assets",
-		"texture": "Assets/Textures",
+		"assetRegistry": "Assets/Sandbox.jregistry",
+		"assetDatabase": "Assets/.jmetadata",
+
 		"shader": "Assets/Shaders",
 		"scene": "Assets/Scenes",
 		"spritesheet": "Assets/Spritesheets",

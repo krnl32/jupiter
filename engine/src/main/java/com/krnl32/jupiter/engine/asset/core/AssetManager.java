@@ -6,22 +6,23 @@ import com.krnl32.jupiter.engine.asset.handle.AssetId;
 import com.krnl32.jupiter.engine.asset.handle.AssetMetadata;
 import com.krnl32.jupiter.engine.asset.loader.AssetLoader;
 import com.krnl32.jupiter.engine.asset.loader.AssetLoaderRegistry;
+import com.krnl32.jupiter.engine.asset.registry.AssetRegistry;
 import com.krnl32.jupiter.engine.core.Logger;
 
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
 public class AssetManager {
 	private final Map<AssetId, Asset> loadedAssets;
 	private final AssetReferenceManager assetReferenceManager;
+	private final AssetRegistry assetRegistry;
 	private final AssetDatabase assetDatabase;
 
-	public AssetManager(Path assetDirectoryPath) {
+	public AssetManager(AssetRegistry assetRegistry, AssetDatabase assetDatabase) {
 		this.loadedAssets = new HashMap<>();
 		this.assetReferenceManager = new AssetReferenceManager();
-		this.assetDatabase = new AssetDatabase();
-		this.assetDatabase.loadFromDisk(assetDirectoryPath.resolve(".jmetadata"));
+		this.assetRegistry = assetRegistry;
+		this.assetDatabase = assetDatabase;
 	}
 
 	public <T extends Asset> T getAsset(AssetId assetId) {

@@ -4,11 +4,13 @@ import com.krnl32.jupiter.editor.editor.Editor;
 import com.krnl32.jupiter.engine.core.Logger;
 import org.apache.commons.cli.*;
 
+import java.nio.file.Path;
+
 public class Main {
 	public static void main(String[] args) {
 		Options options = new Options();
 		options.addOption(null, "help", false, "Prints Help Commands");
-		options.addOption(null, "launch", true, "Path to the Project to Launch");
+		options.addOption(null, "launch", true, "Path to the Project Directory Path to Launch");
 
 		CommandLine cmd = null;
 		try {
@@ -20,9 +22,9 @@ public class Main {
 		}
 
 		if (cmd.hasOption("launch")) {
-			String projectPath = cmd.getOptionValue("launch");
-			Logger.info("Jupiter Editor Launching({})...", projectPath);
-			Editor editor = new Editor("JupiterEditor", 1920, 1080, projectPath);
+			String projectDirectoryPath = cmd.getOptionValue("launch");
+			Logger.info("Jupiter Editor Launching({})...", projectDirectoryPath);
+			Editor editor = new Editor("JupiterEditor", 1920, 1080, Path.of(projectDirectoryPath));
 			editor.run();
 		} else {
 			new HelpFormatter().printHelp("editor", options);

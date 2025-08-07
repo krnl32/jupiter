@@ -23,9 +23,9 @@ public class AssetDatabase {
 		metadataCache.put(assetMetadata.getAssetId(), assetMetadata);
 	}
 
-	public void loadFromDisk(Path assetMetadataFolder) {
-		File metadataDir = new File(assetMetadataFolder.toString());
-		File[] metadataFiles = metadataDir.listFiles();
+	public void loadFromDisk(Path assetDatabaseDirPath) {
+		File databaseDir = new File(assetDatabaseDirPath.toString());
+		File[] metadataFiles = databaseDir.listFiles();
 		if (metadataFiles != null) {
 			for (File metadataFile : metadataFiles) {
 				if (metadataFile.isFile() && metadataFile.getName().endsWith(".jmeta")) {

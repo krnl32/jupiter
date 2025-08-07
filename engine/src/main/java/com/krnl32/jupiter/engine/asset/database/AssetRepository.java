@@ -13,7 +13,7 @@ public class AssetRepository {
 	public AssetRepository(AssetPersistence assetPersistence) {
 		this.assetPersistence = assetPersistence;
 		this.assetRegistry = assetPersistence.loadAssetRegistry();
-		this.assetDatabase = new AssetDatabase();
+		this.assetDatabase = assetPersistence.loadAssetDatabase();
 	}
 
 	public void saveAssetMetadata(AssetMetadata assetMetadata) {

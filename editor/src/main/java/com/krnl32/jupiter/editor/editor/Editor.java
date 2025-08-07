@@ -33,6 +33,12 @@ import com.krnl32.jupiter.editor.renderer.components.renderer.SpriteRendererComp
 import com.krnl32.jupiter.editor.renderer.components.utility.LifetimeComponentRenderer;
 import com.krnl32.jupiter.editor.renderer.components.utility.TagComponentRenderer;
 import com.krnl32.jupiter.editor.renderer.components.utility.UUIDComponentRenderer;
+import com.krnl32.jupiter.engine.asset.core.AssetManager;
+import com.krnl32.jupiter.engine.asset.database.AssetDatabase;
+import com.krnl32.jupiter.engine.asset.registry.AssetRegistry;
+import com.krnl32.jupiter.engine.asset.registry.AssetRegistrySerializer;
+import com.krnl32.jupiter.engine.asset.utility.DefaultAssetLoaders;
+import com.krnl32.jupiter.engine.asset.utility.DefaultAssetSerializers;
 import com.krnl32.jupiter.engine.components.effects.BlinkComponent;
 import com.krnl32.jupiter.engine.components.effects.DeathEffectComponent;
 import com.krnl32.jupiter.engine.components.effects.ParticleComponent;
@@ -51,7 +57,6 @@ import com.krnl32.jupiter.engine.components.utility.UUIDComponent;
 import com.krnl32.jupiter.engine.core.Engine;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.event.EventBus;
-import com.krnl32.jupiter.engine.oldAsset.AssetManager;
 import com.krnl32.jupiter.engine.project.ProjectContext;
 import com.krnl32.jupiter.engine.project.ProjectLoader;
 import com.krnl32.jupiter.engine.project.model.Project;
@@ -59,7 +64,6 @@ import com.krnl32.jupiter.engine.renderer.FrameBufferAttachmentFormat;
 import com.krnl32.jupiter.engine.renderer.Framebuffer;
 import com.krnl32.jupiter.engine.renderer.ProjectionType;
 import com.krnl32.jupiter.engine.renderer.Renderer;
-import com.krnl32.jupiter.engine.renderer.texture.TextureFilterMode;
 import com.krnl32.jupiter.engine.scene.Scene;
 import com.krnl32.jupiter.engine.scene.SceneManager;
 import com.krnl32.jupiter.engine.serializer.SceneSerializer;
@@ -70,7 +74,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.UUID;
 
 public class Editor extends Engine {
 	private Framebuffer framebuffer;
@@ -79,13 +82,13 @@ public class Editor extends Engine {
 	private EditorState editorState;
 	private SceneSerializer sceneSerializer;
 	private EditorCamera editorCamera;
-	private final String projectPath;
+	private final Path projectDirectory;
 	private String currentSceneName;
 
-	public Editor(String name, int width, int height, String projectPath) {
+	public Editor(String name, int width, int height, Path projectDirectory) {
 		super(name, width, height);
 		this.editorState = EditorState.STOP;
-		this.projectPath = projectPath;
+		this.projectDirectory = projectDirectory;
 
 		EventBus.getInstance().register(EditorPlayEvent.class, event -> {
 			play();
@@ -101,14 +104,18 @@ public class Editor extends Engine {
 	@Override
 	public boolean onInit() {
 		// Load Project
-		if (!loadProject(projectPath)) {
-			Logger.critical("Editor Failed to Initialize Project({})", projectPath);
+		if (!loadProject(projectDirectory)) {
+			Logger.critical("Editor Failed to Initialize Project({})", projectDirectory);
 			return false;
 		}
 
 		// Register Editor Components
 		registerComponentFactories();
 		registerComponentRenderers();
+
+		// Register Asset Manager Components
+		DefaultAssetSerializers.registerAll();
+		DefaultAssetLoaders.registerAll();
 
 		// Setup Scene
 		sceneSerializer = new SceneSerializer();
@@ -257,14 +264,22 @@ public class Editor extends Engine {
 		RendererRegistry.registerComponentRenderer(LifetimeComponent.class, new LifetimeComponentRenderer());
 	}
 
-	private boolean loadProject(String projectPath) {
-		Project project = ProjectLoader.load(projectPath);
+	private boolean loadProject(Path projectDirectory) {
+		Project project = ProjectLoader.load(projectDirectory);
 		if (project == null) {
-			Logger.error("Editor Failed to Load Project({})", projectPath);
+			Logger.error("Editor Failed to Load Project({})", projectDirectory);
 			return false;
 		}
 
-		ProjectContext.init(projectPath, project, new AssetManager());
+		try {
+			AssetRegistry assetRegistry = AssetRegistrySerializer.deserialize(new JSONObject(FileIO.readFileContent(projectDirectory.resolve(project.getPaths().getAssetRegistryPath()))));
+			AssetDatabase assetDatabase = new AssetDatabase();
+			assetDatabase.loadFromDisk(projectDirectory.resolve(project.getPaths().getAssetDatabasePath()));
+			ProjectContext.init(projectDirectory, project, new AssetManager(assetRegistry, assetDatabase));
+		} catch (Exception e) {
+			Logger.error("Editor Failed to Load Project({}): {}", projectDirectory, e.getMessage());
+		}
+
 		return true;
 	}
 }
