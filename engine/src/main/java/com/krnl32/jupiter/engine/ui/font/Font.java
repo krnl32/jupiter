@@ -1,6 +1,6 @@
 package com.krnl32.jupiter.engine.ui.font;
 
-import com.krnl32.jupiter.engine.renderer.Texture2D;
+import com.krnl32.jupiter.engine.renderer.texture.Texture2D;
 
 import java.util.Map;
 

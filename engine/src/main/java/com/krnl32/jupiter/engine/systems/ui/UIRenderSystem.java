@@ -1,6 +1,6 @@
 package com.krnl32.jupiter.engine.systems.ui;
 
-import com.krnl32.jupiter.engine.asset.types.TextureAsset;
+import com.krnl32.jupiter.engine.oldAsset.types.TextureAsset;
 import com.krnl32.jupiter.engine.components.ui.UIClipComponent;
 import com.krnl32.jupiter.engine.components.ui.UIHierarchyComponent;
 import com.krnl32.jupiter.engine.components.ui.UIRenderComponent;
@@ -11,6 +11,7 @@ import com.krnl32.jupiter.engine.ecs.Registry;
 import com.krnl32.jupiter.engine.ecs.System;
 import com.krnl32.jupiter.engine.project.ProjectContext;
 import com.krnl32.jupiter.engine.renderer.*;
+import com.krnl32.jupiter.engine.renderer.texture.Texture2D;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 

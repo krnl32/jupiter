@@ -1,6 +1,6 @@
 package com.krnl32.jupiter.engine.systems.ui;
 
-import com.krnl32.jupiter.engine.asset.types.FontAsset;
+import com.krnl32.jupiter.engine.oldAsset.types.FontAsset;
 import com.krnl32.jupiter.engine.components.ui.UIClipComponent;
 import com.krnl32.jupiter.engine.components.ui.UIHierarchyComponent;
 import com.krnl32.jupiter.engine.components.ui.UITextComponent;

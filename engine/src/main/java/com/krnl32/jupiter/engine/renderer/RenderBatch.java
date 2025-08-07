@@ -1,5 +1,6 @@
 package com.krnl32.jupiter.engine.renderer;
 
+import com.krnl32.jupiter.engine.renderer.texture.*;
 import org.joml.Matrix4f;
 
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public abstract class RenderBatch {
 		vertexArray.setIndexBuffer(ib);
 		vertexArray.unbind();
 
-		defaultTexture = new Texture2D(1, 1, 4);
+		defaultTexture = new Texture2D(new TextureSettings(TextureType.TEXTURE_2D, TextureFormat.R8, 1, 1, 4, TextureWrapMode.CLAMP_TO_EDGE, TextureFilterMode.LINEAR, false));
 		defaultTexture.setBuffer(new int[] { 0xffffffff });
 	}
 

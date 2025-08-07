@@ -1,12 +1,16 @@
-package com.krnl32.jupiter.engine.asset;
+package com.krnl32.jupiter.engine.asset.handle;
 
 import java.util.Objects;
 import java.util.UUID;
 
-public class AssetID {
+public final class AssetId {
 	private final UUID id;
 
-	public AssetID(UUID id) {
+	public AssetId() {
+		this.id = UUID.randomUUID();
+	}
+
+	public AssetId(UUID id) {
 		this.id = id;
 	}
 
@@ -17,8 +21,8 @@ public class AssetID {
 	@Override
 	public boolean equals(Object o) {
 		if (o == null || getClass() != o.getClass()) return false;
-		AssetID assetID = (AssetID) o;
-		return Objects.equals(id, assetID.id);
+		AssetId assetId = (AssetId) o;
+		return Objects.equals(id, assetId.id);
 	}
 
 	@Override
@@ -28,7 +32,7 @@ public class AssetID {
 
 	@Override
 	public String toString() {
-		return "AssetID{" +
+		return "AssetId{" +
 			"id=" + id +
 			'}';
 	}

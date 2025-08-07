@@ -1,6 +1,6 @@
 package com.krnl32.jupiter.engine.serializer.components.gameplay;
 
-import com.krnl32.jupiter.engine.asset.AssetID;
+import com.krnl32.jupiter.engine.oldAsset.AssetID;
 import com.krnl32.jupiter.engine.components.gameplay.ScriptComponent;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.script.ScriptInstance;

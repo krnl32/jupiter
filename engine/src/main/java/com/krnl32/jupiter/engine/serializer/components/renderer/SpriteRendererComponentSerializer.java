@@ -1,7 +1,7 @@
 package com.krnl32.jupiter.engine.serializer.components.renderer;
 
-import com.krnl32.jupiter.engine.asset.AssetID;
-import com.krnl32.jupiter.engine.asset.types.TextureAsset;
+import com.krnl32.jupiter.engine.oldAsset.AssetID;
+import com.krnl32.jupiter.engine.oldAsset.types.TextureAsset;
 import com.krnl32.jupiter.engine.components.renderer.SpriteRendererComponent;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.project.ProjectContext;

@@ -1,6 +1,6 @@
 package com.krnl32.jupiter.engine.systems.gameplay;
 
-import com.krnl32.jupiter.engine.asset.types.ScriptAsset;
+import com.krnl32.jupiter.engine.oldAsset.types.ScriptAsset;
 import com.krnl32.jupiter.engine.components.gameplay.ScriptComponent;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.ecs.Entity;

@@ -1,8 +1,8 @@
-package com.krnl32.jupiter.engine.asset.types;
+package com.krnl32.jupiter.engine.oldAsset.types;
 
-import com.krnl32.jupiter.engine.asset.Asset;
-import com.krnl32.jupiter.engine.asset.AssetState;
-import com.krnl32.jupiter.engine.asset.AssetType;
+import com.krnl32.jupiter.engine.oldAsset.Asset;
+import com.krnl32.jupiter.engine.oldAsset.AssetState;
+import com.krnl32.jupiter.engine.oldAsset.AssetType;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.project.ProjectContext;
 import com.krnl32.jupiter.engine.renderer.Shader;

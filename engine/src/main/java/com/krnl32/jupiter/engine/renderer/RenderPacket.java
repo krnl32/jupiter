@@ -1,5 +1,6 @@
 package com.krnl32.jupiter.engine.renderer;
 
+import com.krnl32.jupiter.engine.renderer.texture.Texture2D;
 import org.joml.Vector4f;
 
 public class RenderPacket {

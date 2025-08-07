@@ -1,6 +1,6 @@
 package com.krnl32.jupiter.engine.components.renderer;
 
-import com.krnl32.jupiter.engine.asset.AssetID;
+import com.krnl32.jupiter.engine.oldAsset.AssetID;
 import com.krnl32.jupiter.engine.ecs.Component;
 import org.joml.Vector4f;
 

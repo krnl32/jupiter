@@ -1,10 +1,11 @@
-package com.krnl32.jupiter.engine.renderer;
+package com.krnl32.jupiter.engine.renderer.texture;
 
 import com.krnl32.jupiter.engine.core.Logger;
 import org.lwjgl.BufferUtils;
 
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
+import java.nio.file.Path;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
@@ -18,19 +19,17 @@ public class Texture2D {
 	private int width, height, channels;
 	private int format, internalFormat;
 
-	public Texture2D(int width, int height, int channels) {
-		this.width = width;
-		this.height = height;
-		this.channels = channels;
+	public Texture2D(TextureSettings settings) {
+		this.width = settings.getWidth();
+		this.height = settings.getHeight();
+		this.channels = settings.getChannels();
+		this.internalFormat = TextureUtility.TextureFormatToGL(settings.getFormat());
 
 		if (channels == 4) {
-			internalFormat = GL_RGBA8;
 			format = GL_RGBA;
 		} else if (channels == 3) {
-			internalFormat = GL_RGB8;
 			format = GL_RGB;
 		} else if (channels == 1) {
-			internalFormat = GL_R8;
 			format = GL_RED;
 		} else {
 			Logger.error("Texture2D Invalid Channels({})", channels);
@@ -39,45 +38,48 @@ public class Texture2D {
 
 		textureID = glCreateTextures(GL_TEXTURE_2D);
 		glTextureStorage2D(textureID, 1, internalFormat, width, height);
-		glTextureParameteri(textureID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTextureParameteri(textureID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTextureParameteri(textureID, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTextureParameteri(textureID, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTextureParameteri(textureID, GL_TEXTURE_MIN_FILTER, TextureUtility.TextureFilterModeToGL(settings.getFilterMode()));
+		glTextureParameteri(textureID, GL_TEXTURE_MAG_FILTER, TextureUtility.TextureFilterModeToGL(settings.getFilterMode()));
+		glTextureParameteri(textureID, GL_TEXTURE_WRAP_S, TextureUtility.TextureWrapModeToGL(settings.getWrapMode()));
+		glTextureParameteri(textureID, GL_TEXTURE_WRAP_T, TextureUtility.TextureWrapModeToGL(settings.getWrapMode()));
 	}
 
-	public Texture2D(String filepath) {
+	public Texture2D(TextureSettings settings, Path filepath) {
 		ByteBuffer buffer = loadImage(filepath);
 		if (buffer == null)
 			return;
 
 		textureID = glGenTextures();
 		glBindTexture(GL_TEXTURE_2D, textureID);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, TextureUtility.TextureFilterModeToGL(settings.getFilterMode()));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, TextureUtility.TextureFilterModeToGL(settings.getFilterMode()));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, TextureUtility.TextureWrapModeToGL(settings.getWrapMode()));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, TextureUtility.TextureWrapModeToGL(settings.getWrapMode()));
 
 		glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, buffer);
-		glGenerateMipmap(GL_TEXTURE_2D);
+		if (settings.isGenerateMipmaps()) {
+			glGenerateMipmap(GL_TEXTURE_2D);
+		}
 		glBindTexture(GL_TEXTURE_2D, 0);
-
 		stbi_image_free(buffer);
 	}
 
-	public Texture2D(byte[] data) {
+	public Texture2D(TextureSettings settings, byte[] data) {
 		ByteBuffer buffer = loadImage(data);
 		if (buffer == null)
 			return;
 
 		textureID = glGenTextures();
 		glBindTexture(GL_TEXTURE_2D, textureID);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, TextureUtility.TextureFilterModeToGL(settings.getFilterMode()));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, TextureUtility.TextureFilterModeToGL(settings.getFilterMode()));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, TextureUtility.TextureWrapModeToGL(settings.getWrapMode()));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, TextureUtility.TextureWrapModeToGL(settings.getWrapMode()));
 
 		glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, buffer);
-		glGenerateMipmap(GL_TEXTURE_2D);
+		if (settings.isGenerateMipmaps()) {
+			glGenerateMipmap(GL_TEXTURE_2D);
+		}
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		stbi_image_free(buffer);
@@ -128,14 +130,14 @@ public class Texture2D {
 		return internalFormat;
 	}
 
-	private ByteBuffer loadImage(String filepath) {
+	private ByteBuffer loadImage(Path filepath) {
 		stbi_set_flip_vertically_on_load(true);
 
 		IntBuffer imgWidth = BufferUtils.createIntBuffer(1);
 		IntBuffer imgHeight = BufferUtils.createIntBuffer(1);
 		IntBuffer imgChannels = BufferUtils.createIntBuffer(1);
 
-		ByteBuffer buffer = stbi_load(filepath, imgWidth, imgHeight, imgChannels, 0);
+		ByteBuffer buffer = stbi_load(filepath.toString(), imgWidth, imgHeight, imgChannels, 0);
 		if (buffer == null) {
 			Logger.error("STBI_Load Failed For({}), Reason: ", filepath, stbi_failure_reason());
 			return null;

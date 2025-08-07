@@ -1,6 +1,6 @@
 package com.krnl32.jupiter.engine.systems.renderer;
 
-import com.krnl32.jupiter.engine.asset.types.TextureAsset;
+import com.krnl32.jupiter.engine.oldAsset.types.TextureAsset;
 import com.krnl32.jupiter.engine.components.effects.BlinkComponent;
 import com.krnl32.jupiter.engine.components.gameplay.TransformComponent;
 import com.krnl32.jupiter.engine.components.renderer.SpriteRendererComponent;
@@ -12,7 +12,7 @@ import com.krnl32.jupiter.engine.project.ProjectContext;
 import com.krnl32.jupiter.engine.renderer.RenderPacket;
 import com.krnl32.jupiter.engine.renderer.RenderSpriteCommand;
 import com.krnl32.jupiter.engine.renderer.Renderer;
-import com.krnl32.jupiter.engine.renderer.Texture2D;
+import com.krnl32.jupiter.engine.renderer.texture.Texture2D;
 
 public class RenderSystem implements System {
 	private final Registry registry;

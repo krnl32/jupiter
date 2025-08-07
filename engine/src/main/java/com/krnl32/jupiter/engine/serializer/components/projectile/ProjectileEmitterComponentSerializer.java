@@ -1,6 +1,6 @@
 package com.krnl32.jupiter.engine.serializer.components.projectile;
 
-import com.krnl32.jupiter.engine.asset.AssetID;
+import com.krnl32.jupiter.engine.oldAsset.AssetID;
 import com.krnl32.jupiter.engine.components.projectile.ProjectileEmitterComponent;
 import com.krnl32.jupiter.engine.input.devices.KeyCode;
 import com.krnl32.jupiter.engine.model.Sprite;

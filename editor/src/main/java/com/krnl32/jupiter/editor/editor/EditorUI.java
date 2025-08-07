@@ -6,7 +6,7 @@ import com.krnl32.jupiter.editor.events.editor.EditorStopEvent;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.core.Window;
 import com.krnl32.jupiter.engine.event.EventBus;
-import com.krnl32.jupiter.engine.renderer.Texture2D;
+import com.krnl32.jupiter.engine.renderer.texture.*;
 import com.krnl32.jupiter.engine.utility.FileIO;
 import imgui.ImGui;
 import imgui.ImVec2;
@@ -85,9 +85,9 @@ public class EditorUI {
 		// Icons
 		int playIconId = -1, pauseIconId = -1, stopIconId = -1;
 		try {
-			playIconId = new Texture2D(FileIO.readResourceFileContentBytes("textures/ui/buttons/play.png")).getTextureID();
-			pauseIconId = new Texture2D(FileIO.readResourceFileContentBytes("textures/ui/buttons/pause.png")).getTextureID();
-			stopIconId = new Texture2D(FileIO.readResourceFileContentBytes("textures/ui/buttons/stop.png")).getTextureID();
+			playIconId = new Texture2D(new TextureSettings(TextureType.TEXTURE_2D, TextureWrapMode.REPEAT, TextureFilterMode.NEAREST, true), FileIO.readResourceFileContentBytes("textures/ui/buttons/play.png")).getTextureID();
+			pauseIconId = new Texture2D(new TextureSettings(TextureType.TEXTURE_2D, TextureWrapMode.REPEAT, TextureFilterMode.NEAREST, true), FileIO.readResourceFileContentBytes("textures/ui/buttons/pause.png")).getTextureID();
+			stopIconId = new Texture2D(new TextureSettings(TextureType.TEXTURE_2D, TextureWrapMode.REPEAT, TextureFilterMode.NEAREST, true), FileIO.readResourceFileContentBytes("textures/ui/buttons/stop.png")).getTextureID();
 		} catch (IOException e) {
 			Logger.error("EditorUI Failed to Initialize Editor Icons({}, {}, {})", playIconId, pauseIconId, stopIconId);
 			return;

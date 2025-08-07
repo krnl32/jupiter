@@ -1,7 +1,7 @@
 package com.krnl32.jupiter.engine.utility;
 
 import com.krnl32.jupiter.engine.core.Logger;
-import com.krnl32.jupiter.engine.renderer.Texture2D;
+import com.krnl32.jupiter.engine.renderer.texture.*;
 import com.krnl32.jupiter.engine.ui.font.Font;
 import com.krnl32.jupiter.engine.ui.font.Glyph;
 import org.lwjgl.BufferUtils;
@@ -48,7 +48,7 @@ public class FontLoader {
 			pc.free();
 			bitmap.flip();
 
-			Texture2D atlas = new Texture2D(atlasWidth, atlasHeight, 1);
+			Texture2D atlas = new Texture2D(new TextureSettings(TextureType.TEXTURE_2D, TextureFormat.R8, atlasWidth, atlasHeight, 1, TextureWrapMode.REPEAT, TextureFilterMode.NEAREST, true));
 			atlas.setBuffer(bitmap);
 
 			Map<Character, Glyph> glyphs = new HashMap<>();

@@ -1,8 +1,8 @@
 package com.krnl32.jupiter.editor.utility;
 
-import com.krnl32.jupiter.engine.asset.Asset;
-import com.krnl32.jupiter.engine.asset.AssetID;
-import com.krnl32.jupiter.engine.asset.types.ScriptAsset;
+import com.krnl32.jupiter.engine.oldAsset.Asset;
+import com.krnl32.jupiter.engine.oldAsset.AssetID;
+import com.krnl32.jupiter.engine.oldAsset.types.ScriptAsset;
 import imgui.ImGui;
 import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiColorEditFlags;

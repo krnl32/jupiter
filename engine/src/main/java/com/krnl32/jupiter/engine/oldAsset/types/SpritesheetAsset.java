@@ -1,6 +1,6 @@
-package com.krnl32.jupiter.engine.asset.types;
+package com.krnl32.jupiter.engine.oldAsset.types;
 
-import com.krnl32.jupiter.engine.asset.*;
+import com.krnl32.jupiter.engine.oldAsset.*;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.model.Sprite;
 import com.krnl32.jupiter.engine.project.ProjectContext;

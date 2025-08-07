@@ -1,6 +1,6 @@
 package com.krnl32.jupiter.engine.model;
 
-import com.krnl32.jupiter.engine.asset.AssetID;
+import com.krnl32.jupiter.engine.oldAsset.AssetID;
 import org.joml.Vector4f;
 
 public class Sprite {

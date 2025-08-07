@@ -1,6 +1,6 @@
 package com.krnl32.jupiter.engine.project;
 
-import com.krnl32.jupiter.engine.asset.AssetManager;
+import com.krnl32.jupiter.engine.oldAsset.AssetManager;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.project.model.Project;
 

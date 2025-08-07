@@ -1,0 +1,28 @@
+{
+    "importerName": "TextureAssetImporter",
+    "assetPath": "Textures/StoneWall.jtexture",
+    "lastModified": 1754564217129,
+    "version": 1,
+    "uuid": "df8feff4-3486-4cfa-acf4-9aefe8a41ad5",
+    "assetType": "TEXTURE",
+    "importSettings": {
+        "colorSpace": "LINEAR",
+        "filterMode": "LINEAR",
+        "channels": 4,
+        "format": "RGBA8",
+        "width": 1024,
+        "mipmapCount": 0,
+        "flags": {
+            "cubemap": false,
+            "compressed": false,
+            "sRGB": false,
+            "generateMipmaps": true,
+            "alpha": true
+        },
+        "wrapMode": "CLAMP_TO_EDGE",
+        "compressionType": "NONE",
+        "anisotropicLevel": 4,
+        "type": "TEXTURE_2D",
+        "height": 1024
+    }
+}

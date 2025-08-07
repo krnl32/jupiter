@@ -1,6 +1,6 @@
 package com.krnl32.jupiter.engine.script;
 
-import com.krnl32.jupiter.engine.asset.AssetID;
+import com.krnl32.jupiter.engine.oldAsset.AssetID;
 
 import java.util.Objects;
 

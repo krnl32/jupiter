@@ -1,6 +1,6 @@
 package com.krnl32.jupiter.engine.serializer.components.effects;
 
-import com.krnl32.jupiter.engine.asset.AssetID;
+import com.krnl32.jupiter.engine.oldAsset.AssetID;
 import com.krnl32.jupiter.engine.components.effects.DeathEffectComponent;
 import com.krnl32.jupiter.engine.model.Sprite;
 import com.krnl32.jupiter.engine.serializer.ComponentSerializer;
