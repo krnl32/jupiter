@@ -1,5 +1,6 @@
 {
     "importerName": "TextureAssetImporter",
+	"sourcePath": "Textures/StoneWall.png",
     "assetPath": "Textures/StoneWall.jtexture",
     "lastModified": 1754615765711,
     "version": 1,

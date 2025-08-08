@@ -278,9 +278,14 @@ public class Editor extends Engine {
 		}
 
 		try {
-			AssetRegistry assetRegistry = AssetRegistrySerializer.deserialize(new JSONObject(FileIO.readFileContent(projectDirectory.resolve(project.getPaths().getAssetRegistryPath()))));
+			Path assetRegistryPath = projectDirectory.resolve(project.getPaths().getAssetRegistryPath());
+			JSONObject assetRegistryData = new JSONObject(FileIO.readFileContent(assetRegistryPath));
+			AssetRegistry assetRegistry = AssetRegistrySerializer.deserialize(assetRegistryData);
+
+			Path assetDatabasePath = projectDirectory.resolve(project.getPaths().getAssetDatabasePath());
 			AssetDatabase assetDatabase = new AssetDatabase();
-			assetDatabase.loadFromDisk(projectDirectory.resolve(project.getPaths().getAssetDatabasePath()));
+			assetDatabase.loadFromDisk(assetDatabasePath);
+
 			ProjectContext.init(projectDirectory, project, new AssetManager(assetRegistry, assetDatabase));
 		} catch (Exception e) {
 			Logger.error("Editor Failed to Load Project({}): {}", projectDirectory, e.getMessage());

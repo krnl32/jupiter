@@ -1,11 +1,9 @@
 package com.krnl32.jupiter.engine.project.model;
 
-import java.nio.file.Path;
-
 public final class ProjectPaths {
-	private final Path assetPath;
-	private final Path assetRegistryPath;
-	private final Path assetDatabasePath;
+	private final String assetPath;
+	private final String assetRegistryPath;
+	private final String assetDatabasePath;
 
 	private final String shaderPath;
 	private final String scenePath;
@@ -13,7 +11,7 @@ public final class ProjectPaths {
 	private final String fontPath;
 	private final String scriptPath;
 
-	public ProjectPaths(Path assetPath, Path assetRegistryPath, Path assetDatabasePath, String shaderPath, String scenePath, String spritesheetPath, String fontPath, String scriptPath) {
+	public ProjectPaths(String assetPath, String assetRegistryPath, String assetDatabasePath, String shaderPath, String scenePath, String spritesheetPath, String fontPath, String scriptPath) {
 		this.assetPath = assetPath;
 		this.assetRegistryPath = assetRegistryPath;
 		this.assetDatabasePath = assetDatabasePath;
@@ -25,15 +23,15 @@ public final class ProjectPaths {
 		this.scriptPath = scriptPath;
 	}
 
-	public Path getAssetPath() {
+	public String getAssetPath() {
 		return assetPath;
 	}
 
-	public Path getAssetRegistryPath() {
+	public String getAssetRegistryPath() {
 		return assetRegistryPath;
 	}
 
-	public Path getAssetDatabasePath() {
+	public String getAssetDatabasePath() {
 		return assetDatabasePath;
 	}
 

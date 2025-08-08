@@ -5,7 +5,6 @@ import com.krnl32.jupiter.engine.project.model.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.nio.file.Path;
 import java.util.UUID;
 
 public class ProjectSerializer {
@@ -82,9 +81,9 @@ public class ProjectSerializer {
 
 	private static ProjectPaths deserializeProjectPaths(JSONObject projectPathsData) throws JSONException {
 		return new ProjectPaths(
-			Path.of(projectPathsData.getString("asset")),
-			Path.of(projectPathsData.getString("assetRegistry")),
-			Path.of(projectPathsData.getString("assetDatabase")),
+			projectPathsData.getString("asset"),
+			projectPathsData.getString("assetRegistry"),
+			projectPathsData.getString("assetDatabase"),
 
 			projectPathsData.getString("shader"),
 			projectPathsData.getString("scene"),

@@ -16,7 +16,7 @@ public class JSONTextureAssetLoader implements AssetLoader<TextureAsset> {
 	public TextureAsset load(AssetMetadata assetMetadata) {
 		try {
 			// Get Raw Asset Data
-			Path assetPath = ProjectContext.getInstance().getAssetDirectory().resolve(assetMetadata.getAssetPath());
+			Path assetPath = ProjectContext.getInstance().getAssetDirectory().resolve(assetMetadata.getSourcePath());
 			byte[] assetRawData = FileIO.readFileContentBytes(assetPath);
 
 			// Get Texture Import Settings
