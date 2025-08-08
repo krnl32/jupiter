@@ -1,42 +1,42 @@
 package com.krnl32.jupiter.engine.script;
 
-import com.krnl32.jupiter.engine.oldAsset.AssetID;
+import com.krnl32.jupiter.engine.asset.handle.AssetId;
 
 import java.util.Objects;
 
 public class ScriptInstance {
-	private AssetID scriptAssetID;
+	private AssetId scriptAssetId;
 	private boolean initialized;
 	private boolean disabled;
 	private long lastModified;
 
-	public ScriptInstance(AssetID scriptAssetID) {
-		this.scriptAssetID = scriptAssetID;
+	public ScriptInstance(AssetId scriptAssetId) {
+		this.scriptAssetId = scriptAssetId;
 		this.initialized = false;
 		this.disabled = false;
 		this.lastModified = 0;
 	}
 
-	public ScriptInstance(AssetID scriptAssetID, boolean disabled) {
-		this.scriptAssetID = scriptAssetID;
+	public ScriptInstance(AssetId scriptAssetId, boolean disabled) {
+		this.scriptAssetId = scriptAssetId;
 		this.initialized = false;
 		this.disabled = disabled;
 		this.lastModified = 0;
 	}
 
-	public ScriptInstance(AssetID scriptAssetID, boolean initialized, boolean disabled, long lastModified) {
-		this.scriptAssetID = scriptAssetID;
+	public ScriptInstance(AssetId scriptAssetId, boolean initialized, boolean disabled, long lastModified) {
+		this.scriptAssetId = scriptAssetId;
 		this.initialized = initialized;
 		this.disabled = disabled;
 		this.lastModified = lastModified;
 	}
 
-	public AssetID getScriptAssetID() {
-		return scriptAssetID;
+	public AssetId getScriptAssetId() {
+		return scriptAssetId;
 	}
 
-	public void setScriptAssetID(AssetID scriptAssetID) {
-		this.scriptAssetID = scriptAssetID;
+	public void setScriptAssetId(AssetId scriptAssetId) {
+		this.scriptAssetId = scriptAssetId;
 	}
 
 	public boolean isInitialized() {
@@ -67,11 +67,11 @@ public class ScriptInstance {
 	public boolean equals(Object o) {
 		if (o == null || getClass() != o.getClass()) return false;
 		ScriptInstance that = (ScriptInstance) o;
-		return initialized == that.initialized && disabled == that.disabled && lastModified == that.lastModified && Objects.equals(scriptAssetID, that.scriptAssetID);
+		return initialized == that.initialized && disabled == that.disabled && lastModified == that.lastModified && Objects.equals(scriptAssetId, that.scriptAssetId);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(scriptAssetID, initialized, disabled, lastModified);
+		return Objects.hash(scriptAssetId, initialized, disabled, lastModified);
 	}
 }

@@ -1,6 +1,6 @@
 package com.krnl32.jupiter.engine.serializer.components.projectile;
 
-import com.krnl32.jupiter.engine.oldAsset.AssetID;
+import com.krnl32.jupiter.engine.asset.handle.AssetId;
 import com.krnl32.jupiter.engine.components.projectile.ProjectileEmitterComponent;
 import com.krnl32.jupiter.engine.input.devices.KeyCode;
 import com.krnl32.jupiter.engine.model.Sprite;
@@ -42,7 +42,7 @@ public class ProjectileEmitterComponentSerializer implements ComponentSerializer
 			new Sprite(
 				component.sprite.getIndex(),
 				new Vector4f(component.sprite.getColor()),
-				component.sprite.getTextureAssetID() != null ? new AssetID(component.sprite.getTextureAssetID().getId()) : null,
+				component.sprite.getTextureAssetId() != null ? new AssetId(component.sprite.getTextureAssetId().getId()) : null,
 				component.sprite.getTextureUV().clone()
 			)
 		);

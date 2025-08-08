@@ -1,15 +1,15 @@
 package com.krnl32.jupiter.engine.model;
 
-import com.krnl32.jupiter.engine.oldAsset.AssetID;
+import com.krnl32.jupiter.engine.asset.handle.AssetId;
 import org.joml.Vector4f;
 
 public class Sprite {
 	private final int index;
 	private final Vector4f color;
-	private final AssetID textureAssetID;
+	private final AssetId textureAssetID;
 	private final float[] textureUV;
 
-	public Sprite(int index, Vector4f color, AssetID textureAssetID) {
+	public Sprite(int index, Vector4f color, AssetId textureAssetID) {
 		this.index = index;
 		this.color = color;
 		this.textureAssetID = textureAssetID;
@@ -21,7 +21,7 @@ public class Sprite {
 		};
 	}
 
-	public Sprite(int index, Vector4f color, AssetID textureAssetID, float[] textureUV) {
+	public Sprite(int index, Vector4f color, AssetId textureAssetID, float[] textureUV) {
 		this.index = index;
 		this.color = color;
 		this.textureAssetID = textureAssetID;
@@ -36,7 +36,7 @@ public class Sprite {
 		return color;
 	}
 
-	public AssetID getTextureAssetID() {
+	public AssetId getTextureAssetId() {
 		return textureAssetID;
 	}
 

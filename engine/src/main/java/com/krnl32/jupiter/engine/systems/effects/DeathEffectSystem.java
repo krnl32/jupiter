@@ -46,7 +46,7 @@ public class DeathEffectSystem implements System {
 			Entity particle = registry.createEntity();
 			particle.addComponent(new TransformComponent(new Vector3f(position), new Vector3f(0, 0, 0), new Vector3f(0.5f, 0.5f, 0.5f)));
 			particle.addComponent(new ParticleComponent(velocity, 10 + (float) Math.random() * 0.5f));
-			particle.addComponent(new SpriteRendererComponent(sprite.getIndex(), sprite.getColor(), sprite.getTextureAssetID()));
+			particle.addComponent(new SpriteRendererComponent(sprite.getIndex(), sprite.getColor(), sprite.getTextureAssetId()));
 		}
 	}
 }

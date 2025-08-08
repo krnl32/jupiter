@@ -11,6 +11,12 @@ public abstract class Asset {
 		this.state = AssetState.NONE;
 	}
 
+	public Asset(AssetId id, AssetType type) {
+		this.id = id;
+		this.type = type;
+		this.state = AssetState.NONE;
+	}
+
 	public AssetId getId() {
 		return id;
 	}

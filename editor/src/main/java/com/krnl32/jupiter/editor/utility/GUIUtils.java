@@ -1,8 +1,5 @@
 package com.krnl32.jupiter.editor.utility;
 
-import com.krnl32.jupiter.engine.oldAsset.Asset;
-import com.krnl32.jupiter.engine.oldAsset.AssetID;
-import com.krnl32.jupiter.engine.oldAsset.types.ScriptAsset;
 import imgui.ImGui;
 import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiColorEditFlags;
@@ -14,9 +11,6 @@ import imgui.type.ImString;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
-
-import java.util.List;
-import java.util.function.Consumer;
 
 public class GUIUtils {
 	public static void renderVector2f(String label, Vector2f vec) {
@@ -510,6 +504,7 @@ public class GUIUtils {
 		return clicked;
 	}
 
+	/*
 	public static <T extends Asset> boolean renderAssetCombo(List<T> assets, String label, String currentAssetLabel, AssetID currentAssetID, Consumer<AssetID> onSelect) {
 		int uniqueID = System.identityHashCode(currentAssetID);
 		ImGui.pushID(label + "_" + uniqueID);
@@ -542,4 +537,5 @@ public class GUIUtils {
 
 		return changed;
 	}
+	*/
 }

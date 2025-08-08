@@ -1,60 +1,60 @@
 package com.krnl32.jupiter.engine.serializer.utility;
 
-import com.krnl32.jupiter.engine.oldAsset.AssetID;
-import com.krnl32.jupiter.engine.oldAsset.types.ScriptAsset;
-import com.krnl32.jupiter.engine.oldAsset.types.TextureAsset;
-import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.model.Sprite;
-import com.krnl32.jupiter.engine.project.ProjectContext;
 import com.krnl32.jupiter.engine.script.ScriptInstance;
 import org.json.JSONObject;
 
 public class JupiterSerializerUtils {
 	public static JSONObject serializeSprite(Sprite sprite) {
-		TextureAsset textureAsset = sprite.getTextureAssetID() != null ? ProjectContext.getInstance().getAssetManager().getAsset(sprite.getTextureAssetID()) : null;
+		//TextureAsset textureAsset = sprite.getTextureAssetId() != null ? ProjectContext.getInstance().getAssetManager().getAsset(sprite.getTextureAssetId()) : null;
 
-		return new JSONObject()
-			.put("index", sprite.getIndex())
-			.put("color", JOMLSerializerUtils.serializeVector4f(sprite.getColor()))
-			.put("textureAssetID", (textureAsset != null ? textureAsset.getTexturePath() : JSONObject.NULL));
+		//return new JSONObject()
+		//	.put("index", sprite.getIndex())
+		//	.put("color", JOMLSerializerUtils.serializeVector4f(sprite.getColor()))
+			//.put("textureAssetId", (textureAsset != null ? textureAsset.getTexturePath() : JSONObject.NULL));
+
+		return null;
 	}
 
 	public static Sprite deserializeSprite(JSONObject data) {
-		AssetID textureAssetID = null;
-		if (!data.isNull("textureAssetID")) {
-			textureAssetID = ProjectContext.getInstance().getAssetManager().registerAndLoad(data.getString("textureAssetID"), () -> new TextureAsset(data.getString("textureAssetID")));
-			if (textureAssetID == null) {
-				Logger.error("deserializeSprite Failed, Invalid Texture textureAssetID Path({})", data.getString("textureAssetID"));
-				return null;
-			}
-		}
-
-		return new Sprite(
-			data.getInt("index"),
-			JOMLSerializerUtils.deserializeVector4f(data.getJSONObject("color")),
-			textureAssetID
-		);
+//		AssetId textureAssetId = null;
+//		if (!data.isNull("textureAssetId")) {
+//			textureAssetId = ProjectContext.getInstance().getAssetManager().registerAndLoad(data.getString("textureAssetId"), () -> new TextureAsset(data.getString("textureAssetId")));
+//			if (textureAssetId == null) {
+//				Logger.error("deserializeSprite Failed, Invalid Texture textureAssetId Path({})", data.getString("textureAssetId"));
+//				return null;
+//			}
+//		}
+//
+//		return new Sprite(
+//			data.getInt("index"),
+//			JOMLSerializerUtils.deserializeVector4f(data.getJSONObject("color")),
+//			textureAssetId
+//		);
+		return null;
 	}
 
 	public static JSONObject serializeScriptInstance(ScriptInstance scriptInstance) {
-		ScriptAsset scriptAsset = ProjectContext.getInstance().getAssetManager().getAsset(scriptInstance.getScriptAssetID());
-		if (scriptAsset == null) {
-			Logger.error("serializeScriptInstance Failed, Invalid Script AssetID({})", scriptInstance.getScriptAssetID());
-			return null;
-		}
-
-		return new JSONObject()
-			.put("scriptAssetID", scriptAsset.getRelativePath())
-			.put("disabled", scriptInstance.isDisabled());
+//		ScriptAsset scriptAsset = ProjectContext.getInstance().getAssetManager().getAsset(scriptInstance.getScriptAssetId());
+//		if (scriptAsset == null) {
+//			Logger.error("serializeScriptInstance Failed, Invalid Script AssetId({})", scriptInstance.getScriptAssetId());
+//			return null;
+//		}
+//
+//		return new JSONObject()
+//			.put("scriptAssetId", scriptAsset.getRelativePath())
+//			.put("disabled", scriptInstance.isDisabled());
+		return null;
 	}
 
 	public static ScriptInstance deserializeScriptInstance(JSONObject data) {
-		AssetID scriptAssetID = ProjectContext.getInstance().getAssetManager().registerAndLoad(data.getString("scriptAssetID"), () -> new ScriptAsset(data.getString("scriptAssetID")));
-		if (scriptAssetID == null) {
-			Logger.error("deserializeScriptInstance Failed, Invalid Script AssetPath({})", data.getString("scriptAssetID"));
-			return null;
-		}
-
-		return new ScriptInstance(scriptAssetID, data.getBoolean("disabled"));
+//		AssetId scriptAssetId = ProjectContext.getInstance().getAssetManager().registerAndLoad(data.getString("scriptAssetId"), () -> new ScriptAsset(data.getString("scriptAssetId")));
+//		if (scriptAssetId == null) {
+//			Logger.error("deserializeScriptInstance Failed, Invalid Script AssetPath({})", data.getString("scriptAssetId"));
+//			return null;
+//		}
+//
+//		return new ScriptInstance(scriptAssetId, data.getBoolean("disabled"));
+		return null;
 	}
 }

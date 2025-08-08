@@ -35,10 +35,14 @@ import com.krnl32.jupiter.editor.renderer.components.utility.TagComponentRendere
 import com.krnl32.jupiter.editor.renderer.components.utility.UUIDComponentRenderer;
 import com.krnl32.jupiter.engine.asset.core.AssetManager;
 import com.krnl32.jupiter.engine.asset.database.AssetDatabase;
+import com.krnl32.jupiter.engine.asset.handle.AssetType;
+import com.krnl32.jupiter.engine.asset.loader.AssetLoaderRegistry;
+import com.krnl32.jupiter.engine.asset.loader.types.JTextureAssetLoader;
 import com.krnl32.jupiter.engine.asset.registry.AssetRegistry;
 import com.krnl32.jupiter.engine.asset.registry.AssetRegistrySerializer;
-import com.krnl32.jupiter.engine.asset.utility.DefaultAssetLoaders;
-import com.krnl32.jupiter.engine.asset.utility.DefaultAssetSerializers;
+import com.krnl32.jupiter.engine.asset.serializer.AssetSerializerRegistry;
+import com.krnl32.jupiter.engine.asset.serializer.types.JTextureAssetSerializer;
+import com.krnl32.jupiter.engine.asset.types.TextureAsset;
 import com.krnl32.jupiter.engine.components.effects.BlinkComponent;
 import com.krnl32.jupiter.engine.components.effects.DeathEffectComponent;
 import com.krnl32.jupiter.engine.components.effects.ParticleComponent;
@@ -71,7 +75,6 @@ import com.krnl32.jupiter.engine.utility.FileIO;
 import org.joml.Vector4f;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -113,36 +116,39 @@ public class Editor extends Engine {
 		registerComponentFactories();
 		registerComponentRenderers();
 
-		// Register Asset Manager Components
-		DefaultAssetSerializers.registerAll();
-		DefaultAssetLoaders.registerAll();
+		// Register Asset Manager Components -------------TMP
+		AssetLoaderRegistry.register(AssetType.TEXTURE, TextureAsset.class, new JTextureAssetLoader());
+		AssetSerializerRegistry.register(AssetType.TEXTURE, TextureAsset.class, new JTextureAssetSerializer());
 
 		// Setup Scene
 		sceneSerializer = new SceneSerializer();
 		sceneManager = new SceneManager();
 
-		if (ProjectContext.getInstance().getProject().getStartup().getSceneName() != null && !ProjectContext.getInstance().getProject().getStartup().getSceneName().isEmpty()) {
-			String scenePath = ProjectContext.getInstance().getProjectDirectory() + "/" + ProjectContext.getInstance().getProject().getPaths().getScenePath() + "/" + ProjectContext.getInstance().getProject().getStartup().getSceneName();
-
-			try {
-				Scene startupScene = sceneSerializer.deserialize(new JSONObject(FileIO.readFileContent(scenePath)));
-				if (startupScene == null) {
-					Logger.critical("Editor Failed to Deserialize Startup Scene({})", scenePath);
-					return false;
-				}
-
-				currentSceneName = ProjectContext.getInstance().getProject().getStartup().getSceneName();
-				sceneManager.addScene(currentSceneName, startupScene);
-				sceneManager.switchScene(currentSceneName);
-			} catch (IOException e) {
-				Logger.critical("Editor Failed to Deserialize Startup Scene({}), File Doesn't Exist", scenePath);
-				return false;
-			}
-		} else {
-			currentSceneName = "editor";
-			sceneManager.addScene(currentSceneName, new EditorScene());
-			sceneManager.switchScene(currentSceneName);
-		}
+//		if (ProjectContext.getInstance().getProject().getStartup().getSceneName() != null && !ProjectContext.getInstance().getProject().getStartup().getSceneName().isEmpty()) {
+//			String scenePath = ProjectContext.getInstance().getProjectDirectory() + "/" + ProjectContext.getInstance().getProject().getPaths().getScenePath() + "/" + ProjectContext.getInstance().getProject().getStartup().getSceneName();
+//
+//			try {
+//				Scene startupScene = sceneSerializer.deserialize(new JSONObject(FileIO.readFileContent(scenePath)));
+//				if (startupScene == null) {
+//					Logger.critical("Editor Failed to Deserialize Startup Scene({})", scenePath);
+//					return false;
+//				}
+//
+//				currentSceneName = ProjectContext.getInstance().getProject().getStartup().getSceneName();
+//				sceneManager.addScene(currentSceneName, startupScene);
+//				sceneManager.switchScene(currentSceneName);
+//			} catch (IOException e) {
+//				Logger.critical("Editor Failed to Deserialize Startup Scene({}), File Doesn't Exist", scenePath);
+//				return false;
+//			}
+//		} else {
+//			currentSceneName = "editor";
+//			sceneManager.addScene(currentSceneName, new EditorScene());
+//			sceneManager.switchScene(currentSceneName);
+//		}
+		currentSceneName = "editor";
+		sceneManager.addScene(currentSceneName, new EditorSceneTmp());
+		sceneManager.switchScene(currentSceneName);
 
 		// FrameBuffer
 		framebuffer = new Framebuffer(getWindow().getWidth(), getWindow().getHeight(), List.of(FrameBufferAttachmentFormat.RGBA8, FrameBufferAttachmentFormat.RED_INTEGER));
@@ -278,6 +284,7 @@ public class Editor extends Engine {
 			ProjectContext.init(projectDirectory, project, new AssetManager(assetRegistry, assetDatabase));
 		} catch (Exception e) {
 			Logger.error("Editor Failed to Load Project({}): {}", projectDirectory, e.getMessage());
+			return false;
 		}
 
 		return true;

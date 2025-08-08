@@ -1,6 +1,8 @@
 package com.krnl32.jupiter.engine.asset.serializer.types;
 
 import com.krnl32.jupiter.engine.asset.serializer.AssetSerializer;
+import com.krnl32.jupiter.engine.asset.serializer.model.jtexture.JTexture;
+import com.krnl32.jupiter.engine.asset.serializer.model.jtexture.JTextureHeader;
 import com.krnl32.jupiter.engine.asset.types.TextureAsset;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.renderer.texture.*;
@@ -34,7 +36,7 @@ import java.util.Arrays;
  * DATA
  * Followed by raw or compressed image data
  */
-public class TextureAssetSerializer implements AssetSerializer<TextureAsset> {
+public class JTextureAssetSerializer implements AssetSerializer<TextureAsset, JTexture> {
 	private static final byte[] MAGIC = new byte[]{'J', 'T', 'E', 'X'};
 	private static final byte VERSION = 0x1;
 
@@ -66,21 +68,21 @@ public class TextureAssetSerializer implements AssetSerializer<TextureAsset> {
 	}
 
 	@Override
-	public TextureAsset deserialize(byte[] inputData) {
+	public JTexture deserialize(byte[] inputData) {
 		ByteArrayInputStream inputDataStream = new ByteArrayInputStream(inputData);
 
 		// Validate Magic
 		byte[] magic = new byte[4];
 		inputDataStream.read(magic, 0, 4);
 		if (!Arrays.equals(magic, MAGIC)) {
-			Logger.error("TextureAssetSerializer Failed to Deserialize Invalid Magic Header");
+			Logger.error("JTextureAssetSerializer Failed to Deserialize Invalid Magic Header");
 			return null;
 		}
 
 		// Validate Version
 		int version = inputDataStream.read();
 		if (version > VERSION) {
-			Logger.error("TextureAssetSerializer Failed to Deserialize Invalid Version");
+			Logger.error("JTextureAssetSerializer Failed to Deserialize Invalid Version");
 			return null;
 		}
 
@@ -99,10 +101,9 @@ public class TextureAssetSerializer implements AssetSerializer<TextureAsset> {
 		inputDataStream.skip(5);
 		byte[] data = inputDataStream.readAllBytes();
 
-		TextureSettings settings = new TextureSettings(type, format, width, height, channels,
+		JTextureHeader header = new JTextureHeader(type, format, width, height, channels,
 			wrapMode, filterMode, mipmapCount, colorSpace, compressionType, anisotropicLevel, flags);
-
-		return new TextureAsset(settings, data);
+		return new JTexture(header, data);
 	}
 
 	private void writeUInt32(ByteArrayOutputStream stream, int value) {

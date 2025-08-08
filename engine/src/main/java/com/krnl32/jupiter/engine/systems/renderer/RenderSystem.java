@@ -1,6 +1,6 @@
 package com.krnl32.jupiter.engine.systems.renderer;
 
-import com.krnl32.jupiter.engine.oldAsset.types.TextureAsset;
+import com.krnl32.jupiter.engine.asset.types.TextureAsset;
 import com.krnl32.jupiter.engine.components.effects.BlinkComponent;
 import com.krnl32.jupiter.engine.components.gameplay.TransformComponent;
 import com.krnl32.jupiter.engine.components.renderer.SpriteRendererComponent;
@@ -38,11 +38,11 @@ public class RenderSystem implements System {
 			TransformComponent transform = entity.getComponent(TransformComponent.class);
 			SpriteRendererComponent spriteRenderer = entity.getComponent(SpriteRendererComponent.class);
 
-			TextureAsset textureAsset = ProjectContext.getInstance().getAssetManager().getAsset(spriteRenderer.textureAssetID);
-			if (spriteRenderer.textureAssetID != null && (textureAsset == null || !textureAsset.isLoaded()))
-				Logger.error("RenderSystem Failed to get Texture Asset({})\n", spriteRenderer.textureAssetID);
+			TextureAsset textureAsset = ProjectContext.getInstance().getAssetManager().getAsset(spriteRenderer.textureAssetId);
+			if (spriteRenderer.textureAssetId != null && (textureAsset == null || !textureAsset.isValid()))
+				Logger.error("RenderSystem Failed to get Texture Asset({})\n", spriteRenderer.textureAssetId);
 
-			Texture2D texture = (textureAsset != null && textureAsset.isLoaded()) ? textureAsset.getTexture() : null;
+			Texture2D texture = (textureAsset != null && textureAsset.isValid()) ? textureAsset.getTexture() : null;
 			renderer.submit(new RenderSpriteCommand(new RenderPacket(spriteRenderer.index, spriteRenderer.color, texture), transform.getTransform(), spriteRenderer.textureUV));
 		}
 	}

@@ -1,19 +1,9 @@
 package com.krnl32.jupiter.editor.renderer.components.gameplay;
 
 import com.krnl32.jupiter.editor.renderer.ComponentRenderer;
-import com.krnl32.jupiter.editor.utility.GUIUtils;
-import com.krnl32.jupiter.engine.oldAsset.AssetType;
-import com.krnl32.jupiter.engine.oldAsset.types.ScriptAsset;
 import com.krnl32.jupiter.engine.components.gameplay.ScriptComponent;
-import com.krnl32.jupiter.engine.project.ProjectContext;
 import com.krnl32.jupiter.engine.script.ScriptInstance;
-import imgui.ImGui;
-import imgui.flag.ImGuiCol;
-import imgui.flag.ImGuiTreeNodeFlags;
 import imgui.type.ImString;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class ScriptComponentRenderer implements ComponentRenderer<ScriptComponent> {
 
@@ -22,20 +12,21 @@ public class ScriptComponentRenderer implements ComponentRenderer<ScriptComponen
 
 	@Override
 	public void render(ScriptComponent component) {
-		renderScriptComponent(component);
-
-		ImGui.spacing();
-		ImGui.separator();
-		ImGui.spacing();
-
-		renderAddScriptSection(component);
-
-		if (scriptToRemove != null) {
-			component.scripts.remove(scriptToRemove);
-			scriptToRemove = null;
-		}
+//		renderScriptComponent(component);
+//
+//		ImGui.spacing();
+//		ImGui.separator();
+//		ImGui.spacing();
+//
+//		renderAddScriptSection(component);
+//
+//		if (scriptToRemove != null) {
+//			component.scripts.remove(scriptToRemove);
+//			scriptToRemove = null;
+//		}
 	}
 
+	/*
 	private void renderScriptComponent(ScriptComponent scriptComponent) {
 		for (int i = 0; i < scriptComponent.scripts.size(); i++) {
 			ScriptInstance script = scriptComponent.scripts.get(i);
@@ -155,4 +146,5 @@ public class ScriptComponentRenderer implements ComponentRenderer<ScriptComponen
 
 		ImGui.endPopup();
 	}
+	 */
 }

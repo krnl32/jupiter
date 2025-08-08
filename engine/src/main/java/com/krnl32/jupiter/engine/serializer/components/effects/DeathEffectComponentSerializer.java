@@ -1,6 +1,6 @@
 package com.krnl32.jupiter.engine.serializer.components.effects;
 
-import com.krnl32.jupiter.engine.oldAsset.AssetID;
+import com.krnl32.jupiter.engine.asset.handle.AssetId;
 import com.krnl32.jupiter.engine.components.effects.DeathEffectComponent;
 import com.krnl32.jupiter.engine.model.Sprite;
 import com.krnl32.jupiter.engine.serializer.ComponentSerializer;
@@ -32,7 +32,7 @@ public class DeathEffectComponentSerializer implements ComponentSerializer<Death
 			new Sprite(
 				component.particleSprite.getIndex(),
 				new Vector4f(component.particleSprite.getColor()),
-				component.particleSprite.getTextureAssetID() != null ? new AssetID(component.particleSprite.getTextureAssetID().getId()) : null,
+				component.particleSprite.getTextureAssetId() != null ? new AssetId(component.particleSprite.getTextureAssetId().getId()) : null,
 				component.particleSprite.getTextureUV().clone()
 			)
 		);

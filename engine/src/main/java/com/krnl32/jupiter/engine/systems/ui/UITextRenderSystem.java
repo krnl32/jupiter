@@ -1,25 +1,11 @@
 package com.krnl32.jupiter.engine.systems.ui;
 
-import com.krnl32.jupiter.engine.oldAsset.types.FontAsset;
-import com.krnl32.jupiter.engine.components.ui.UIClipComponent;
 import com.krnl32.jupiter.engine.components.ui.UIHierarchyComponent;
-import com.krnl32.jupiter.engine.components.ui.UITextComponent;
 import com.krnl32.jupiter.engine.components.ui.UITransformComponent;
-import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.ecs.Entity;
 import com.krnl32.jupiter.engine.ecs.Registry;
 import com.krnl32.jupiter.engine.ecs.System;
-import com.krnl32.jupiter.engine.project.ProjectContext;
-import com.krnl32.jupiter.engine.renderer.ClipRect;
-import com.krnl32.jupiter.engine.renderer.RenderPacket;
-import com.krnl32.jupiter.engine.renderer.RenderTextCommand;
 import com.krnl32.jupiter.engine.renderer.Renderer;
-import com.krnl32.jupiter.engine.ui.font.Glyph;
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class UITextRenderSystem implements System {
 	private final Registry registry;
@@ -38,11 +24,12 @@ public class UITextRenderSystem implements System {
 		for (Entity entity : registry.getEntitiesWith(UITransformComponent.class)) {
 			UIHierarchyComponent uiHierarchy = entity.getComponent(UIHierarchyComponent.class);
 			if (uiHierarchy == null || uiHierarchy.parent == null) {
-				renderHierarchy(renderer, entity, new Matrix4f(), null);
+				//renderHierarchy(renderer, entity, new Matrix4f(), null);
 			}
 		}
 	}
 
+	/*
 	private void renderHierarchy(Renderer renderer, Entity entity, Matrix4f parentTransform, ClipRect parentClipRect) {
 		UITransformComponent transform = entity.getComponent(UITransformComponent.class);
 		UITextComponent text = entity.getComponent(UITextComponent.class);
@@ -485,4 +472,5 @@ public class UITextRenderSystem implements System {
 			}
 		}
 	}
+	 */
 }

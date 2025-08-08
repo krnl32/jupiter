@@ -1,6 +1,6 @@
 package com.krnl32.jupiter.engine.serializer.components.gameplay;
 
-import com.krnl32.jupiter.engine.oldAsset.AssetID;
+import com.krnl32.jupiter.engine.asset.handle.AssetId;
 import com.krnl32.jupiter.engine.components.gameplay.ScriptComponent;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.script.ScriptInstance;
@@ -21,7 +21,7 @@ public class ScriptComponentSerializer implements ComponentSerializer<ScriptComp
 		for (ScriptInstance script : component.scripts) {
 			JSONObject scriptData = JupiterSerializerUtils.serializeScriptInstance(script);
 			if (scriptData == null) {
-				Logger.error("ScriptComponentSerializer Serialize Failed for AssetID({})", script.getScriptAssetID());
+				Logger.error("ScriptComponentSerializer Serialize Failed for AssetId({})", script.getScriptAssetId());
 				return null;
 			}
 			scriptsData.put(scriptData);
@@ -49,7 +49,7 @@ public class ScriptComponentSerializer implements ComponentSerializer<ScriptComp
 		List<ScriptInstance> scripts = new ArrayList<>();
 
 		for (ScriptInstance script : component.scripts) {
-			scripts.add(new ScriptInstance(new AssetID(script.getScriptAssetID().getId()), script.isDisabled()));
+			scripts.add(new ScriptInstance(new AssetId(script.getScriptAssetId().getId()), script.isDisabled()));
 		}
 
 		return new ScriptComponent(scripts);

@@ -146,7 +146,11 @@ public class TextureSettings {
 	}
 
 	public void setGenerateMipmaps(boolean generateMipmaps) {
-		flags |= TextureFlag.GENERATE_MIPMAPS.getMask();
+		if (generateMipmaps) {
+			flags |= TextureFlag.GENERATE_MIPMAPS.getMask();
+		} else {
+			flags &= ~TextureFlag.GENERATE_MIPMAPS.getMask();
+		}
 	}
 
 	public boolean isCompressed() {
@@ -154,7 +158,11 @@ public class TextureSettings {
 	}
 
 	public void setCompressed(boolean compressed) {
-		flags |= TextureFlag.COMPRESSED.getMask();
+		if (compressed) {
+			flags |= TextureFlag.COMPRESSED.getMask();
+		} else {
+			flags &= ~TextureFlag.COMPRESSED.getMask();
+		}
 	}
 
 	public boolean isCubemap() {
@@ -162,15 +170,23 @@ public class TextureSettings {
 	}
 
 	public void setCubemap(boolean cubemap) {
-		flags |= TextureFlag.CUBEMAP.getMask();
+		if (cubemap) {
+			flags |= TextureFlag.CUBEMAP.getMask();
+		} else {
+			flags &= ~TextureFlag.CUBEMAP.getMask();
+		}
 	}
 
 	public boolean isSRGB() {
 		return (flags & TextureFlag.SRGB.getMask()) != 0;
 	}
 
-	public void setSRGB(boolean alpha) {
-		flags |= TextureFlag.SRGB.getMask();
+	public void setSRGB(boolean sRGB) {
+		if (sRGB) {
+			flags |= TextureFlag.SRGB.getMask();
+		} else {
+			flags &= ~TextureFlag.SRGB.getMask();
+		}
 	}
 
 	public boolean isAlpha() {
@@ -178,6 +194,10 @@ public class TextureSettings {
 	}
 
 	public void setAlpha(boolean alpha) {
-		flags |= TextureFlag.ALPHA.getMask();
+		if (alpha) {
+			flags |= TextureFlag.ALPHA.getMask();
+		} else {
+			flags &= ~TextureFlag.ALPHA.getMask();
+		}
 	}
 }

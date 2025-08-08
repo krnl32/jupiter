@@ -38,12 +38,8 @@ public class ProjectContext {
 		return project;
 	}
 
-//	public AssetManager getAssetManager() {
-//		return assetManager;
-//	}
-	// TEMPORARY
-	public com.krnl32.jupiter.engine.oldAsset.AssetManager getAssetManager() {
-		return new com.krnl32.jupiter.engine.oldAsset.AssetManager();
+	public AssetManager getAssetManager() {
+		return assetManager;
 	}
 
 	public Path getAssetDirectory() {

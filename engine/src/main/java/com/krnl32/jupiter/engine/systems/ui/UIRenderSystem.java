@@ -1,6 +1,6 @@
 package com.krnl32.jupiter.engine.systems.ui;
 
-import com.krnl32.jupiter.engine.oldAsset.types.TextureAsset;
+import com.krnl32.jupiter.engine.asset.types.TextureAsset;
 import com.krnl32.jupiter.engine.components.ui.UIClipComponent;
 import com.krnl32.jupiter.engine.components.ui.UIHierarchyComponent;
 import com.krnl32.jupiter.engine.components.ui.UIRenderComponent;
@@ -10,7 +10,10 @@ import com.krnl32.jupiter.engine.ecs.Entity;
 import com.krnl32.jupiter.engine.ecs.Registry;
 import com.krnl32.jupiter.engine.ecs.System;
 import com.krnl32.jupiter.engine.project.ProjectContext;
-import com.krnl32.jupiter.engine.renderer.*;
+import com.krnl32.jupiter.engine.renderer.ClipRect;
+import com.krnl32.jupiter.engine.renderer.RenderPacket;
+import com.krnl32.jupiter.engine.renderer.RenderUICommand;
+import com.krnl32.jupiter.engine.renderer.Renderer;
 import com.krnl32.jupiter.engine.renderer.texture.Texture2D;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -65,11 +68,11 @@ public class UIRenderSystem implements System {
 
 		if (renderComponent != null) {
 			Texture2D texture = null;
-			if (renderComponent.textureAssetID != null) {
-				TextureAsset textureAsset = ProjectContext.getInstance().getAssetManager().getAsset(renderComponent.textureAssetID);
-				if (textureAsset == null || !textureAsset.isLoaded())
-					Logger.error("UIRenderSystem Failed to get Texture Asset({})\n", renderComponent.textureAssetID);
-				texture = (textureAsset != null && textureAsset.isLoaded()) ? textureAsset.getTexture() : null;
+			if (renderComponent.textureAssetId != null) {
+				TextureAsset textureAsset = ProjectContext.getInstance().getAssetManager().getAsset(renderComponent.textureAssetId);
+				if (textureAsset == null || !textureAsset.isValid())
+					Logger.error("UIRenderSystem Failed to get Texture Asset({})\n", renderComponent.textureAssetId);
+				texture = (textureAsset != null && textureAsset.isValid()) ? textureAsset.getTexture() : null;
 			}
 
 			renderer.submit(new RenderUICommand(new RenderPacket(renderComponent.index, renderComponent.color, texture), worldTransform, renderComponent.textureUV, localClipRect));
