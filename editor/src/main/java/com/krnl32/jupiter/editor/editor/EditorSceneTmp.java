@@ -21,6 +21,10 @@ import org.joml.Vector4f;
 import java.util.UUID;
 
 public class EditorSceneTmp extends Scene {
+	public EditorSceneTmp(String name) {
+		super(name);
+	}
+
 	@Override
 	public void onCreate() {
 		// Sample Code....

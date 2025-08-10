@@ -21,8 +21,24 @@ import com.krnl32.jupiter.engine.systems.utility.DestroySystem;
 import com.krnl32.jupiter.engine.systems.utility.LifetimeSystem;
 
 public abstract class Scene {
-	private final Registry registry = new Registry();
-	private boolean initialized = false;
+	private final String name;
+	private final SceneSettings sceneSettings;
+	private final Registry registry;
+	private boolean initialized;
+
+	public Scene(String name) {
+		this.name = name;
+		this.sceneSettings = new SceneSettings();
+		this.registry = new Registry();
+		this.initialized = false;
+	}
+
+	public Scene(String name, SceneSettings sceneSettings) {
+		this.name = name;
+		this.sceneSettings = sceneSettings;
+		this.registry = new Registry();
+		this.initialized = false;
+	}
 
 	public void onUpdate(float dt) {
 		registry.onUpdate(dt);
@@ -44,6 +60,14 @@ public abstract class Scene {
 	public abstract void onCreate();
 	public abstract void onActivate();
 	public abstract void onUnload();
+
+	public String getName() {
+		return name;
+	}
+
+	public SceneSettings getSceneSettings() {
+		return sceneSettings;
+	}
 
 	public Registry getRegistry() {
 		return registry;

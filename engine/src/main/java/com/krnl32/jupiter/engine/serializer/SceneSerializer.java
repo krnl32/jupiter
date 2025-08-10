@@ -24,7 +24,7 @@ public class SceneSerializer {
 	}
 
 	public Scene deserialize(JSONObject data) {
-		Scene scene = new Scene() {
+		Scene scene = new Scene("untitled") {
 			@Override
 			public void onCreate() {
 			}
@@ -102,7 +102,7 @@ public class SceneSerializer {
 	}
 
 	public Scene clone(Scene scene, boolean regenUUID) {
-		Scene clone = new Scene() {
+		Scene clone = new Scene("untitled") {
 			@Override
 			public void onCreate() {
 			}
@@ -151,7 +151,7 @@ public class SceneSerializer {
 				if (component instanceof UUIDComponent)
 					continue;
 
-				ComponentSerializer componentSerializer = SerializerRegistry.getComponentSerializer(component.getClass());
+				OldComponentSerializer componentSerializer = EntitySerializerRegistry.getComponentSerializer(component.getClass());
 				if (componentSerializer != null) {
 					Component clonedComponent = componentSerializer.clone(component);
 					clonedEntity.addComponent(clonedComponent);
@@ -165,9 +165,9 @@ public class SceneSerializer {
 	private JSONObject serializeEntity(Entity entity) {
 		JSONObject componentsObj = new JSONObject();
 		for(Component component: entity.getComponents()) {
-			if (SerializerRegistry.hasComponentSerializer(component.getClass())) {
+			if (EntitySerializerRegistry.hasComponentSerializer(component.getClass())) {
 				@SuppressWarnings("unchecked")
-				ComponentSerializer<Component> serializer = (ComponentSerializer<Component>) SerializerRegistry.getComponentSerializer(component.getClass());
+                OldComponentSerializer<Component> serializer = (OldComponentSerializer<Component>) EntitySerializerRegistry.getComponentSerializer(component.getClass());
 				componentsObj.put(component.getClass().getSimpleName(), serializer.serialize(component));
 			}
 		}
@@ -183,7 +183,7 @@ public class SceneSerializer {
 			if (key.equals("UUIDComponent"))
 				continue;
 
-			for (var entry : SerializerRegistry.getComponentSerializers().entrySet()) {
+			for (var entry : EntitySerializerRegistry.getComponentSerializers().entrySet()) {
 				if (entry.getKey().getSimpleName().equals(key)) {
 					Component component = entry.getValue().deserialize(components.getJSONObject(key), resolver);
 					entity.addComponent(component);

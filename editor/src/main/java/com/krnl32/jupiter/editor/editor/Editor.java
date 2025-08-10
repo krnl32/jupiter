@@ -147,7 +147,7 @@ public class Editor extends Engine {
 //			sceneManager.switchScene(currentSceneName);
 //		}
 		currentSceneName = "editor";
-		sceneManager.addScene(currentSceneName, new EditorSceneTmp());
+		sceneManager.addScene(currentSceneName, new EditorSceneTmp("EditorSceneTMP"));
 		sceneManager.switchScene(currentSceneName);
 
 		// FrameBuffer
