@@ -1,13 +1,14 @@
-package com.krnl32.jupiter.engine.serializer.oldcomponents.renderer;
+package com.krnl32.jupiter.engine.serializer.components.renderer;
 
 import com.krnl32.jupiter.engine.components.renderer.SpriteRendererComponent;
-import com.krnl32.jupiter.engine.serializer.OldComponentSerializer;
+import com.krnl32.jupiter.engine.serializer.ComponentSerializer;
 import com.krnl32.jupiter.engine.serializer.resolvers.EntityResolver;
-import org.json.JSONObject;
 
-public class SpriteRendererComponentSerializer implements OldComponentSerializer<SpriteRendererComponent> {
+import java.util.Map;
+
+public class SpriteRendererComponentSerializer implements ComponentSerializer<SpriteRendererComponent, Map<String, Object>> {
 	@Override
-	public JSONObject serialize(SpriteRendererComponent component) {
+	public Map<String, Object> serialize(SpriteRendererComponent component) {
 //		TextureAsset textureAsset = component.textureAssetID != null ? ProjectContext.getInstance().getAssetManager().getAsset(component.textureAssetID) : null;
 //
 //		return new JSONObject()
@@ -19,7 +20,7 @@ public class SpriteRendererComponentSerializer implements OldComponentSerializer
 	}
 
 	@Override
-	public SpriteRendererComponent deserialize(JSONObject data, EntityResolver resolver) {
+	public SpriteRendererComponent deserialize(Map<String, Object> data, EntityResolver resolver) {
 //		AssetID textureAssetID = null;
 //		if (!data.isNull("textureAssetID")) {
 //			textureAssetID = ProjectContext.getInstance().getAssetManager().registerAndLoad(data.getString("textureAssetID"), () -> new TextureAsset(data.getString("textureAssetID")));
@@ -43,17 +44,6 @@ public class SpriteRendererComponentSerializer implements OldComponentSerializer
 //				data.getJSONArray("textureUV").getFloat(6),
 //				data.getJSONArray("textureUV").getFloat(7),
 //			}
-//		);
-		return null;
-	}
-
-	@Override
-	public SpriteRendererComponent clone(SpriteRendererComponent component) {
-//		return new SpriteRendererComponent(
-//			component.index,
-//			new Vector4f(component.color),
-//			component.textureAssetID != null ? new AssetID(component.textureAssetID.getId()) : null,
-//			component.textureUV.clone()
 //		);
 		return null;
 	}

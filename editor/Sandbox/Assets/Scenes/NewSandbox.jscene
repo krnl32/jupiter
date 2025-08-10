@@ -6,27 +6,63 @@
 	"entities": [
 		{
 			"components": {
+				"UUIDComponent": {
+					"uuid": "54d82c18-64bd-4334-a8d0-1b530d2dd109"
+				},
+				"CameraComponent": {
+					"mouseEnabled": false,
+					"primary": true,
+					"position": {
+						"x": 0.0,
+						"y": 0.0,
+						"z": 3.0
+					},
+					"zoom": 50.0,
+					"aspectRatio": 1.778,
+					"yaw": -90.0,
+					"projectionFOV": 45.0,
+					"worldUp": {
+						"x": 0.0,
+						"y": 1.0,
+						"z": 0.0
+					},
+					"projectionSize": 10.0,
+					"projectionFar": 100.0,
+					"projectionType": "ORTHOGRAPHIC",
+					"zoomSpeed": 10.0,
+					"pitch": 0.0,
+					"roll": 0.0,
+					"projectionNear": 0.1,
+					"turnSpeed": 1.0,
+					"rollSpeed": 45.0
+				},
 				"TransformComponent": {
 					"rotation": {
-						"x": 5.1,
-						"y": 0.25,
-						"z": 55.0
+						"x": 0.0,
+						"y": 0.0,
+						"z": 0.0
 					},
 					"translation": {
 						"x": 0.0,
-						"y": 0.120,
-						"z": 1253.0
+						"y": 0.0,
+						"z": 3.0
 					},
 					"scale": {
 						"x": 1.0,
 						"y": 1.0,
 						"z": 1.0
 					}
+				},
+				"TagComponent": {
+					"tag": "Camera"
 				}
 			}
 		},
 		{
 			"components": {
+				"UUIDComponent": {
+					"uuid": "351ba4f3-73d0-4a78-a30e-b77ca0725d71"
+				},
 				"TransformComponent": {
 					"rotation": {
 						"x": 0.0,
@@ -43,6 +79,36 @@
 						"y": 5.0,
 						"z": 1.0
 					}
+				},
+				"TagComponent": {
+					"tag": "Box"
+				},
+				"BoxCollider2DComponent": {
+					"sensor": false,
+					"offset": {
+						"x": 0.0,
+						"y": 0.0
+					},
+					"density": 1.0,
+					"size": {
+						"x": 1.0,
+						"y": 1.0
+					},
+					"friction": 0.5
+				},
+				"RigidBody2DComponent": {
+					"bodyType": "DYNAMIC",
+					"velocity": {
+						"x": 0.0,
+						"y": 0.0,
+						"finite": true
+					},
+					"linearDamping": 0.9,
+					"gravityScale": 1.0,
+					"angularDamping": 0.8,
+					"fixedRotation": false,
+					"continuousCollision": true,
+					"mass": 1.0
 				}
 			}
 		}

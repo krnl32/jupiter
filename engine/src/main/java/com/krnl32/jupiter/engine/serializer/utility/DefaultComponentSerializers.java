@@ -1,7 +1,6 @@
 package com.krnl32.jupiter.engine.serializer.utility;
 
 import com.krnl32.jupiter.engine.components.effects.BlinkComponent;
-import com.krnl32.jupiter.engine.components.effects.DeathEffectComponent;
 import com.krnl32.jupiter.engine.components.effects.ParticleComponent;
 import com.krnl32.jupiter.engine.components.gameplay.*;
 import com.krnl32.jupiter.engine.components.input.KeyboardControlComponent;
@@ -9,63 +8,59 @@ import com.krnl32.jupiter.engine.components.physics.BoxCollider2DComponent;
 import com.krnl32.jupiter.engine.components.physics.CircleCollider2DComponent;
 import com.krnl32.jupiter.engine.components.physics.RigidBody2DComponent;
 import com.krnl32.jupiter.engine.components.projectile.ProjectileComponent;
-import com.krnl32.jupiter.engine.components.projectile.ProjectileEmitterComponent;
 import com.krnl32.jupiter.engine.components.renderer.CameraComponent;
-import com.krnl32.jupiter.engine.components.renderer.SpriteRendererComponent;
 import com.krnl32.jupiter.engine.components.utility.LifetimeComponent;
 import com.krnl32.jupiter.engine.components.utility.TagComponent;
 import com.krnl32.jupiter.engine.components.utility.UUIDComponent;
-import com.krnl32.jupiter.engine.serializer.EntitySerializerRegistry;
-import com.krnl32.jupiter.engine.serializer.oldcomponents.effects.BlinkComponentSerializer;
-import com.krnl32.jupiter.engine.serializer.oldcomponents.effects.DeathEffectComponentSerializer;
-import com.krnl32.jupiter.engine.serializer.oldcomponents.effects.ParticleComponentSerializer;
-import com.krnl32.jupiter.engine.serializer.oldcomponents.gameplay.*;
-import com.krnl32.jupiter.engine.serializer.oldcomponents.input.KeyboardControlComponentSerializer;
-import com.krnl32.jupiter.engine.serializer.oldcomponents.physics.BoxCollider2DComponentSerializer;
-import com.krnl32.jupiter.engine.serializer.oldcomponents.physics.CircleCollider2DComponentSerializer;
-import com.krnl32.jupiter.engine.serializer.oldcomponents.physics.RigidBody2DComponentSerializer;
-import com.krnl32.jupiter.engine.serializer.oldcomponents.projectile.ProjectileComponentSerializer;
-import com.krnl32.jupiter.engine.serializer.oldcomponents.projectile.ProjectileEmitterComponentSerializer;
-import com.krnl32.jupiter.engine.serializer.oldcomponents.renderer.CameraComponentSerializer;
-import com.krnl32.jupiter.engine.serializer.oldcomponents.renderer.SpriteRendererComponentSerializer;
-import com.krnl32.jupiter.engine.serializer.oldcomponents.utility.LifetimeComponentSerializer;
-import com.krnl32.jupiter.engine.serializer.oldcomponents.utility.TagComponentSerializer;
-import com.krnl32.jupiter.engine.serializer.oldcomponents.utility.UUIDComponentSerializer;
+import com.krnl32.jupiter.engine.serializer.ComponentSerializerRegistry;
+import com.krnl32.jupiter.engine.serializer.components.effects.DTOBlinkComponentSerializer;
+import com.krnl32.jupiter.engine.serializer.components.effects.DTOParticleComponentSerializer;
+import com.krnl32.jupiter.engine.serializer.components.gameplay.*;
+import com.krnl32.jupiter.engine.serializer.components.input.DTOKeyboardControlComponentSerializer;
+import com.krnl32.jupiter.engine.serializer.components.physics.DTOBoxCollider2DComponentSerializer;
+import com.krnl32.jupiter.engine.serializer.components.physics.DTOCircleCollider2DComponentSerializer;
+import com.krnl32.jupiter.engine.serializer.components.physics.DTORigidBody2DComponentSerializer;
+import com.krnl32.jupiter.engine.serializer.components.projectile.DTOProjectileComponentSerializer;
+import com.krnl32.jupiter.engine.serializer.components.renderer.DTOCameraComponentSerializer;
+import com.krnl32.jupiter.engine.serializer.components.utility.DTOLifetimeComponentSerializer;
+import com.krnl32.jupiter.engine.serializer.components.utility.DTOTagComponentSerializer;
+import com.krnl32.jupiter.engine.serializer.components.utility.DTOUUIDComponentSerializer;
 
+// Maybe Remove this File?
 public class DefaultComponentSerializers {
 	public static void registerAll() {
 		// Utility
-		EntitySerializerRegistry.registerComponentSerializer(UUIDComponent.class, new UUIDComponentSerializer());
-		EntitySerializerRegistry.registerComponentSerializer(TagComponent.class, new TagComponentSerializer());
-		EntitySerializerRegistry.registerComponentSerializer(LifetimeComponent.class, new LifetimeComponentSerializer());
+		ComponentSerializerRegistry.register(UUIDComponent.class, new DTOUUIDComponentSerializer());
+		ComponentSerializerRegistry.register(TagComponent.class, new DTOTagComponentSerializer());
+		ComponentSerializerRegistry.register(LifetimeComponent.class, new DTOLifetimeComponentSerializer());
 
 		// Effects
-		EntitySerializerRegistry.registerComponentSerializer(BlinkComponent.class, new BlinkComponentSerializer());
-		EntitySerializerRegistry.registerComponentSerializer(DeathEffectComponent.class, new DeathEffectComponentSerializer());
-		EntitySerializerRegistry.registerComponentSerializer(ParticleComponent.class, new ParticleComponentSerializer());
+		ComponentSerializerRegistry.register(BlinkComponent.class, new DTOBlinkComponentSerializer());
+		//ComponentSerializerRegistry.register(DeathEffectComponent.class, new DeathEffectComponentSerializer());
+		ComponentSerializerRegistry.register(ParticleComponent.class, new DTOParticleComponentSerializer());
 
 		// Gameplay
-		EntitySerializerRegistry.registerComponentSerializer(TransformComponent.class, new TransformComponentSerializer());
-		EntitySerializerRegistry.registerComponentSerializer(HealthComponent.class, new HealthComponentSerializer());
-		EntitySerializerRegistry.registerComponentSerializer(TeamComponent.class, new TeamComponentSerializer());
-		EntitySerializerRegistry.registerComponentSerializer(MovementIntentComponent.class, new MovementIntentComponentSerializer());
-		EntitySerializerRegistry.registerComponentSerializer(ForceMovementComponent.class, new ForceMovementComponentSerializer());
-		EntitySerializerRegistry.registerComponentSerializer(ScriptComponent.class, new ScriptComponentSerializer());
+		ComponentSerializerRegistry.register(TransformComponent.class, new DTOTransformComponentSerializer());
+		ComponentSerializerRegistry.register(HealthComponent.class, new DTOHealthComponentSerializer());
+		ComponentSerializerRegistry.register(TeamComponent.class, new DTOTeamComponentSerializer());
+		ComponentSerializerRegistry.register(MovementIntentComponent.class, new DTOMovementIntentComponentSerializer());
+		ComponentSerializerRegistry.register(ForceMovementComponent.class, new DTOForceMovementComponentSerializer());
+		//ComponentSerializerRegistry.register(ScriptComponent.class, new ScriptComponentSerializer());
 
 		// Physics
-		EntitySerializerRegistry.registerComponentSerializer(RigidBody2DComponent.class, new RigidBody2DComponentSerializer());
-		EntitySerializerRegistry.registerComponentSerializer(BoxCollider2DComponent.class, new BoxCollider2DComponentSerializer());
-		EntitySerializerRegistry.registerComponentSerializer(CircleCollider2DComponent.class, new CircleCollider2DComponentSerializer());
+		ComponentSerializerRegistry.register(RigidBody2DComponent.class, new DTORigidBody2DComponentSerializer());
+		ComponentSerializerRegistry.register(BoxCollider2DComponent.class, new DTOBoxCollider2DComponentSerializer());
+		ComponentSerializerRegistry.register(CircleCollider2DComponent.class, new DTOCircleCollider2DComponentSerializer());
 
 		// Renderer
-		EntitySerializerRegistry.registerComponentSerializer(CameraComponent.class, new CameraComponentSerializer());
-		EntitySerializerRegistry.registerComponentSerializer(SpriteRendererComponent.class, new SpriteRendererComponentSerializer());
+		ComponentSerializerRegistry.register(CameraComponent.class, new DTOCameraComponentSerializer());
+		//ComponentSerializerRegistry.register(SpriteRendererComponent.class, new SpriteRendererComponentSerializer());
 
 		// Input
-		EntitySerializerRegistry.registerComponentSerializer(KeyboardControlComponent.class, new KeyboardControlComponentSerializer());
+		ComponentSerializerRegistry.register(KeyboardControlComponent.class, new DTOKeyboardControlComponentSerializer());
 
 		// Projectile
-		EntitySerializerRegistry.registerComponentSerializer(ProjectileComponent.class, new ProjectileComponentSerializer());
-		EntitySerializerRegistry.registerComponentSerializer(ProjectileEmitterComponent.class, new ProjectileEmitterComponentSerializer());
+		ComponentSerializerRegistry.register(ProjectileComponent.class, new DTOProjectileComponentSerializer());
+		//ComponentSerializerRegistry.register(ProjectileEmitterComponent.class, new ProjectileEmitterComponentSerializer());
 	}
 }

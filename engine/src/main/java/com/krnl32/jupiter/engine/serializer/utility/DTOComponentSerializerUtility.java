@@ -6,7 +6,7 @@ import org.joml.Vector4f;
 
 import java.util.Map;
 
-public class ComponentDTOSerializerUtility {
+public class DTOComponentSerializerUtility {
 	public static Map<String, Object> serializeVector2f(Vector2f vec) {
 		return Map.of("x", vec.x, "y", vec.y);
 	}
