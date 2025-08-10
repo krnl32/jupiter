@@ -1,5 +1,7 @@
 package com.krnl32.jupiter.editor.editor;
 
+import com.krnl32.jupiter.engine.asset.handle.AssetId;
+import com.krnl32.jupiter.engine.components.gameplay.ScriptComponent;
 import com.krnl32.jupiter.engine.components.gameplay.TransformComponent;
 import com.krnl32.jupiter.engine.components.physics.BoxCollider2DComponent;
 import com.krnl32.jupiter.engine.components.physics.CircleCollider2DComponent;
@@ -12,9 +14,12 @@ import com.krnl32.jupiter.engine.ecs.Entity;
 import com.krnl32.jupiter.engine.physics.BodyType;
 import com.krnl32.jupiter.engine.renderer.Camera;
 import com.krnl32.jupiter.engine.scene.Scene;
+import com.krnl32.jupiter.engine.script.ScriptInstance;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
+
+import java.util.UUID;
 
 public class EditorScene extends Scene {
 	public EditorScene(String name) {
@@ -38,9 +43,10 @@ public class EditorScene extends Scene {
 		entity.addComponent(new UUIDComponent());
 		entity.addComponent(new TagComponent("redBox"));
 		entity.addComponent(new TransformComponent(new Vector3f(0.0f, 0.0f, -1.0f), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(1.0f, 1.0f, 1.0f)));
-		entity.addComponent(new SpriteRendererComponent(-1, new Vector4f(1.0f, 0.0f, 0.0f, 1.0f), null));
+		entity.addComponent(new SpriteRendererComponent(-1, new Vector4f(1.0f, 0.0f, 0.0f, 1.0f), new AssetId(UUID.fromString("7d78d687-fc7b-4fe8-9a01-e12bdf3fdb16"))));
 		entity.addComponent(new RigidBody2DComponent(BodyType.DYNAMIC));
 		entity.addComponent(new BoxCollider2DComponent(new Vector2f(1.0f, 1.0f)));
+		entity.addComponent(new ScriptComponent(new ScriptInstance(new AssetId(UUID.fromString("7d78d687-fc7b-4fe8-9a01-e12bdf3fdb16")), false), new ScriptInstance(new AssetId(UUID.fromString("7d78d687-fc7b-4fe8-9a01-e12bdf3fdb16")), false)));
 
 		for (int i = 0; i < 7; i++) {
 			Entity box = createEntity();

@@ -4,6 +4,7 @@ import com.krnl32.jupiter.engine.asset.handle.AssetId;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.model.Sprite;
 import com.krnl32.jupiter.engine.project.ProjectContext;
+import com.krnl32.jupiter.engine.script.ScriptInstance;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -86,7 +87,7 @@ public class DTOComponentSerializerUtility {
 		if (data.get("textureAssetId") != null) {
 			textureAssetId = new AssetId(UUID.fromString(data.get("textureAssetId").toString()));
 			if (!ProjectContext.getInstance().getAssetManager().isAssetRegistered(textureAssetId)) {
-				Logger.error("SpriteRendererComponentSerializer Failed to Load Invalid Texture({})", textureAssetId);
+				Logger.error("DTOComponentSerializerUtility deserializeSprite Failed to Load Texture({}) Not Registered", textureAssetId);
 				return null;
 			}
 		}
@@ -97,5 +98,32 @@ public class DTOComponentSerializerUtility {
 			textureAssetId,
 			DTOComponentSerializerUtility.toFloatArray(data.get("textureUV"))
 		);
+	}
+
+	public static Map<String, Object> serializeScriptInstance(ScriptInstance scriptInstance) {
+		if (!ProjectContext.getInstance().getAssetManager().isAssetRegistered(scriptInstance.getScriptAssetId())) {
+			Logger.error("DTOComponentSerializerUtility serializeScriptInstance Failed, Script AssetId({}) Not Registered", scriptInstance.getScriptAssetId());
+			return null;
+		}
+
+		return Map.of(
+			"scriptAssetId", scriptInstance.getScriptAssetId().getId(),
+			"disabled", scriptInstance.isDisabled()
+		);
+	}
+
+	public static ScriptInstance deserializeScriptInstance(Map<String, Object> data) {
+		if (data.get("scriptAssetId") == null) {
+			Logger.error("DTOComponentSerializerUtility deserializeScriptInstance Failed, Invalid Script AssetId({})", data.get("scriptAssetId"));
+			return null;
+		}
+
+		AssetId scriptAssetId = new AssetId(UUID.fromString(data.get("scriptAssetId").toString()));
+		if (!ProjectContext.getInstance().getAssetManager().isAssetRegistered(scriptAssetId)) {
+			Logger.error("DTOComponentSerializerUtility serializeScriptInstance Failed, Script AssetId({}) Not Registered", scriptAssetId);
+			return null;
+		}
+
+		return new ScriptInstance(scriptAssetId, (boolean) data.get("disabled"));
 	}
 }

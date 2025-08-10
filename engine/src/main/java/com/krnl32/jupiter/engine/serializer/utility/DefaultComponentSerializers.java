@@ -51,7 +51,7 @@ public class DefaultComponentSerializers {
 		ComponentSerializerRegistry.register(TeamComponent.class, new DTOTeamComponentSerializer());
 		ComponentSerializerRegistry.register(MovementIntentComponent.class, new DTOMovementIntentComponentSerializer());
 		ComponentSerializerRegistry.register(ForceMovementComponent.class, new DTOForceMovementComponentSerializer());
-		//ComponentSerializerRegistry.register(ScriptComponent.class, new ScriptComponentSerializer());
+		ComponentSerializerRegistry.register(ScriptComponent.class, new DTOScriptComponentSerializer());
 
 		// Physics
 		ComponentSerializerRegistry.register(RigidBody2DComponent.class, new DTORigidBody2DComponentSerializer());

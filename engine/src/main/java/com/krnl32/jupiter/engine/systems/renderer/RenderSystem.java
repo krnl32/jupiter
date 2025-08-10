@@ -38,11 +38,16 @@ public class RenderSystem implements System {
 			TransformComponent transform = entity.getComponent(TransformComponent.class);
 			SpriteRendererComponent spriteRenderer = entity.getComponent(SpriteRendererComponent.class);
 
-			TextureAsset textureAsset = ProjectContext.getInstance().getAssetManager().getAsset(spriteRenderer.textureAssetId);
-			if (spriteRenderer.textureAssetId != null && (textureAsset == null || !textureAsset.isValid()))
-				Logger.error("RenderSystem Failed to get Texture Asset({})\n", spriteRenderer.textureAssetId);
+			Texture2D texture = null;
+			if (spriteRenderer.textureAssetId != null) {
+				TextureAsset textureAsset = ProjectContext.getInstance().getAssetManager().getAsset(spriteRenderer.textureAssetId);
+				if (spriteRenderer.textureAssetId != null && (textureAsset == null || !textureAsset.isValid())) {
+					Logger.error("RenderSystem Failed to get Texture Asset({})\n", spriteRenderer.textureAssetId);
+				}
 
-			Texture2D texture = (textureAsset != null && textureAsset.isValid()) ? textureAsset.getTexture() : null;
+				texture = (textureAsset != null && textureAsset.isValid()) ? textureAsset.getTexture() : null;
+			}
+
 			renderer.submit(new RenderSpriteCommand(new RenderPacket(spriteRenderer.index, spriteRenderer.color, texture), transform.getTransform(), spriteRenderer.textureUV));
 		}
 	}
