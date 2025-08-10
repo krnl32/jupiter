@@ -28,10 +28,10 @@ public class DTORigidBody2DComponentSerializer implements ComponentSerializer<Ri
 		return new RigidBody2DComponent(
 			BodyType.valueOf(data.get("bodyType").toString()),
 			DTOComponentSerializerUtility.deserializeVector2f((Map<String, Object>) data.get("velocity")),
-			DTOComponentSerializerUtility.convertToFloat(data.get("linearDamping")),
-			DTOComponentSerializerUtility.convertToFloat(data.get("angularDamping")),
-			DTOComponentSerializerUtility.convertToFloat(data.get("mass")),
-			DTOComponentSerializerUtility.convertToFloat(data.get("gravityScale")),
+			DTOComponentSerializerUtility.toFloat(data.get("linearDamping")),
+			DTOComponentSerializerUtility.toFloat(data.get("angularDamping")),
+			DTOComponentSerializerUtility.toFloat(data.get("mass")),
+			DTOComponentSerializerUtility.toFloat(data.get("gravityScale")),
 			(boolean) data.get("fixedRotation"),
 			(boolean) data.get("continuousCollision")
 		);

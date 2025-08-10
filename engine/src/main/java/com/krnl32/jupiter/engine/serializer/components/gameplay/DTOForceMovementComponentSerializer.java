@@ -22,11 +22,11 @@ public class DTOForceMovementComponentSerializer implements ComponentSerializer<
 	@Override
 	public ForceMovementComponent deserialize(Map<String, Object> data, EntityResolver resolver) {
 		return new ForceMovementComponent(
-			DTOComponentSerializerUtility.convertToFloat(data.get("moveForce")),
-			DTOComponentSerializerUtility.convertToFloat(data.get("sprintMultiplier")),
-			DTOComponentSerializerUtility.convertToFloat(data.get("maxSpeed")),
-			DTOComponentSerializerUtility.convertToFloat(data.get("rotationTorque")),
-			DTOComponentSerializerUtility.convertToFloat(data.get("jumpImpulse"))
+			DTOComponentSerializerUtility.toFloat(data.get("moveForce")),
+			DTOComponentSerializerUtility.toFloat(data.get("sprintMultiplier")),
+			DTOComponentSerializerUtility.toFloat(data.get("maxSpeed")),
+			DTOComponentSerializerUtility.toFloat(data.get("rotationTorque")),
+			DTOComponentSerializerUtility.toFloat(data.get("jumpImpulse"))
 		);
 	}
 }

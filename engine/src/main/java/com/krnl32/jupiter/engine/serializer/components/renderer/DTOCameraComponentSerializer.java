@@ -38,30 +38,30 @@ public class DTOCameraComponentSerializer implements ComponentSerializer<CameraC
 		Camera camera = new Camera(
 			DTOComponentSerializerUtility.deserializeVector3f((Map<String, Object>) data.get("position")),
 			DTOComponentSerializerUtility.deserializeVector3f((Map<String, Object>) data.get("worldUp")),
-			DTOComponentSerializerUtility.convertToFloat(data.get("yaw")),
-			DTOComponentSerializerUtility.convertToFloat(data.get("pitch")),
-			DTOComponentSerializerUtility.convertToFloat(data.get("roll")),
-			DTOComponentSerializerUtility.convertToFloat(data.get("zoom")),
-			DTOComponentSerializerUtility.convertToFloat(data.get("turnSpeed")),
-			DTOComponentSerializerUtility.convertToFloat(data.get("rollSpeed")),
-			DTOComponentSerializerUtility.convertToFloat(data.get("zoomSpeed")),
+			DTOComponentSerializerUtility.toFloat(data.get("yaw")),
+			DTOComponentSerializerUtility.toFloat(data.get("pitch")),
+			DTOComponentSerializerUtility.toFloat(data.get("roll")),
+			DTOComponentSerializerUtility.toFloat(data.get("zoom")),
+			DTOComponentSerializerUtility.toFloat(data.get("turnSpeed")),
+			DTOComponentSerializerUtility.toFloat(data.get("rollSpeed")),
+			DTOComponentSerializerUtility.toFloat(data.get("zoomSpeed")),
 			(boolean) data.get("mouseEnabled")
 		);
 
-		float projectionNear = DTOComponentSerializerUtility.convertToFloat(data.get("projectionNear"));
-		float projectionFar = DTOComponentSerializerUtility.convertToFloat(data.get("projectionFar"));
+		float projectionNear = DTOComponentSerializerUtility.toFloat(data.get("projectionNear"));
+		float projectionFar = DTOComponentSerializerUtility.toFloat(data.get("projectionFar"));
 
 		ProjectionType projectionType = ProjectionType.valueOf(data.get("projectionType").toString());
 		if (projectionType == ProjectionType.ORTHOGRAPHIC) {
-			float projectionSize = DTOComponentSerializerUtility.convertToFloat(data.get("projectionSize"));
+			float projectionSize = DTOComponentSerializerUtility.toFloat(data.get("projectionSize"));
 			camera.setOrthographic(projectionSize, projectionNear, projectionFar);
 		}
 		else if(projectionType == ProjectionType.PERSPECTIVE) {
-			float projectionFOV = DTOComponentSerializerUtility.convertToFloat(data.get("projectionFOV"));
+			float projectionFOV = DTOComponentSerializerUtility.toFloat(data.get("projectionFOV"));
 			camera.setPerspective(projectionFOV, projectionNear, projectionFar);
 		}
 
-		camera.setAspectRatio(DTOComponentSerializerUtility.convertToFloat(data.get("aspectRatio")));
+		camera.setAspectRatio(DTOComponentSerializerUtility.toFloat(data.get("aspectRatio")));
 
 		return new CameraComponent(camera, (boolean) data.get("primary"));
 	}

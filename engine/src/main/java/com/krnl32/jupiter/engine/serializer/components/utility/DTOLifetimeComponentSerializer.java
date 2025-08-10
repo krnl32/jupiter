@@ -15,6 +15,6 @@ public class DTOLifetimeComponentSerializer implements ComponentSerializer<Lifet
 
 	@Override
 	public LifetimeComponent deserialize(Map<String, Object> data, EntityResolver resolver) {
-		return new LifetimeComponent(DTOComponentSerializerUtility.convertToFloat(data.get("remainingTime")));
+		return new LifetimeComponent(DTOComponentSerializerUtility.toFloat(data.get("remainingTime")));
 	}
 }

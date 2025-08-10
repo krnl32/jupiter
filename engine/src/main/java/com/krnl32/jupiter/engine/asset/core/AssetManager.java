@@ -6,9 +6,11 @@ import com.krnl32.jupiter.engine.asset.handle.AssetId;
 import com.krnl32.jupiter.engine.asset.handle.AssetMetadata;
 import com.krnl32.jupiter.engine.asset.loader.AssetLoader;
 import com.krnl32.jupiter.engine.asset.loader.AssetLoaderRegistry;
+import com.krnl32.jupiter.engine.asset.registry.AssetEntry;
 import com.krnl32.jupiter.engine.asset.registry.AssetRegistry;
 import com.krnl32.jupiter.engine.core.Logger;
 
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,6 +81,21 @@ public class AssetManager {
 
 		loadedAssets.put(assetId, asset);
 		return new AssetHandle<>(assetId, this);
+	}
+
+	public boolean isAssetLoaded(AssetId assetId) {
+		return loadedAssets.containsKey(assetId);
+	}
+
+	public boolean isAssetRegistered(AssetId assetId) {
+		return assetRegistry.getAssetEntry(assetId) != null;
+	}
+
+	public Path getAssetPath(AssetId assetId) {
+		AssetEntry assetEntry = assetRegistry.getAssetEntry(assetId);
+		if (assetEntry == null)
+			return null;
+		return Path.of(assetEntry.getAssetPath());
 	}
 
 	protected void acquireAsset(AssetId assetId) {

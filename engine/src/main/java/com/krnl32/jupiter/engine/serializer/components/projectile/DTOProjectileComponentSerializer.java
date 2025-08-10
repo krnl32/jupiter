@@ -30,7 +30,7 @@ public class DTOProjectileComponentSerializer implements ComponentSerializer<Pro
 	public ProjectileComponent deserialize(Map<String, Object> data, EntityResolver resolver) {
 		return new ProjectileComponent(
 			resolver.resolve(UUID.fromString(data.get("owner").toString())),
-			DTOComponentSerializerUtility.convertToFloat(data.get("damage")),
+			DTOComponentSerializerUtility.toFloat(data.get("damage")),
 			(boolean) data.get("canHitOwner")
 		);
 	}

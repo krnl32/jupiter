@@ -21,8 +21,8 @@ public class DTOParticleComponentSerializer implements ComponentSerializer<Parti
 	public ParticleComponent deserialize(Map<String, Object> data, EntityResolver resolver) {
 		return new ParticleComponent(
 			DTOComponentSerializerUtility.deserializeVector3f((Map<String, Object>) data.get("velocity")),
-			DTOComponentSerializerUtility.convertToFloat(data.get("duration")),
-			DTOComponentSerializerUtility.convertToFloat(data.get("remainingTime"))
+			DTOComponentSerializerUtility.toFloat(data.get("duration")),
+			DTOComponentSerializerUtility.toFloat(data.get("remainingTime"))
 		);
 	}
 }

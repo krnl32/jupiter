@@ -22,10 +22,10 @@ public class DTOBlinkComponentSerializer implements ComponentSerializer<BlinkCom
 	@Override
 	public BlinkComponent deserialize(Map<String, Object> data, EntityResolver resolver) {
 		return new BlinkComponent(
-			DTOComponentSerializerUtility.convertToFloat(data.get("duration")),
-			DTOComponentSerializerUtility.convertToFloat(data.get("interval")),
-			DTOComponentSerializerUtility.convertToFloat(data.get("elapsedTime")),
-			DTOComponentSerializerUtility.convertToFloat(data.get("blinkTime")),
+			DTOComponentSerializerUtility.toFloat(data.get("duration")),
+			DTOComponentSerializerUtility.toFloat(data.get("interval")),
+			DTOComponentSerializerUtility.toFloat(data.get("elapsedTime")),
+			DTOComponentSerializerUtility.toFloat(data.get("blinkTime")),
 			(boolean) data.get("visible")
 		);
 	}

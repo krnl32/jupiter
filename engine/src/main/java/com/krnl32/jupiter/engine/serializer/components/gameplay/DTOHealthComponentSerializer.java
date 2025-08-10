@@ -19,8 +19,8 @@ public class DTOHealthComponentSerializer implements ComponentSerializer<HealthC
 	@Override
 	public HealthComponent deserialize(Map<String, Object> data, EntityResolver resolver) {
 		return new HealthComponent(
-			DTOComponentSerializerUtility.convertToFloat(data.get("maxHealth")),
-			DTOComponentSerializerUtility.convertToFloat(data.get("currentHealth"))
+			DTOComponentSerializerUtility.toFloat(data.get("maxHealth")),
+			DTOComponentSerializerUtility.toFloat(data.get("currentHealth"))
 		);
 	}
 }

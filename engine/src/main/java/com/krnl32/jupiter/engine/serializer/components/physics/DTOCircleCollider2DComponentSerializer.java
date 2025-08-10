@@ -22,10 +22,10 @@ public class DTOCircleCollider2DComponentSerializer implements ComponentSerializ
 	@Override
 	public CircleCollider2DComponent deserialize(Map<String, Object> data, EntityResolver resolver) {
 		return new CircleCollider2DComponent(
-			DTOComponentSerializerUtility.convertToFloat(data.get("radius")),
+			DTOComponentSerializerUtility.toFloat(data.get("radius")),
 			DTOComponentSerializerUtility.deserializeVector2f((Map<String, Object>) data.get("offset")),
-			DTOComponentSerializerUtility.convertToFloat(data.get("friction")),
-			DTOComponentSerializerUtility.convertToFloat(data.get("density")),
+			DTOComponentSerializerUtility.toFloat(data.get("friction")),
+			DTOComponentSerializerUtility.toFloat(data.get("density")),
 			(boolean) data.get("sensor")
 		);
 	}

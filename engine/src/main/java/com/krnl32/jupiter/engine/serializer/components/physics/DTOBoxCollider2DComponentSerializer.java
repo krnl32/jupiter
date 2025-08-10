@@ -24,8 +24,8 @@ public class DTOBoxCollider2DComponentSerializer implements ComponentSerializer<
 		return new BoxCollider2DComponent(
 			DTOComponentSerializerUtility.deserializeVector2f((Map<String, Object>) data.get("size")),
 			DTOComponentSerializerUtility.deserializeVector2f((Map<String, Object>) data.get("offset")),
-			DTOComponentSerializerUtility.convertToFloat(data.get("friction")),
-			DTOComponentSerializerUtility.convertToFloat(data.get("density")),
+			DTOComponentSerializerUtility.toFloat(data.get("friction")),
+			DTOComponentSerializerUtility.toFloat(data.get("density")),
 			(boolean) data.get("sensor")
 		);
 	}
