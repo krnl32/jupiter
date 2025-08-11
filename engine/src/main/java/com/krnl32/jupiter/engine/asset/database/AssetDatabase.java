@@ -13,14 +13,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AssetDatabase {
-	private final Map<AssetId, AssetMetadata> metadataCache = new HashMap<>();
+	private final Map<AssetId, AssetMetadata> assetIdToMetadata = new HashMap<>();
+	private final Map<String, AssetId> pathToAssetId = new HashMap<>();
 
 	public AssetMetadata getAssetMetadata(AssetId assetId) {
-		return metadataCache.get(assetId);
+		return assetIdToMetadata.get(assetId);
+	}
+
+	public AssetMetadata getAssetMetadata(String sourcePath) {
+		AssetId assetId = pathToAssetId.get(sourcePath);
+		return assetIdToMetadata.get(assetId);
 	}
 
 	public void addAssetMetadata(AssetMetadata assetMetadata) {
-		metadataCache.put(assetMetadata.getAssetId(), assetMetadata);
+		assetIdToMetadata.put(assetMetadata.getAssetId(), assetMetadata);
+		pathToAssetId.put(assetMetadata.getSourcePath(), assetMetadata.getAssetId());
 	}
 
 	public void loadFromDisk(Path assetDatabaseDirPath) {
@@ -32,7 +39,8 @@ public class AssetDatabase {
 					try {
 						JSONObject metadata = new JSONObject(FileIO.readFileContent(metadataFile.getAbsolutePath()));
 						AssetMetadata assetMetadata = AssetMetadataSerializer.deserialize(metadata);;
-						metadataCache.put(assetMetadata.getAssetId(), assetMetadata);
+						assetIdToMetadata.put(assetMetadata.getAssetId(), assetMetadata);
+						pathToAssetId.put(assetMetadata.getSourcePath(), assetMetadata.getAssetId());
 					} catch (Exception e) {
 						Logger.error("AssetDatabase LoadFromDisk Failed to Load Asset({}): {}", metadataFile.getName(), e.getMessage());
 					}

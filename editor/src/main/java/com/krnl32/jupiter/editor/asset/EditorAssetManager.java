@@ -86,9 +86,13 @@ public class EditorAssetManager implements AssetManager {
 		assetReferenceManager.release(assetId);
 	}
 
-	public <T extends Asset> T getAsset(Path assetPath) {
-		AssetId assetId = assetRegistry.getAssetId(assetPath.toString());
-		return getAsset(assetId);
+	public <T extends Asset> T getAsset(String sourcePath) {
+		AssetMetadata assetMetadata = assetDatabase.getAssetMetadata(sourcePath);
+		if (assetMetadata == null) {
+			Logger.error("EditorAssetManager Failed to Get Asset({}): No AssetMetadata Found", sourcePath);
+			return null;
+		}
+		return getAsset(assetMetadata.getAssetId());
 	}
 
 	public Path getAssetPath(AssetId assetId) {

@@ -70,37 +70,25 @@ public class ProjectSerializer {
 		return new JSONObject()
 			.put("asset", projectPaths.getAssetPath())
 			.put("assetRegistry", projectPaths.getAssetRegistryPath())
-			.put("assetDatabase", projectPaths.getAssetDatabasePath())
-
-			.put("shader", projectPaths.getShaderPath())
-			.put("scene", projectPaths.getScenePath())
-			.put("spritesheet", projectPaths.getSpritesheetPath())
-			.put("font", projectPaths.getFontPath())
-			.put("script", projectPaths.getScriptPath());
+			.put("assetDatabase", projectPaths.getAssetDatabasePath());
 	}
 
 	private static ProjectPaths deserializeProjectPaths(JSONObject projectPathsData) throws JSONException {
 		return new ProjectPaths(
 			projectPathsData.getString("asset"),
 			projectPathsData.getString("assetRegistry"),
-			projectPathsData.getString("assetDatabase"),
-
-			projectPathsData.getString("shader"),
-			projectPathsData.getString("scene"),
-			projectPathsData.getString("spritesheet"),
-			projectPathsData.getString("font"),
-			projectPathsData.getString("script")
+			projectPathsData.getString("assetDatabase")
 		);
 	}
 
 	private static JSONObject serializeProjectStartup(ProjectStartup projectStartup) {
 		return new JSONObject()
-			.put("scene", projectStartup.getSceneName());
+			.put("scenePath", projectStartup.getScenePath());
 	}
 
 	private static ProjectStartup deserializeProjectStartup(JSONObject projectStartupData) {
 		return new ProjectStartup(
-			projectStartupData.optString("scene", "")
+			projectStartupData.optString("scenePath", "")
 		);
 	}
 

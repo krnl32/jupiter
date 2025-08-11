@@ -71,14 +71,12 @@ import com.krnl32.jupiter.engine.renderer.FrameBufferAttachmentFormat;
 import com.krnl32.jupiter.engine.renderer.Framebuffer;
 import com.krnl32.jupiter.engine.renderer.ProjectionType;
 import com.krnl32.jupiter.engine.renderer.Renderer;
-import com.krnl32.jupiter.engine.scene.Scene;
 import com.krnl32.jupiter.engine.scene.SceneManager;
 import com.krnl32.jupiter.engine.serializer.utility.DTOComponentSerializers;
 import com.krnl32.jupiter.engine.utility.FileIO;
 import org.joml.Vector4f;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -127,33 +125,22 @@ public class Editor extends Engine {
 		// Setup Scene
 		sceneManager = new SceneManager();
 
-		if (ProjectContext.getInstance().getProject().getStartup().getSceneName() != null && !ProjectContext.getInstance().getProject().getStartup().getSceneName().isEmpty()) {
-			String scenePath = ProjectContext.getInstance().getProjectDirectory() + "/" + ProjectContext.getInstance().getProject().getPaths().getScenePath() + "/" + ProjectContext.getInstance().getProject().getStartup().getSceneName();
-
-			try {
-				// must be registered as asset?
-				// then assetManager get by path
-				Scene startupScene = sceneSerializer.deserialize(new JSONObject(FileIO.readFileContent(scenePath)));
-				if (startupScene == null) {
-					Logger.critical("Editor Failed to Deserialize Startup Scene({})", scenePath);
-					return false;
-				}
-
-				currentSceneName = ProjectContext.getInstance().getProject().getStartup().getSceneName();
-				sceneManager.addScene(currentSceneName, startupScene);
-				sceneManager.switchScene(currentSceneName);
-			} catch (IOException e) {
-				Logger.critical("Editor Failed to Deserialize Startup Scene({}), File Doesn't Exist", scenePath);
+		String startupScenePath = ProjectContext.getInstance().getProject().getStartup().getScenePath();
+		if (startupScenePath != null && !startupScenePath.isEmpty()) {
+			SceneAsset sceneAsset = ((EditorAssetManager) ProjectContext.getInstance().getAssetManager()).getAsset(startupScenePath);
+			if (sceneAsset == null) {
+				Logger.critical("Editor Failed to Load Startup Scene({})", startupScenePath);
 				return false;
 			}
+
+			currentSceneName = sceneAsset.getScene().getName();
+			sceneManager.addScene(currentSceneName, sceneAsset.getScene());
+			sceneManager.switchScene(currentSceneName);
 		} else {
-			currentSceneName = "editor";
-			sceneManager.addScene(currentSceneName, new EditorScene());
+			currentSceneName = "Sandbox";
+			sceneManager.addScene(currentSceneName, new EditorScene(currentSceneName));
 			sceneManager.switchScene(currentSceneName);
 		}
-		currentSceneName = "editor";
-		sceneManager.addScene(currentSceneName, new EditorSceneTmp("EditorSceneTMP"));
-		sceneManager.switchScene(currentSceneName);
 
 		// FrameBuffer
 		framebuffer = new Framebuffer(getWindow().getWidth(), getWindow().getHeight(), List.of(FrameBufferAttachmentFormat.RGBA8, FrameBufferAttachmentFormat.RED_INTEGER));
@@ -206,6 +193,45 @@ public class Editor extends Engine {
 	private void stop() {
 		sceneManager.switchScene(currentSceneName);
 		editorState = EditorState.STOP;
+	}
+
+	private void registerAssetSerializers() {
+		AssetSerializerRegistry.register(AssetType.SCENE, SceneAsset.class, new JSONDTOSceneAssetSerializer());
+	}
+
+	private void registerAssetLoaders() {
+		AssetLoaderRegistry.register(AssetType.TEXTURE, TextureAsset.class, new PlainTextureAssetLoader());
+		AssetLoaderRegistry.register(AssetType.SCENE, SceneAsset.class, new DTOSceneAssetLoader());
+	}
+
+	private void registerECSComponentSerializers() {
+		DTOComponentSerializers.registerAll();
+	}
+
+	private boolean loadProject(Path projectDirectory) {
+		Project project = ProjectLoader.load(projectDirectory);
+		if (project == null) {
+			Logger.error("Editor Failed to Load Project({})", projectDirectory);
+			return false;
+		}
+
+		try {
+			// Setup Asset Manager
+			Path assetRegistryPath = projectDirectory.resolve(project.getPaths().getAssetRegistryPath());
+			JSONObject assetRegistryData = new JSONObject(FileIO.readFileContent(assetRegistryPath));
+			AssetRegistry assetRegistry = AssetRegistrySerializer.deserialize(assetRegistryData);
+
+			Path assetDatabasePath = projectDirectory.resolve(project.getPaths().getAssetDatabasePath());
+			AssetDatabase assetDatabase = new AssetDatabase();
+			assetDatabase.loadFromDisk(assetDatabasePath);
+
+			ProjectContext.init(projectDirectory, project, new EditorAssetManager(assetRegistry, assetDatabase));
+		} catch (Exception e) {
+			Logger.error("Editor Failed to Load Project({}): {}", projectDirectory, e.getMessage());
+			return false;
+		}
+
+		return true;
 	}
 
 	private void registerComponentFactories() {
@@ -273,44 +299,5 @@ public class Editor extends Engine {
 		RendererRegistry.registerComponentRenderer(UUIDComponent.class, new UUIDComponentRenderer());
 		RendererRegistry.registerComponentRenderer(TagComponent.class, new TagComponentRenderer());
 		RendererRegistry.registerComponentRenderer(LifetimeComponent.class, new LifetimeComponentRenderer());
-	}
-
-	private boolean loadProject(Path projectDirectory) {
-		Project project = ProjectLoader.load(projectDirectory);
-		if (project == null) {
-			Logger.error("Editor Failed to Load Project({})", projectDirectory);
-			return false;
-		}
-
-		try {
-			// Setup Asset Manager
-			Path assetRegistryPath = projectDirectory.resolve(project.getPaths().getAssetRegistryPath());
-			JSONObject assetRegistryData = new JSONObject(FileIO.readFileContent(assetRegistryPath));
-			AssetRegistry assetRegistry = AssetRegistrySerializer.deserialize(assetRegistryData);
-
-			Path assetDatabasePath = projectDirectory.resolve(project.getPaths().getAssetDatabasePath());
-			AssetDatabase assetDatabase = new AssetDatabase();
-			assetDatabase.loadFromDisk(assetDatabasePath);
-
-			ProjectContext.init(projectDirectory, project, new EditorAssetManager(assetRegistry, assetDatabase));
-		} catch (Exception e) {
-			Logger.error("Editor Failed to Load Project({}): {}", projectDirectory, e.getMessage());
-			return false;
-		}
-
-		return true;
-	}
-
-	private void registerAssetSerializers() {
-		AssetSerializerRegistry.register(AssetType.SCENE, SceneAsset.class, new JSONDTOSceneAssetSerializer());
-	}
-
-	private void registerAssetLoaders() {
-		AssetLoaderRegistry.register(AssetType.TEXTURE, TextureAsset.class, new PlainTextureAssetLoader());
-		AssetLoaderRegistry.register(AssetType.SCENE, SceneAsset.class, new DTOSceneAssetLoader());
-	}
-
-	private void registerECSComponentSerializers() {
-		DTOComponentSerializers.registerAll();
 	}
 }

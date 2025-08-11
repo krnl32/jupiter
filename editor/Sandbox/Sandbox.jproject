@@ -14,16 +14,10 @@
 	"paths": {
 		"asset": "Assets",
 		"assetRegistry": "Assets/Sandbox.jregistry",
-		"assetDatabase": "Assets/.jmetadata",
-
-		"shader": "Assets/Shaders",
-		"scene": "Assets/Scenes",
-		"spritesheet": "Assets/Spritesheets",
-		"font": "Assets/Fonts",
-		"script": "Assets/Scripts"
+		"assetDatabase": "Assets/.jmetadata"
 	},
 	"startup": {
-		"scene": "Sandbox.jscene"
+		"scenePath": "Scenes/Sandbox.jscene.json"
 	},
 	"metadata": {
 		"uuid": "375987eb-8d8a-48b7-9223-e44ad050707f",

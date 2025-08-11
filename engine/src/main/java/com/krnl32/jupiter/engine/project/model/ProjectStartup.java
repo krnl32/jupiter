@@ -1,20 +1,20 @@
 package com.krnl32.jupiter.engine.project.model;
 
 public final class ProjectStartup {
-	private final String sceneName;
+	private final String scenePath;
 
-	public ProjectStartup(String sceneName) {
-		this.sceneName = sceneName;
+	public ProjectStartup(String scenePath) {
+		this.scenePath = scenePath;
 	}
 
-	public String getSceneName() {
-		return sceneName;
+	public String getScenePath() {
+		return scenePath;
 	}
 
 	@Override
 	public String toString() {
 		return "ProjectStartup{" +
-			"sceneName='" + sceneName + '\'' +
+			"scenePath='" + scenePath + '\'' +
 			'}';
 	}
 }
