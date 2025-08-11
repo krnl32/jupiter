@@ -5,7 +5,6 @@ import com.krnl32.jupiter.engine.events.window.WindowCloseEvent;
 import com.krnl32.jupiter.engine.input.InputActionSystem;
 import com.krnl32.jupiter.engine.input.InputDeviceSystem;
 import com.krnl32.jupiter.engine.renderer.*;
-import com.krnl32.jupiter.engine.serializer.utility.DefaultComponentSerializers;
 import com.krnl32.jupiter.engine.utility.FileIO;
 import com.krnl32.jupiter.engine.utility.Timer;
 import org.joml.Matrix4f;
@@ -15,9 +14,9 @@ public abstract class Engine {
 	private Window window;
 	private Renderer renderer;
 
-	public Engine(String name, int width, int height) {
+	public Engine(EngineSettings settings) {
 		running = false;
-		window = new Window(name, width, height);
+		window = new Window(settings.getWindowSettings());
 
 		// Setup Renderer
 		renderer = new Renderer();
@@ -31,9 +30,6 @@ public abstract class Engine {
 	}
 
 	public void run() {
-		// Register ECS Component Serializers
-		DefaultComponentSerializers.registerAll();
-
 		if(!onInit()) {
 			Logger.critical("Failed to run onInit");
 			return;

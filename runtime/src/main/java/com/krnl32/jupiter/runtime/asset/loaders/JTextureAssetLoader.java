@@ -1,34 +1,34 @@
-package com.krnl32.jupiter.engine.asset.loader.types;
+package com.krnl32.jupiter.runtime.asset.loaders;
 
-import com.krnl32.jupiter.engine.asset.handle.AssetMetadata;
+import com.krnl32.jupiter.engine.asset.handle.AssetDescriptor;
 import com.krnl32.jupiter.engine.asset.loader.AssetLoader;
 import com.krnl32.jupiter.engine.asset.serializer.AssetSerializer;
 import com.krnl32.jupiter.engine.asset.serializer.AssetSerializerRegistry;
-import com.krnl32.jupiter.engine.asset.serializer.model.jtexture.JTexture;
-import com.krnl32.jupiter.engine.asset.serializer.model.jtexture.JTextureHeader;
 import com.krnl32.jupiter.engine.asset.types.TextureAsset;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.project.ProjectContext;
 import com.krnl32.jupiter.engine.renderer.texture.TextureSettings;
 import com.krnl32.jupiter.engine.utility.FileIO;
+import com.krnl32.jupiter.runtime.model.jtexture.JTexture;
+import com.krnl32.jupiter.runtime.model.jtexture.JTextureHeader;
 
 import java.nio.file.Path;
 
 public class JTextureAssetLoader implements AssetLoader<TextureAsset> {
 	@Override
-	public TextureAsset load(AssetMetadata assetMetadata) {
+	public TextureAsset load(AssetDescriptor assetDescriptor) {
 		try {
-			AssetSerializer<TextureAsset, JTexture> assetSerializer = AssetSerializerRegistry.getSerializer(assetMetadata.getAssetType());
+			AssetSerializer<TextureAsset, JTexture> assetSerializer = AssetSerializerRegistry.getSerializer(assetDescriptor.getAssetType());
 			if (assetSerializer == null) {
-				Logger.error("JTextureAssetLoader Failed to Load Asset({}): No Serializer for Type({})", assetMetadata.getAssetId(), assetMetadata.getAssetType());
+				Logger.error("JTextureAssetLoader Failed to Load Asset({}): No Serializer for Type({})", assetDescriptor.getAssetId(), assetDescriptor.getAssetType());
 				return null;
 			}
 
-			Path assetPath = ProjectContext.getInstance().getAssetDirectory().resolve(assetMetadata.getAssetPath());
+			Path assetPath = ProjectContext.getInstance().getAssetDirectory().resolve(assetDescriptor.getAssetPath());
 			byte[] assetData = FileIO.readFileContentBytes(assetPath);
 			JTexture jTexture = assetSerializer.deserialize(assetData);
 			if (jTexture == null) {
-				Logger.error("JTextureAssetLoader AssetSerializer Failed to Deserialize Asset({})", assetMetadata.getAssetId());
+				Logger.error("JTextureAssetLoader AssetSerializer Failed to Deserialize Asset({})", assetDescriptor.getAssetId());
 				return null;
 			}
 
@@ -48,9 +48,9 @@ public class JTextureAssetLoader implements AssetLoader<TextureAsset> {
 				jHeader.getFlags()
 			);
 
-			return new TextureAsset(assetMetadata.getAssetId(), settings, jTexture.getData());
+			return new TextureAsset(assetDescriptor.getAssetId(), settings, jTexture.getData());
 		} catch (Exception e) {
-			Logger.error("JTextureAssetLoader Failed to Load Asset({}): {}", assetMetadata.getAssetId(), e.getMessage());
+			Logger.error("JTextureAssetLoader Failed to Load Asset({}): {}", assetDescriptor.getAssetId(), e.getMessage());
 			return null;
 		}
 	}

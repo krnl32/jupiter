@@ -1,7 +1,9 @@
 package com.krnl32.jupiter.editor;
 
 import com.krnl32.jupiter.editor.editor.Editor;
+import com.krnl32.jupiter.engine.core.EngineSettings;
 import com.krnl32.jupiter.engine.core.Logger;
+import com.krnl32.jupiter.engine.core.WindowSettings;
 import org.apache.commons.cli.*;
 
 import java.nio.file.Path;
@@ -24,7 +26,7 @@ public class Main {
 		if (cmd.hasOption("launch")) {
 			String projectDirectoryPath = cmd.getOptionValue("launch");
 			Logger.info("Jupiter Editor Launching({})...", projectDirectoryPath);
-			Editor editor = new Editor("JupiterEditor", 1920, 1080, Path.of(projectDirectoryPath));
+			Editor editor = new Editor(new EngineSettings(new WindowSettings("JupiterEditor", 1920, 1080, true)), Path.of(projectDirectoryPath));
 			editor.run();
 		} else {
 			new HelpFormatter().printHelp("editor", options);

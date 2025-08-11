@@ -1,112 +1,11 @@
 package com.krnl32.jupiter.engine.asset.core;
 
-import com.krnl32.jupiter.engine.asset.database.AssetDatabase;
 import com.krnl32.jupiter.engine.asset.handle.Asset;
 import com.krnl32.jupiter.engine.asset.handle.AssetId;
-import com.krnl32.jupiter.engine.asset.handle.AssetMetadata;
-import com.krnl32.jupiter.engine.asset.loader.AssetLoader;
-import com.krnl32.jupiter.engine.asset.loader.AssetLoaderRegistry;
-import com.krnl32.jupiter.engine.asset.registry.AssetEntry;
-import com.krnl32.jupiter.engine.asset.registry.AssetRegistry;
-import com.krnl32.jupiter.engine.core.Logger;
 
-import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
-
-public class AssetManager {
-	private final Map<AssetId, Asset> loadedAssets;
-	private final AssetReferenceManager assetReferenceManager;
-	private final AssetRegistry assetRegistry;
-	private final AssetDatabase assetDatabase;
-
-	public AssetManager(AssetRegistry assetRegistry, AssetDatabase assetDatabase) {
-		this.loadedAssets = new HashMap<>();
-		this.assetReferenceManager = new AssetReferenceManager();
-		this.assetRegistry = assetRegistry;
-		this.assetDatabase = assetDatabase;
-	}
-
-	public <T extends Asset> T getAsset(AssetId assetId) {
-		if (loadedAssets.containsKey(assetId)) {
-			assetReferenceManager.acquire(assetId);
-			return (T) loadedAssets.get(assetId);
-		}
-
-		AssetMetadata assetMetadata = assetDatabase.getAssetMetadata(assetId);
-		if (assetMetadata == null) {
-			Logger.error("AssetManager Failed to Get Asset({}): No AssetMetadata Found", assetId);
-			return null;
-		}
-
-		AssetLoader assetLoader = AssetLoaderRegistry.getLoader(assetMetadata.getAssetType());
-		if (assetLoader == null) {
-			Logger.error("AssetManager Get Asset({}) Failed: No AssetLoader Found For Type({})", assetMetadata.getAssetId(), assetMetadata.getAssetType());
-			return null;
-		}
-
-		Asset asset = assetLoader.load(assetMetadata);
-		if (asset == null) {
-			Logger.error("AssetManager Get Asset({}) Failed: AssetLoader({}) Failed", assetMetadata.getAssetId(), assetMetadata.getAssetType());
-			return null;
-		}
-
-		loadedAssets.put(assetId, asset);
-		assetReferenceManager.acquire(assetId);
-		return (T) asset;
-	}
-
-	public <T extends Asset> AssetHandle<T> getAssetHandle(AssetId assetId) {
-		if (loadedAssets.containsKey(assetId)) {
-			return new AssetHandle<>(assetId, this);
-		}
-
-		AssetMetadata assetMetadata = assetDatabase.getAssetMetadata(assetId);
-		if (assetMetadata == null) {
-			Logger.error("AssetManager Failed to Get Asset({}): No AssetMetadata Found", assetId);
-			return null;
-		}
-
-		AssetLoader assetLoader = AssetLoaderRegistry.getLoader(assetMetadata.getAssetType());
-		if (assetLoader == null) {
-			Logger.error("AssetManager Get Asset({}) Failed: No AssetLoader Found For Type({})", assetMetadata.getAssetId(), assetMetadata.getAssetType());
-			return null;
-		}
-
-		Asset asset = assetLoader.load(assetMetadata);
-		if (asset == null) {
-			Logger.error("AssetManager Get Asset({}) Failed: AssetLoader({}) Failed", assetMetadata.getAssetId(), assetMetadata.getAssetType());
-			return null;
-		}
-
-		loadedAssets.put(assetId, asset);
-		return new AssetHandle<>(assetId, this);
-	}
-
-	public boolean isAssetLoaded(AssetId assetId) {
-		return loadedAssets.containsKey(assetId);
-	}
-
-	public boolean isAssetRegistered(AssetId assetId) {
-		return assetRegistry.getAssetEntry(assetId) != null;
-	}
-
-	public Path getAssetPath(AssetId assetId) {
-		AssetEntry assetEntry = assetRegistry.getAssetEntry(assetId);
-		if (assetEntry == null)
-			return null;
-		return Path.of(assetEntry.getAssetPath());
-	}
-
-	protected void acquireAsset(AssetId assetId) {
-		assetReferenceManager.acquire(assetId);
-	}
-
-	protected void releaseAsset(AssetId assetId) {
-		assetReferenceManager.release(assetId);
-	}
-
-	protected <T extends Asset> T getLoadedAsset(AssetId assetId) {
-		return (T) loadedAssets.get(assetId);
-	}
+public interface AssetManager {
+	<T extends Asset> T getAsset(AssetId assetId);
+	boolean isAssetLoaded(AssetId assetId);
+	boolean isAssetRegistered(AssetId assetId);
+	void unloadAsset(AssetId assetId);
 }

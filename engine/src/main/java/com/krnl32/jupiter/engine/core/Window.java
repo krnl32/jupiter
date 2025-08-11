@@ -16,16 +16,15 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Window {
-	private String title;
-	private int width;
-	private int height;
+	private WindowSettings settings;
 	private long window;
 
-	public Window(String title, int width, int height) {
-		this.title = title;
-		this.width = width;
-		this.height = height;
-		init();
+	public Window(WindowSettings settings) {
+		this.settings = settings;
+		if (!init()) {
+			Logger.critical("Window Failed to init");
+			return;
+		}
 		setupEvents();
 	}
 
@@ -43,29 +42,31 @@ public class Window {
 		}
 	}
 
-	public String getTitle() {
-		return title;
+	public String getName() {
+		return settings.getName();
 	}
 
 	public int getWidth() {
-		return width;
+		return settings.getWidth();
 	}
 
 	public int getHeight() {
-		return height;
+		return settings.getHeight();
 	}
 
 	public long getNativeWindow() {
 		return window;
 	}
 
-	private void init() {
+	private boolean init() {
 		Logger.info("LWJGL Version: {}", Version.getVersion());
 
 		GLFWErrorCallback.createPrint(System.err).set();
 
-		if (!glfwInit())
+		if (!glfwInit()) {
 			Logger.critical("Unable to initialize GLFW");
+			return false;
+		}
 
 		glfwDefaultWindowHints();
 		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
@@ -75,15 +76,18 @@ public class Window {
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 		glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
 
-		window = glfwCreateWindow(width, height, title, NULL, NULL);
-		if (window == NULL)
+		window = glfwCreateWindow(settings.getWidth(), settings.getHeight(), settings.getName(), NULL, NULL);
+		if (window == NULL) {
 			Logger.critical("Failed to create the GLFW window");
+			return false;
+		}
 
 		glfwMakeContextCurrent(window);
-		glfwSwapInterval(1);
+		glfwSwapInterval(settings.isVSync() ? 1 : 0);
 
 		glfwShowWindow(window);
 		GL.createCapabilities();
+		return true;
 	}
 
 	private void setupEvents() {
@@ -92,8 +96,8 @@ public class Window {
 		});
 
 		glfwSetWindowSizeCallback(window, (window, width, height) -> {
-			this.width = width;
-			this.height = height;
+			settings.setWidth(width);
+			settings.setHeight(height);
 			EventBus.getInstance().emit(new WindowResizeEvent(width, height));
 		});
 

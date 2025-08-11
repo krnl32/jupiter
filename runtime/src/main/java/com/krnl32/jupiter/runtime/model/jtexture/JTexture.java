@@ -1,4 +1,4 @@
-package com.krnl32.jupiter.engine.asset.serializer.model.jtexture;
+package com.krnl32.jupiter.runtime.model.jtexture;
 
 import java.util.Arrays;
 import java.util.Objects;

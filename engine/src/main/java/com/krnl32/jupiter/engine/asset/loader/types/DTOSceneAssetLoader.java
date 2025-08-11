@@ -1,6 +1,6 @@
 package com.krnl32.jupiter.engine.asset.loader.types;
 
-import com.krnl32.jupiter.engine.asset.handle.AssetMetadata;
+import com.krnl32.jupiter.engine.asset.handle.AssetDescriptor;
 import com.krnl32.jupiter.engine.asset.loader.AssetLoader;
 import com.krnl32.jupiter.engine.asset.serializer.AssetSerializer;
 import com.krnl32.jupiter.engine.asset.serializer.AssetSerializerRegistry;
@@ -26,21 +26,21 @@ import java.util.UUID;
 
 public class DTOSceneAssetLoader implements AssetLoader<SceneAsset> {
 	@Override
-	public SceneAsset load(AssetMetadata assetMetadata) {
+	public SceneAsset load(AssetDescriptor assetDescriptor) {
 		try {
-			AssetSerializer<SceneAsset, SceneDTO> assetSerializer = AssetSerializerRegistry.getSerializer(assetMetadata.getAssetType());
+			AssetSerializer<SceneAsset, SceneDTO> assetSerializer = AssetSerializerRegistry.getSerializer(assetDescriptor.getAssetType());
 			if (assetSerializer == null) {
-				Logger.error("SceneAssetDTOLoader Failed to Load Asset({}): No Serializer for Type({})", assetMetadata.getAssetId(), assetMetadata.getAssetType());
+				Logger.error("SceneAssetDTOLoader Failed to Load Asset({}): No Serializer for Type({})", assetDescriptor.getAssetId(), assetDescriptor.getAssetType());
 				return null;
 			}
 
 			// Get Raw Asset Data
-			Path assetPath = ProjectContext.getInstance().getAssetDirectory().resolve(assetMetadata.getSourcePath());
+			Path assetPath = ProjectContext.getInstance().getAssetDirectory().resolve(assetDescriptor.getAssetPath());
 			byte[] assetRawData = FileIO.readFileContentBytes(assetPath);
 
 			SceneDTO sceneDTO = assetSerializer.deserialize(assetRawData);
 			if (sceneDTO == null) {
-				Logger.error("SceneAssetDTOLoader AssetSerializer Failed to Deserialize Asset({})", assetMetadata.getAssetId());
+				Logger.error("SceneAssetDTOLoader AssetSerializer Failed to Deserialize Asset({})", assetDescriptor.getAssetId());
 				return null;
 			}
 
@@ -90,9 +90,9 @@ public class DTOSceneAssetLoader implements AssetLoader<SceneAsset> {
 				loadEntityDTO(entityDTO, uuidToEntity, resolver);
 			});
 
-			return new SceneAsset(assetMetadata.getAssetId(), scene);
+			return new SceneAsset(assetDescriptor.getAssetId(), scene);
 		} catch (Exception e) {
-			Logger.error("SceneAssetDTOLoader Failed to Load Asset({}): {}", assetMetadata.getAssetId(), e.getMessage());
+			Logger.error("SceneAssetDTOLoader Failed to Load Asset({}): {}", assetDescriptor.getAssetId(), e.getMessage());
 			return null;
 		}
 }

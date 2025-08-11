@@ -39,7 +39,6 @@ dependencies {
 	api("org.joml:joml:$jomlVersion")
 	api("org.json:json:20250517")
 	api("commons-cli:commons-cli:1.9.0")
-	implementation("com.fasterxml.jackson.core:jackson-databind:2.19.2")
 
 	// Thirdparty
 	implementation(files("${rootProject.projectDir}/thirdparty/jbox2d-library.jar"))

@@ -33,7 +33,7 @@ import com.krnl32.jupiter.engine.serializer.components.utility.DTOTagComponentSe
 import com.krnl32.jupiter.engine.serializer.components.utility.DTOUUIDComponentSerializer;
 
 // Maybe Remove this File?
-public class DefaultComponentSerializers {
+public class DTOComponentSerializers {
 	public static void registerAll() {
 		// Utility
 		ComponentSerializerRegistry.register(UUIDComponent.class, new DTOUUIDComponentSerializer());
@@ -68,5 +68,41 @@ public class DefaultComponentSerializers {
 		// Projectile
 		ComponentSerializerRegistry.register(ProjectileComponent.class, new DTOProjectileComponentSerializer());
 		ComponentSerializerRegistry.register(ProjectileEmitterComponent.class, new DTOProjectileEmitterComponentSerializer());
+	}
+
+	public static void unregisterAll() {
+		// Utility
+		ComponentSerializerRegistry.unregister(UUIDComponent.class);
+		ComponentSerializerRegistry.unregister(TagComponent.class);
+		ComponentSerializerRegistry.unregister(LifetimeComponent.class);
+
+		// Effects
+		ComponentSerializerRegistry.unregister(BlinkComponent.class);
+		ComponentSerializerRegistry.unregister(DeathEffectComponent.class);
+		ComponentSerializerRegistry.unregister(ParticleComponent.class);
+
+		// Gameplay
+		ComponentSerializerRegistry.unregister(TransformComponent.class);
+		ComponentSerializerRegistry.unregister(HealthComponent.class);
+		ComponentSerializerRegistry.unregister(TeamComponent.class);
+		ComponentSerializerRegistry.unregister(MovementIntentComponent.class);
+		ComponentSerializerRegistry.unregister(ForceMovementComponent.class);
+		ComponentSerializerRegistry.unregister(ScriptComponent.class);
+
+		// Physics
+		ComponentSerializerRegistry.unregister(RigidBody2DComponent.class);
+		ComponentSerializerRegistry.unregister(BoxCollider2DComponent.class);
+		ComponentSerializerRegistry.unregister(CircleCollider2DComponent.class);
+
+		// Renderer
+		ComponentSerializerRegistry.unregister(CameraComponent.class);
+		ComponentSerializerRegistry.unregister(SpriteRendererComponent.class);
+
+		// Input
+		ComponentSerializerRegistry.unregister(KeyboardControlComponent.class);
+
+		// Projectile
+		ComponentSerializerRegistry.unregister(ProjectileComponent.class);
+		ComponentSerializerRegistry.unregister(ProjectileEmitterComponent.class);
 	}
 }

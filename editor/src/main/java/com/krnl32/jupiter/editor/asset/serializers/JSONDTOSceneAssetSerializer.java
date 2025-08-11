@@ -1,4 +1,4 @@
-package com.krnl32.jupiter.engine.asset.serializer.types;
+package com.krnl32.jupiter.editor.asset.serializers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JSONSceneAssetSerializer implements AssetSerializer<SceneAsset, SceneDTO> {
+public class JSONDTOSceneAssetSerializer implements AssetSerializer<SceneAsset, SceneDTO> {
 	@Override
 	public byte[] serialize(SceneAsset asset) {
 		SceneDTO sceneDTO = new SceneDTO();

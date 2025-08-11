@@ -1,11 +1,11 @@
-package com.krnl32.jupiter.engine.asset.serializer.types;
+package com.krnl32.jupiter.runtime.asset.serializers;
 
 import com.krnl32.jupiter.engine.asset.serializer.AssetSerializer;
-import com.krnl32.jupiter.engine.asset.serializer.model.jtexture.JTexture;
-import com.krnl32.jupiter.engine.asset.serializer.model.jtexture.JTextureHeader;
 import com.krnl32.jupiter.engine.asset.types.TextureAsset;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.renderer.texture.*;
+import com.krnl32.jupiter.runtime.model.jtexture.JTexture;
+import com.krnl32.jupiter.runtime.model.jtexture.JTextureHeader;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

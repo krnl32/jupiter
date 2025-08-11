@@ -1,5 +1,8 @@
 package com.krnl32.jupiter.editor.editor;
 
+import com.krnl32.jupiter.editor.asset.EditorAssetManager;
+import com.krnl32.jupiter.editor.asset.loaders.PlainTextureAssetLoader;
+import com.krnl32.jupiter.editor.asset.serializers.JSONDTOSceneAssetSerializer;
 import com.krnl32.jupiter.editor.events.editor.EditorPauseEvent;
 import com.krnl32.jupiter.editor.events.editor.EditorPlayEvent;
 import com.krnl32.jupiter.editor.events.editor.EditorStopEvent;
@@ -33,15 +36,14 @@ import com.krnl32.jupiter.editor.renderer.components.renderer.SpriteRendererComp
 import com.krnl32.jupiter.editor.renderer.components.utility.LifetimeComponentRenderer;
 import com.krnl32.jupiter.editor.renderer.components.utility.TagComponentRenderer;
 import com.krnl32.jupiter.editor.renderer.components.utility.UUIDComponentRenderer;
-import com.krnl32.jupiter.engine.asset.core.AssetManager;
 import com.krnl32.jupiter.engine.asset.database.AssetDatabase;
 import com.krnl32.jupiter.engine.asset.handle.AssetType;
 import com.krnl32.jupiter.engine.asset.loader.AssetLoaderRegistry;
-import com.krnl32.jupiter.engine.asset.loader.types.JTextureAssetLoader;
+import com.krnl32.jupiter.engine.asset.loader.types.DTOSceneAssetLoader;
 import com.krnl32.jupiter.engine.asset.registry.AssetRegistry;
 import com.krnl32.jupiter.engine.asset.registry.AssetRegistrySerializer;
 import com.krnl32.jupiter.engine.asset.serializer.AssetSerializerRegistry;
-import com.krnl32.jupiter.engine.asset.serializer.types.JTextureAssetSerializer;
+import com.krnl32.jupiter.engine.asset.types.SceneAsset;
 import com.krnl32.jupiter.engine.asset.types.TextureAsset;
 import com.krnl32.jupiter.engine.components.effects.BlinkComponent;
 import com.krnl32.jupiter.engine.components.effects.DeathEffectComponent;
@@ -59,6 +61,7 @@ import com.krnl32.jupiter.engine.components.utility.LifetimeComponent;
 import com.krnl32.jupiter.engine.components.utility.TagComponent;
 import com.krnl32.jupiter.engine.components.utility.UUIDComponent;
 import com.krnl32.jupiter.engine.core.Engine;
+import com.krnl32.jupiter.engine.core.EngineSettings;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.event.EventBus;
 import com.krnl32.jupiter.engine.project.ProjectContext;
@@ -70,11 +73,12 @@ import com.krnl32.jupiter.engine.renderer.ProjectionType;
 import com.krnl32.jupiter.engine.renderer.Renderer;
 import com.krnl32.jupiter.engine.scene.Scene;
 import com.krnl32.jupiter.engine.scene.SceneManager;
-import com.krnl32.jupiter.engine.serializer.SceneSerializer;
+import com.krnl32.jupiter.engine.serializer.utility.DTOComponentSerializers;
 import com.krnl32.jupiter.engine.utility.FileIO;
 import org.joml.Vector4f;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -83,13 +87,12 @@ public class Editor extends Engine {
 	private EditorUI editorUI;
 	private SceneManager sceneManager;
 	private EditorState editorState;
-	private SceneSerializer sceneSerializer;
 	private EditorCamera editorCamera;
 	private final Path projectDirectory;
 	private String currentSceneName;
 
-	public Editor(String name, int width, int height, Path projectDirectory) {
-		super(name, width, height);
+	public Editor(EngineSettings engineSettings, Path projectDirectory) {
+		super(engineSettings);
 		this.editorState = EditorState.STOP;
 		this.projectDirectory = projectDirectory;
 
@@ -106,6 +109,11 @@ public class Editor extends Engine {
 
 	@Override
 	public boolean onInit() {
+		// Register Engine Components
+		registerAssetSerializers();
+		registerAssetLoaders();
+		registerECSComponentSerializers();
+
 		// Load Project
 		if (!loadProject(projectDirectory)) {
 			Logger.critical("Editor Failed to Initialize Project({})", projectDirectory);
@@ -116,36 +124,33 @@ public class Editor extends Engine {
 		registerComponentFactories();
 		registerComponentRenderers();
 
-		// Register Asset Manager Components -------------TMP
-		AssetLoaderRegistry.register(AssetType.TEXTURE, TextureAsset.class, new JTextureAssetLoader());
-		AssetSerializerRegistry.register(AssetType.TEXTURE, TextureAsset.class, new JTextureAssetSerializer());
-
 		// Setup Scene
-		sceneSerializer = new SceneSerializer();
 		sceneManager = new SceneManager();
 
-//		if (ProjectContext.getInstance().getProject().getStartup().getSceneName() != null && !ProjectContext.getInstance().getProject().getStartup().getSceneName().isEmpty()) {
-//			String scenePath = ProjectContext.getInstance().getProjectDirectory() + "/" + ProjectContext.getInstance().getProject().getPaths().getScenePath() + "/" + ProjectContext.getInstance().getProject().getStartup().getSceneName();
-//
-//			try {
-//				Scene startupScene = sceneSerializer.deserialize(new JSONObject(FileIO.readFileContent(scenePath)));
-//				if (startupScene == null) {
-//					Logger.critical("Editor Failed to Deserialize Startup Scene({})", scenePath);
-//					return false;
-//				}
-//
-//				currentSceneName = ProjectContext.getInstance().getProject().getStartup().getSceneName();
-//				sceneManager.addScene(currentSceneName, startupScene);
-//				sceneManager.switchScene(currentSceneName);
-//			} catch (IOException e) {
-//				Logger.critical("Editor Failed to Deserialize Startup Scene({}), File Doesn't Exist", scenePath);
-//				return false;
-//			}
-//		} else {
-//			currentSceneName = "editor";
-//			sceneManager.addScene(currentSceneName, new EditorScene());
-//			sceneManager.switchScene(currentSceneName);
-//		}
+		if (ProjectContext.getInstance().getProject().getStartup().getSceneName() != null && !ProjectContext.getInstance().getProject().getStartup().getSceneName().isEmpty()) {
+			String scenePath = ProjectContext.getInstance().getProjectDirectory() + "/" + ProjectContext.getInstance().getProject().getPaths().getScenePath() + "/" + ProjectContext.getInstance().getProject().getStartup().getSceneName();
+
+			try {
+				// must be registered as asset?
+				// then assetManager get by path
+				Scene startupScene = sceneSerializer.deserialize(new JSONObject(FileIO.readFileContent(scenePath)));
+				if (startupScene == null) {
+					Logger.critical("Editor Failed to Deserialize Startup Scene({})", scenePath);
+					return false;
+				}
+
+				currentSceneName = ProjectContext.getInstance().getProject().getStartup().getSceneName();
+				sceneManager.addScene(currentSceneName, startupScene);
+				sceneManager.switchScene(currentSceneName);
+			} catch (IOException e) {
+				Logger.critical("Editor Failed to Deserialize Startup Scene({}), File Doesn't Exist", scenePath);
+				return false;
+			}
+		} else {
+			currentSceneName = "editor";
+			sceneManager.addScene(currentSceneName, new EditorScene());
+			sceneManager.switchScene(currentSceneName);
+		}
 		currentSceneName = "editor";
 		sceneManager.addScene(currentSceneName, new EditorSceneTmp("EditorSceneTMP"));
 		sceneManager.switchScene(currentSceneName);
@@ -189,9 +194,9 @@ public class Editor extends Engine {
 	}
 
 	private void play() {
-		Scene clone = sceneSerializer.clone(sceneManager.getScene(), false);
-		sceneManager.setScene(clone);
-		editorState = EditorState.PLAY;
+//		Scene clone = sceneSerializer.clone(sceneManager.getScene(), false);
+//		sceneManager.setScene(clone);
+//		editorState = EditorState.PLAY;
 	}
 
 	private void pause() {
@@ -278,6 +283,7 @@ public class Editor extends Engine {
 		}
 
 		try {
+			// Setup Asset Manager
 			Path assetRegistryPath = projectDirectory.resolve(project.getPaths().getAssetRegistryPath());
 			JSONObject assetRegistryData = new JSONObject(FileIO.readFileContent(assetRegistryPath));
 			AssetRegistry assetRegistry = AssetRegistrySerializer.deserialize(assetRegistryData);
@@ -286,12 +292,25 @@ public class Editor extends Engine {
 			AssetDatabase assetDatabase = new AssetDatabase();
 			assetDatabase.loadFromDisk(assetDatabasePath);
 
-			ProjectContext.init(projectDirectory, project, new AssetManager(assetRegistry, assetDatabase));
+			ProjectContext.init(projectDirectory, project, new EditorAssetManager(assetRegistry, assetDatabase));
 		} catch (Exception e) {
 			Logger.error("Editor Failed to Load Project({}): {}", projectDirectory, e.getMessage());
 			return false;
 		}
 
 		return true;
+	}
+
+	private void registerAssetSerializers() {
+		AssetSerializerRegistry.register(AssetType.SCENE, SceneAsset.class, new JSONDTOSceneAssetSerializer());
+	}
+
+	private void registerAssetLoaders() {
+		AssetLoaderRegistry.register(AssetType.TEXTURE, TextureAsset.class, new PlainTextureAssetLoader());
+		AssetLoaderRegistry.register(AssetType.SCENE, SceneAsset.class, new DTOSceneAssetLoader());
+	}
+
+	private void registerECSComponentSerializers() {
+		DTOComponentSerializers.registerAll();
 	}
 }

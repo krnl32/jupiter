@@ -1,2 +1,2 @@
 rootProject.name = "jupiter"
-include("engine", "editor", "launcher")
+include("engine", "runtime", "editor", "launcher")

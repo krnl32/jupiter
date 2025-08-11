@@ -9,17 +9,15 @@ plugins {
 }
 
 application {
-	mainClass.set("com.krnl32.jupiter.editor.Main")
+	mainClass.set("com.krnl32.jupiter.runtime.Main")
 }
 
 dependencies {
 	implementation(project(":engine"))
-
-	implementation("com.fasterxml.jackson.core:jackson-databind:2.19.2")
 }
 
 tasks.named<ShadowJar>("shadowJar") {
-	archiveBaseName.set("jupiter-editor")
+	archiveBaseName.set("jupiter-runtime")
 	archiveVersion.set("$version")
 	archiveClassifier.set("")
 }
