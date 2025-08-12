@@ -79,7 +79,7 @@ public class ProjectileEmitterSystem implements System {
 
 		if (owner.hasComponent(TeamComponent.class)) {
 			TeamComponent team = owner.getComponent(TeamComponent.class);
-			projectile.addComponent(new TeamComponent(team.teamID));
+			projectile.addComponent(new TeamComponent(team.teamId));
 		}
 	}
 }

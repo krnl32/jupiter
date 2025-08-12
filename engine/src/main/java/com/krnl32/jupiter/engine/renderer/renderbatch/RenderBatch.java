@@ -1,5 +1,6 @@
-package com.krnl32.jupiter.engine.renderer;
+package com.krnl32.jupiter.engine.renderer.renderbatch;
 
+import com.krnl32.jupiter.engine.renderer.*;
 import com.krnl32.jupiter.engine.renderer.texture.*;
 import org.joml.Matrix4f;
 

@@ -1,5 +1,7 @@
-package com.krnl32.jupiter.engine.renderer;
+package com.krnl32.jupiter.engine.renderer.rendercommand.types;
 
+import com.krnl32.jupiter.engine.renderer.RenderPacket;
+import com.krnl32.jupiter.engine.renderer.rendercommand.RenderCommand;
 import org.joml.Matrix4f;
 
 public class RenderSpriteCommand implements RenderCommand {

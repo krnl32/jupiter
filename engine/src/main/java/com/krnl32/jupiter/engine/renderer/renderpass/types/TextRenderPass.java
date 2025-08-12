@@ -1,7 +1,12 @@
-package com.krnl32.jupiter.engine.renderer;
+package com.krnl32.jupiter.engine.renderer.renderpass.types;
 
 import com.krnl32.jupiter.engine.event.EventBus;
 import com.krnl32.jupiter.engine.events.scene.ViewportResizeEvent;
+import com.krnl32.jupiter.engine.renderer.*;
+import com.krnl32.jupiter.engine.renderer.renderbatch.types.TextRenderBatch;
+import com.krnl32.jupiter.engine.renderer.rendercommand.RenderCommand;
+import com.krnl32.jupiter.engine.renderer.rendercommand.types.RenderTextCommand;
+import com.krnl32.jupiter.engine.renderer.renderpass.RenderPass;
 import org.joml.Matrix4f;
 
 import java.util.ArrayList;
@@ -10,16 +15,16 @@ import java.util.Objects;
 
 import static org.lwjgl.opengl.GL11.*;
 
-public class UIRenderPass implements RenderPass {
-	private final List<RenderUICommand> renderUICommands;
-	private final UIRenderBatch uiRenderBatch;
+public class TextRenderPass implements RenderPass {
+	private final List<RenderTextCommand> renderTextCommands;
+	private final TextRenderBatch textRenderBatch;
 	private final Shader shader;
 	private int screenWidth, screenHeight;
 	private final Matrix4f projectionMatrix;
 
-	public UIRenderPass(Shader shader, int screenWidth, int screenHeight) {
-		this.renderUICommands = new ArrayList<>();
-		this.uiRenderBatch = new UIRenderBatch();
+	public TextRenderPass(Shader shader, int screenWidth, int screenHeight) {
+		this.renderTextCommands = new ArrayList<>();
+		this.textRenderBatch = new TextRenderBatch();
 		this.shader = shader;
 		this.screenWidth = screenWidth;
 		this.screenHeight = screenHeight;
@@ -34,8 +39,8 @@ public class UIRenderPass implements RenderPass {
 
 	@Override
 	public void beginFrame(Camera camera) {
-		renderUICommands.clear();
-		uiRenderBatch.begin();
+		renderTextCommands.clear();
+		textRenderBatch.begin();
 
 		shader.bind();
 		if (camera != null) {
@@ -47,7 +52,7 @@ public class UIRenderPass implements RenderPass {
 
 	@Override
 	public void endFrame() {
-		renderUICommands.sort((a, b) -> {
+		renderTextCommands.sort((a, b) -> {
 			int cmp = ClipRect.compareClipRect(a.getClipRect(), b.getClipRect());
 			if (cmp != 0)
 				return cmp;
@@ -57,13 +62,13 @@ public class UIRenderPass implements RenderPass {
 		});
 
 		ClipRect currentClip = null;
-		for (RenderUICommand cmd : renderUICommands) {
+		for (RenderTextCommand cmd : renderTextCommands) {
 			ClipRect clipRect = cmd.getClipRect();
 
 			// If ClipRect Changed, Flush Batch
 			if (!Objects.equals(currentClip, clipRect)) {
 				shader.bind();
-				uiRenderBatch.end();
+				textRenderBatch.end();
 				shader.unbind();
 
 				if (clipRect != null) {
@@ -73,15 +78,15 @@ public class UIRenderPass implements RenderPass {
 					glDisable(GL_SCISSOR_TEST);
 				}
 
-				uiRenderBatch.begin();
+				textRenderBatch.begin();
 				currentClip = clipRect;
 			}
 
-			uiRenderBatch.addQuad(cmd.getTransform(), cmd.getRenderPacket(), cmd.getTextureUV());
+			textRenderBatch.addQuad(cmd.getTransform(), cmd.getRenderPacket(), cmd.getTextureUV());
 		}
 
 		shader.bind();
-		uiRenderBatch.end();
+		textRenderBatch.end();
 		shader.unbind();
 
 		glDisable(GL_SCISSOR_TEST);
@@ -89,8 +94,8 @@ public class UIRenderPass implements RenderPass {
 
 	@Override
 	public void submit(RenderCommand cmd) {
-		if (cmd instanceof RenderUICommand uiCommand) {
-			renderUICommands.add(uiCommand);
+		if (cmd instanceof RenderTextCommand textCommand) {
+			renderTextCommands.add(textCommand);
 		}
 	}
 }

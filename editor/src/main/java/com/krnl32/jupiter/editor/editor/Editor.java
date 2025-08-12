@@ -45,6 +45,8 @@ import com.krnl32.jupiter.engine.asset.registry.AssetRegistrySerializer;
 import com.krnl32.jupiter.engine.asset.serializer.AssetSerializerRegistry;
 import com.krnl32.jupiter.engine.asset.types.SceneAsset;
 import com.krnl32.jupiter.engine.asset.types.TextureAsset;
+import com.krnl32.jupiter.engine.cloner.SceneCloner;
+import com.krnl32.jupiter.engine.cloner.utility.DefaultComponentCloners;
 import com.krnl32.jupiter.engine.components.effects.BlinkComponent;
 import com.krnl32.jupiter.engine.components.effects.DeathEffectComponent;
 import com.krnl32.jupiter.engine.components.effects.ParticleComponent;
@@ -71,6 +73,7 @@ import com.krnl32.jupiter.engine.renderer.FrameBufferAttachmentFormat;
 import com.krnl32.jupiter.engine.renderer.Framebuffer;
 import com.krnl32.jupiter.engine.renderer.ProjectionType;
 import com.krnl32.jupiter.engine.renderer.Renderer;
+import com.krnl32.jupiter.engine.scene.Scene;
 import com.krnl32.jupiter.engine.scene.SceneManager;
 import com.krnl32.jupiter.engine.serializer.utility.DTOComponentSerializers;
 import com.krnl32.jupiter.engine.utility.FileIO;
@@ -111,6 +114,7 @@ public class Editor extends Engine {
 		registerAssetSerializers();
 		registerAssetLoaders();
 		registerECSComponentSerializers();
+		DefaultComponentCloners.registerAll();
 
 		// Load Project
 		if (!loadProject(projectDirectory)) {
@@ -181,9 +185,9 @@ public class Editor extends Engine {
 	}
 
 	private void play() {
-//		Scene clone = sceneSerializer.clone(sceneManager.getScene(), false);
-//		sceneManager.setScene(clone);
-//		editorState = EditorState.PLAY;
+		Scene clone = SceneCloner.clone(sceneManager.getScene(), false);
+		sceneManager.setScene(clone);
+		editorState = EditorState.PLAY;
 	}
 
 	private void pause() {

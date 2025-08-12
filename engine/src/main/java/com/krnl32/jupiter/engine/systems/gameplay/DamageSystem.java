@@ -45,7 +45,7 @@ public class DamageSystem implements System {
 		if (projectileEntity.hasComponent(TeamComponent.class) && targetEntity.hasComponent(TeamComponent.class)) {
 			TeamComponent projectileTeam = projectileEntity.getComponent(TeamComponent.class);
 			TeamComponent targetTeam = targetEntity.getComponent(TeamComponent.class);
-			if (projectileTeam.teamID == targetTeam.teamID)
+			if (projectileTeam.teamId == targetTeam.teamId)
 				return;
 		}
 

@@ -3,6 +3,8 @@ package com.krnl32.jupiter.engine.renderer;
 import com.krnl32.jupiter.engine.event.EventBus;
 import com.krnl32.jupiter.engine.events.renderer.SwitchRendererCameraEvent;
 import com.krnl32.jupiter.engine.events.scene.ViewportResizeEvent;
+import com.krnl32.jupiter.engine.renderer.rendercommand.RenderCommand;
+import com.krnl32.jupiter.engine.renderer.renderpass.RenderPass;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 

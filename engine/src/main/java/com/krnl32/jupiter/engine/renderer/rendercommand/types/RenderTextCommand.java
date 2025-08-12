@@ -1,14 +1,17 @@
-package com.krnl32.jupiter.engine.renderer;
+package com.krnl32.jupiter.engine.renderer.rendercommand.types;
 
+import com.krnl32.jupiter.engine.renderer.ClipRect;
+import com.krnl32.jupiter.engine.renderer.RenderPacket;
+import com.krnl32.jupiter.engine.renderer.rendercommand.RenderCommand;
 import org.joml.Matrix4f;
 
-public class RenderUICommand implements RenderCommand {
+public class RenderTextCommand implements RenderCommand {
 	private final RenderPacket renderPacket;
 	private final Matrix4f transform;
 	private final float[] textureUV;
 	private final ClipRect clipRect;
 
-	public RenderUICommand(RenderPacket renderPacket, Matrix4f transform, float[] textureUV, ClipRect clipRect) {
+	public RenderTextCommand(RenderPacket renderPacket, Matrix4f transform, float[] textureUV, ClipRect clipRect) {
 		this.renderPacket = renderPacket;
 		this.transform = transform;
 		this.textureUV = textureUV;

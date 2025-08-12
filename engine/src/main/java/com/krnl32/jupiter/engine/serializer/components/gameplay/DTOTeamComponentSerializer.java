@@ -9,7 +9,7 @@ import java.util.Map;
 public class DTOTeamComponentSerializer implements ComponentSerializer<TeamComponent, Map<String, Object>> {
 	@Override
 	public Map<String, Object> serialize(TeamComponent component) {
-		return Map.of("teamID", component.teamID);
+		return Map.of("teamID", component.teamId);
 	}
 
 	@Override

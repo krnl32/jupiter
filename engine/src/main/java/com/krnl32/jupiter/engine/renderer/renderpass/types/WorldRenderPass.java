@@ -1,4 +1,11 @@
-package com.krnl32.jupiter.engine.renderer;
+package com.krnl32.jupiter.engine.renderer.renderpass.types;
+
+import com.krnl32.jupiter.engine.renderer.Camera;
+import com.krnl32.jupiter.engine.renderer.Shader;
+import com.krnl32.jupiter.engine.renderer.renderbatch.types.SpriteRenderBatch;
+import com.krnl32.jupiter.engine.renderer.rendercommand.RenderCommand;
+import com.krnl32.jupiter.engine.renderer.rendercommand.types.RenderSpriteCommand;
+import com.krnl32.jupiter.engine.renderer.renderpass.RenderPass;
 
 import java.util.ArrayList;
 import java.util.List;

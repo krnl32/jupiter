@@ -10,7 +10,7 @@ import com.krnl32.jupiter.engine.ecs.Registry;
 import com.krnl32.jupiter.engine.ecs.System;
 import com.krnl32.jupiter.engine.project.ProjectContext;
 import com.krnl32.jupiter.engine.renderer.RenderPacket;
-import com.krnl32.jupiter.engine.renderer.RenderSpriteCommand;
+import com.krnl32.jupiter.engine.renderer.rendercommand.types.RenderSpriteCommand;
 import com.krnl32.jupiter.engine.renderer.Renderer;
 import com.krnl32.jupiter.engine.renderer.texture.Texture2D;
 

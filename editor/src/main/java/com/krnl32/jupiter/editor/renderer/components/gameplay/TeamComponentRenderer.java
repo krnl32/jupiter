@@ -8,9 +8,9 @@ import imgui.type.ImInt;
 public class TeamComponentRenderer implements ComponentRenderer<TeamComponent> {
 	@Override
 	public void render(TeamComponent component) {
-		ImInt teamId = new ImInt(component.teamID);
+		ImInt teamId = new ImInt(component.teamId);
 		if (GUIUtils.renderIntInputWithResetButton("Team ID", teamId, -1)) {
-			component.teamID = teamId.get();
+			component.teamId = teamId.get();
 		}
 	}
 }

@@ -32,7 +32,6 @@ import com.krnl32.jupiter.engine.serializer.components.utility.DTOLifetimeCompon
 import com.krnl32.jupiter.engine.serializer.components.utility.DTOTagComponentSerializer;
 import com.krnl32.jupiter.engine.serializer.components.utility.DTOUUIDComponentSerializer;
 
-// Maybe Remove this File?
 public class DTOComponentSerializers {
 	public static void registerAll() {
 		// Utility
