@@ -47,7 +47,7 @@ public abstract class RenderBatch {
 		vertexArray.setIndexBuffer(ib);
 		vertexArray.unbind();
 
-		defaultTexture = new Texture2D(new TextureSettings(TextureType.TEXTURE_2D, TextureFormat.R8, 1, 1, 4, TextureWrapMode.CLAMP_TO_EDGE, TextureFilterMode.LINEAR, false));
+		defaultTexture = new Texture2D(new TextureSettings(TextureType.TEXTURE_2D, TextureFormat.RGBA8, 1, 1, 4, TextureWrapMode.CLAMP_TO_EDGE, TextureFilterMode.LINEAR, false));
 		defaultTexture.setBuffer(new int[] { 0xffffffff });
 	}
 

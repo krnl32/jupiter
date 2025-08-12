@@ -6,23 +6,14 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class FileIO {
-	public static String readFileContent(String filePath) throws IOException {
-		return new String(Files.readAllBytes(Paths.get(filePath)));
-	}
-
 	public static String readFileContent(Path filePath) throws IOException {
 		return new String(Files.readAllBytes(filePath));
 	}
 
 	public static byte[] readFileContentBytes(Path filePath) throws IOException {
 		return Files.readAllBytes(filePath);
-	}
-
-	public static void writeFileContent(String filePath, String data) throws IOException {
-		Files.write(Paths.get(filePath), data.getBytes());
 	}
 
 	public static void writeFileContent(Path filePath, String data) throws IOException {

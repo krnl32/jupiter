@@ -37,7 +37,7 @@ public class AssetDatabase {
 			for (File metadataFile : metadataFiles) {
 				if (metadataFile.isFile() && metadataFile.getName().endsWith(".jmeta")) {
 					try {
-						JSONObject metadata = new JSONObject(FileIO.readFileContent(metadataFile.getAbsolutePath()));
+						JSONObject metadata = new JSONObject(FileIO.readFileContent(Path.of(metadataFile.getAbsolutePath())));
 						AssetMetadata assetMetadata = AssetMetadataSerializer.deserialize(metadata);;
 						assetIdToMetadata.put(assetMetadata.getAssetId(), assetMetadata);
 						pathToAssetId.put(assetMetadata.getSourcePath(), assetMetadata.getAssetId());
