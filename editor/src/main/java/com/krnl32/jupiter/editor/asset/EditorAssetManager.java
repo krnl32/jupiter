@@ -12,7 +12,9 @@ import com.krnl32.jupiter.engine.core.Logger;
 
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class EditorAssetManager implements AssetManager {
 	private final Map<AssetId, Asset> loadedAssets;
@@ -107,5 +109,19 @@ public class EditorAssetManager implements AssetManager {
 	public AssetType getAssetType(AssetId assetId) {
 		AssetEntry assetEntry = assetRegistry.getAssetEntry(assetId);
 		return (assetEntry != null ? assetEntry.getAssetType() : null);
+	}
+
+	public List<AssetId> getAssetIdsByType(AssetType type) {
+		return assetRegistry.getAssetEntries().stream()
+			.filter(assetEntry -> assetEntry.getAssetType() == type)
+			.map(AssetEntry::getAssetId)
+			.toList();
+	}
+
+	public List<Asset> getAssetsByType(AssetType type) {
+		return assetRegistry.getAssetEntries().stream()
+			.filter(assetEntry -> assetEntry.getAssetType() == type)
+			.map(assetEntry -> (Asset) getAsset(assetEntry.getAssetId()))
+			.collect(Collectors.toList());
 	}
 }

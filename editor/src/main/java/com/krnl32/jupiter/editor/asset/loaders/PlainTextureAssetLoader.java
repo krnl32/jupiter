@@ -85,7 +85,7 @@ public class PlainTextureAssetLoader implements AssetLoader<TextureAsset> {
 
 			return new TextureAsset(assetDescriptor.getAssetId(), settings, assetRawData);
 		} catch (Exception e) {
-			Logger.error("JSONTextureAssetLoader Failed to Load Asset({}): {}", assetDescriptor.getAssetId(), e.getMessage());
+			Logger.error("PlainTextureAssetLoader Failed to Load Asset({}): {}", assetDescriptor.getAssetId(), e.getMessage());
 			return null;
 		}
 	}

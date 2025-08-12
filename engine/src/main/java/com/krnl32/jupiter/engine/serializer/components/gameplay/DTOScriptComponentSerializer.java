@@ -40,15 +40,5 @@ public class DTOScriptComponentSerializer implements ComponentSerializer<ScriptC
 		}
 
 		return new ScriptComponent(scripts);
-
-//
-//		JSONArray scriptsData = data.getJSONArray("scripts");
-//		if (scriptsData != null) {
-//			for (int i = 0; i < scriptsData.length(); i++) {
-//				scripts.add(JupiterSerializerUtils.deserializeScriptInstance(scriptsData.getJSONObject(i)));
-//			}
-//		}
-//
-//		return new ScriptComponent(scripts);
 	}
 }

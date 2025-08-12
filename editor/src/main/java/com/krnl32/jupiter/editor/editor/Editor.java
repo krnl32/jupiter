@@ -1,6 +1,7 @@
 package com.krnl32.jupiter.editor.editor;
 
 import com.krnl32.jupiter.editor.asset.EditorAssetManager;
+import com.krnl32.jupiter.editor.asset.loaders.PlainScriptAssetLoader;
 import com.krnl32.jupiter.editor.asset.loaders.PlainTextureAssetLoader;
 import com.krnl32.jupiter.editor.asset.serializers.JSONDTOSceneAssetSerializer;
 import com.krnl32.jupiter.editor.events.editor.EditorPauseEvent;
@@ -44,6 +45,7 @@ import com.krnl32.jupiter.engine.asset.registry.AssetRegistry;
 import com.krnl32.jupiter.engine.asset.registry.AssetRegistrySerializer;
 import com.krnl32.jupiter.engine.asset.serializer.AssetSerializerRegistry;
 import com.krnl32.jupiter.engine.asset.types.SceneAsset;
+import com.krnl32.jupiter.engine.asset.types.ScriptAsset;
 import com.krnl32.jupiter.engine.asset.types.TextureAsset;
 import com.krnl32.jupiter.engine.cloner.SceneCloner;
 import com.krnl32.jupiter.engine.cloner.utility.DefaultComponentCloners;
@@ -206,6 +208,7 @@ public class Editor extends Engine {
 	private void registerAssetLoaders() {
 		AssetLoaderRegistry.register(AssetType.TEXTURE, TextureAsset.class, new PlainTextureAssetLoader());
 		AssetLoaderRegistry.register(AssetType.SCENE, SceneAsset.class, new DTOSceneAssetLoader());
+		AssetLoaderRegistry.register(AssetType.SCRIPT, ScriptAsset.class, new PlainScriptAssetLoader());
 	}
 
 	private void registerECSComponentSerializers() {

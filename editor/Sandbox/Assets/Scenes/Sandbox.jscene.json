@@ -78,7 +78,7 @@
 						"z": 0
 					},
 					"index": -1,
-					"textureAssetID": null
+					"textureAssetId": null
 				},
 				"UUIDComponent": {
 					"uuid": "724631ee-036a-44a2-9f89-f76313ce00da"
@@ -86,11 +86,11 @@
 				"ScriptComponent": {
 					"scripts": [
 						{
-							"scriptAssetID": "Scripts/Test.lua",
+							"scriptAssetId": "c5a19a6a-163d-4549-833b-b67222f9362f",
 							"disabled": false
 						},
 						{
-							"scriptAssetID": "Scripts/Test2.lua",
+							"scriptAssetId": "90ec7451-82be-49fe-aacd-d9c2848ffddc",
 							"disabled": false
 						}
 					]
@@ -163,7 +163,7 @@
 						"z": 0.3299888
 					},
 					"index": -1,
-					"textureAssetID": null
+					"textureAssetId": null
 				},
 				"UUIDComponent": {
 					"uuid": "a28ee4b6-2798-43ca-b44f-72fb21dfc6fb"
@@ -233,7 +233,7 @@
 						"z": 1
 					},
 					"index": -1,
-					"textureAssetID": null
+					"textureAssetId": null
 				},
 				"UUIDComponent": {
 					"uuid": "188f9d4f-e765-46b8-93eb-0dd1ca93bb77"
@@ -306,7 +306,7 @@
 						"z": 0.5110882
 					},
 					"index": -1,
-					"textureAssetID": null
+					"textureAssetId": null
 				},
 				"UUIDComponent": {
 					"uuid": "daa3ea06-e533-4c2e-ae63-879b8d8010de"
@@ -376,7 +376,7 @@
 						"z": 1
 					},
 					"index": -1,
-					"textureAssetID": null
+					"textureAssetId": null
 				},
 				"UUIDComponent": {
 					"uuid": "31751b8c-e15b-485b-9fef-180b56823c15"
@@ -449,7 +449,7 @@
 						"z": 0.74623823
 					},
 					"index": -1,
-					"textureAssetID": null
+					"textureAssetId": null
 				},
 				"UUIDComponent": {
 					"uuid": "c3dbb628-e0e1-43c7-886a-ee5f2e61b87e"
@@ -519,7 +519,7 @@
 						"z": 1
 					},
 					"index": -1,
-					"textureAssetID": null
+					"textureAssetId": null
 				},
 				"UUIDComponent": {
 					"uuid": "df3d34cf-dd8c-4424-bb3a-fb3c121255cc"
@@ -592,7 +592,7 @@
 						"z": 0.7926947
 					},
 					"index": -1,
-					"textureAssetID": null
+					"textureAssetId": null
 				},
 				"UUIDComponent": {
 					"uuid": "f2284272-fbd6-4e07-b386-728e3d06e9b2"
@@ -662,7 +662,7 @@
 						"z": 1
 					},
 					"index": -1,
-					"textureAssetID": null
+					"textureAssetId": null
 				},
 				"UUIDComponent": {
 					"uuid": "cb3aa1e4-cb23-4567-bc04-788cef4343c3"
@@ -735,7 +735,7 @@
 						"z": 0.2948382
 					},
 					"index": -1,
-					"textureAssetID": null
+					"textureAssetId": null
 				},
 				"UUIDComponent": {
 					"uuid": "6bd348f0-3cc8-4e13-b8c2-875f39ce0d5f"
@@ -805,7 +805,7 @@
 						"z": 1
 					},
 					"index": -1,
-					"textureAssetID": null
+					"textureAssetId": null
 				},
 				"UUIDComponent": {
 					"uuid": "9847de3c-8736-4b89-a79b-7533e298d57d"
@@ -878,7 +878,7 @@
 						"z": 0.47515428
 					},
 					"index": -1,
-					"textureAssetID": null
+					"textureAssetId": null
 				},
 				"UUIDComponent": {
 					"uuid": "39d30ce6-7224-490b-866f-ce8032f41d5b"
@@ -948,7 +948,7 @@
 						"z": 1
 					},
 					"index": -1,
-					"textureAssetID": null
+					"textureAssetId": null
 				},
 				"UUIDComponent": {
 					"uuid": "73076c50-6bb8-4eaa-a9ef-5ef57da6bf5e"
@@ -1021,7 +1021,7 @@
 						"z": 0.07966886
 					},
 					"index": -1,
-					"textureAssetID": null
+					"textureAssetId": null
 				},
 				"UUIDComponent": {
 					"uuid": "8878e1cd-f5bb-47ec-9918-1d44acc25203"
@@ -1091,7 +1091,7 @@
 						"z": 1
 					},
 					"index": -1,
-					"textureAssetID": null
+					"textureAssetI": null
 				},
 				"UUIDComponent": {
 					"uuid": "5a2fbc95-780d-42d9-9f9d-c2941a9b87c6"

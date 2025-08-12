@@ -1,9 +1,20 @@
 package com.krnl32.jupiter.editor.renderer.components.gameplay;
 
+import com.krnl32.jupiter.editor.asset.EditorAssetManager;
 import com.krnl32.jupiter.editor.renderer.ComponentRenderer;
+import com.krnl32.jupiter.editor.utility.GUIUtils;
+import com.krnl32.jupiter.engine.asset.handle.AssetType;
+import com.krnl32.jupiter.engine.asset.types.ScriptAsset;
 import com.krnl32.jupiter.engine.components.gameplay.ScriptComponent;
+import com.krnl32.jupiter.engine.project.ProjectContext;
 import com.krnl32.jupiter.engine.script.ScriptInstance;
+import imgui.ImGui;
+import imgui.flag.ImGuiCol;
+import imgui.flag.ImGuiTreeNodeFlags;
 import imgui.type.ImString;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ScriptComponentRenderer implements ComponentRenderer<ScriptComponent> {
 
@@ -12,21 +23,20 @@ public class ScriptComponentRenderer implements ComponentRenderer<ScriptComponen
 
 	@Override
 	public void render(ScriptComponent component) {
-//		renderScriptComponent(component);
-//
-//		ImGui.spacing();
-//		ImGui.separator();
-//		ImGui.spacing();
-//
-//		renderAddScriptSection(component);
-//
-//		if (scriptToRemove != null) {
-//			component.scripts.remove(scriptToRemove);
-//			scriptToRemove = null;
-//		}
+		renderScriptComponent(component);
+
+		ImGui.spacing();
+		ImGui.separator();
+		ImGui.spacing();
+
+		renderAddScriptSection(component);
+
+		if (scriptToRemove != null) {
+			component.scripts.remove(scriptToRemove);
+			scriptToRemove = null;
+		}
 	}
 
-	/*
 	private void renderScriptComponent(ScriptComponent scriptComponent) {
 		for (int i = 0; i < scriptComponent.scripts.size(); i++) {
 			ScriptInstance script = scriptComponent.scripts.get(i);
@@ -62,28 +72,28 @@ public class ScriptComponentRenderer implements ComponentRenderer<ScriptComponen
 	}
 
 	private void renderScript(ScriptInstance script, ScriptComponent scriptComponent) {
-		List<ScriptAsset> filteredScripts = ProjectContext.getInstance().getAssetManager().getRegisteredAssetsByType(AssetType.SCRIPT)
+		List<ScriptAsset> filteredScripts = ((EditorAssetManager) ProjectContext.getInstance().getAssetManager()).getAssetsByType(AssetType.SCRIPT)
 			.stream()
 			.map(asset -> (ScriptAsset) asset)
 			.filter(scriptAsset -> scriptComponent.scripts.stream()
 				.filter(existing -> !existing.equals(script))
-				.noneMatch(existing -> existing.getScriptAssetID() != null && existing.getScriptAssetID().equals(scriptAsset.getId())))
+				.noneMatch(existing -> existing.getScriptAssetId() != null && existing.getScriptAssetId().equals(scriptAsset.getId())))
 			.collect(Collectors.toList());
 
-		ScriptAsset scriptAsset = (script.getScriptAssetID() != null) ? ProjectContext.getInstance().getAssetManager().getAsset(script.getScriptAssetID()) : null;
-		String scriptPath = (scriptAsset != null) ? scriptAsset.getRelativePath() : "<None>";
+		ScriptAsset scriptAsset = (script.getScriptAssetId() != null) ? ProjectContext.getInstance().getAssetManager().getAsset(script.getScriptAssetId()) : null;
+		String scriptPath = (scriptAsset != null) ? scriptAsset.getAssetPath() : "<None>";
 
 		GUIUtils.renderAssetCombo(
 			filteredScripts,
 			"Script",
 			scriptPath,
-			script.getScriptAssetID(),
-			newID -> {
-				script.setScriptAssetID(newID);
-				script.setLastModified(0);
+			script.getScriptAssetId(),
+			newId -> {
+				script.setScriptAssetId(newId);
+				script.setLastModified(0); // Force Reload
 			});
 
-		if (script.getScriptAssetID() != null) {
+		if (script.getScriptAssetId() != null) {
 			GUIUtils.renderLongReadOnly("Last Modified", script.getLastModified());
 			GUIUtils.renderStringReadOnly("Status", script.isDisabled() ? "Disabled" : (script.isInitialized() ? "Active" : "Pending Init"));
 		}
@@ -124,19 +134,20 @@ public class ScriptComponentRenderer implements ComponentRenderer<ScriptComponen
 
 		String filterLower = addScriptFilter.get().toLowerCase();
 
-		ProjectContext.getInstance().getAssetManager().getRegisteredAssetsByType(AssetType.SCRIPT).stream()
+		((EditorAssetManager) ProjectContext.getInstance().getAssetManager()).getAssetsByType(AssetType.SCRIPT)
+			.stream()
 			.map(asset -> (ScriptAsset) asset)
 			.filter(script -> {
-				String scriptPathLower = script.getRelativePath().toLowerCase();
+				String scriptPathLower = script.getAssetPath().toLowerCase();
 				boolean matchesSearch = filterLower.isEmpty() || scriptPathLower.contains(filterLower);
 				boolean alreadyAdded = scriptComponent.scripts.stream()
-					.anyMatch(existing -> existing.getScriptAssetID() != null && existing.getScriptAssetID().equals(script.getId()));
+					.anyMatch(existing -> existing.getScriptAssetId() != null && existing.getScriptAssetId().equals(script.getId()));
 				return matchesSearch && !alreadyAdded;
 			})
 			.forEach(script -> {
-				if (ImGui.menuItem(script.getRelativePath())) {
+				if (ImGui.menuItem(script.getAssetPath())) {
 					ScriptInstance newScript = new ScriptInstance(script.getId());
-					newScript.setScriptAssetID(script.getId());
+					newScript.setScriptAssetId(script.getId());
 					newScript.setLastModified(0);
 					scriptComponent.scripts.add(newScript);
 					ImGui.closeCurrentPopup();
@@ -146,5 +157,4 @@ public class ScriptComponentRenderer implements ComponentRenderer<ScriptComponen
 
 		ImGui.endPopup();
 	}
-	 */
 }

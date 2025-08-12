@@ -1,0 +1,13 @@
+{
+    "importerName": "ScriptAssetImporter",
+	"sourcePath": "Scripts/Test.lua",
+    "assetPath": "Scripts/Test.jscript",
+    "lastModified": 1754615765712,
+    "version": 1,
+    "uuid": "c5a19a6a-163d-4549-833b-b67222f9362f",
+    "assetType": "SCRIPT",
+    "importSettings": {
+        "hotReload": true,
+		"compile": false
+    }
+}

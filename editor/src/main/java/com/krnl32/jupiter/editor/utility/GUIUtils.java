@@ -1,5 +1,8 @@
 package com.krnl32.jupiter.editor.utility;
 
+import com.krnl32.jupiter.engine.asset.handle.Asset;
+import com.krnl32.jupiter.engine.asset.handle.AssetId;
+import com.krnl32.jupiter.engine.asset.types.ScriptAsset;
 import imgui.ImGui;
 import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiColorEditFlags;
@@ -11,6 +14,9 @@ import imgui.type.ImString;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
+
+import java.util.List;
+import java.util.function.Consumer;
 
 public class GUIUtils {
 	public static void renderVector2f(String label, Vector2f vec) {
@@ -504,8 +510,7 @@ public class GUIUtils {
 		return clicked;
 	}
 
-	/*
-	public static <T extends Asset> boolean renderAssetCombo(List<T> assets, String label, String currentAssetLabel, AssetID currentAssetID, Consumer<AssetID> onSelect) {
+	public static <T extends Asset> boolean renderAssetCombo(List<T> assets, String label, String currentAssetLabel, AssetId currentAssetID, Consumer<AssetId> onSelect) {
 		int uniqueID = System.identityHashCode(currentAssetID);
 		ImGui.pushID(label + "_" + uniqueID);
 		ImGui.columns(2, "Columns_" + label, false);
@@ -517,7 +522,7 @@ public class GUIUtils {
 		ImGui.pushItemWidth(ImGui.getContentRegionAvailX());
 		if (ImGui.beginCombo("##" + label, currentAssetLabel)) {
 			for (T asset : assets) {
-				String selectableLabel = (asset instanceof ScriptAsset) ? ((ScriptAsset) asset).getRelativePath() : asset.getId().toString();
+				String selectableLabel = (asset instanceof ScriptAsset) ? ((ScriptAsset) asset).getAssetPath() : asset.getId().toString();
 
 				boolean selected = asset.getId().equals(currentAssetID);
 				if (ImGui.selectable(selectableLabel, selected)) {
@@ -537,5 +542,4 @@ public class GUIUtils {
 
 		return changed;
 	}
-	*/
 }

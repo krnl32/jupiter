@@ -41,7 +41,7 @@ public class AssetRegistry {
 		return assetIdToEntry.get(assetId);
 	}
 
-	protected Collection<AssetEntry> getAssetEntries() {
+	public Collection<AssetEntry> getAssetEntries() {
 		return Collections.unmodifiableCollection(assetIdToEntry.values());
 	}
 }

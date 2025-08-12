@@ -6,11 +6,15 @@ import org.luaj.vm2.Globals;
 import org.luaj.vm2.LuaValue;
 import org.luaj.vm2.lib.jse.JsePlatform;
 
-public class ScriptDefinition {
-	private final String scriptPath;
+import java.nio.file.Path;
 
-	public ScriptDefinition(String scriptPath) {
+public class ScriptDefinition {
+	private final Path scriptPath;
+	private final ScriptSettings settings;
+
+	public ScriptDefinition(Path scriptPath, ScriptSettings settings) {
 		this.scriptPath = scriptPath;
+		this.settings = settings;
 	}
 
 	public ScriptBindings createBindings(ScriptContext scriptContext) {
@@ -18,7 +22,7 @@ public class ScriptDefinition {
 		globals.set("entity", new LuaEntity(scriptContext));
 
 		try {
-			LuaValue chunk = globals.loadfile(scriptPath);
+			LuaValue chunk = globals.loadfile(scriptPath.toString());
 			chunk.call();
 		} catch (Exception e) {
 			Logger.error("ScriptDefinition createBindings Failed to Call Script({}): {}", scriptPath, e.getMessage());
@@ -30,5 +34,13 @@ public class ScriptDefinition {
 			globals.get("onDestroy").isfunction() ? globals.get("onDestroy").checkfunction() : null,
 			globals.get("onUpdate").isfunction() ? globals.get("onUpdate").checkfunction() : null
 		);
+	}
+
+	public Path getScriptPath() {
+		return scriptPath;
+	}
+
+	public ScriptSettings getSettings() {
+		return settings;
 	}
 }

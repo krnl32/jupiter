@@ -20,9 +20,13 @@ import com.krnl32.jupiter.engine.ecs.Entity;
 import com.krnl32.jupiter.engine.model.Sprite;
 import com.krnl32.jupiter.engine.renderer.Camera;
 import com.krnl32.jupiter.engine.renderer.ProjectionType;
+import com.krnl32.jupiter.engine.script.ScriptInstance;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DefaultComponentCloners {
 	public static void registerAll() {
@@ -78,13 +82,13 @@ public class DefaultComponentCloners {
 			component.rotationTorque,
 			component.jumpImpulse
 		));
-//		ComponentClonerRegistry.register(ScriptComponent.class, component -> {
-//			List<ScriptInstance> scripts = new ArrayList<>();
-//			for (ScriptInstance script : component.scripts) {
-//				scripts.add(new ScriptInstance(script.getScriptAssetId(), script.isDisabled()));
-//			}
-//			return new ScriptComponent(scripts);
-//		});
+		ComponentClonerRegistry.register(ScriptComponent.class, component -> {
+			List<ScriptInstance> scripts = new ArrayList<>();
+			for (ScriptInstance script : component.scripts) {
+				scripts.add(new ScriptInstance(script.getScriptAssetId(), script.isDisabled()));
+			}
+			return new ScriptComponent(scripts);
+		});
 
 		// Physics
 		ComponentClonerRegistry.register(RigidBody2DComponent.class, component -> new RigidBody2DComponent(
