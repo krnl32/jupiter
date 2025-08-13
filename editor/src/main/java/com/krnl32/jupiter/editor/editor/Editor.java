@@ -216,9 +216,9 @@ public class Editor extends Engine {
 
 		try {
 			// Setup Asset Manager
-			Path assetRegistryPath = projectDirectory.resolve(project.getPaths().getAssetRegistryPath());
 			Path assetDatabasePath = projectDirectory.resolve(project.getPaths().getAssetDatabasePath());
-			ProjectContext.init(projectDirectory, project, new EditorAssetManager(new AssetRepository(new AssetPersistence(assetRegistryPath, assetDatabasePath))));
+			Path assetRegistryPath = projectDirectory.resolve(project.getPaths().getAssetRegistryPath());
+			ProjectContext.init(projectDirectory, project, new EditorAssetManager(new AssetRepository(new AssetPersistence(assetDatabasePath, assetRegistryPath))));
 		} catch (Exception e) {
 			Logger.error("Editor Failed to Load Project({}): {}", projectDirectory, e.getMessage());
 			return false;

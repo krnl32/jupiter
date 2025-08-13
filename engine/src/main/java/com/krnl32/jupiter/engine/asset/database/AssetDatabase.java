@@ -9,6 +9,8 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +25,10 @@ public class AssetDatabase {
 	public AssetMetadata getAssetMetadata(String assetPath) {
 		AssetId assetId = pathToAssetId.get(assetPath);
 		return assetIdToMetadata.get(assetId);
+	}
+
+	public Collection<AssetMetadata> getAssetMetadatas() {
+		return Collections.unmodifiableCollection(assetIdToMetadata.values());
 	}
 
 	public void addAssetMetadata(AssetMetadata assetMetadata) {

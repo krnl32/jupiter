@@ -10,7 +10,6 @@ import com.krnl32.jupiter.engine.asset.importer.ImportResult;
 import com.krnl32.jupiter.engine.asset.importer.importers.TextureAssetImporter;
 import com.krnl32.jupiter.engine.asset.loader.AssetLoader;
 import com.krnl32.jupiter.engine.asset.loader.AssetLoaderRegistry;
-import com.krnl32.jupiter.engine.asset.registry.AssetEntry;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.utility.FileIO;
 
@@ -32,6 +31,7 @@ public class EditorAssetManager implements AssetManager {
 		this.assetRepository = assetRepository;
 		this.assetImportPipeline = new AssetImportPipeline();
 
+		// Register Importers
 		this.assetImportPipeline.registerImporter(new TextureAssetImporter());
 	}
 
@@ -73,7 +73,7 @@ public class EditorAssetManager implements AssetManager {
 
 	@Override
 	public boolean isAssetRegistered(AssetId assetId) {
-		return assetRepository.getAssetEntry(assetId) != null;
+		return assetRepository.getAssetMetadata(assetId) != null;
 	}
 
 	@Override
@@ -108,7 +108,7 @@ public class EditorAssetManager implements AssetManager {
 			AssetMetadata assetMetadata = new AssetMetadata(
 				importedAsset.getId(),
 				importedAsset.getType(),
-				filePath.toString(),
+				filePath.toString(), // FIX BUG, ONLY PASS RELATIVE NOT FULL PATH
 				result.getImporterName(),
 				result.getMetadata(),
 				System.currentTimeMillis()
@@ -141,21 +141,21 @@ public class EditorAssetManager implements AssetManager {
 	}
 
 	public AssetType getAssetType(AssetId assetId) {
-		AssetEntry assetEntry = assetRepository.getAssetEntry(assetId);
-		return (assetEntry != null ? assetEntry.getAssetType() : null);
+		AssetMetadata assetMetadata = assetRepository.getAssetMetadata(assetId);
+		return (assetMetadata != null ? assetMetadata.getAssetType() : null);
 	}
 
 	public List<AssetId> getAssetIdsByType(AssetType type) {
-		return assetRepository.getAssetEntries().stream()
-			.filter(assetEntry -> assetEntry.getAssetType() == type)
-			.map(AssetEntry::getAssetId)
+		return assetRepository.getAssetMetadatas().stream()
+			.filter(assetMetadata -> assetMetadata.getAssetType() == type)
+			.map(AssetMetadata::getAssetId)
 			.toList();
 	}
 
 	public List<Asset> getAssetsByType(AssetType type) {
-		return assetRepository.getAssetEntries().stream()
-			.filter(assetEntry -> assetEntry.getAssetType() == type)
-			.map(assetEntry -> (Asset) getAsset(assetEntry.getAssetId()))
+		return assetRepository.getAssetMetadatas().stream()
+			.filter(assetMetadata -> assetMetadata.getAssetType() == type)
+			.map(assetMetadata -> (Asset) getAsset(assetMetadata.getAssetId()))
 			.collect(Collectors.toList());
 	}
 }

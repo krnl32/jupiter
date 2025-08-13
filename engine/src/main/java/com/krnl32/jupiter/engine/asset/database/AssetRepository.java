@@ -9,13 +9,13 @@ import java.util.Collection;
 
 public class AssetRepository {
 	private final AssetPersistence assetPersistence;
-	private final AssetRegistry assetRegistry;
 	private final AssetDatabase assetDatabase;
+	private final AssetRegistry assetRegistry;
 
 	public AssetRepository(AssetPersistence assetPersistence) {
 		this.assetPersistence = assetPersistence;
-		this.assetRegistry = assetPersistence.loadAssetRegistry();
 		this.assetDatabase = assetPersistence.loadAssetDatabase();
+		this.assetRegistry = assetPersistence.loadAssetRegistry();
 	}
 
 	public AssetMetadata getAssetMetadata(AssetId assetId) {
@@ -49,8 +49,10 @@ public class AssetRepository {
 	public void saveAssetMetadata(AssetMetadata assetMetadata) {
 		assetDatabase.addAssetMetadata(assetMetadata);
 		assetPersistence.saveAssetMetadata(assetMetadata);
-		assetRegistry.register(new AssetEntry(assetMetadata.getAssetId(), assetMetadata.getAssetType(), assetMetadata.getAssetPath()));
-		assetPersistence.saveAssetRegistry(assetRegistry);
+	}
+
+	public Collection<AssetMetadata> getAssetMetadatas() {
+		return assetDatabase.getAssetMetadatas();
 	}
 
 	public AssetEntry getAssetEntry(AssetId assetId) {
