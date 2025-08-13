@@ -17,7 +17,7 @@
 		"assetDatabase": "Assets/.jmetadata"
 	},
 	"startup": {
-		"scenePath": "Scenes/Sandbox.jscene.json"
+		"scenePath": "Scenes/Sandbox.jscene"
 	},
 	"metadata": {
 		"uuid": "375987eb-8d8a-48b7-9223-e44ad050707f",

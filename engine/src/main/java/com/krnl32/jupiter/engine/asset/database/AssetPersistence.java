@@ -75,7 +75,7 @@ public class AssetPersistence {
 		}
 	}
 
-	public AssetMetadata getAssetMetadata(String sourcePath) {
+	public AssetMetadata getAssetMetadata(String assetPath) {
 		File[] metadataFiles = new File(assetDatabaseDirectory.toString()).listFiles();
 		if (metadataFiles == null) {
 			return null;
@@ -92,7 +92,7 @@ public class AssetPersistence {
 				JSONObject metadata = new JSONObject(metadataContent);
 				AssetMetadata assetMetadata = AssetMetadataSerializer.deserialize(metadata);
 
-				if (assetMetadata.getSourcePath().equals(sourcePath)) {
+				if (assetMetadata.getAssetPath().equals(assetPath)) {
 					return assetMetadata;
 				}
 			} catch (Exception e) {

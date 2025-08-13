@@ -1,9 +1,9 @@
 package com.krnl32.jupiter.editor.editor;
 
 import com.krnl32.jupiter.editor.asset.EditorAssetManager;
-import com.krnl32.jupiter.editor.asset.loaders.PlainScriptAssetLoader;
-import com.krnl32.jupiter.editor.asset.loaders.PlainTextureAssetLoader;
-import com.krnl32.jupiter.editor.asset.serializers.JSONDTOSceneAssetSerializer;
+import com.krnl32.jupiter.editor.asset.loaders.EditorSceneAssetLoader;
+import com.krnl32.jupiter.editor.asset.loaders.EditorScriptAssetLoader;
+import com.krnl32.jupiter.editor.asset.loaders.EditorTextureAssetLoader;
 import com.krnl32.jupiter.editor.events.editor.EditorPauseEvent;
 import com.krnl32.jupiter.editor.events.editor.EditorPlayEvent;
 import com.krnl32.jupiter.editor.events.editor.EditorStopEvent;
@@ -42,8 +42,6 @@ import com.krnl32.jupiter.engine.asset.database.AssetPersistence;
 import com.krnl32.jupiter.engine.asset.database.AssetRepository;
 import com.krnl32.jupiter.engine.asset.handle.AssetType;
 import com.krnl32.jupiter.engine.asset.loader.AssetLoaderRegistry;
-import com.krnl32.jupiter.engine.asset.loader.types.DTOSceneAssetLoader;
-import com.krnl32.jupiter.engine.asset.serializer.AssetSerializerRegistry;
 import com.krnl32.jupiter.engine.asset.types.SceneAsset;
 import com.krnl32.jupiter.engine.asset.types.ScriptAsset;
 import com.krnl32.jupiter.engine.asset.types.TextureAsset;
@@ -77,7 +75,7 @@ import com.krnl32.jupiter.engine.renderer.ProjectionType;
 import com.krnl32.jupiter.engine.renderer.Renderer;
 import com.krnl32.jupiter.engine.scene.Scene;
 import com.krnl32.jupiter.engine.scene.SceneManager;
-import com.krnl32.jupiter.engine.serializer.utility.DTOComponentSerializers;
+import com.krnl32.jupiter.engine.serializer.utility.DefaultComponentSerializers;
 import org.joml.Vector4f;
 
 import java.nio.file.Path;
@@ -111,7 +109,6 @@ public class Editor extends Engine {
 	@Override
 	public boolean onInit() {
 		// Register Engine Components
-		registerAssetSerializers();
 		registerAssetLoaders();
 		registerECSComponentSerializers();
 		DefaultComponentCloners.registerAll();
@@ -200,18 +197,14 @@ public class Editor extends Engine {
 		editorState = EditorState.STOP;
 	}
 
-	private void registerAssetSerializers() {
-		AssetSerializerRegistry.register(AssetType.SCENE, SceneAsset.class, new JSONDTOSceneAssetSerializer());
-	}
-
 	private void registerAssetLoaders() {
-		AssetLoaderRegistry.register(AssetType.TEXTURE, TextureAsset.class, new PlainTextureAssetLoader());
-		AssetLoaderRegistry.register(AssetType.SCENE, SceneAsset.class, new DTOSceneAssetLoader());
-		AssetLoaderRegistry.register(AssetType.SCRIPT, ScriptAsset.class, new PlainScriptAssetLoader());
+		AssetLoaderRegistry.register(AssetType.TEXTURE, TextureAsset.class, new EditorTextureAssetLoader());
+		AssetLoaderRegistry.register(AssetType.SCENE, SceneAsset.class, new EditorSceneAssetLoader());
+		AssetLoaderRegistry.register(AssetType.SCRIPT, ScriptAsset.class, new EditorScriptAssetLoader());
 	}
 
 	private void registerECSComponentSerializers() {
-		DTOComponentSerializers.registerAll();
+		DefaultComponentSerializers.registerAll();
 	}
 
 	private boolean loadProject(Path projectDirectory) {

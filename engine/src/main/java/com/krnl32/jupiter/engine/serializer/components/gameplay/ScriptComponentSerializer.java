@@ -5,19 +5,19 @@ import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.script.ScriptInstance;
 import com.krnl32.jupiter.engine.serializer.ComponentSerializer;
 import com.krnl32.jupiter.engine.serializer.resolvers.EntityResolver;
-import com.krnl32.jupiter.engine.serializer.utility.DTOComponentSerializerUtility;
+import com.krnl32.jupiter.engine.serializer.utility.ComponentSerializerUtility;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class DTOScriptComponentSerializer implements ComponentSerializer<ScriptComponent, Map<String, Object>> {
+public class ScriptComponentSerializer implements ComponentSerializer<ScriptComponent, Map<String, Object>> {
 	@Override
 	public Map<String, Object> serialize(ScriptComponent component) {
 		List<Object> scriptsData = new ArrayList<>();
 
 		for (ScriptInstance script : component.scripts) {
-			Map<String, Object> scriptData = DTOComponentSerializerUtility.serializeScriptInstance(script);
+			Map<String, Object> scriptData = ComponentSerializerUtility.serializeScriptInstance(script);
 			if (scriptData == null) {
 				Logger.error("ScriptComponentSerializer Serialize Failed for AssetId({})", script.getScriptAssetId());
 				return null;
@@ -35,7 +35,7 @@ public class DTOScriptComponentSerializer implements ComponentSerializer<ScriptC
 		List<Object> scriptsData = (List<Object>) data.get("scripts");
 		if (scriptsData != null) {
 			for (int i = 0; i < scriptsData.size(); i++) {
-				scripts.add(DTOComponentSerializerUtility.deserializeScriptInstance((Map<String, Object>) scriptsData.get(i)));
+				scripts.add(ComponentSerializerUtility.deserializeScriptInstance((Map<String, Object>) scriptsData.get(i)));
 			}
 		}
 

@@ -6,7 +6,7 @@ import com.krnl32.jupiter.engine.serializer.resolvers.EntityResolver;
 
 import java.util.Map;
 
-public class DTOTeamComponentSerializer implements ComponentSerializer<TeamComponent, Map<String, Object>> {
+public class TeamComponentSerializer implements ComponentSerializer<TeamComponent, Map<String, Object>> {
 	@Override
 	public Map<String, Object> serialize(TeamComponent component) {
 		return Map.of("teamID", component.teamId);

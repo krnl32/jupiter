@@ -13,7 +13,6 @@ public class AssetMetadataSerializer {
 			.put("version", metadata.getVersion())
 			.put("uuid", metadata.getAssetId().getId())
 			.put("assetType", metadata.getAssetType().name())
-			.put("sourcePath", metadata.getSourcePath())
 			.put("assetPath", metadata.getAssetPath())
 			.put("importerName", metadata.getImporterName())
 			.put("importSettings", metadata.getImportSettings())
@@ -25,7 +24,6 @@ public class AssetMetadataSerializer {
 			metadata.getInt("version"),
 			new AssetId(UUID.fromString(metadata.getString("uuid"))),
 			AssetType.valueOf(metadata.getString("assetType")),
-			metadata.getString("sourcePath"),
 			metadata.getString("assetPath"),
 			metadata.getString("importerName"),
 			metadata.getJSONObject("importSettings").toMap(),

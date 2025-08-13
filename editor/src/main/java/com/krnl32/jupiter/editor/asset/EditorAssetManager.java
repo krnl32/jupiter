@@ -54,7 +54,7 @@ public class EditorAssetManager implements AssetManager {
 			return null;
 		}
 
-		AssetDescriptor assetDescriptor = new AssetDescriptor(assetMetadata.getAssetId(), assetMetadata.getAssetType(), Path.of(assetMetadata.getSourcePath()), assetMetadata.getImportSettings());
+		AssetDescriptor assetDescriptor = new AssetDescriptor(assetMetadata.getAssetId(), assetMetadata.getAssetType(), Path.of(assetMetadata.getAssetPath()), assetMetadata.getImportSettings());
 		Asset asset = assetLoader.load(assetDescriptor);
 		if (asset == null) {
 			Logger.error("EditorAssetManager Get Asset({}) Failed: AssetLoader({}) Failed", assetMetadata.getAssetId(), assetMetadata.getAssetType());
@@ -109,7 +109,6 @@ public class EditorAssetManager implements AssetManager {
 				importedAsset.getId(),
 				importedAsset.getType(),
 				filePath.toString(),
-				null,
 				result.getImporterName(),
 				result.getMetadata(),
 				System.currentTimeMillis()
@@ -138,7 +137,7 @@ public class EditorAssetManager implements AssetManager {
 			Logger.error("EditorAssetManager Failed to Get AssetPath({}): No AssetMetadata Found", assetId);
 			return null;
 		}
-		return Path.of(assetMetadata.getSourcePath());
+		return Path.of(assetMetadata.getAssetPath());
 	}
 
 	public AssetType getAssetType(AssetId assetId) {

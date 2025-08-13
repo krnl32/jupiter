@@ -6,7 +6,7 @@ import com.krnl32.jupiter.engine.serializer.resolvers.EntityResolver;
 
 import java.util.Map;
 
-public class DTOTagComponentSerializer implements ComponentSerializer<TagComponent, Map<String, Object>> {
+public class TagComponentSerializer implements ComponentSerializer<TagComponent, Map<String, Object>> {
 	@Override
 	public Map<String, Object> serialize(TagComponent component) {
 		return Map.of("tag", component.tag);

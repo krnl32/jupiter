@@ -3,11 +3,11 @@ package com.krnl32.jupiter.engine.serializer.components.utility;
 import com.krnl32.jupiter.engine.components.utility.LifetimeComponent;
 import com.krnl32.jupiter.engine.serializer.ComponentSerializer;
 import com.krnl32.jupiter.engine.serializer.resolvers.EntityResolver;
-import com.krnl32.jupiter.engine.serializer.utility.DTOComponentSerializerUtility;
+import com.krnl32.jupiter.engine.serializer.utility.ComponentSerializerUtility;
 
 import java.util.Map;
 
-public class DTOLifetimeComponentSerializer implements ComponentSerializer<LifetimeComponent, Map<String, Object>> {
+public class LifetimeComponentSerializer implements ComponentSerializer<LifetimeComponent, Map<String, Object>> {
 	@Override
 	public Map<String, Object> serialize(LifetimeComponent component) {
 		return Map.of("remainingTime", component.remainingTime);
@@ -15,6 +15,6 @@ public class DTOLifetimeComponentSerializer implements ComponentSerializer<Lifet
 
 	@Override
 	public LifetimeComponent deserialize(Map<String, Object> data, EntityResolver resolver) {
-		return new LifetimeComponent(DTOComponentSerializerUtility.toFloat(data.get("remainingTime")));
+		return new LifetimeComponent(ComponentSerializerUtility.toFloat(data.get("remainingTime")));
 	}
 }

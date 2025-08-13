@@ -1,7 +1,6 @@
 {
     "importerName": "TextureAssetImporter",
-	"sourcePath": "Textures/StoneWall.png",
-    "assetPath": "Textures/StoneWall.jtexture",
+    "assetPath": "Textures/StoneWall.png",
     "lastModified": 1754615765711,
     "version": 1,
     "uuid": "7d78d687-fc7b-4fe8-9a01-e12bdf3fdb16",

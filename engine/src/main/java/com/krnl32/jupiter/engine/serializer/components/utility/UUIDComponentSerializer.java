@@ -7,7 +7,7 @@ import com.krnl32.jupiter.engine.serializer.resolvers.EntityResolver;
 import java.util.Map;
 import java.util.UUID;
 
-public class DTOUUIDComponentSerializer implements ComponentSerializer<UUIDComponent, Map<String, Object>> {
+public class UUIDComponentSerializer implements ComponentSerializer<UUIDComponent, Map<String, Object>> {
 	@Override
 	public Map<String, Object> serialize(UUIDComponent component) {
 		return Map.of("uuid", component.uuid.toString());

@@ -14,6 +14,7 @@ import com.krnl32.jupiter.engine.ecs.Entity;
 import com.krnl32.jupiter.engine.physics.BodyType;
 import com.krnl32.jupiter.engine.renderer.Camera;
 import com.krnl32.jupiter.engine.scene.Scene;
+import com.krnl32.jupiter.engine.scene.SceneSettings;
 import com.krnl32.jupiter.engine.script.ScriptInstance;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -24,6 +25,10 @@ import java.util.UUID;
 public class EditorScene extends Scene {
 	public EditorScene(String name) {
 		super(name);
+	}
+
+	public EditorScene(String name, SceneSettings sceneSettings) {
+		super(name, sceneSettings);
 	}
 
 	@Override

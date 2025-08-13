@@ -7,7 +7,7 @@ import com.krnl32.jupiter.engine.serializer.resolvers.EntityResolver;
 
 import java.util.Map;
 
-public class DTOKeyboardControlComponentSerializer implements ComponentSerializer<KeyboardControlComponent, Map<String, Object>> {
+public class KeyboardControlComponentSerializer implements ComponentSerializer<KeyboardControlComponent, Map<String, Object>> {
 	@Override
 	public Map<String, Object> serialize(KeyboardControlComponent component) {
 		return Map.of(

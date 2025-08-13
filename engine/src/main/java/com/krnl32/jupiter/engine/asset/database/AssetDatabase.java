@@ -20,14 +20,14 @@ public class AssetDatabase {
 		return assetIdToMetadata.get(assetId);
 	}
 
-	public AssetMetadata getAssetMetadata(String sourcePath) {
-		AssetId assetId = pathToAssetId.get(sourcePath);
+	public AssetMetadata getAssetMetadata(String assetPath) {
+		AssetId assetId = pathToAssetId.get(assetPath);
 		return assetIdToMetadata.get(assetId);
 	}
 
 	public void addAssetMetadata(AssetMetadata assetMetadata) {
 		assetIdToMetadata.put(assetMetadata.getAssetId(), assetMetadata);
-		pathToAssetId.put(assetMetadata.getSourcePath(), assetMetadata.getAssetId());
+		pathToAssetId.put(assetMetadata.getAssetPath(), assetMetadata.getAssetId());
 	}
 
 	public void loadFromDisk(Path assetDatabaseDirectory) {
@@ -48,7 +48,7 @@ public class AssetDatabase {
 				JSONObject metadata = new JSONObject(metadataContent);
 				AssetMetadata assetMetadata = AssetMetadataSerializer.deserialize(metadata);;
 				assetIdToMetadata.put(assetMetadata.getAssetId(), assetMetadata);
-				pathToAssetId.put(assetMetadata.getSourcePath(), assetMetadata.getAssetId());
+				pathToAssetId.put(assetMetadata.getAssetPath(), assetMetadata.getAssetId());
 			} catch (Exception e) {
 				Logger.error("AssetDatabase LoadFromDisk Failed to Load Asset({}): {}", metadataFile.getName(), e.getMessage());
 			}

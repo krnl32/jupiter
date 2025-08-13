@@ -9,7 +9,7 @@ import com.krnl32.jupiter.engine.script.ScriptSettings;
 
 import java.nio.file.Path;
 
-public class PlainScriptAssetLoader implements AssetLoader<ScriptAsset> {
+public class EditorScriptAssetLoader implements AssetLoader<ScriptAsset> {
 	@Override
 	public ScriptAsset load(AssetDescriptor assetDescriptor) {
 		// Script Path

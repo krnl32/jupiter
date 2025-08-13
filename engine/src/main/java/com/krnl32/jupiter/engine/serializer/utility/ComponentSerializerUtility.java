@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class DTOComponentSerializerUtility {
+public class ComponentSerializerUtility {
 	// JOML Math Types
 	public static Map<String, Object> serializeVector2f(Vector2f vec) {
 		return Map.of("x", vec.x, "y", vec.y);
@@ -76,7 +76,7 @@ public class DTOComponentSerializerUtility {
 	public static Map<String, Object> serializeSprite(Sprite sprite) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("index", sprite.getIndex());
-		map.put("color", DTOComponentSerializerUtility.serializeVector4f(sprite.getColor()));
+		map.put("color", ComponentSerializerUtility.serializeVector4f(sprite.getColor()));
 		map.put("textureAssetId", (sprite.getTextureAssetId() != null ? sprite.getTextureAssetId().getId() : null));
 		map.put("textureUV", sprite.getTextureUV());
 		return map;
@@ -94,9 +94,9 @@ public class DTOComponentSerializerUtility {
 
 		return new Sprite(
 			(int) data.get("index"),
-			DTOComponentSerializerUtility.deserializeVector4f((Map<String, Object>) data.get("color")),
+			ComponentSerializerUtility.deserializeVector4f((Map<String, Object>) data.get("color")),
 			textureAssetId,
-			DTOComponentSerializerUtility.toFloatArray(data.get("textureUV"))
+			ComponentSerializerUtility.toFloatArray(data.get("textureUV"))
 		);
 	}
 

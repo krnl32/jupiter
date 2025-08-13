@@ -32,13 +32,13 @@ public class AssetRepository {
 		return assetMetadata;
 	}
 
-	public AssetMetadata getAssetMetadata(String sourcePath) {
-		AssetMetadata assetMetadata = assetDatabase.getAssetMetadata(sourcePath);
+	public AssetMetadata getAssetMetadata(String assetPath) {
+		AssetMetadata assetMetadata = assetDatabase.getAssetMetadata(assetPath);
 		if (assetMetadata != null) {
 			return assetMetadata;
 		}
 
-		assetMetadata = assetPersistence.getAssetMetadata(sourcePath);
+		assetMetadata = assetPersistence.getAssetMetadata(assetPath);
 		if (assetMetadata != null) {
 			assetDatabase.addAssetMetadata(assetMetadata);
 		}
