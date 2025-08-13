@@ -20,13 +20,18 @@ public class TextureAssetImporter implements AssetImporter<TextureAsset> {
 
 	@Override
 	public ImportResult<TextureAsset> importAsset(ImportRequest request) {
-		TextureAssetImportSettings textureImportSettings = (TextureAssetImportSettings) request.getImportSettings();
+		TextureAssetImportSettings textureImportSettings;
+		if (request.getImportSettings() == null) {
+			textureImportSettings = (TextureAssetImportSettings) getDefaultSettings();
+		} else {
+			textureImportSettings = (TextureAssetImportSettings) request.getImportSettings();
+		}
 
 		TextureSettings textureSettings = textureImportSettings.getSettings();
 
 		TextureAsset textureAsset = new TextureAsset(textureSettings, request.getData());
 
-		ImportResult<TextureAsset> importResult = new ImportResult<>(textureAsset);
+		ImportResult<TextureAsset> importResult = new ImportResult<>(textureAsset, getClass().getSimpleName());
 		importResult.setMetadata("type", textureSettings.getType().name());
 		importResult.setMetadata("format", textureSettings.getFormat().name());
 		importResult.setMetadata("width", textureSettings.getWidth());

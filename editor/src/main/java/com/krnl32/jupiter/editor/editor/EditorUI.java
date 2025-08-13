@@ -26,6 +26,7 @@ public class EditorUI {
 		this.imGuiWrapper = new ImGuiWrapper(window);
 		this.editorPanels = new ArrayList<>();
 		this.editorState = EditorState.STOP;
+		
 
 		EventBus.getInstance().register(EditorPlayEvent.class, event -> {
 			editorState = EditorState.PLAY;

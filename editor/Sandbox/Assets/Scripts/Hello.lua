@@ -12,8 +12,11 @@ end
 
 function onUpdate(dt)
 	--print("Running Hello Script: ".. dt)
+
 	local rb = entity:getComponent("RigidBody2DComponent")
-	--print(rb.mass)
-	rb.mass = rb.mass - dt
-	entity:setComponent("RigidBody2DComponent", rb)
+	if rb ~= nil then
+		--print(rb.mass)
+		rb.mass = rb.mass - dt
+		entity:setComponent("RigidBody2DComponent", rb)
+	end
 end

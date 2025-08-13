@@ -1,6 +1,7 @@
 package com.krnl32.jupiter.engine.core;
 
 import com.krnl32.jupiter.engine.event.EventBus;
+import com.krnl32.jupiter.engine.events.filesystem.FileDragDropEvent;
 import com.krnl32.jupiter.engine.events.input.*;
 import com.krnl32.jupiter.engine.events.window.WindowCloseEvent;
 import com.krnl32.jupiter.engine.events.window.WindowResizeEvent;
@@ -8,8 +9,11 @@ import com.krnl32.jupiter.engine.input.devices.KeyCode;
 import com.krnl32.jupiter.engine.input.devices.MouseCode;
 import org.joml.Vector2f;
 import org.lwjgl.Version;
+import org.lwjgl.glfw.GLFWDropCallback;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
+
+import java.nio.file.Path;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -123,6 +127,13 @@ public class Window {
 
 		glfwSetScrollCallback(window, (window, xoffset, yoffset) -> {
 			EventBus.getInstance().emit(new MouseScrollEvent(new Vector2f((float)xoffset, (float)yoffset)));
+		});
+
+		glfwSetDropCallback(window, (window, count, names) -> {
+			for (int i = 0; i < count; i++) {
+				String filePath = GLFWDropCallback.getName(names, i);
+				EventBus.getInstance().emit(new FileDragDropEvent(Path.of(filePath)));
+			}
 		});
 	}
 }

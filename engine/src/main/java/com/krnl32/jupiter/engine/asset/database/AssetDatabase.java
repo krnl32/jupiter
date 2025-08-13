@@ -30,21 +30,27 @@ public class AssetDatabase {
 		pathToAssetId.put(assetMetadata.getSourcePath(), assetMetadata.getAssetId());
 	}
 
-	public void loadFromDisk(Path assetDatabaseDirPath) {
-		File databaseDir = new File(assetDatabaseDirPath.toString());
-		File[] metadataFiles = databaseDir.listFiles();
-		if (metadataFiles != null) {
-			for (File metadataFile : metadataFiles) {
-				if (metadataFile.isFile() && metadataFile.getName().endsWith(".jmeta")) {
-					try {
-						JSONObject metadata = new JSONObject(FileIO.readFileContent(Path.of(metadataFile.getAbsolutePath())));
-						AssetMetadata assetMetadata = AssetMetadataSerializer.deserialize(metadata);;
-						assetIdToMetadata.put(assetMetadata.getAssetId(), assetMetadata);
-						pathToAssetId.put(assetMetadata.getSourcePath(), assetMetadata.getAssetId());
-					} catch (Exception e) {
-						Logger.error("AssetDatabase LoadFromDisk Failed to Load Asset({}): {}", metadataFile.getName(), e.getMessage());
-					}
-				}
+	public void loadFromDisk(Path assetDatabaseDirectory) {
+
+		File[] metadataFiles = new File(assetDatabaseDirectory.toString()).listFiles();
+		if (metadataFiles == null) {
+			return;
+		}
+
+		for (File metadataFile : metadataFiles) {
+			if (!metadataFile.isFile() && !metadataFile.getName().endsWith(".jmeta")) {
+				continue;
+			}
+
+			try {
+				Path metadataPath = metadataFile.toPath();
+				String metadataContent = FileIO.readFileContent(metadataPath);
+				JSONObject metadata = new JSONObject(metadataContent);
+				AssetMetadata assetMetadata = AssetMetadataSerializer.deserialize(metadata);;
+				assetIdToMetadata.put(assetMetadata.getAssetId(), assetMetadata);
+				pathToAssetId.put(assetMetadata.getSourcePath(), assetMetadata.getAssetId());
+			} catch (Exception e) {
+				Logger.error("AssetDatabase LoadFromDisk Failed to Load Asset({}): {}", metadataFile.getName(), e.getMessage());
 			}
 		}
 	}

@@ -9,60 +9,65 @@ import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.utility.FileIO;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class AssetPersistence {
 	private static final String ASSET_METADATA_EXTENSION = ".jmeta";
 
-	private final Path assetRegistryPath;
-	private final Path assetDatabaseDirPath;
+	private final Path assetRegistryFilePath;
+	private final Path assetDatabaseDirectory;
 
-	public AssetPersistence(Path assetRegistryPath, Path assetDatabaseDirPath) {
-		this.assetRegistryPath = assetRegistryPath;
-		this.assetDatabaseDirPath = assetDatabaseDirPath;
+	public AssetPersistence(Path assetRegistryFilePath, Path assetDatabaseDirectory) {
+		this.assetRegistryFilePath = assetRegistryFilePath;
+		this.assetDatabaseDirectory = assetDatabaseDirectory;
 	}
 
 	public AssetRegistry loadAssetRegistry() {
-		if (!Files.exists(assetRegistryPath)) {
+		if (!Files.exists(assetRegistryFilePath)) {
 			return new AssetRegistry();
 		}
 
 		try {
-			return AssetRegistrySerializer.deserialize(new JSONObject(FileIO.readFileContent(assetRegistryPath)));
+			String fileContent = FileIO.readFileContent(assetRegistryFilePath);
+			JSONObject assetRegistry = new JSONObject(fileContent);
+			return AssetRegistrySerializer.deserialize(assetRegistry);
 		} catch (Exception e) {
-			Logger.error("AssetPersistence loadAssetRegistry Failed To Deserialize AssetRegistry({}): {}", assetRegistryPath, e.getMessage());
+			Logger.error("AssetPersistence loadAssetRegistry Failed To Deserialize AssetRegistry({}): {}", assetRegistryFilePath, e.getMessage());
 			return null;
 		}
 	}
 
 	public void saveAssetRegistry(AssetRegistry assetRegistry) {
 		try {
-			FileIO.writeFileContent(assetRegistryPath, AssetRegistrySerializer.serialize(assetRegistry).toString(4));
+			String serializedData = AssetRegistrySerializer.serialize(assetRegistry).toString(4);
+			FileIO.writeFileContent(assetRegistryFilePath, serializedData);
 		} catch (Exception e) {
-			Logger.error("AssetPersistence saveRegistry Failed To Write AssetRegistry({}): {}", assetRegistryPath, e.getMessage());
+			Logger.error("AssetPersistence saveRegistry Failed To Write AssetRegistry({}): {}", assetRegistryFilePath, e.getMessage());
 		}
 	}
 
 	public AssetDatabase loadAssetDatabase() {
-		if (!Files.exists(assetDatabaseDirPath)) {
+		if (!Files.exists(assetDatabaseDirectory)) {
 			return new AssetDatabase();
 		}
 
 		AssetDatabase assetDatabase = new AssetDatabase();
-		assetDatabase.loadFromDisk(assetDatabaseDirPath);
+		assetDatabase.loadFromDisk(assetDatabaseDirectory);
 		return assetDatabase;
 	}
 
 	public AssetMetadata getAssetMetadata(AssetId assetId) {
-		Path metadataFilePath = assetDatabaseDirPath.resolve(assetId.getId() + ASSET_METADATA_EXTENSION);
+		Path metadataFilePath = assetDatabaseDirectory.resolve(assetId.getId() + ASSET_METADATA_EXTENSION);
 		if (!Files.exists(metadataFilePath)) {
 			Logger.error("AssetPersistence getAssetMetadata Failed to get Asset({}) MetadataFile({}): File Doesn't Exist", assetId, metadataFilePath.toString());
 			return null;
 		}
 
 		try {
-			JSONObject metadataFileData = new JSONObject(FileIO.readFileContent(metadataFilePath));
+			String metadataContent = FileIO.readFileContent(metadataFilePath);
+			JSONObject metadataFileData = new JSONObject(metadataContent);
 			return AssetMetadataSerializer.deserialize(metadataFileData);
 		} catch (Exception e) {
 			Logger.error("AssetPersistence getAssetMetadata Failed To Read Asset({}) Metadata: {}", assetId.getId(), e.getMessage());
@@ -70,10 +75,38 @@ public class AssetPersistence {
 		}
 	}
 
+	public AssetMetadata getAssetMetadata(String sourcePath) {
+		File[] metadataFiles = new File(assetDatabaseDirectory.toString()).listFiles();
+		if (metadataFiles == null) {
+			return null;
+		}
+
+		for (File metadataFile : metadataFiles) {
+			if (!metadataFile.isFile() && !metadataFile.getName().endsWith(".jmeta")) {
+				continue;
+			}
+
+			try {
+				Path metadataPath = metadataFile.toPath();
+				String metadataContent = FileIO.readFileContent(metadataPath);
+				JSONObject metadata = new JSONObject(metadataContent);
+				AssetMetadata assetMetadata = AssetMetadataSerializer.deserialize(metadata);
+
+				if (assetMetadata.getSourcePath().equals(sourcePath)) {
+					return assetMetadata;
+				}
+			} catch (Exception e) {
+				Logger.error("AssetDatabase LoadFromDisk Failed to Load Asset({}): {}", metadataFile.getName(), e.getMessage());
+			}
+		}
+		return null;
+	}
+
 	public void saveAssetMetadata(AssetMetadata assetMetadata) {
 		try {
-			Path metadataFilePath = assetDatabaseDirPath.resolve(assetMetadata.getAssetId().getId() + ASSET_METADATA_EXTENSION);
-			FileIO.writeFileContent(metadataFilePath, AssetMetadataSerializer.serialize(assetMetadata).toString(4));
+			Path metadataFilePath = assetDatabaseDirectory.resolve(assetMetadata.getAssetId().getId() + ASSET_METADATA_EXTENSION);
+			String serializedMetadata = AssetMetadataSerializer.serialize(assetMetadata).toString(4);
+			FileIO.writeFileContent(metadataFilePath, serializedMetadata);
 		} catch (Exception e) {
 			Logger.error("AssetPersistence saveAssetMetadata Failed To Write Asset({}) Metadata: {}", assetMetadata.getAssetId().getId(), e.getMessage());
 		}

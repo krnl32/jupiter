@@ -5,6 +5,8 @@ import com.krnl32.jupiter.engine.asset.handle.AssetMetadata;
 import com.krnl32.jupiter.engine.asset.registry.AssetEntry;
 import com.krnl32.jupiter.engine.asset.registry.AssetRegistry;
 
+import java.util.Collection;
+
 public class AssetRepository {
 	private final AssetPersistence assetPersistence;
 	private final AssetRegistry assetRegistry;
@@ -16,13 +18,6 @@ public class AssetRepository {
 		this.assetDatabase = assetPersistence.loadAssetDatabase();
 	}
 
-	public void saveAssetMetadata(AssetMetadata assetMetadata) {
-		assetDatabase.addAssetMetadata(assetMetadata);
-		assetPersistence.saveAssetMetadata(assetMetadata);
-		assetRegistry.register(new AssetEntry(assetMetadata.getAssetId(), assetMetadata.getAssetType(), assetMetadata.getAssetPath()));
-		assetPersistence.saveAssetRegistry(assetRegistry);
-	}
-
 	public AssetMetadata getAssetMetadata(AssetId assetId) {
 		AssetMetadata assetMetadata = assetDatabase.getAssetMetadata(assetId);
 		if (assetMetadata != null) {
@@ -32,9 +27,37 @@ public class AssetRepository {
 		assetMetadata = assetPersistence.getAssetMetadata(assetId);
 		if (assetMetadata != null) {
 			assetDatabase.addAssetMetadata(assetMetadata);
+		}
+
+		return assetMetadata;
+	}
+
+	public AssetMetadata getAssetMetadata(String sourcePath) {
+		AssetMetadata assetMetadata = assetDatabase.getAssetMetadata(sourcePath);
+		if (assetMetadata != null) {
 			return assetMetadata;
 		}
 
-		return null;
+		assetMetadata = assetPersistence.getAssetMetadata(sourcePath);
+		if (assetMetadata != null) {
+			assetDatabase.addAssetMetadata(assetMetadata);
+		}
+
+		return assetMetadata;
+	}
+
+	public void saveAssetMetadata(AssetMetadata assetMetadata) {
+		assetDatabase.addAssetMetadata(assetMetadata);
+		assetPersistence.saveAssetMetadata(assetMetadata);
+		assetRegistry.register(new AssetEntry(assetMetadata.getAssetId(), assetMetadata.getAssetType(), assetMetadata.getAssetPath()));
+		assetPersistence.saveAssetRegistry(assetRegistry);
+	}
+
+	public AssetEntry getAssetEntry(AssetId assetId) {
+		return assetRegistry.getAssetEntry(assetId);
+	}
+
+	public Collection<AssetEntry> getAssetEntries() {
+		return assetRegistry.getAssetEntries();
 	}
 }

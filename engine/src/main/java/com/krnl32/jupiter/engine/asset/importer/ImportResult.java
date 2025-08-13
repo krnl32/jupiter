@@ -9,10 +9,12 @@ import java.util.Map;
 public class ImportResult<T extends Asset> {
 	private final T asset;
 	private final Map<String, Object> metadata;
+	private final String importerName;
 
-	public ImportResult(T asset) {
+	public ImportResult(T asset, String importerName) {
 		this.asset = asset;
 		this.metadata = new HashMap<>();
+		this.importerName = importerName;
 	}
 
 	public T getAsset() {
@@ -29,5 +31,9 @@ public class ImportResult<T extends Asset> {
 
 	public void setMetadata(String key, Object value) {
 		metadata.put(key, value);
+	}
+
+	public String getImporterName() {
+		return importerName;
 	}
 }

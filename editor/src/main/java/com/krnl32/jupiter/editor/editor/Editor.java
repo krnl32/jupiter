@@ -23,6 +23,7 @@ import com.krnl32.jupiter.editor.factory.components.renderer.SpriteRendererCompo
 import com.krnl32.jupiter.editor.factory.components.utility.LifetimeComponentFactory;
 import com.krnl32.jupiter.editor.factory.components.utility.TagComponentFactory;
 import com.krnl32.jupiter.editor.factory.components.utility.UUIDComponentFactory;
+import com.krnl32.jupiter.editor.panels.ContentBrowserPanel;
 import com.krnl32.jupiter.editor.panels.InspectorPanel;
 import com.krnl32.jupiter.editor.panels.SceneHierarchyPanel;
 import com.krnl32.jupiter.editor.panels.ViewportPanel;
@@ -37,12 +38,11 @@ import com.krnl32.jupiter.editor.renderer.components.renderer.SpriteRendererComp
 import com.krnl32.jupiter.editor.renderer.components.utility.LifetimeComponentRenderer;
 import com.krnl32.jupiter.editor.renderer.components.utility.TagComponentRenderer;
 import com.krnl32.jupiter.editor.renderer.components.utility.UUIDComponentRenderer;
-import com.krnl32.jupiter.engine.asset.database.AssetDatabase;
+import com.krnl32.jupiter.engine.asset.database.AssetPersistence;
+import com.krnl32.jupiter.engine.asset.database.AssetRepository;
 import com.krnl32.jupiter.engine.asset.handle.AssetType;
 import com.krnl32.jupiter.engine.asset.loader.AssetLoaderRegistry;
 import com.krnl32.jupiter.engine.asset.loader.types.DTOSceneAssetLoader;
-import com.krnl32.jupiter.engine.asset.registry.AssetRegistry;
-import com.krnl32.jupiter.engine.asset.registry.AssetRegistrySerializer;
 import com.krnl32.jupiter.engine.asset.serializer.AssetSerializerRegistry;
 import com.krnl32.jupiter.engine.asset.types.SceneAsset;
 import com.krnl32.jupiter.engine.asset.types.ScriptAsset;
@@ -78,9 +78,7 @@ import com.krnl32.jupiter.engine.renderer.Renderer;
 import com.krnl32.jupiter.engine.scene.Scene;
 import com.krnl32.jupiter.engine.scene.SceneManager;
 import com.krnl32.jupiter.engine.serializer.utility.DTOComponentSerializers;
-import com.krnl32.jupiter.engine.utility.FileIO;
 import org.joml.Vector4f;
-import org.json.JSONObject;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -159,6 +157,7 @@ public class Editor extends Engine {
 		editorUI.addEditorPanel(new ViewportPanel(framebuffer));
 		editorUI.addEditorPanel(new SceneHierarchyPanel(sceneManager.getScene()));
 		editorUI.addEditorPanel(new InspectorPanel());
+		editorUI.addEditorPanel(new ContentBrowserPanel());
 
 		return true;
 	}
@@ -225,14 +224,8 @@ public class Editor extends Engine {
 		try {
 			// Setup Asset Manager
 			Path assetRegistryPath = projectDirectory.resolve(project.getPaths().getAssetRegistryPath());
-			JSONObject assetRegistryData = new JSONObject(FileIO.readFileContent(assetRegistryPath));
-			AssetRegistry assetRegistry = AssetRegistrySerializer.deserialize(assetRegistryData);
-
 			Path assetDatabasePath = projectDirectory.resolve(project.getPaths().getAssetDatabasePath());
-			AssetDatabase assetDatabase = new AssetDatabase();
-			assetDatabase.loadFromDisk(assetDatabasePath);
-
-			ProjectContext.init(projectDirectory, project, new EditorAssetManager(assetRegistry, assetDatabase));
+			ProjectContext.init(projectDirectory, project, new EditorAssetManager(new AssetRepository(new AssetPersistence(assetRegistryPath, assetDatabasePath))));
 		} catch (Exception e) {
 			Logger.error("Editor Failed to Load Project({}): {}", projectDirectory, e.getMessage());
 			return false;
