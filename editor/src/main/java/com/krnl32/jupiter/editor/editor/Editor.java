@@ -1,9 +1,9 @@
 package com.krnl32.jupiter.editor.editor;
 
 import com.krnl32.jupiter.editor.asset.EditorAssetManager;
-import com.krnl32.jupiter.editor.asset.loaders.EditorSceneAssetLoader;
 import com.krnl32.jupiter.editor.asset.loaders.EditorLuaScriptAssetLoader;
 import com.krnl32.jupiter.editor.asset.loaders.EditorRasterTextureAssetLoader;
+import com.krnl32.jupiter.editor.asset.loaders.EditorSceneAssetLoader;
 import com.krnl32.jupiter.editor.events.editor.EditorPauseEvent;
 import com.krnl32.jupiter.editor.events.editor.EditorPlayEvent;
 import com.krnl32.jupiter.editor.events.editor.EditorStopEvent;
@@ -41,6 +41,8 @@ import com.krnl32.jupiter.editor.renderer.components.utility.UUIDComponentRender
 import com.krnl32.jupiter.engine.asset.database.AssetPersistence;
 import com.krnl32.jupiter.engine.asset.database.AssetRepository;
 import com.krnl32.jupiter.engine.asset.handle.AssetType;
+import com.krnl32.jupiter.engine.asset.importer.importers.LuaScriptAssetImporter;
+import com.krnl32.jupiter.engine.asset.importer.importers.RasterTextureAssetImporter;
 import com.krnl32.jupiter.engine.asset.loader.AssetLoaderRegistry;
 import com.krnl32.jupiter.engine.asset.types.SceneAsset;
 import com.krnl32.jupiter.engine.asset.types.ScriptAsset;
@@ -108,16 +110,16 @@ public class Editor extends Engine {
 
 	@Override
 	public boolean onInit() {
-		// Register Engine Components
-		registerAssetLoaders();
-		registerECSComponentSerializers();
-		DefaultComponentCloners.registerAll();
-
-		// Load Project
-		if (!loadProject(projectDirectory)) {
+		if (!initProjectContext(projectDirectory)) {
 			Logger.critical("Editor Failed to Initialize Project({})", projectDirectory);
 			return false;
 		}
+
+		// Register Engine Components
+		registerAssetImporters();
+		registerAssetLoaders();
+		DefaultComponentSerializers.registerAll();
+		DefaultComponentCloners.registerAll();
 
 		// Register Editor Components
 		registerComponentFactories();
@@ -197,17 +199,18 @@ public class Editor extends Engine {
 		editorState = EditorState.STOP;
 	}
 
+	private void registerAssetImporters() {
+		((EditorAssetManager) ProjectContext.getInstance().getAssetManager()).registerAssetImporter(new RasterTextureAssetImporter());
+		((EditorAssetManager) ProjectContext.getInstance().getAssetManager()).registerAssetImporter(new LuaScriptAssetImporter());
+	}
+
 	private void registerAssetLoaders() {
 		AssetLoaderRegistry.register(AssetType.TEXTURE, TextureAsset.class, new EditorRasterTextureAssetLoader());
 		AssetLoaderRegistry.register(AssetType.SCENE, SceneAsset.class, new EditorSceneAssetLoader());
 		AssetLoaderRegistry.register(AssetType.SCRIPT, ScriptAsset.class, new EditorLuaScriptAssetLoader());
 	}
 
-	private void registerECSComponentSerializers() {
-		DefaultComponentSerializers.registerAll();
-	}
-
-	private boolean loadProject(Path projectDirectory) {
+	private boolean initProjectContext(Path projectDirectory) {
 		Project project = ProjectLoader.load(projectDirectory);
 		if (project == null) {
 			Logger.error("Editor Failed to Load Project({})", projectDirectory);

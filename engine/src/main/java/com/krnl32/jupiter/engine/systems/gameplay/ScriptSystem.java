@@ -14,7 +14,6 @@ import com.krnl32.jupiter.engine.script.ScriptBindings;
 import com.krnl32.jupiter.engine.script.ScriptContext;
 import com.krnl32.jupiter.engine.script.ScriptInstance;
 import com.krnl32.jupiter.engine.script.utility.DefaultComponentBinders;
-import org.luaj.vm2.LuaValue;
 
 import java.io.File;
 import java.util.HashMap;
@@ -38,9 +37,9 @@ public class ScriptSystem implements System {
 
 			for (ScriptInstance script : scriptComponent.scripts) {
 				ScriptBindings bindings = scriptBindings.get(new ScriptContext(event.getEntity(), script));
-				if (bindings != null && bindings.onDestroy() != null) {
+				if (bindings != null) {
 					try {
-						bindings.onDestroy().call();
+						bindings.onDestroy();
 					} catch (Exception e) {
 						Logger.warn("ScriptSystem Script({}) onDestroy Error for Entity({}): {}", script.getScriptAssetId(), event.getEntity().getTagOrId(), e.getMessage());
 					}
@@ -82,10 +81,11 @@ public class ScriptSystem implements System {
 				}
 
 				// Handle Script onInit
-				if (bindings.onInit() != null && !script.isInitialized() && !script.isDisabled()) {
+				if (!script.isInitialized() && !script.isDisabled()) {
 					try {
-						bindings.onInit().call();
-						script.setInitialized(true);
+						if (bindings.onInit()) {
+							script.setInitialized(true);
+						}
 					} catch (Exception e) {
 						Logger.error("ScriptSystem Script({}) onInit Error for Entity({}): {}, disabling script...", scriptAsset.getAssetPath(), entity.getTagOrId(), e.getMessage());
 						script.setDisabled(true);
@@ -93,9 +93,9 @@ public class ScriptSystem implements System {
 				}
 
 				// Handle onUpdate
-				if (bindings.onUpdate() != null && !script.isDisabled()) {
+				if (!script.isDisabled()) {
 					try {
-						bindings.onUpdate().call(LuaValue.valueOf(dt));
+						bindings.onUpdate(dt);
 					} catch (Exception e) {
 						Logger.error("ScriptSystem Script({}) onUpdate Error for Entity({}): {}, Disabling Script...", scriptAsset.getAssetPath(), entity.getTagOrId(), e.getMessage());
 						script.setDisabled(true);

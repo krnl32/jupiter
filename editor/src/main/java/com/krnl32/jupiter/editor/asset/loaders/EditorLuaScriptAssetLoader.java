@@ -4,8 +4,8 @@ import com.krnl32.jupiter.engine.asset.handle.AssetDescriptor;
 import com.krnl32.jupiter.engine.asset.loader.AssetLoader;
 import com.krnl32.jupiter.engine.asset.types.ScriptAsset;
 import com.krnl32.jupiter.engine.project.ProjectContext;
-import com.krnl32.jupiter.engine.script.ScriptDefinition;
 import com.krnl32.jupiter.engine.script.ScriptSettings;
+import com.krnl32.jupiter.engine.script.lua.LuaScriptDefinition;
 
 import java.nio.file.Path;
 
@@ -19,7 +19,7 @@ public class EditorLuaScriptAssetLoader implements AssetLoader<ScriptAsset> {
 		boolean compile = (boolean) assetDescriptor.getSettings().get("compile");
 		ScriptSettings settings = new ScriptSettings(hotReload, compile);
 
-		return new ScriptAsset(assetDescriptor.getAssetId(), settings, new ScriptDefinition(scriptPath, settings));
+		return new ScriptAsset(assetDescriptor.getAssetId(), settings, new LuaScriptDefinition(scriptPath, settings));
 	}
 
 	@Override

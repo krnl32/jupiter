@@ -1,4 +1,4 @@
-package com.krnl32.jupiter.engine.script.types;
+package com.krnl32.jupiter.engine.script.lua.types;
 
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.ecs.Component;

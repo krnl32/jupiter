@@ -7,8 +7,8 @@ import com.krnl32.jupiter.engine.asset.importsettings.ImportSettings;
 import com.krnl32.jupiter.engine.asset.importsettings.types.ScriptAssetImportSettings;
 import com.krnl32.jupiter.engine.asset.types.ScriptAsset;
 import com.krnl32.jupiter.engine.project.ProjectContext;
-import com.krnl32.jupiter.engine.script.ScriptDefinition;
 import com.krnl32.jupiter.engine.script.ScriptSettings;
+import com.krnl32.jupiter.engine.script.lua.LuaScriptDefinition;
 import com.krnl32.jupiter.engine.utility.FileIO;
 
 import java.nio.file.Path;
@@ -26,7 +26,7 @@ public class LuaScriptAssetImporter implements AssetImporter<ScriptAsset> {
 			(request.getImportSettings() == null ? getDefaultSettings() : request.getImportSettings());
 
 		Path scriptPath = ProjectContext.getInstance().getAssetDirectory().resolve(request.getSource());
-		ScriptAsset scriptAsset = new ScriptAsset(importSettings.getSettings(), new ScriptDefinition(scriptPath, importSettings.getSettings()));
+		ScriptAsset scriptAsset = new ScriptAsset(importSettings.getSettings(), new LuaScriptDefinition(scriptPath, importSettings.getSettings()));
 		return new ImportResult<>(scriptAsset, importSettings.toMap(), getClass().getSimpleName());
 	}
 
