@@ -11,7 +11,7 @@ import com.krnl32.jupiter.engine.utility.FileIO;
 import java.nio.file.Path;
 import java.util.Map;
 
-public class EditorTextureAssetLoader implements AssetLoader<TextureAsset> {
+public class EditorRasterTextureAssetLoader implements AssetLoader<TextureAsset> {
 	@Override
 	public TextureAsset load(AssetDescriptor assetDescriptor) {
 		try {

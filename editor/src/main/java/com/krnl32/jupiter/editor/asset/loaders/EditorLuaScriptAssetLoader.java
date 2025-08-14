@@ -9,18 +9,17 @@ import com.krnl32.jupiter.engine.script.ScriptSettings;
 
 import java.nio.file.Path;
 
-public class EditorScriptAssetLoader implements AssetLoader<ScriptAsset> {
+public class EditorLuaScriptAssetLoader implements AssetLoader<ScriptAsset> {
 	@Override
 	public ScriptAsset load(AssetDescriptor assetDescriptor) {
-		// Script Path
-		Path assetPath = ProjectContext.getInstance().getAssetDirectory().resolve(assetDescriptor.getAssetPath());
+		Path scriptPath = ProjectContext.getInstance().getAssetDirectory().resolve(assetDescriptor.getAssetPath());
 
 		// Script Settings
 		boolean hotReload = (boolean) assetDescriptor.getSettings().get("hotReload");
 		boolean compile = (boolean) assetDescriptor.getSettings().get("compile");
 		ScriptSettings settings = new ScriptSettings(hotReload, compile);
 
-		return new ScriptAsset(assetDescriptor.getAssetId(), assetDescriptor.getAssetPath().toString(), settings, new ScriptDefinition(assetPath, settings));
+		return new ScriptAsset(assetDescriptor.getAssetId(), settings, new ScriptDefinition(scriptPath, settings));
 	}
 
 	@Override

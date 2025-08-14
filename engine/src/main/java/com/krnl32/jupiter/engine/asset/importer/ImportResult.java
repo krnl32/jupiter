@@ -17,6 +17,12 @@ public class ImportResult<T extends Asset> {
 		this.importerName = importerName;
 	}
 
+	public ImportResult(T asset, Map<String, Object> importSettings, String importerName) {
+		this.asset = asset;
+		this.importSettings = importSettings;
+		this.importerName = importerName;
+	}
+
 	public T getAsset() {
 		return asset;
 	}
@@ -27,6 +33,10 @@ public class ImportResult<T extends Asset> {
 
 	public Object getImportSettings(String key) {
 		return importSettings.get(key);
+	}
+
+	public void setImportSettings(Map<String, Object> settings) {
+		importSettings.putAll(settings);
 	}
 
 	public void setImportSettings(String key, Object value) {

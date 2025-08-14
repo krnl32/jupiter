@@ -2,8 +2,8 @@ package com.krnl32.jupiter.editor.editor;
 
 import com.krnl32.jupiter.editor.asset.EditorAssetManager;
 import com.krnl32.jupiter.editor.asset.loaders.EditorSceneAssetLoader;
-import com.krnl32.jupiter.editor.asset.loaders.EditorScriptAssetLoader;
-import com.krnl32.jupiter.editor.asset.loaders.EditorTextureAssetLoader;
+import com.krnl32.jupiter.editor.asset.loaders.EditorLuaScriptAssetLoader;
+import com.krnl32.jupiter.editor.asset.loaders.EditorRasterTextureAssetLoader;
 import com.krnl32.jupiter.editor.events.editor.EditorPauseEvent;
 import com.krnl32.jupiter.editor.events.editor.EditorPlayEvent;
 import com.krnl32.jupiter.editor.events.editor.EditorStopEvent;
@@ -198,9 +198,9 @@ public class Editor extends Engine {
 	}
 
 	private void registerAssetLoaders() {
-		AssetLoaderRegistry.register(AssetType.TEXTURE, TextureAsset.class, new EditorTextureAssetLoader());
+		AssetLoaderRegistry.register(AssetType.TEXTURE, TextureAsset.class, new EditorRasterTextureAssetLoader());
 		AssetLoaderRegistry.register(AssetType.SCENE, SceneAsset.class, new EditorSceneAssetLoader());
-		AssetLoaderRegistry.register(AssetType.SCRIPT, ScriptAsset.class, new EditorScriptAssetLoader());
+		AssetLoaderRegistry.register(AssetType.SCRIPT, ScriptAsset.class, new EditorLuaScriptAssetLoader());
 	}
 
 	private void registerECSComponentSerializers() {

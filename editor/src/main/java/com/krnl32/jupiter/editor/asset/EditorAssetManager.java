@@ -7,6 +7,7 @@ import com.krnl32.jupiter.engine.asset.handle.*;
 import com.krnl32.jupiter.engine.asset.importer.AssetImportPipeline;
 import com.krnl32.jupiter.engine.asset.importer.ImportRequest;
 import com.krnl32.jupiter.engine.asset.importer.ImportResult;
+import com.krnl32.jupiter.engine.asset.importer.importers.LuaScriptAssetImporter;
 import com.krnl32.jupiter.engine.asset.importer.importers.RasterTextureAssetImporter;
 import com.krnl32.jupiter.engine.asset.loader.AssetLoader;
 import com.krnl32.jupiter.engine.asset.loader.AssetLoaderRegistry;
@@ -32,6 +33,7 @@ public class EditorAssetManager implements AssetManager {
 
 		// Register Importers
 		this.assetImportPipeline.registerImporter(new RasterTextureAssetImporter());
+		this.assetImportPipeline.registerImporter(new LuaScriptAssetImporter());
 	}
 
 	@Override

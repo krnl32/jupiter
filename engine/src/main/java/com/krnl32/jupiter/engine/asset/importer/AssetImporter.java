@@ -4,7 +4,7 @@ import com.krnl32.jupiter.engine.asset.handle.Asset;
 import com.krnl32.jupiter.engine.asset.importsettings.ImportSettings;
 
 public interface AssetImporter<T extends Asset> {
-	boolean supports(ImportRequest importRequest);
+	boolean supports(ImportRequest request);
 	ImportResult<T> importAsset(ImportRequest request);
 	ImportSettings getDefaultSettings();
 }

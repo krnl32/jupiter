@@ -10,7 +10,6 @@ import com.krnl32.jupiter.engine.renderer.texture.*;
 import com.krnl32.jupiter.engine.utility.FileIO;
 
 import java.nio.file.Path;
-import java.util.Map;
 import java.util.Set;
 
 public class RasterTextureAssetImporter implements AssetImporter<TextureAsset> {
@@ -27,33 +26,11 @@ public class RasterTextureAssetImporter implements AssetImporter<TextureAsset> {
 
 	@Override
 	public ImportResult<TextureAsset> importAsset(ImportRequest request) {
-		TextureAssetImportSettings textureImportSettings = (TextureAssetImportSettings)
+		TextureAssetImportSettings importSettings = (TextureAssetImportSettings)
 			(request.getImportSettings() == null ? getDefaultSettings() : request.getImportSettings());
 
-		TextureSettings textureSettings = textureImportSettings.getSettings();
-		TextureAsset textureAsset = new TextureAsset(textureSettings, request.getData());
-
-		ImportResult<TextureAsset> importResult = new ImportResult<>(textureAsset, getClass().getSimpleName());
-		importResult.setImportSettings("type", textureSettings.getType().name());
-		importResult.setImportSettings("format", textureSettings.getFormat().name());
-		importResult.setImportSettings("width", textureSettings.getWidth());
-		importResult.setImportSettings("height", textureSettings.getHeight());
-		importResult.setImportSettings("channels", textureSettings.getChannels());
-		importResult.setImportSettings("wrapMode", textureSettings.getWrapMode().name());
-		importResult.setImportSettings("filterMode", textureSettings.getFilterMode().name());
-		importResult.setImportSettings("mipmapCount", textureSettings.getMipmapCount());
-		importResult.setImportSettings("colorSpace", textureSettings.getColorSpace().name());
-		importResult.setImportSettings("compressionType", textureSettings.getCompressionType().name());
-		importResult.setImportSettings("anisotropicLevel", textureSettings.getAnisotropicLevel());
-		importResult.setImportSettings("flags", Map.of(
-			"generateMipmaps", textureSettings.isGenerateMipmaps(),
-			"compressed", textureSettings.isCompressed(),
-			"cubemap", textureSettings.isCubemap(),
-			"sRGB", textureSettings.isSRGB(),
-			"alpha", textureSettings.isAlpha()
-		));
-
-		return importResult;
+		TextureAsset textureAsset = new TextureAsset(importSettings.getSettings(), request.getData());
+		return new ImportResult<>(textureAsset, importSettings.toMap(), getClass().getSimpleName());
 	}
 
 	@Override

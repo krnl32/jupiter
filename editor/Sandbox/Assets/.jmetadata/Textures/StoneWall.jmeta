@@ -1,5 +1,5 @@
 {
-    "importerName": "TextureAssetImporter",
+    "importerName": "RasterTextureAssetImporter",
     "assetPath": "Textures/StoneWall.png",
     "lastModified": 1754615765711,
     "version": 1,

@@ -1,5 +1,5 @@
 {
-    "importerName": "ScriptAssetImporter",
+    "importerName": "LuaScriptAssetImporter",
     "assetPath": "Scripts/Hello.lua",
     "lastModified": 1754615765712,
     "version": 1,

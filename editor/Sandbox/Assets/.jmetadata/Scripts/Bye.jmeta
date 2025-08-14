@@ -1,0 +1,12 @@
+{
+    "importerName": "LuaScriptAssetImporter",
+    "assetPath": "Scripts/Bye.lua",
+    "lastModified": 1755199016341,
+    "version": 1,
+    "uuid": "f675e0eb-27a5-4e44-bc94-5eaee6742864",
+    "assetType": "SCRIPT",
+    "importSettings": {
+        "compile": false,
+        "hotReload": true
+    }
+}
