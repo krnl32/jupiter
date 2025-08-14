@@ -2,11 +2,14 @@ package com.krnl32.jupiter.editor.panels;
 
 import com.krnl32.jupiter.editor.asset.EditorAssetManager;
 import com.krnl32.jupiter.editor.editor.EditorPanel;
-import com.krnl32.jupiter.engine.asset.handle.AssetId;
+import com.krnl32.jupiter.engine.asset.handle.Asset;
+import com.krnl32.jupiter.engine.asset.importer.ImportRequest;
+import com.krnl32.jupiter.engine.asset.importer.ImportResult;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.event.EventBus;
 import com.krnl32.jupiter.engine.events.filesystem.FileDragDropEvent;
 import com.krnl32.jupiter.engine.project.ProjectContext;
+import com.krnl32.jupiter.engine.utility.FileIO;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.ImGuiCol;
@@ -31,33 +34,7 @@ public class ContentBrowserPanel implements EditorPanel {
 		this.rootPath = ProjectContext.getInstance().getAssetDirectory();
 		this.selectedPath = ProjectContext.getInstance().getAssetDirectory();
 
-		EventBus.getInstance().register(FileDragDropEvent.class, event -> {
-			Path droppedFilePath = event.getFilePath();
-			if (!Files.exists(droppedFilePath)) {
-				Logger.error("ContentBrowserPanel FileDragDropEvent Invalid File({})", droppedFilePath);
-				return;
-			}
-
-			Path targetFilePath = selectedPath.resolve(droppedFilePath.getFileName());
-
-			try {
-				if (!droppedFilePath.startsWith(rootPath)) {
-					Files.copy(droppedFilePath, targetFilePath, StandardCopyOption.REPLACE_EXISTING);
-				} else {
-					targetFilePath = droppedFilePath;
-				}
-
-				AssetId importedAssetId = ((EditorAssetManager) ProjectContext.getInstance().getAssetManager()).importAsset(targetFilePath);
-				if (importedAssetId == null) {
-					Logger.error("ContentBrowserPanel Failed to Import Asset({})", droppedFilePath);
-					return;
-				}
-
-				Logger.info("ContentBrowserPanel Imported Asset({}, {})", importedAssetId, targetFilePath);
-			} catch (Exception e) {
-				Logger.error("ContentBrowserPanel FileDragDropEvent Error File({}): {}", droppedFilePath, e.getMessage());
-			}
-		});
+		EventBus.getInstance().register(FileDragDropEvent.class, this::onFileDragDropEvent);
 	}
 
 	@Override
@@ -217,7 +194,7 @@ public class ContentBrowserPanel implements EditorPanel {
 				if (file.isDirectory()) {
 					selectedPath = selectedPath.resolve(file.getPath());
 				} else {
-					// Open file
+					// Open file (Inspector)
 				}
 			}
 
@@ -233,7 +210,8 @@ public class ContentBrowserPanel implements EditorPanel {
 
 				}
 				if (ImGui.menuItem("Delete")) {
-					file.delete();
+					removeAsset(file.toPath());
+					//file.delete();
 				}
 				ImGui.endPopup();
 			}
@@ -244,5 +222,42 @@ public class ContentBrowserPanel implements EditorPanel {
 		}
 
 		ImGui.columns(1);
+	}
+
+	private void onFileDragDropEvent(FileDragDropEvent event) {
+		Path droppedFilePath = event.getFilePath();
+		if (!Files.exists(droppedFilePath)) {
+			Logger.error("ContentBrowserPanel onFileDragDropEvent Invalid File({})", droppedFilePath);
+			return;
+		}
+
+		try {
+			Path copyFilePath = selectedPath.resolve(droppedFilePath.getFileName());
+
+			if (!droppedFilePath.startsWith(rootPath)) {
+				Files.copy(droppedFilePath, copyFilePath, StandardCopyOption.REPLACE_EXISTING);
+			} else {
+				copyFilePath = droppedFilePath;
+			}
+
+			String relativePath = copyFilePath.toString().replace(rootPath.toString(), "").substring(1);
+			byte[] copyFileContent = FileIO.readFileContentBytes(copyFilePath);
+			ImportRequest request = new ImportRequest(relativePath, copyFileContent, null);
+
+			ImportResult<Asset> result = ((EditorAssetManager) ProjectContext.getInstance().getAssetManager()).importAsset(request);
+			if (result == null) {
+				Logger.error("ContentBrowserPanel Failed to Import Asset({})", droppedFilePath);
+				return;
+			}
+
+			Logger.info("ContentBrowserPanel Imported Asset({}, {})", result.getAsset().getId(), copyFilePath);
+		} catch (Exception e) {
+			Logger.error("ContentBrowserPanel FileDragDropEvent Error File({}): {}", droppedFilePath, e.getMessage());
+		}
+	}
+
+	private void removeAsset(Path assetPath) {
+		System.out.println("Removing: " + assetPath);
+		// IMPLEMENT
 	}
 }

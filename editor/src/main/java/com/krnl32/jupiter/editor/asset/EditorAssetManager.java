@@ -11,7 +11,6 @@ import com.krnl32.jupiter.engine.asset.importer.importers.TextureAssetImporter;
 import com.krnl32.jupiter.engine.asset.loader.AssetLoader;
 import com.krnl32.jupiter.engine.asset.loader.AssetLoaderRegistry;
 import com.krnl32.jupiter.engine.core.Logger;
-import com.krnl32.jupiter.engine.utility.FileIO;
 
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -94,38 +93,36 @@ public class EditorAssetManager implements AssetManager {
 		assetReferenceManager.release(assetId);
 	}
 
-	public AssetId importAsset(Path filePath) {
-		try {
-			byte[] fileContent = FileIO.readFileContentBytes(filePath);
-			ImportResult result = assetImportPipeline.importAsset(new ImportRequest(filePath.toString(), fileContent, null));
+	public ImportResult<Asset> importAsset(ImportRequest request) {
+			ImportResult<Asset> result = assetImportPipeline.importAsset(request);
 			if (result == null) {
-				Logger.error("EditorAssetManager Failed to ImportAsset({})", filePath);
+				Logger.error("EditorAssetManager Failed to ImportAsset({})", request.getSource());
 				return null;
 			}
 
 			Asset importedAsset = result.getAsset();
-
 			AssetMetadata assetMetadata = new AssetMetadata(
 				importedAsset.getId(),
 				importedAsset.getType(),
-				filePath.toString(), // FIX BUG, ONLY PASS RELATIVE NOT FULL PATH
+				request.getSource(),
 				result.getImporterName(),
 				result.getMetadata(),
 				System.currentTimeMillis()
 			);
 			assetRepository.saveAssetMetadata(assetMetadata);
 
-			return result.getAsset().getId();
-		} catch (Exception e) {
-			Logger.error("EditorAssetManager Failed to ImportAsset({}): {}", filePath, e.getMessage());
-			return null;
-		}
+			return result;
 	}
 
-	public <T extends Asset> T getAsset(String sourcePath) {
-		AssetMetadata assetMetadata = assetRepository.getAssetMetadata(sourcePath);
+	public void removeAsset(AssetId assetId) {
+		unloadAsset(assetId);
+		assetRepository.removeAssetMetadata(assetId);
+	}
+
+	public <T extends Asset> T getAsset(String assetPath) {
+		AssetMetadata assetMetadata = assetRepository.getAssetMetadata(assetPath);
 		if (assetMetadata == null) {
-			Logger.error("EditorAssetManager Failed to Get Asset({}): No AssetMetadata Found", sourcePath);
+			Logger.error("EditorAssetManager Failed to Get Asset({}): No AssetMetadata Found", assetPath);
 			return null;
 		}
 		return getAsset(assetMetadata.getAssetId());

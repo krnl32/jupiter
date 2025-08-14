@@ -88,6 +88,15 @@ public class AssetPersistence {
 		}
 	}
 
+	public void removeAssetMetadata(AssetId assetId) {
+		try {
+			Path metadataFilePath = assetDatabaseDirectory.resolve(assetId.getId() + ASSET_METADATA_EXTENSION);
+			Files.delete(metadataFilePath);
+		} catch (Exception e) {
+			Logger.error("AssetPersistence removeAssetMetadata Failed for Asset({}): {}", assetId, e.getMessage());
+		}
+	}
+
 	public AssetRegistry loadAssetRegistry() {
 		if (!Files.exists(assetRegistryFilePath)) {
 			return new AssetRegistry();

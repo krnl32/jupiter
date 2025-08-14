@@ -36,8 +36,16 @@ public class AssetDatabase {
 		pathToAssetId.put(assetMetadata.getAssetPath(), assetMetadata.getAssetId());
 	}
 
-	public void loadFromDisk(Path assetDatabaseDirectory) {
+	public void removeAssetMetadata(AssetId assetId) {
+		AssetMetadata assetMetadata = assetIdToMetadata.get(assetId);
+		if (assetMetadata == null) {
+			return;
+		}
+		pathToAssetId.remove(assetMetadata.getAssetPath());
+		assetIdToMetadata.remove(assetId);
+	}
 
+	public void loadFromDisk(Path assetDatabaseDirectory) {
 		File[] metadataFiles = new File(assetDatabaseDirectory.toString()).listFiles();
 		if (metadataFiles == null) {
 			return;
