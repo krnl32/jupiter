@@ -83,9 +83,7 @@ public class ScriptSystem implements System {
 				// Handle Script onInit
 				if (!script.isInitialized() && !script.isDisabled()) {
 					try {
-						if (bindings.onInit()) {
-							script.setInitialized(true);
-						}
+						script.setInitialized(bindings.onInit());
 					} catch (Exception e) {
 						Logger.error("ScriptSystem Script({}) onInit Error for Entity({}): {}, disabling script...", scriptAsset.getAssetPath(), entity.getTagOrId(), e.getMessage());
 						script.setDisabled(true);

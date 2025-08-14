@@ -19,7 +19,8 @@ public class LuaScriptBindings implements ScriptBindings {
 	@Override
 	public boolean onInit() throws LuaError {
 		if (onInit != null) {
-			return onInit.call().toboolean();
+			onInit.call();
+			return true;
 		}
 		return false;
 	}

@@ -1,15 +1,3 @@
-function onInit()
-	print("Initialized Bye Script")
-
-	if entity:hasComponent("RigidBody2DComponent") then
-		print("Entity Has RigidBody2D")
-	end
-end
-
-function onDestroy()
-	print("Destroying Bye Script")
-end
-
 function onUpdate(dt)
 	print("Running Bye Script: ".. dt)
 
