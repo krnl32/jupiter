@@ -74,11 +74,11 @@
 					"color": {
 						"w": 1,
 						"x": 1,
-						"y": 0,
-						"z": 0
+						"y": 1,
+						"z": 1
 					},
 					"index": -1,
-					"textureAssetId": null
+					"textureAssetId": "7d78d687-fc7b-4fe8-9a01-e12bdf3fdb16"
 				},
 				"UUIDComponent": {
 					"uuid": "724631ee-036a-44a2-9f89-f76313ce00da"
@@ -107,18 +107,18 @@
 						"z": -1
 					},
 					"scale": {
-						"x": 1,
-						"y": 1,
+						"x": 3,
+						"y": 3,
 						"z": 1
 					}
 				},
 				"TagComponent": {
-					"tag": "TheRedBox"
+					"tag": "TheBox"
 				},
 				"BoxCollider2DComponent": {
 					"size": {
-						"x": 1,
-						"y": 1
+						"x": 3,
+						"y": 3
 					},
 					"offset": {
 						"x": 0,

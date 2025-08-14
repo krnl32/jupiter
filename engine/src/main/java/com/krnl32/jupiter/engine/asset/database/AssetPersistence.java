@@ -25,13 +25,34 @@ public class AssetPersistence {
 	}
 
 	public AssetDatabase loadAssetDatabase() {
-		if (!Files.exists(assetDatabaseDirectory)) {
-			return new AssetDatabase();
-		}
+		try {
+			if (!Files.exists(assetDatabaseDirectory)) {
+				Files.createDirectories(assetDatabaseDirectory);
+				return new AssetDatabase();
+			}
 
-		AssetDatabase assetDatabase = new AssetDatabase();
-		assetDatabase.loadFromDisk(assetDatabaseDirectory);
-		return assetDatabase;
+			File[] metadataFiles = new File(assetDatabaseDirectory.toString()).listFiles();
+			if (metadataFiles == null) {
+				return new AssetDatabase();
+			}
+
+			AssetDatabase assetDatabase = new AssetDatabase();
+			for (File metadataFile : metadataFiles) {
+				if (!metadataFile.isFile() && !metadataFile.getName().endsWith(".jmeta")) {
+					continue;
+				}
+
+				Path metadataPath = metadataFile.toPath();
+				String metadataContent = FileIO.readFileContent(metadataPath);
+				JSONObject metadata = new JSONObject(metadataContent);
+				AssetMetadata assetMetadata = AssetMetadataSerializer.deserialize(metadata);
+				assetDatabase.addAssetMetadata(assetMetadata);
+			}
+			return assetDatabase;
+		} catch (Exception e) {
+			Logger.error("AssetPersistence loadAssetDatabase Failed: {}", e.getMessage());
+			return null;
+		}
 	}
 
 	public AssetMetadata getAssetMetadata(AssetId assetId) {

@@ -240,7 +240,7 @@ public class ContentBrowserPanel implements EditorPanel {
 				copyFilePath = droppedFilePath;
 			}
 
-			String relativePath = copyFilePath.toString().replace(rootPath.toString(), "").substring(1);
+			String relativePath = copyFilePath.toString().replace(rootPath.toString(), "").substring(1).replace("\\", "/");
 			byte[] copyFileContent = FileIO.readFileContentBytes(copyFilePath);
 			ImportRequest request = new ImportRequest(relativePath, copyFileContent, null);
 

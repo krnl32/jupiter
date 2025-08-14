@@ -2,13 +2,7 @@ package com.krnl32.jupiter.engine.asset.database;
 
 import com.krnl32.jupiter.engine.asset.handle.AssetId;
 import com.krnl32.jupiter.engine.asset.handle.AssetMetadata;
-import com.krnl32.jupiter.engine.asset.serializer.AssetMetadataSerializer;
-import com.krnl32.jupiter.engine.core.Logger;
-import com.krnl32.jupiter.engine.utility.FileIO;
-import org.json.JSONObject;
 
-import java.io.File;
-import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -43,29 +37,5 @@ public class AssetDatabase {
 		}
 		pathToAssetId.remove(assetMetadata.getAssetPath());
 		assetIdToMetadata.remove(assetId);
-	}
-
-	public void loadFromDisk(Path assetDatabaseDirectory) {
-		File[] metadataFiles = new File(assetDatabaseDirectory.toString()).listFiles();
-		if (metadataFiles == null) {
-			return;
-		}
-
-		for (File metadataFile : metadataFiles) {
-			if (!metadataFile.isFile() && !metadataFile.getName().endsWith(".jmeta")) {
-				continue;
-			}
-
-			try {
-				Path metadataPath = metadataFile.toPath();
-				String metadataContent = FileIO.readFileContent(metadataPath);
-				JSONObject metadata = new JSONObject(metadataContent);
-				AssetMetadata assetMetadata = AssetMetadataSerializer.deserialize(metadata);;
-				assetIdToMetadata.put(assetMetadata.getAssetId(), assetMetadata);
-				pathToAssetId.put(assetMetadata.getAssetPath(), assetMetadata.getAssetId());
-			} catch (Exception e) {
-				Logger.error("AssetDatabase LoadFromDisk Failed to Load Asset({}): {}", metadataFile.getName(), e.getMessage());
-			}
-		}
 	}
 }
