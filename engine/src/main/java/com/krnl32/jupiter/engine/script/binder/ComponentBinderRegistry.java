@@ -6,11 +6,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ComponentBinderRegistry {
-	private static final Map<Class<? extends Component>, ComponentBinder<? extends Component>> binders = new HashMap<>();
+	private static final Map<Class<? extends Component>, ComponentBinder<? extends Component, ?>> binders = new HashMap<>();
 	private static final Map<Class<? extends Component>, String> classToName = new HashMap<>();
 	private static final Map<String, Class<? extends Component>> nameToClass = new HashMap<>();
 
-	public static <T extends Component> void register(Class<T> componentType, ComponentBinder<T> componentBinder) {
+	public static <T extends Component, R> void register(Class<T> componentType, ComponentBinder<T,R> componentBinder) {
 		binders.put(componentType, componentBinder);
 		classToName.put(componentType, componentType.getSimpleName());
 		nameToClass.put(componentType.getSimpleName(), componentType);
@@ -25,13 +25,13 @@ public class ComponentBinderRegistry {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static <T extends Component> ComponentBinder<T> getBinder(Class<T> componentType) {
-		return (ComponentBinder<T>) binders.get(componentType);
+	public static <T extends Component, R> ComponentBinder<T,R> getBinder(Class<T> componentType) {
+		return (ComponentBinder<T,R>) binders.get(componentType);
 	}
 
 	@SuppressWarnings("unchecked")
-	public static <T extends Component> ComponentBinder<T> getBinder(String componentName) {
-		return (ComponentBinder<T>) binders.get(nameToClass.get(componentName));
+	public static <T extends Component, R> ComponentBinder<T,R> getBinder(String componentName) {
+		return (ComponentBinder<T,R>) binders.get(nameToClass.get(componentName));
 	}
 
 	public static Class<? extends Component> getComponentClass(String componentName) {

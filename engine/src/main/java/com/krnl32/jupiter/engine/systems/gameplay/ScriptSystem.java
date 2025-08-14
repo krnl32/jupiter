@@ -13,7 +13,6 @@ import com.krnl32.jupiter.engine.renderer.Renderer;
 import com.krnl32.jupiter.engine.script.ScriptBindings;
 import com.krnl32.jupiter.engine.script.ScriptContext;
 import com.krnl32.jupiter.engine.script.ScriptInstance;
-import com.krnl32.jupiter.engine.script.utility.DefaultComponentBinders;
 
 import java.io.File;
 import java.util.HashMap;
@@ -26,8 +25,6 @@ public class ScriptSystem implements System {
 	public ScriptSystem(Registry registry) {
 		this.registry = registry;
 		this.scriptBindings = new HashMap<>();
-
-		DefaultComponentBinders.registerAll();
 
 		// Handle onDestroy
 		EventBus.getInstance().register(EntityDestroyedEvent.class, event -> {

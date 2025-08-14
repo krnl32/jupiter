@@ -77,6 +77,7 @@ import com.krnl32.jupiter.engine.renderer.ProjectionType;
 import com.krnl32.jupiter.engine.renderer.Renderer;
 import com.krnl32.jupiter.engine.scene.Scene;
 import com.krnl32.jupiter.engine.scene.SceneManager;
+import com.krnl32.jupiter.engine.script.lua.utility.LuaComponentBinders;
 import com.krnl32.jupiter.engine.serializer.utility.DefaultComponentSerializers;
 import org.joml.Vector4f;
 
@@ -118,8 +119,9 @@ public class Editor extends Engine {
 		// Register Engine Components
 		registerAssetImporters();
 		registerAssetLoaders();
-		DefaultComponentSerializers.registerAll();
-		DefaultComponentCloners.registerAll();
+		registerComponentBinders();
+		registerComponentSerializers();
+		registerComponentCloners();
 
 		// Register Editor Components
 		registerComponentFactories();
@@ -199,17 +201,6 @@ public class Editor extends Engine {
 		editorState = EditorState.STOP;
 	}
 
-	private void registerAssetImporters() {
-		((EditorAssetManager) ProjectContext.getInstance().getAssetManager()).registerAssetImporter(new RasterTextureAssetImporter());
-		((EditorAssetManager) ProjectContext.getInstance().getAssetManager()).registerAssetImporter(new LuaScriptAssetImporter());
-	}
-
-	private void registerAssetLoaders() {
-		AssetLoaderRegistry.register(AssetType.TEXTURE, TextureAsset.class, new EditorRasterTextureAssetLoader());
-		AssetLoaderRegistry.register(AssetType.SCENE, SceneAsset.class, new EditorSceneAssetLoader());
-		AssetLoaderRegistry.register(AssetType.SCRIPT, ScriptAsset.class, new EditorLuaScriptAssetLoader());
-	}
-
 	private boolean initProjectContext(Path projectDirectory) {
 		Project project = ProjectLoader.load(projectDirectory);
 		if (project == null) {
@@ -228,6 +219,29 @@ public class Editor extends Engine {
 		}
 
 		return true;
+	}
+
+	private void registerAssetImporters() {
+		((EditorAssetManager) ProjectContext.getInstance().getAssetManager()).registerAssetImporter(new RasterTextureAssetImporter());
+		((EditorAssetManager) ProjectContext.getInstance().getAssetManager()).registerAssetImporter(new LuaScriptAssetImporter());
+	}
+
+	private void registerAssetLoaders() {
+		AssetLoaderRegistry.register(AssetType.TEXTURE, TextureAsset.class, new EditorRasterTextureAssetLoader());
+		AssetLoaderRegistry.register(AssetType.SCENE, SceneAsset.class, new EditorSceneAssetLoader());
+		AssetLoaderRegistry.register(AssetType.SCRIPT, ScriptAsset.class, new EditorLuaScriptAssetLoader());
+	}
+
+	private void registerComponentBinders() {
+		LuaComponentBinders.registerAll();
+	}
+
+	private void registerComponentSerializers() {
+		DefaultComponentSerializers.registerAll();
+	}
+
+	private void registerComponentCloners() {
+		DefaultComponentCloners.registerAll();
 	}
 
 	private void registerComponentFactories() {

@@ -1,4 +1,4 @@
-package com.krnl32.jupiter.engine.script.binder.components;
+package com.krnl32.jupiter.engine.script.lua.binders.components;
 
 import com.krnl32.jupiter.engine.components.physics.RigidBody2DComponent;
 import com.krnl32.jupiter.engine.core.Logger;
@@ -8,9 +8,9 @@ import org.joml.Vector2f;
 import org.luaj.vm2.LuaTable;
 import org.luaj.vm2.LuaValue;
 
-public class RigidBody2DComponentBinder implements ComponentBinder<RigidBody2DComponent> {
+public class LuaRigidBody2DComponentBinder implements ComponentBinder<RigidBody2DComponent, LuaValue> {
 	@Override
-	public LuaValue toLua(RigidBody2DComponent component) {
+	public LuaValue to(RigidBody2DComponent component) {
 		LuaTable table = new LuaTable();
 		table.set("bodyType", LuaValue.valueOf(component.bodyType.name()));
 
@@ -29,7 +29,7 @@ public class RigidBody2DComponentBinder implements ComponentBinder<RigidBody2DCo
 	}
 
 	@Override
-	public RigidBody2DComponent fromLua(LuaValue table) {
+	public RigidBody2DComponent from(LuaValue table) {
 		BodyType bodyType = BodyType.STATIC;
 		try {
 			String bodyTypeStr = table.get("bodyType").checkjstring().toUpperCase();
@@ -63,7 +63,7 @@ public class RigidBody2DComponentBinder implements ComponentBinder<RigidBody2DCo
 	}
 
 	@Override
-	public void updateFromLua(RigidBody2DComponent component, LuaValue table) {
+	public void update(RigidBody2DComponent component, LuaValue table) {
 		if (!table.get("bodyType").isnil()) {
 			try {
 				String bodyTypeStr = table.get("bodyType").checkjstring().toUpperCase();
