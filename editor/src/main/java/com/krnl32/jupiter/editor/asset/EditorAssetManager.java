@@ -7,7 +7,7 @@ import com.krnl32.jupiter.engine.asset.handle.*;
 import com.krnl32.jupiter.engine.asset.importer.AssetImportPipeline;
 import com.krnl32.jupiter.engine.asset.importer.ImportRequest;
 import com.krnl32.jupiter.engine.asset.importer.ImportResult;
-import com.krnl32.jupiter.engine.asset.importer.importers.TextureAssetImporter;
+import com.krnl32.jupiter.engine.asset.importer.importers.RasterTextureAssetImporter;
 import com.krnl32.jupiter.engine.asset.loader.AssetLoader;
 import com.krnl32.jupiter.engine.asset.loader.AssetLoaderRegistry;
 import com.krnl32.jupiter.engine.core.Logger;
@@ -31,7 +31,7 @@ public class EditorAssetManager implements AssetManager {
 		this.assetImportPipeline = new AssetImportPipeline();
 
 		// Register Importers
-		this.assetImportPipeline.registerImporter(new TextureAssetImporter());
+		this.assetImportPipeline.registerImporter(new RasterTextureAssetImporter());
 	}
 
 	@Override
@@ -106,7 +106,7 @@ public class EditorAssetManager implements AssetManager {
 				importedAsset.getType(),
 				request.getSource(),
 				result.getImporterName(),
-				result.getMetadata(),
+				result.getImportSettings(),
 				System.currentTimeMillis()
 			);
 			assetRepository.saveAssetMetadata(assetMetadata);

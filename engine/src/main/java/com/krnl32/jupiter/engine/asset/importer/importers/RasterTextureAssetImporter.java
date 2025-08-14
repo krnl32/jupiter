@@ -7,43 +7,45 @@ import com.krnl32.jupiter.engine.asset.importsettings.ImportSettings;
 import com.krnl32.jupiter.engine.asset.importsettings.types.TextureAssetImportSettings;
 import com.krnl32.jupiter.engine.asset.types.TextureAsset;
 import com.krnl32.jupiter.engine.renderer.texture.*;
+import com.krnl32.jupiter.engine.utility.FileIO;
 
 import java.nio.file.Path;
 import java.util.Map;
+import java.util.Set;
 
-public class TextureAssetImporter implements AssetImporter<TextureAsset> {
+public class RasterTextureAssetImporter implements AssetImporter<TextureAsset> {
+	private static final Set<String> SUPPORTED_FORMATS = Set.of(
+		"png", "jpg", "jpeg", "tga", "gif", "psd",
+		"hdr", "pic", "ppm", "pgm", "bmp"
+	);
+
 	@Override
-	public boolean supports(ImportRequest importRequest) {
-		String fileName = Path.of(importRequest.getSource()).getFileName().toString().toLowerCase();
-		return fileName.endsWith(".png") || fileName.endsWith(".jpg") || fileName.endsWith(".jpeg");
+	public boolean supports(ImportRequest request) {
+		String fileExtension = FileIO.getFileExtension(Path.of(request.getSource()));
+		return SUPPORTED_FORMATS.contains(fileExtension);
 	}
 
 	@Override
 	public ImportResult<TextureAsset> importAsset(ImportRequest request) {
-		TextureAssetImportSettings textureImportSettings;
-		if (request.getImportSettings() == null) {
-			textureImportSettings = (TextureAssetImportSettings) getDefaultSettings();
-		} else {
-			textureImportSettings = (TextureAssetImportSettings) request.getImportSettings();
-		}
+		TextureAssetImportSettings textureImportSettings = (TextureAssetImportSettings)
+			(request.getImportSettings() == null ? getDefaultSettings() : request.getImportSettings());
 
 		TextureSettings textureSettings = textureImportSettings.getSettings();
-
 		TextureAsset textureAsset = new TextureAsset(textureSettings, request.getData());
 
 		ImportResult<TextureAsset> importResult = new ImportResult<>(textureAsset, getClass().getSimpleName());
-		importResult.setMetadata("type", textureSettings.getType().name());
-		importResult.setMetadata("format", textureSettings.getFormat().name());
-		importResult.setMetadata("width", textureSettings.getWidth());
-		importResult.setMetadata("height", textureSettings.getHeight());
-		importResult.setMetadata("channels", textureSettings.getChannels());
-		importResult.setMetadata("wrapMode", textureSettings.getWrapMode().name());
-		importResult.setMetadata("filterMode", textureSettings.getFilterMode().name());
-		importResult.setMetadata("mipmapCount", textureSettings.getMipmapCount());
-		importResult.setMetadata("colorSpace", textureSettings.getColorSpace().name());
-		importResult.setMetadata("compressionType", textureSettings.getCompressionType().name());
-		importResult.setMetadata("anisotropicLevel", textureSettings.getAnisotropicLevel());
-		importResult.setMetadata("flags", Map.of(
+		importResult.setImportSettings("type", textureSettings.getType().name());
+		importResult.setImportSettings("format", textureSettings.getFormat().name());
+		importResult.setImportSettings("width", textureSettings.getWidth());
+		importResult.setImportSettings("height", textureSettings.getHeight());
+		importResult.setImportSettings("channels", textureSettings.getChannels());
+		importResult.setImportSettings("wrapMode", textureSettings.getWrapMode().name());
+		importResult.setImportSettings("filterMode", textureSettings.getFilterMode().name());
+		importResult.setImportSettings("mipmapCount", textureSettings.getMipmapCount());
+		importResult.setImportSettings("colorSpace", textureSettings.getColorSpace().name());
+		importResult.setImportSettings("compressionType", textureSettings.getCompressionType().name());
+		importResult.setImportSettings("anisotropicLevel", textureSettings.getAnisotropicLevel());
+		importResult.setImportSettings("flags", Map.of(
 			"generateMipmaps", textureSettings.isGenerateMipmaps(),
 			"compressed", textureSettings.isCompressed(),
 			"cubemap", textureSettings.isCubemap(),

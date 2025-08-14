@@ -8,12 +8,12 @@ import java.util.Map;
 
 public class ImportResult<T extends Asset> {
 	private final T asset;
-	private final Map<String, Object> metadata;
+	private final Map<String, Object> importSettings;
 	private final String importerName;
 
 	public ImportResult(T asset, String importerName) {
 		this.asset = asset;
-		this.metadata = new HashMap<>();
+		this.importSettings = new HashMap<>();
 		this.importerName = importerName;
 	}
 
@@ -21,16 +21,16 @@ public class ImportResult<T extends Asset> {
 		return asset;
 	}
 
-	public Map<String, Object> getMetadata() {
-		return Collections.unmodifiableMap(metadata);
+	public Map<String, Object> getImportSettings() {
+		return Collections.unmodifiableMap(importSettings);
 	}
 
-	public Object getMetadata(String key) {
-		return metadata.get(key);
+	public Object getImportSettings(String key) {
+		return importSettings.get(key);
 	}
 
-	public void setMetadata(String key, Object value) {
-		metadata.put(key, value);
+	public void setImportSettings(String key, Object value) {
+		importSettings.put(key, value);
 	}
 
 	public String getImporterName() {

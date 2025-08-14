@@ -59,4 +59,13 @@ public class FileIO {
 
 		return path.resolveSibling(newFileName);
 	}
+
+	public static String getFileExtension(Path path) {
+		String fileName = path.getFileName().toString();
+		int dot = fileName.lastIndexOf('.');
+		if (dot == -1 || dot == 0 || dot == fileName.length() - 1) {
+			return null;
+		}
+		return fileName.substring(dot + 1).toLowerCase();
+	}
 }
