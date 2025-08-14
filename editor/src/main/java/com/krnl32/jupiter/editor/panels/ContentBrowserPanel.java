@@ -250,14 +250,21 @@ public class ContentBrowserPanel implements EditorPanel {
 				return;
 			}
 
-			Logger.info("ContentBrowserPanel Imported Asset({}, {})", result.getAsset().getId(), copyFilePath);
+			Logger.info("ContentBrowserPanel Imported Asset({}, {})", result.getAsset().getId(), relativePath);
 		} catch (Exception e) {
 			Logger.error("ContentBrowserPanel FileDragDropEvent Error File({}): {}", droppedFilePath, e.getMessage());
 		}
 	}
 
-	private void removeAsset(Path assetPath) {
-		System.out.println("Removing: " + assetPath);
-		// IMPLEMENT
+	private void removeAsset(Path absoluteAssetPath) {
+		String relativePath = absoluteAssetPath.toString().replace(rootPath.toString(), "").substring(1).replace("\\", "/");
+
+		try {
+			FileIO.deleteFile(absoluteAssetPath);
+			((EditorAssetManager) ProjectContext.getInstance().getAssetManager()).removeAsset(relativePath);
+			Logger.info("ContentBrowserPanel Removed Asset({})", relativePath);
+		} catch (Exception e) {
+			Logger.error("ContentBrowserPanel Failed to Remove Asset({}): {}", relativePath, e.getMessage());
+		}
 	}
 }

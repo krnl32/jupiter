@@ -38,4 +38,13 @@ public class AssetDatabase {
 		pathToAssetId.remove(assetMetadata.getAssetPath());
 		assetIdToMetadata.remove(assetId);
 	}
+
+	public void removeAssetMetadata(String assetPath) {
+		AssetId assetId = pathToAssetId.get(assetPath);
+		if (assetId == null) {
+			return;
+		}
+		assetIdToMetadata.remove(assetId);
+		pathToAssetId.remove(assetPath);
+	}
 }

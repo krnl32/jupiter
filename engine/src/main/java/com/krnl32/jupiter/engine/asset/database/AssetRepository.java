@@ -56,6 +56,11 @@ public class AssetRepository {
 		assetPersistence.removeAssetMetadata(assetId);
 	}
 
+	public void removeAssetMetadata(String assetPath) {
+		assetDatabase.removeAssetMetadata(assetPath);
+		assetPersistence.removeAssetMetadata(assetPath);
+	}
+
 	public Collection<AssetMetadata> getAssetMetadatas() {
 		return assetDatabase.getAssetMetadatas();
 	}

@@ -9,9 +9,13 @@ import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.utility.FileIO;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 public class AssetPersistence {
 	private static final String ASSET_METADATA_EXTENSION = ".jmeta";
@@ -31,77 +35,80 @@ public class AssetPersistence {
 				return new AssetDatabase();
 			}
 
-			File[] metadataFiles = new File(assetDatabaseDirectory.toString()).listFiles();
-			if (metadataFiles == null) {
-				return new AssetDatabase();
-			}
+			List<Path> metadataPaths = Files.walk(assetDatabaseDirectory)
+				.filter(Files::isRegularFile)
+				.filter(path -> path.toString().endsWith(ASSET_METADATA_EXTENSION))
+				.toList();
 
 			AssetDatabase assetDatabase = new AssetDatabase();
-			for (File metadataFile : metadataFiles) {
-				if (!metadataFile.isFile() && !metadataFile.getName().endsWith(".jmeta")) {
-					continue;
-				}
-
-				Path metadataPath = metadataFile.toPath();
+			for (Path metadataPath : metadataPaths) {
 				String metadataContent = FileIO.readFileContent(metadataPath);
 				JSONObject metadata = new JSONObject(metadataContent);
 				AssetMetadata assetMetadata = AssetMetadataSerializer.deserialize(metadata);
 				assetDatabase.addAssetMetadata(assetMetadata);
 			}
+
 			return assetDatabase;
 		} catch (Exception e) {
-			Logger.error("AssetPersistence loadAssetDatabase Failed: {}", e.getMessage());
+			Logger.error("AssetPersistence loadAssetDatabase({}) Failed: {}", assetDatabaseDirectory, e.getMessage());
 			return null;
 		}
 	}
 
 	public AssetMetadata getAssetMetadata(AssetId assetId) {
-		Path metadataFilePath = assetDatabaseDirectory.resolve(assetId.getId() + ASSET_METADATA_EXTENSION);
-		if (!Files.exists(metadataFilePath)) {
-			Logger.error("AssetPersistence getAssetMetadata Failed to get Asset({}) MetadataFile({}): File Doesn't Exist", assetId, metadataFilePath.toString());
-			return null;
-		}
-
 		try {
-			String metadataContent = FileIO.readFileContent(metadataFilePath);
-			JSONObject metadataFileData = new JSONObject(metadataContent);
-			return AssetMetadataSerializer.deserialize(metadataFileData);
+			if (Files.notExists(assetDatabaseDirectory)) {
+				return null;
+			}
+
+			try (Stream<Path> paths = Files.walk(assetDatabaseDirectory)) {
+				return paths
+					.filter(Files::isRegularFile)
+					.filter(path -> path.toString().endsWith(ASSET_METADATA_EXTENSION))
+					.map(path -> {
+						try {
+							String metadataContent = FileIO.readFileContent(path);
+							JSONObject metadata = new JSONObject(metadataContent);
+							return AssetMetadataSerializer.deserialize(metadata);
+						} catch (Exception e) {
+							Logger.error("AssetPersistence getAssetMetadata Failed To Read Asset({}) Metadata: {}", assetId.getId(), e.getMessage());
+							return null;
+						}
+					})
+					.filter(Objects::nonNull)
+					.filter(assetMetadata -> assetMetadata.getAssetId().equals(assetId))
+					.findFirst()
+					.orElse(null);
+			}
 		} catch (Exception e) {
-			Logger.error("AssetPersistence getAssetMetadata Failed To Read Asset({}) Metadata: {}", assetId.getId(), e.getMessage());
+			Logger.error("AssetPersistence getAssetMetadata Failed To Read AssetDatabase({}): {}", assetDatabaseDirectory, e.getMessage());
 			return null;
 		}
 	}
 
 	public AssetMetadata getAssetMetadata(String assetPath) {
-		File[] metadataFiles = new File(assetDatabaseDirectory.toString()).listFiles();
-		if (metadataFiles == null) {
+		Path metadataPath = assetDatabaseDirectory.resolve(assetPath);
+		if (!Files.exists(metadataPath)) {
+			Logger.error("AssetPersistence getAssetMetadata Failed to get Asset({}): File Doesn't Exist", assetPath);
 			return null;
 		}
 
-		for (File metadataFile : metadataFiles) {
-			if (!metadataFile.isFile() && !metadataFile.getName().endsWith(".jmeta")) {
-				continue;
-			}
-
-			try {
-				Path metadataPath = metadataFile.toPath();
-				String metadataContent = FileIO.readFileContent(metadataPath);
-				JSONObject metadata = new JSONObject(metadataContent);
-				AssetMetadata assetMetadata = AssetMetadataSerializer.deserialize(metadata);
-
-				if (assetMetadata.getAssetPath().equals(assetPath)) {
-					return assetMetadata;
-				}
-			} catch (Exception e) {
-				Logger.error("AssetDatabase LoadFromDisk Failed to Load Asset({}): {}", metadataFile.getName(), e.getMessage());
-			}
+		try {
+			String metadataContent = FileIO.readFileContent(metadataPath);
+			JSONObject metadata = new JSONObject(metadataContent);
+			return AssetMetadataSerializer.deserialize(metadata);
+		} catch (Exception e) {
+			Logger.error("AssetPersistence getAssetMetadata Failed To Read Asset({}): {}", assetPath, e.getMessage());
+			return null;
 		}
-		return null;
 	}
 
 	public void saveAssetMetadata(AssetMetadata assetMetadata) {
 		try {
-			Path metadataFilePath = assetDatabaseDirectory.resolve(assetMetadata.getAssetId().getId() + ASSET_METADATA_EXTENSION);
+			Path assetPath = Path.of(assetMetadata.getAssetPath());
+			Path metadataPath = FileIO.replaceFileExtension(assetPath, ASSET_METADATA_EXTENSION);
+			Path metadataFilePath = assetDatabaseDirectory.resolve(metadataPath);
+			Files.createDirectories(metadataFilePath.getParent());
 			String serializedMetadata = AssetMetadataSerializer.serialize(assetMetadata).toString(4);
 			FileIO.writeFileContent(metadataFilePath, serializedMetadata);
 		} catch (Exception e) {
@@ -110,12 +117,21 @@ public class AssetPersistence {
 	}
 
 	public void removeAssetMetadata(AssetId assetId) {
-		try {
-			Path metadataFilePath = assetDatabaseDirectory.resolve(assetId.getId() + ASSET_METADATA_EXTENSION);
-			Files.delete(metadataFilePath);
-		} catch (Exception e) {
-			Logger.error("AssetPersistence removeAssetMetadata Failed for Asset({}): {}", assetId, e.getMessage());
-		}
+		removeAssetMetadata(metadata -> {
+			try {
+				String metadataAssetId = metadata.optString("assetId", null);
+				return metadataAssetId != null && assetId.getId().equals(UUID.fromString(metadataAssetId));
+			} catch (Exception e) {
+				return false;
+			}
+		}, assetId.toString());
+	}
+
+	public void removeAssetMetadata(String assetPath) {
+		removeAssetMetadata(metadata -> {
+			String metadataAssetPath = metadata.optString("assetPath", null);
+			return assetPath.equals(metadataAssetPath);
+		}, assetPath);
 	}
 
 	public AssetRegistry loadAssetRegistry() {
@@ -139,6 +155,39 @@ public class AssetPersistence {
 			FileIO.writeFileContent(assetRegistryFilePath, serializedData);
 		} catch (Exception e) {
 			Logger.error("AssetPersistence saveRegistry Failed To Write AssetRegistry({}): {}", assetRegistryFilePath, e.getMessage());
+		}
+	}
+
+	private void removeAssetMetadata(Predicate<JSONObject> predicate, String source) {
+		try {
+			if (Files.notExists(assetDatabaseDirectory)) {
+				return;
+			}
+
+			try (Stream<Path> paths = Files.walk(assetDatabaseDirectory)) {
+				paths
+					.filter(Files::isRegularFile)
+					.filter(path -> path.toString().endsWith(ASSET_METADATA_EXTENSION))
+					.filter(path -> {
+						try {
+							String metadataContent = FileIO.readFileContent(path);
+							JSONObject metadata = new JSONObject(metadataContent);
+							return predicate.test(metadata);
+						} catch (Exception e) {
+							return false;
+						}
+					})
+					.findFirst()
+					.ifPresent(path -> {
+						try {
+							Files.delete(path);
+						} catch (Exception e) {
+							Logger.error("AssetPersistence removeAssetMetadata Failed for Asset({}): {}", source, e.getMessage());
+						}
+					});
+			}
+		} catch (Exception e) {
+			Logger.error("AssetPersistence removeAssetMetadata Failed To Read AssetDatabase({}): {}", assetDatabaseDirectory, e.getMessage());
 		}
 	}
 }

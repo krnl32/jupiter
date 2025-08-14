@@ -119,6 +119,14 @@ public class EditorAssetManager implements AssetManager {
 		assetRepository.removeAssetMetadata(assetId);
 	}
 
+	public void removeAsset(String assetPath) {
+		AssetMetadata assetMetadata = assetRepository.getAssetMetadata(assetPath);
+		if (assetMetadata != null) {
+			unloadAsset(assetMetadata.getAssetId());
+			assetRepository.removeAssetMetadata(assetPath);
+		}
+	}
+
 	public <T extends Asset> T getAsset(String assetPath) {
 		AssetMetadata assetMetadata = assetRepository.getAssetMetadata(assetPath);
 		if (assetMetadata == null) {

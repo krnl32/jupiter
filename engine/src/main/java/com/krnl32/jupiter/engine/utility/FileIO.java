@@ -24,6 +24,10 @@ public class FileIO {
 		Files.write(filePath, data);
 	}
 
+	public static void deleteFile(Path filePath) throws IOException {
+		Files.delete(filePath);
+	}
+
 	public static String readResourceFileContent(String resourcePath) throws IOException {
 		try (InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(resourcePath)) {
 			if (inputStream == null) {
@@ -40,5 +44,19 @@ public class FileIO {
 			}
 			return inputStream.readAllBytes();
 		}
+	}
+
+	public static Path replaceFileExtension(Path path, String ext) {
+		if (ext.startsWith(".")) {
+			ext = ext.substring(1);
+		}
+
+		String fileName = path.getFileName().toString();
+		int dot = fileName.lastIndexOf('.');
+		String newFileName = (dot == -1)
+			? fileName + "." + ext
+			: fileName.substring(0, dot) + "." + ext;
+
+		return path.resolveSibling(newFileName);
 	}
 }
