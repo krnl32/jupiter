@@ -194,7 +194,7 @@ public class ContentBrowserPanel implements EditorPanel {
 				if (file.isDirectory()) {
 					selectedPath = selectedPath.resolve(file.getPath());
 				} else {
-					// Open file (Inspector)
+					openAsset(file.toPath());
 				}
 			}
 
@@ -204,14 +204,13 @@ public class ContentBrowserPanel implements EditorPanel {
 
 			if (ImGui.beginPopup("AssetContextMenu")) {
 				if (ImGui.menuItem("Open")) {
-
+					openAsset(file.toPath());
 				}
 				if (ImGui.menuItem("Rename")) {
 
 				}
 				if (ImGui.menuItem("Delete")) {
 					removeAsset(file.toPath());
-					//file.delete();
 				}
 				ImGui.endPopup();
 			}
@@ -254,6 +253,12 @@ public class ContentBrowserPanel implements EditorPanel {
 		} catch (Exception e) {
 			Logger.error("ContentBrowserPanel FileDragDropEvent Error File({}): {}", droppedFilePath, e.getMessage());
 		}
+	}
+
+	private void openAsset(Path absoluteAssetPath) {
+		// Open file (Inspector)
+		String relativePath = absoluteAssetPath.toString().replace(rootPath.toString(), "").substring(1).replace("\\", "/");
+		System.out.println("Opening: " + relativePath);
 	}
 
 	private void removeAsset(Path absoluteAssetPath) {

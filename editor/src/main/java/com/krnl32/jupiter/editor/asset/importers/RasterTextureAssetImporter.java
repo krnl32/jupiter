@@ -1,4 +1,4 @@
-package com.krnl32.jupiter.engine.asset.importer.importers;
+package com.krnl32.jupiter.editor.asset.importers;
 
 import com.krnl32.jupiter.engine.asset.importer.AssetImporter;
 import com.krnl32.jupiter.engine.asset.importer.ImportRequest;

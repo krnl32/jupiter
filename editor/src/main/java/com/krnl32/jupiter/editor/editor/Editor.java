@@ -1,6 +1,7 @@
 package com.krnl32.jupiter.editor.editor;
 
 import com.krnl32.jupiter.editor.asset.EditorAssetManager;
+import com.krnl32.jupiter.editor.asset.importers.JSONSceneAssetImporter;
 import com.krnl32.jupiter.editor.asset.loaders.EditorLuaScriptAssetLoader;
 import com.krnl32.jupiter.editor.asset.loaders.EditorRasterTextureAssetLoader;
 import com.krnl32.jupiter.editor.asset.loaders.EditorSceneAssetLoader;
@@ -41,8 +42,8 @@ import com.krnl32.jupiter.editor.renderer.components.utility.UUIDComponentRender
 import com.krnl32.jupiter.engine.asset.database.AssetPersistence;
 import com.krnl32.jupiter.engine.asset.database.AssetRepository;
 import com.krnl32.jupiter.engine.asset.handle.AssetType;
-import com.krnl32.jupiter.engine.asset.importer.importers.LuaScriptAssetImporter;
-import com.krnl32.jupiter.engine.asset.importer.importers.RasterTextureAssetImporter;
+import com.krnl32.jupiter.editor.asset.importers.LuaScriptAssetImporter;
+import com.krnl32.jupiter.editor.asset.importers.RasterTextureAssetImporter;
 import com.krnl32.jupiter.engine.asset.loader.AssetLoaderRegistry;
 import com.krnl32.jupiter.engine.asset.types.SceneAsset;
 import com.krnl32.jupiter.engine.asset.types.ScriptAsset;
@@ -223,6 +224,7 @@ public class Editor extends Engine {
 
 	private void registerAssetImporters() {
 		((EditorAssetManager) ProjectContext.getInstance().getAssetManager()).registerAssetImporter(new RasterTextureAssetImporter());
+		((EditorAssetManager) ProjectContext.getInstance().getAssetManager()).registerAssetImporter(new JSONSceneAssetImporter());
 		((EditorAssetManager) ProjectContext.getInstance().getAssetManager()).registerAssetImporter(new LuaScriptAssetImporter());
 	}
 

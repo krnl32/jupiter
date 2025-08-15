@@ -1,12 +1,11 @@
 {
-	"importerName": "SceneAssetImporter",
+	"importerName": "JSONSceneAssetImporter",
 	"assetPath": "Scenes/Sandbox.jscene",
 	"lastModified": 1754615765711,
 	"version": 1,
 	"uuid": "331c0930-1fbd-40d9-a38b-628c5015bf84",
 	"assetType": "SCENE",
 	"importSettings": {
-		"name": "Sandbox",
 		"gravity": 9.8
 	}
 }

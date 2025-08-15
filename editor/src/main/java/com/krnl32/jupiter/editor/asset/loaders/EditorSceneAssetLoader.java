@@ -25,7 +25,7 @@ public class EditorSceneAssetLoader implements AssetLoader<SceneAsset> {
 				return null;
 			}
 
-			return new SceneAsset(assetDescriptor.getAssetId(), scene);
+			return new SceneAsset(assetDescriptor.getAssetId(), scene.getSceneSettings(), scene);
 		} catch (Exception e) {
 			Logger.error("EditorSceneAssetLoader Failed to Load Asset({}): {}", assetDescriptor.getAssetId(), e.getMessage());
 			return null;
