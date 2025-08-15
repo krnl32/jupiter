@@ -12,14 +12,16 @@ import java.util.UUID;
 
 public class ProjectInitializer {
 	private static final String PROJECT_EXTENSION = ".jproject";
+	private static final String ASSET_REGISTRY_EXTENSION = ".jregistry";
+	private static final String ASSET_DATABASE_DIRECTORY = ".jmetadata";
 
-	public static JProject createProject(String projectName, String path, String engineVersion, String template) {
-		if (!Files.exists(Path.of(path))) {
-			Logger.error("ProjectInitializer Failed to Create Project({}), Path({}) Not Found", projectName, path);
+	public static JProject createProject(String projectName, Path directoryPath, String engineVersion, String template) {
+		if (!Files.exists(directoryPath) || !Files.isDirectory(directoryPath)) {
+			Logger.error("ProjectInitializer Failed to Create Project({}), Path({}) Not Found", projectName, directoryPath);
 			return null;
 		}
 
-		String projectPath = path + "/" + projectName;
+		Path projectPath = directoryPath.resolve(projectName);
 		if (!generateProjectDirectories(projectPath)) {
 			Logger.error("ProjectInitializer Failed to Create Project({}, {}), Failed to Generate Project Directories", projectName, projectPath);
 			return null;
@@ -31,28 +33,17 @@ public class ProjectInitializer {
 			return null;
 		}
 
-		return new JProject(project.getInfo().getProjectName(), projectPath, project.getInfo().getEngineVersion(), template);
+		return new JProject(project.getInfo().getProjectName(), projectPath.toString(), project.getInfo().getEngineVersion(), template);
 	}
 
-	private static boolean generateProjectDirectories(String projectPath) {
+	private static boolean generateProjectDirectories(Path projectPath) {
 		try {
 			// Generate Project Directory
-			Files.createDirectories(Path.of(projectPath));
+			Files.createDirectories(projectPath);
 
 			// Generate Asset Directory
-			Files.createDirectories(Path.of(projectPath + "/Assets"));
-			Files.createDirectories(Path.of(projectPath + "/Assets/Textures"));
-			Files.createFile(Path.of(projectPath + "/Assets/Textures/.keep"));
-			Files.createDirectories(Path.of(projectPath + "/Assets/Shaders"));
-			Files.createFile(Path.of(projectPath + "/Assets/Shaders/.keep"));
-			Files.createDirectories(Path.of(projectPath + "/Assets/Scenes"));
-			Files.createFile(Path.of(projectPath + "/Assets/Scenes/.keep"));
-			Files.createDirectories(Path.of(projectPath + "/Assets/Spritesheets"));
-			Files.createFile(Path.of(projectPath + "/Assets/Spritesheets/.keep"));
-			Files.createDirectories(Path.of(projectPath + "/Assets/Fonts"));
-			Files.createFile(Path.of(projectPath + "/Assets/Fonts/.keep"));
-			Files.createDirectories(Path.of(projectPath + "/Assets/Scripts"));
-			Files.createFile(Path.of(projectPath + "/Assets/Scripts/.keep"));
+			Files.createDirectories(projectPath.resolve("Assets"));
+			Files.createDirectories(projectPath.resolve("Assets").resolve(ASSET_DATABASE_DIRECTORY));
 			return true;
 		} catch (IOException e) {
 			Logger.error("ProjectInitializer Failed to Create Project({}): {}", projectPath, e.getMessage());
@@ -60,17 +51,23 @@ public class ProjectInitializer {
 		}
 	}
 
-	private static Project generateProjectFile(String projectName, String projectPath, String engineVersion, String template) {
+	private static Project generateProjectFile(String projectName, Path projectPath, String engineVersion, String template) {
+		UUID uuid = UUID.randomUUID();
+		long generationTime = System.currentTimeMillis();
+		String assetRegistryPath = "Assets/" + projectName + ASSET_REGISTRY_EXTENSION;
+		String assetDatabasePath = "Assets/" + ASSET_DATABASE_DIRECTORY;
+
 		Project project = new Project(
 			new ProjectInfo(projectName, engineVersion, "JupiterEngine", "", template),
 			new ProjectAuthor("", "", ""),
-			new ProjectPaths("Assets", "Assets/Textures", "Assets/Shaders", "Assets/Scenes", "Assets/Spritesheets", "t/fonts", "Assets/Scripts"),
+			new ProjectPaths("Assets", assetRegistryPath, assetDatabasePath),
 			new ProjectStartup(""),
-			new ProjectMetadata(UUID.randomUUID(), System.currentTimeMillis())
+			new ProjectMetadata(uuid, generationTime)
 		);
 
+		Path projectFilePath = projectPath.resolve(projectName + PROJECT_EXTENSION);
 		try {
-			FileIO.writeFileContent(projectPath + "/" + projectName + PROJECT_EXTENSION, ProjectSerializer.serialize(project).toString(4));
+			FileIO.writeFileContent(projectFilePath, ProjectSerializer.serialize(project).toString(4));
 			return project;
 		} catch (IOException e) {
 			Logger.error("ProjectInitializer Failed to Create Project File({}): {}", projectName, e.getMessage());

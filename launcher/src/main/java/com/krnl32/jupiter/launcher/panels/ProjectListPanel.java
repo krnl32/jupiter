@@ -40,11 +40,14 @@ public class ProjectListPanel implements UIPanel {
 
 		ImGui.sameLine();
 		if (ImGui.button("Import Project")) {
-			String path = FileDialog.openFolder();
-			if (path != null && !path.isEmpty()) {
-				Project project = ProjectLoader.load(Path.of(path));
+			Path path = FileDialog.openFolder();
+			if (path != null) {
+				Project project = ProjectLoader.load(path);
 				if (project != null) {
-					projectManager.addProject(new JProject(project.getInfo().getProjectName(), path, project.getInfo().getEngineVersion(), project.getInfo().getTemplate()));
+					String name = project.getInfo().getProjectName();
+					String engineVersion = project.getInfo().getEngineVersion();
+					String template = project.getInfo().getTemplate();
+					projectManager.addProject(new JProject(name, path.toString(), engineVersion, template));
 				} else {
 					Logger.error("ProjectListPanel failed to Import Project({})", path);
 				}
@@ -106,7 +109,7 @@ public class ProjectListPanel implements UIPanel {
 			message = "No Editor Selected";
 			textSize = ImGui.calcTextSize(message);
 			ImGui.setCursorPos(new ImVec2(windowSize.x - textSize.x - padding, windowSize.y - textSize.y - padding));
-			ImGui.pushStyleColor(ImGuiCol.Text, 1.0f, 0.0f, 0.0f, 1.0f);
+			ImGui.pushStyleColor(ImGuiCol.Text, 1.0f, 0.0f, 0.0f, 1.0f); // Red
 			ImGui.text(message);
 			ImGui.popStyleColor();
 		} else {
@@ -115,7 +118,7 @@ public class ProjectListPanel implements UIPanel {
 			message = String.format("Editor: %s (v%s)", path, version);
 			textSize = ImGui.calcTextSize(message);
 			ImGui.setCursorPos(new ImVec2(windowSize.x - textSize.x - padding, windowSize.y - textSize.y - padding));
-			ImGui.pushStyleColor(ImGuiCol.Text, 0.0f, 1.0f, 0.0f, 1.0f); // 🟢 Green
+			ImGui.pushStyleColor(ImGuiCol.Text, 0.0f, 1.0f, 0.0f, 1.0f); // Green
 			ImGui.text(message);
 			ImGui.popStyleColor();
 		}

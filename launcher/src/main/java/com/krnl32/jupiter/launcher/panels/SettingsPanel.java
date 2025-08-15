@@ -95,12 +95,12 @@ public class SettingsPanel implements UIPanel {
 
 		// Add New Editor
 		if (ImGui.button("Add Editor (.jar)")) {
-			String path = FileDialog.openFile(".jar");
+			Path path = FileDialog.openFile(".jar");
 
 			try {
-				if (path != null && !path.isEmpty() && Files.exists(Path.of(path))) {
-					editorManager.addEditor(new JEditor(path, EditorUtil.extractVersionFromEditorPath(path)));
-					editorManager.setSelectedEditorPath(path);
+				if (path != null && Files.exists(path)) {
+					editorManager.addEditor(new JEditor(path.toString(), EditorUtil.extractVersionFromEditorPath((path))));
+					editorManager.setSelectedEditorPath(path.toString());
 				} else {
 					Logger.error("SettingsPanel Failed to Add Editor Invalid Path({})", path);
 				}

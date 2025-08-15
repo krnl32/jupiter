@@ -58,13 +58,18 @@ public class ProjectManager {
 		}
 
 		try {
-			JSONObject projectFileData = new JSONObject(FileIO.readFileContent(configFilePath.toString()));
+			String configData = FileIO.readFileContent(configFilePath);
+			JSONObject configDataJson = new JSONObject(configData);
 
-			JSONArray projectsData = projectFileData.getJSONArray("projects");
+			JSONArray projectsData = configDataJson.getJSONArray("projects");
 			if (projectsData != null) {
 				for (int i = 0; i < projectsData.length(); i++) {
 					JSONObject projectData = projectsData.getJSONObject(i);
-					projects.add(new JProject(projectData.getString("name"), projectData.getString("path"), projectData.getString("engineVersion"), projectData.getString("template")));
+					String name = projectData.getString("name");
+					String path = projectData.getString("path");
+					String engineVersion = projectData.getString("engineVersion");
+					String template = projectData.getString("template");
+					projects.add(new JProject(name, path, engineVersion, template));
 				}
 			}
 		} catch (Exception e) {
@@ -75,18 +80,17 @@ public class ProjectManager {
 	private void saveProjects() {
 		JSONArray projectsData = new JSONArray();
 		for (JProject project : projects) {
-			JSONObject projectData =
-				new JSONObject()
-					.put("name", project.getName())
-					.put("path", project.getPath())
-					.put("engineVersion", project.getEngineVersion())
-					.put("template", project.getTemplate());
+			JSONObject projectData = new JSONObject()
+				.put("name", project.getName())
+				.put("path", project.getPath())
+				.put("engineVersion", project.getEngineVersion())
+				.put("template", project.getTemplate());
 			projectsData.put(projectData);
 		}
 
 		try {
-			JSONObject projectFileData = new JSONObject().put("projects", projectsData);
-			FileIO.writeFileContent(configFilePath.toString(), projectFileData.toString(4));
+			JSONObject configDataJson = new JSONObject().put("projects", projectsData);
+			FileIO.writeFileContent(configFilePath, configDataJson.toString(4));
 		} catch (Exception e) {
 			Logger.error("ProjectManager Failed to Save Projects: {}", e.getMessage());
 		}
@@ -97,7 +101,7 @@ public class ProjectManager {
 			Files.createDirectories(configFilePath.getParent());
 			if (Files.notExists(configFilePath)) {
 				Files.createFile(configFilePath);
-				FileIO.writeFileContent(configFilePath.toString(), new JSONObject().put("projects", new JSONArray()).toString(4));
+				FileIO.writeFileContent(configFilePath, new JSONObject().put("projects", new JSONArray()).toString(4));
 			}
 		} catch (Exception e) {
 			Logger.error("ProjectManager Failed to Generate ConfigFile({}): {}", configFilePath, e.getMessage());

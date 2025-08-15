@@ -2,12 +2,12 @@ package com.krnl32.jupiter.launcher.editor;
 
 import com.krnl32.jupiter.engine.core.Logger;
 
-import java.nio.file.Paths;
+import java.nio.file.Path;
 
 public class EditorUtil {
-	public static String extractVersionFromEditorPath(String path) {
+	public static String extractVersionFromEditorPath(Path path) {
 		try {
-			String fileName = Paths.get(path).getFileName().toString();
+			String fileName = path.getFileName().toString();
 			if (fileName.endsWith(".jar")) {
 				String baseName = fileName.substring(0, fileName.length() - 4);
 				String[] parts = baseName.split("-");
@@ -18,6 +18,6 @@ public class EditorUtil {
 		} catch (Exception e) {
 			Logger.error("EditorUtil failed to extractVersionFromEditorPath for Path({}): {}", path, e.getMessage());
 		}
-		return "INVALID";
+		return "0";
 	}
 }

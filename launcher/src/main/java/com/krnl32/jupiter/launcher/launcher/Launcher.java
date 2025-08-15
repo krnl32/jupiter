@@ -1,6 +1,7 @@
 package com.krnl32.jupiter.launcher.launcher;
 
 import com.krnl32.jupiter.engine.core.Engine;
+import com.krnl32.jupiter.engine.core.EngineSettings;
 import com.krnl32.jupiter.engine.renderer.FrameBufferAttachmentFormat;
 import com.krnl32.jupiter.engine.renderer.Framebuffer;
 import com.krnl32.jupiter.engine.renderer.Renderer;
@@ -18,8 +19,8 @@ public class Launcher extends Engine {
 	private EditorManager editorManager;
 	private LauncherUI launcherUI;
 
-	public Launcher(String name, int width, int height) {
-		super(name, width, height);
+	public Launcher(EngineSettings settings) {
+		super(settings);
 	}
 
 	@Override

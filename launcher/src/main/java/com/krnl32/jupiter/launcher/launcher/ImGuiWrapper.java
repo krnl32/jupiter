@@ -86,7 +86,7 @@ public class ImGuiWrapper {
 		try {
 			Files.createDirectories(imguiConfigFilePath.getParent());
 			if (Files.notExists(imguiConfigFilePath) || Files.size(imguiConfigFilePath) == 0) {
-				FileIO.writeFileContent(imguiConfigFilePath.toString(), FileIO.readResourceFileContent("settings/imgui.ini"));
+				FileIO.writeFileContent(imguiConfigFilePath, FileIO.readResourceFileContent("settings/imgui.ini"));
 			}
 		} catch (Exception e) {
 			Logger.critical("ImGuiWrapper initProductionConfig Failed to Generate imguiConfigFile({}): {}", imguiConfigFilePath, e.getMessage());

@@ -80,15 +80,18 @@ public class EditorManager {
 		}
 
 		try {
-			JSONObject configFileData = new JSONObject(FileIO.readFileContent(configFilePath.toString()));
+			String configData = FileIO.readFileContent(configFilePath);
+			JSONObject configDataJson = new JSONObject(configData);
 
-			selectedEditorPath = configFileData.optString("selectedEditorPath", null);
+			selectedEditorPath = configDataJson.optString("selectedEditorPath", null);
 
-			JSONArray editorsArrayData = configFileData.getJSONArray("editors");
+			JSONArray editorsArrayData = configDataJson.getJSONArray("editors");
 			if (editorsArrayData != null) {
 				for (int i = 0; i < editorsArrayData.length(); i++) {
 					JSONObject editorData = editorsArrayData.getJSONObject(i);
-					editors.add(new JEditor(editorData.getString("path"), editorData.getString("version")));
+					String path = editorData.getString("path");
+					String version = editorData.getString("version");
+					editors.add(new JEditor(path, version));
 				}
 			}
 		} catch (Exception e) {
@@ -107,11 +110,11 @@ public class EditorManager {
 		}
 
 		try {
-			JSONObject configFileData = new JSONObject()
+			JSONObject configDataJson = new JSONObject()
 				.put("editors", editorsArrayData)
 				.put("selectedEditorPath", selectedEditorPath != null ? selectedEditorPath : JSONObject.NULL);
 
-			FileIO.writeFileContent(configFilePath.toString(), configFileData.toString(4));
+			FileIO.writeFileContent(configFilePath, configDataJson.toString(4));
 		} catch (Exception e) {
 			Logger.error("EditorManager Failed to Save Editors: {}", e.getMessage());
 		}
@@ -122,7 +125,7 @@ public class EditorManager {
 			Files.createDirectories(configFilePath.getParent());
 			if (Files.notExists(configFilePath)) {
 				Files.createFile(configFilePath);
-				FileIO.writeFileContent(configFilePath.toString(), new JSONObject().put("editors", new JSONArray()).toString(4));
+				FileIO.writeFileContent(configFilePath, new JSONObject().put("editors", new JSONArray()).put("selectedEditorPath", JSONObject.NULL).toString(4));
 			}
 		} catch (Exception e) {
 			Logger.error("EditorManager Failed to Generate ConfigFile({}): {}", configFilePath, e.getMessage());

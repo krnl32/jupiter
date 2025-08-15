@@ -59,8 +59,8 @@ public class NewProjectPanel implements UIPanel {
 			ImGui.inputText("##projectPath", newProjectPath);
 			ImGui.sameLine();
 			if (ImGui.button("Browse")) {
-				String path = FileDialog.openFolder();
-				if (path != null && !path.isEmpty()) {
+				Path path = FileDialog.openFolder();
+				if (path != null) {
 					newProjectPath.set(path);
 				}
 			}
@@ -74,8 +74,9 @@ public class NewProjectPanel implements UIPanel {
 			if (ImGui.button("Create")) {
 				String name = newProjectName.toString().trim();
 				String path = newProjectPath.toString().trim();
-				if (!name.isEmpty() && !path.isEmpty() && Files.exists(Path.of(path))) {
-					JProject newProject = ProjectInitializer.createProject(name, path, engineVersions[selectedEngineVersion.get()], templates[selectedTemplate.get()]);
+				Path directoryPath = Path.of(path);
+				if (!name.isEmpty() && !path.isEmpty() && Files.exists(directoryPath)) {
+					JProject newProject = ProjectInitializer.createProject(name, directoryPath, engineVersions[selectedEngineVersion.get()], templates[selectedTemplate.get()]);
 					if (newProject != null) {
 						projectManager.addProject(newProject);
 					} else {
