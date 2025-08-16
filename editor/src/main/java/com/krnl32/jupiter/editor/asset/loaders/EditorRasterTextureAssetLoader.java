@@ -92,5 +92,6 @@ public class EditorRasterTextureAssetLoader implements AssetLoader<TextureAsset>
 
 	@Override
 	public void unload(TextureAsset asset) {
+		asset.unload();
 	}
 }

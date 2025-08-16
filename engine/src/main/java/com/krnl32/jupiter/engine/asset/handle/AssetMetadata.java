@@ -1,5 +1,6 @@
 package com.krnl32.jupiter.engine.asset.handle;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 
@@ -55,7 +56,7 @@ public final class AssetMetadata {
 	}
 
 	public Map<String, Object> getImportSettings() {
-		return importSettings;
+		return Collections.unmodifiableMap(importSettings);
 	}
 
 	public long getLastModified() {

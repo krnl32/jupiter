@@ -90,6 +90,11 @@ public class EditorAssetManager implements AssetManager {
 		assetReferenceManager.release(assetId);
 	}
 
+	public void reloadAsset(AssetId assetId) {
+		unloadAsset(assetId);
+		getAsset(assetId);
+	}
+
 	public void registerAssetImporter(AssetImporter<? extends Asset> importer) {
 		this.assetImportPipeline.registerImporter(importer);
 	}
@@ -163,5 +168,18 @@ public class EditorAssetManager implements AssetManager {
 			.filter(assetMetadata -> assetMetadata.getAssetType() == type)
 			.map(assetMetadata -> (Asset) getAsset(assetMetadata.getAssetId()))
 			.collect(Collectors.toList());
+	}
+
+	public AssetMetadata getAssetMetadata(AssetId assetId) {
+		return assetRepository.getAssetMetadata(assetId);
+	}
+
+	public void saveAssetMetadata(AssetId assetId, AssetMetadata assetMetadata) {
+		if (!isAssetRegistered(assetId) || !assetId.equals(assetMetadata.getAssetId())) {
+			Logger.error("EditorAssetManager Failed to save Asset({}) Metadata", assetId);
+			return;
+		}
+
+		assetRepository.saveAssetMetadata(assetMetadata);
 	}
 }

@@ -24,10 +24,7 @@ import com.krnl32.jupiter.editor.factory.components.renderer.SpriteRendererCompo
 import com.krnl32.jupiter.editor.factory.components.utility.LifetimeComponentFactory;
 import com.krnl32.jupiter.editor.factory.components.utility.TagComponentFactory;
 import com.krnl32.jupiter.editor.factory.components.utility.UUIDComponentFactory;
-import com.krnl32.jupiter.editor.panels.ContentBrowserPanel;
-import com.krnl32.jupiter.editor.panels.InspectorPanel;
-import com.krnl32.jupiter.editor.panels.SceneHierarchyPanel;
-import com.krnl32.jupiter.editor.panels.ViewportPanel;
+import com.krnl32.jupiter.editor.panels.*;
 import com.krnl32.jupiter.editor.renderer.RendererRegistry;
 import com.krnl32.jupiter.editor.renderer.components.effects.BlinkComponentRenderer;
 import com.krnl32.jupiter.editor.renderer.components.effects.ParticleComponentRenderer;

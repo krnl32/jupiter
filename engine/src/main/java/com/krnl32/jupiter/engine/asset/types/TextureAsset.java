@@ -36,4 +36,8 @@ public class TextureAsset extends Asset {
 	public Texture2D getTexture() {
 		return texture;
 	}
+
+	public void unload() {
+		texture.destroy();
+	}
 }

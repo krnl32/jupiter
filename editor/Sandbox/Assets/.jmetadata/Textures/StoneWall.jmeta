@@ -7,7 +7,7 @@
     "assetType": "TEXTURE",
     "importSettings": {
         "colorSpace": "LINEAR",
-        "filterMode": "LINEAR",
+        "filterMode": "NEAREST",
         "channels": 4,
         "format": "RGBA8",
         "width": 1024,
@@ -15,8 +15,8 @@
         "flags": {
             "cubemap": false,
             "compressed": false,
-            "generateMipmaps": true,
             "alpha": true,
+            "generateMipmaps": true,
             "sRGB": false
         },
         "wrapMode": "CLAMP_TO_EDGE",

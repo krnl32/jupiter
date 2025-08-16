@@ -2,6 +2,7 @@ package com.krnl32.jupiter.editor.panels;
 
 import com.krnl32.jupiter.editor.asset.EditorAssetManager;
 import com.krnl32.jupiter.editor.editor.EditorPanel;
+import com.krnl32.jupiter.editor.events.asset.AssetSelectedEvent;
 import com.krnl32.jupiter.engine.asset.handle.Asset;
 import com.krnl32.jupiter.engine.asset.importer.ImportRequest;
 import com.krnl32.jupiter.engine.asset.importer.ImportResult;
@@ -256,9 +257,16 @@ public class ContentBrowserPanel implements EditorPanel {
 	}
 
 	private void openAsset(Path absoluteAssetPath) {
-		// Open file (Inspector)
 		String relativePath = absoluteAssetPath.toString().replace(rootPath.toString(), "").substring(1).replace("\\", "/");
-		System.out.println("Opening: " + relativePath);
+		Asset asset = ((EditorAssetManager) ProjectContext.getInstance().getAssetManager()).getAsset(relativePath);
+
+		if (asset == null) {
+			Logger.error("ContentBrowserPanel Failed to Open Asset({})", relativePath);
+			return;
+		}
+
+		// Open in Inspector
+		EventBus.getInstance().emit(new AssetSelectedEvent(asset));
 	}
 
 	private void removeAsset(Path absoluteAssetPath) {
