@@ -17,6 +17,7 @@ public class SceneAssetImportSettings implements ImportSettings {
 	public Map<String, Object> toMap() {
 		Map<String, Object> data = new HashMap<>();
 		data.put("gravity", settings.getGravity());
+
 		return data;
 	}
 

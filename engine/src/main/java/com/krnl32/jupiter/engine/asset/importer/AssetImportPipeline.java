@@ -18,15 +18,17 @@ public class AssetImportPipeline {
 				return (AssetImporter<T>) importer;
 			}
 		}
+
 		return null;
 	}
 
 	public <T extends Asset> ImportResult<T> importAsset(ImportRequest request) {
 		for (var importer : importers) {
 			if (importer.supports(request)) {
-				return  (ImportResult<T>) importer.importAsset(request);
+				return (ImportResult<T>) importer.importAsset(request);
 			}
 		}
+
 		return null;
 	}
 }

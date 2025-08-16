@@ -9,16 +9,22 @@ public class AssetReferenceManager {
 	private final Map<AssetId, Integer> refCounter = new HashMap<>();
 
 	public void acquire(AssetId assetId) {
-		refCounter.put(assetId, refCounter.getOrDefault(assetId, 0) + 1);
+		int refCount = refCounter.getOrDefault(assetId, 0);
+		refCount++;
+		refCounter.put(assetId, refCount);
 	}
 
 	public boolean release(AssetId assetId) {
-		int refCount = refCounter.getOrDefault(assetId, 0) - 1;
+		int refCount = refCounter.getOrDefault(assetId, 0);
+
 		if (refCount <= 0) {
 			refCounter.remove(assetId);
 			return true;
 		}
+
+		refCount--;
 		refCounter.put(assetId, refCount);
+
 		return false;
 	}
 

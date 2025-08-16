@@ -19,17 +19,21 @@ public class AssetLoaderRegistry {
 
 	public static <T extends Asset> void unregister(Class<T> assetClass) {
 		AssetType type = classToType.remove(assetClass);
+
 		if (type != null) {
 			typeToClass.remove(type);
 		}
+
 		classToLoader.remove(assetClass);
 	}
 
 	public static <T extends Asset> void unregister(AssetType assetType) {
 		Class<? extends Asset> assetClass = typeToClass.remove(assetType);
+
 		if (assetClass != null) {
 			classToType.remove(assetClass);
 		}
+
 		classToLoader.remove(assetClass);
 	}
 

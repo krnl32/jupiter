@@ -14,14 +14,28 @@ public class ScriptAsset extends Asset {
 
 	public ScriptAsset(ScriptSettings settings, ScriptDefinition definition) {
 		super(AssetType.SCRIPT);
-		this.assetPath = definition.getScriptPath().toString().replace(ProjectContext.getInstance().getAssetDirectory().toString(), "").substring(1).replace("\\", "/");
+
+		String assetDirectoryPath = ProjectContext.getInstance().getAssetDirectory().toString();
+		this.assetPath = definition.getScriptPath()
+			.toString()
+			.replace(assetDirectoryPath, "")
+			.substring(1)
+			.replace("\\", "/");
+
 		this.settings = settings;
 		this.definition = definition;
 	}
 
 	public ScriptAsset(AssetId assetId, ScriptSettings settings, ScriptDefinition definition) {
 		super(assetId, AssetType.SCRIPT);
-		this.assetPath = definition.getScriptPath().toString().replace(ProjectContext.getInstance().getAssetDirectory().toString(), "").substring(1).replace("\\", "/");
+
+		String assetDirectoryPath = ProjectContext.getInstance().getAssetDirectory().toString();
+		this.assetPath = definition.getScriptPath()
+			.toString()
+			.replace(assetDirectoryPath, "")
+			.substring(1)
+			.replace("\\", "/");
+
 		this.settings = settings;
 		this.definition = definition;
 	}

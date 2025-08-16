@@ -19,31 +19,35 @@ public class AssetRepository {
 	}
 
 	public AssetMetadata getAssetMetadata(AssetId assetId) {
-		AssetMetadata assetMetadata = assetDatabase.getAssetMetadata(assetId);
-		if (assetMetadata != null) {
-			return assetMetadata;
+		AssetMetadata cachedMetadata = assetDatabase.getAssetMetadata(assetId);
+
+		if (cachedMetadata != null) {
+			return cachedMetadata;
 		}
 
-		assetMetadata = assetPersistence.getAssetMetadata(assetId);
-		if (assetMetadata != null) {
-			assetDatabase.addAssetMetadata(assetMetadata);
+		AssetMetadata persistedMetadata = assetPersistence.getAssetMetadata(assetId);
+
+		if (persistedMetadata != null) {
+			assetDatabase.addAssetMetadata(persistedMetadata);
 		}
 
-		return assetMetadata;
+		return persistedMetadata;
 	}
 
 	public AssetMetadata getAssetMetadata(String assetPath) {
-		AssetMetadata assetMetadata = assetDatabase.getAssetMetadata(assetPath);
-		if (assetMetadata != null) {
-			return assetMetadata;
+		AssetMetadata cachedMetadata = assetDatabase.getAssetMetadata(assetPath);
+
+		if (cachedMetadata != null) {
+			return cachedMetadata;
 		}
 
-		assetMetadata = assetPersistence.getAssetMetadata(assetPath);
-		if (assetMetadata != null) {
-			assetDatabase.addAssetMetadata(assetMetadata);
+		AssetMetadata persistedMetadata = assetPersistence.getAssetMetadata(assetPath);
+
+		if (persistedMetadata != null) {
+			assetDatabase.addAssetMetadata(persistedMetadata);
 		}
 
-		return assetMetadata;
+		return persistedMetadata;
 	}
 
 	public void saveAssetMetadata(AssetMetadata assetMetadata) {
@@ -61,8 +65,8 @@ public class AssetRepository {
 		assetPersistence.removeAssetMetadata(assetPath);
 	}
 
-	public Collection<AssetMetadata> getAssetMetadatas() {
-		return assetDatabase.getAssetMetadatas();
+	public Collection<AssetMetadata> getAllAssetMetadata() {
+		return assetDatabase.getAllAssetMetadata();
 	}
 
 	public AssetEntry getAssetEntry(AssetId assetId) {

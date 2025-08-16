@@ -15,6 +15,13 @@ public class TextureAssetImportSettings implements ImportSettings {
 
 	@Override
 	public Map<String, Object> toMap() {
+		Map<String, Object> dataFlags = new HashMap<>();
+		dataFlags.put("generateMipmaps", ((settings.getFlags() & TextureFlag.GENERATE_MIPMAPS.getMask()) != 0));
+		dataFlags.put("compressed", ((settings.getFlags() & TextureFlag.COMPRESSED.getMask()) != 0));
+		dataFlags.put("cubemap", ((settings.getFlags() & TextureFlag.CUBEMAP.getMask()) != 0));
+		dataFlags.put("sRGB", ((settings.getFlags() & TextureFlag.SRGB.getMask()) != 0));
+		dataFlags.put("alpha", ((settings.getFlags() & TextureFlag.ALPHA.getMask()) != 0));
+
 		Map<String, Object> data = new HashMap<>();
 		data.put("type", settings.getType().name());
 		data.put("format", settings.getFormat().name());
@@ -27,14 +34,8 @@ public class TextureAssetImportSettings implements ImportSettings {
 		data.put("colorSpace", settings.getColorSpace().name());
 		data.put("compressionType", settings.getCompressionType().name());
 		data.put("anisotropicLevel", settings.getAnisotropicLevel());
-
-		Map<String, Object> dataFlags = new HashMap<>();
-		dataFlags.put("generateMipmaps", ((settings.getFlags() & TextureFlag.GENERATE_MIPMAPS.getMask()) != 0));
-		dataFlags.put("compressed", ((settings.getFlags() & TextureFlag.COMPRESSED.getMask()) != 0));
-		dataFlags.put("cubemap", ((settings.getFlags() & TextureFlag.CUBEMAP.getMask()) != 0));
-		dataFlags.put("sRGB", ((settings.getFlags() & TextureFlag.SRGB.getMask()) != 0));
-		dataFlags.put("alpha", ((settings.getFlags() & TextureFlag.ALPHA.getMask()) != 0));
 		data.put("flags", dataFlags);
+
 		return data;
 	}
 

@@ -9,42 +9,49 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AssetDatabase {
-	private final Map<AssetId, AssetMetadata> assetIdToMetadata = new HashMap<>();
-	private final Map<String, AssetId> pathToAssetId = new HashMap<>();
+	private final Map<AssetId, AssetMetadata> assetIdToAssetMetadata = new HashMap<>();
+	private final Map<String, AssetId> assetPathToAssetId = new HashMap<>();
 
 	public AssetMetadata getAssetMetadata(AssetId assetId) {
-		return assetIdToMetadata.get(assetId);
+		return assetIdToAssetMetadata.get(assetId);
 	}
 
 	public AssetMetadata getAssetMetadata(String assetPath) {
-		AssetId assetId = pathToAssetId.get(assetPath);
-		return assetIdToMetadata.get(assetId);
+		AssetId assetId = assetPathToAssetId.get(assetPath);
+		return assetIdToAssetMetadata.get(assetId);
 	}
 
-	public Collection<AssetMetadata> getAssetMetadatas() {
-		return Collections.unmodifiableCollection(assetIdToMetadata.values());
+	public Collection<AssetMetadata> getAllAssetMetadata() {
+		return Collections.unmodifiableCollection(assetIdToAssetMetadata.values());
 	}
 
 	public void addAssetMetadata(AssetMetadata assetMetadata) {
-		assetIdToMetadata.put(assetMetadata.getAssetId(), assetMetadata);
-		pathToAssetId.put(assetMetadata.getAssetPath(), assetMetadata.getAssetId());
+		AssetId assetId = assetMetadata.getAssetId();
+		String assetPath = assetMetadata.getAssetPath();
+
+		assetIdToAssetMetadata.put(assetId, assetMetadata);
+		assetPathToAssetId.put(assetPath, assetId);
 	}
 
 	public void removeAssetMetadata(AssetId assetId) {
-		AssetMetadata assetMetadata = assetIdToMetadata.get(assetId);
+		AssetMetadata assetMetadata = assetIdToAssetMetadata.get(assetId);
+
 		if (assetMetadata == null) {
 			return;
 		}
-		pathToAssetId.remove(assetMetadata.getAssetPath());
-		assetIdToMetadata.remove(assetId);
+
+		assetPathToAssetId.remove(assetMetadata.getAssetPath());
+		assetIdToAssetMetadata.remove(assetId);
 	}
 
 	public void removeAssetMetadata(String assetPath) {
-		AssetId assetId = pathToAssetId.get(assetPath);
+		AssetId assetId = assetPathToAssetId.get(assetPath);
+
 		if (assetId == null) {
 			return;
 		}
-		assetIdToMetadata.remove(assetId);
-		pathToAssetId.remove(assetPath);
+
+		assetIdToAssetMetadata.remove(assetId);
+		assetPathToAssetId.remove(assetPath);
 	}
 }

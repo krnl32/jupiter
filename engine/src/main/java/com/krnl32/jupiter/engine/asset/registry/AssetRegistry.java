@@ -9,39 +9,44 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AssetRegistry {
-	private final Map<String, AssetId> assetPathToId = new HashMap<>();
-	private final Map<AssetId, AssetEntry> assetIdToEntry = new HashMap<>();
+	private final Map<String, AssetId> assetPathToAssetId = new HashMap<>();
+	private final Map<AssetId, AssetEntry> assetIdToAssetEntry = new HashMap<>();
 
 	public void register(AssetEntry assetEntry) {
-		AssetId existingId = assetPathToId.get(assetEntry.getAssetPath());
-		if (existingId != null && !existingId.equals(assetEntry.getAssetId())) {
+		AssetId assetEntryId = assetEntry.getAssetId();
+		String assetEntryPath = assetEntry.getAssetPath();
+
+		// Check if Path Already Registered with a Different AssetID
+		AssetId existingId = assetPathToAssetId.get(assetEntryPath);
+		if (existingId != null && !existingId.equals(assetEntryId)) {
 			return;
 		}
 
-		if (!assetIdToEntry.containsKey(assetEntry.getAssetId())) {
-			assetPathToId.put(assetEntry.getAssetPath(), assetEntry.getAssetId());
-			assetIdToEntry.put(assetEntry.getAssetId(), assetEntry);
+		if (!assetIdToAssetEntry.containsKey(assetEntryId)) {
+			assetPathToAssetId.put(assetEntryPath, assetEntryId);
+			assetIdToAssetEntry.put(assetEntryId, assetEntry);
 			Logger.debug("AssetRegistry Registering({})", assetEntry);
 		}
 	}
 
 	public void unregister(AssetId assetId) {
-		AssetEntry entry = assetIdToEntry.remove(assetId);
+		AssetEntry entry = assetIdToAssetEntry.remove(assetId);
+
 		if (entry != null) {
-			assetPathToId.remove(entry.getAssetPath());
+			assetPathToAssetId.remove(entry.getAssetPath());
 			Logger.debug("AssetRegistry Unregistering({})", assetId);
 		}
 	}
 
 	public AssetId getAssetId(String assetPath) {
-		return assetPathToId.get(assetPath);
+		return assetPathToAssetId.get(assetPath);
 	}
 
 	public AssetEntry getAssetEntry(AssetId assetId) {
-		return assetIdToEntry.get(assetId);
+		return assetIdToAssetEntry.get(assetId);
 	}
 
 	public Collection<AssetEntry> getAssetEntries() {
-		return Collections.unmodifiableCollection(assetIdToEntry.values());
+		return Collections.unmodifiableCollection(assetIdToAssetEntry.values());
 	}
 }

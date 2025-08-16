@@ -18,6 +18,7 @@ public class ScriptAssetImportSettings implements ImportSettings {
 		Map<String, Object> data = new HashMap<>();
 		data.put("hotReload", settings.isHotReload());
 		data.put("compile", settings.isCompile());
+
 		return data;
 	}
 

@@ -20,10 +20,14 @@ public class AssetMetadataSerializer {
 	}
 
 	public static AssetMetadata deserialize(JSONObject metadata) {
+		UUID assetUUID = UUID.fromString(metadata.getString("uuid"));
+		AssetId assetId = new AssetId(assetUUID);
+		AssetType assetType = AssetType.valueOf(metadata.getString("assetType"));
+
 		return new AssetMetadata(
 			metadata.getInt("version"),
-			new AssetId(UUID.fromString(metadata.getString("uuid"))),
-			AssetType.valueOf(metadata.getString("assetType")),
+			assetId,
+			assetType,
 			metadata.getString("assetPath"),
 			metadata.getString("importerName"),
 			metadata.getJSONObject("importSettings").toMap(),

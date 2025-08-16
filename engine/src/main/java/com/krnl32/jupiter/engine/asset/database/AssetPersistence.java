@@ -30,9 +30,11 @@ public class AssetPersistence {
 
 	public AssetDatabase loadAssetDatabase() {
 		try {
+			AssetDatabase assetDatabase = new AssetDatabase();
+
 			if (!Files.exists(assetDatabaseDirectory)) {
 				Files.createDirectories(assetDatabaseDirectory);
-				return new AssetDatabase();
+				return assetDatabase;
 			}
 
 			List<Path> metadataPaths = Files.walk(assetDatabaseDirectory)
@@ -40,11 +42,11 @@ public class AssetPersistence {
 				.filter(path -> path.toString().endsWith(ASSET_METADATA_EXTENSION))
 				.toList();
 
-			AssetDatabase assetDatabase = new AssetDatabase();
 			for (Path metadataPath : metadataPaths) {
 				String metadataContent = FileIO.readFileContent(metadataPath);
-				JSONObject metadata = new JSONObject(metadataContent);
-				AssetMetadata assetMetadata = AssetMetadataSerializer.deserialize(metadata);
+				JSONObject metadataJson = new JSONObject(metadataContent);
+				AssetMetadata assetMetadata = AssetMetadataSerializer.deserialize(metadataJson);
+
 				assetDatabase.addAssetMetadata(assetMetadata);
 			}
 
@@ -68,8 +70,9 @@ public class AssetPersistence {
 					.map(path -> {
 						try {
 							String metadataContent = FileIO.readFileContent(path);
-							JSONObject metadata = new JSONObject(metadataContent);
-							return AssetMetadataSerializer.deserialize(metadata);
+							JSONObject metadataJson = new JSONObject(metadataContent);
+
+							return AssetMetadataSerializer.deserialize(metadataJson);
 						} catch (Exception e) {
 							Logger.error("AssetPersistence getAssetMetadata Failed To Read Asset({}) Metadata: {}", assetId.getId(), e.getMessage());
 							return null;
@@ -88,6 +91,7 @@ public class AssetPersistence {
 
 	public AssetMetadata getAssetMetadata(String assetPath) {
 		Path metadataPath = assetDatabaseDirectory.resolve(assetPath);
+
 		if (!Files.exists(metadataPath)) {
 			Logger.error("AssetPersistence getAssetMetadata Failed to get Asset({}): File Doesn't Exist", assetPath);
 			return null;
@@ -95,8 +99,9 @@ public class AssetPersistence {
 
 		try {
 			String metadataContent = FileIO.readFileContent(metadataPath);
-			JSONObject metadata = new JSONObject(metadataContent);
-			return AssetMetadataSerializer.deserialize(metadata);
+			JSONObject metadataJson = new JSONObject(metadataContent);
+
+			return AssetMetadataSerializer.deserialize(metadataJson);
 		} catch (Exception e) {
 			Logger.error("AssetPersistence getAssetMetadata Failed To Read Asset({}): {}", assetPath, e.getMessage());
 			return null;
@@ -109,6 +114,7 @@ public class AssetPersistence {
 			Path metadataPath = FileIO.replaceFileExtension(assetPath, ASSET_METADATA_EXTENSION);
 			Path metadataFilePath = assetDatabaseDirectory.resolve(metadataPath);
 			Files.createDirectories(metadataFilePath.getParent());
+
 			String serializedMetadata = AssetMetadataSerializer.serialize(assetMetadata).toString(4);
 			FileIO.writeFileContent(metadataFilePath, serializedMetadata);
 		} catch (Exception e) {
@@ -120,7 +126,12 @@ public class AssetPersistence {
 		removeAssetMetadata(metadata -> {
 			try {
 				String metadataAssetId = metadata.optString("assetId", null);
-				return metadataAssetId != null && assetId.getId().equals(UUID.fromString(metadataAssetId));
+
+				if (metadataAssetId == null) {
+					return false;
+				}
+
+				return assetId.getId().equals(UUID.fromString(metadataAssetId));
 			} catch (Exception e) {
 				return false;
 			}
@@ -140,9 +151,10 @@ public class AssetPersistence {
 		}
 
 		try {
-			String fileContent = FileIO.readFileContent(assetRegistryFilePath);
-			JSONObject assetRegistry = new JSONObject(fileContent);
-			return AssetRegistrySerializer.deserialize(assetRegistry);
+			String registryContent = FileIO.readFileContent(assetRegistryFilePath);
+			JSONObject jsonRegistry = new JSONObject(registryContent);
+
+			return AssetRegistrySerializer.deserialize(jsonRegistry);
 		} catch (Exception e) {
 			Logger.error("AssetPersistence loadAssetRegistry Failed To Deserialize AssetRegistry({}): {}", assetRegistryFilePath, e.getMessage());
 			return null;
@@ -171,8 +183,9 @@ public class AssetPersistence {
 					.filter(path -> {
 						try {
 							String metadataContent = FileIO.readFileContent(path);
-							JSONObject metadata = new JSONObject(metadataContent);
-							return predicate.test(metadata);
+							JSONObject metadataJson = new JSONObject(metadataContent);
+
+							return predicate.test(metadataJson);
 						} catch (Exception e) {
 							return false;
 						}

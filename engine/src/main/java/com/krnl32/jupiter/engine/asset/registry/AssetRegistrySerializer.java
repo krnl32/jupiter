@@ -6,25 +6,35 @@ import com.krnl32.jupiter.engine.core.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.Collection;
 import java.util.UUID;
 
 public class AssetRegistrySerializer {
 	public static JSONObject serialize(AssetRegistry registry) {
-		JSONArray assetEntriesData = new JSONArray();
-		registry.getAssetEntries().forEach(assetEntry -> assetEntriesData.put(serializeAssetEntry(assetEntry)));
-		return new JSONObject().put("assets", assetEntriesData);
+		JSONArray assetEntriesJson = new JSONArray();
+		Collection<AssetEntry> assetEntries = registry.getAssetEntries();
+
+		for (AssetEntry assetEntry : assetEntries) {
+			JSONObject serializedEntry = serializeAssetEntry(assetEntry);
+			assetEntriesJson.put(serializedEntry);
+		}
+
+		return new JSONObject()
+			.put("assets", assetEntriesJson);
 	}
 
 	public static AssetRegistry deserialize(JSONObject registryData) {
 		try {
-			AssetRegistry registry = new AssetRegistry();
+			AssetRegistry assetRegistry = new AssetRegistry();
+			JSONArray assetEntriesJson = registryData.getJSONArray("assets");
 
-			JSONArray assetEntriesData = registryData.getJSONArray("assets");
-			for (int i = 0; i < assetEntriesData.length(); i++) {
-				registry.register(deserializeAssetEntry(assetEntriesData.getJSONObject(i)));
+			for (int i = 0; i < assetEntriesJson.length(); i++) {
+				JSONObject assetEntryJson = assetEntriesJson.getJSONObject(i);
+				AssetEntry assetEntry = deserializeAssetEntry(assetEntryJson);
+				assetRegistry.register(assetEntry);
 			}
 
-			return registry;
+			return assetRegistry;
 		} catch (Exception e) {
 			Logger.error("AssetRegistrySerializer Failed to Deserialize: {}", e.getMessage());
 			return null;
@@ -32,17 +42,22 @@ public class AssetRegistrySerializer {
 	}
 
 	private static JSONObject serializeAssetEntry(AssetEntry assetEntry) {
+		UUID uuid = assetEntry.getAssetId().getId();
+		String type = assetEntry.getAssetType().name();
+		String path = assetEntry.getAssetPath();
+
 		return new JSONObject()
-			.put("uuid", assetEntry.getAssetId().getId())
-			.put("assetType", assetEntry.getAssetType().name())
-			.put("assetPath", assetEntry.getAssetPath());
+			.put("uuid", uuid)
+			.put("assetType", type)
+			.put("assetPath", path);
 	}
 
 	private static AssetEntry deserializeAssetEntry(JSONObject assetEntryData) {
-		return new AssetEntry(
-			new AssetId(UUID.fromString(assetEntryData.getString("uuid"))),
-			AssetType.valueOf(assetEntryData.getString("assetType")),
-			assetEntryData.getString("assetPath")
-		);
+		UUID assetUUID = UUID.fromString(assetEntryData.getString("uuid"));
+		AssetId assetId = new AssetId(assetUUID);
+		AssetType assetType = AssetType.valueOf(assetEntryData.getString("assetType"));
+		String assetPath = assetEntryData.getString("assetPath");
+
+		return new AssetEntry(assetId, assetType, assetPath);
 	}
 }
