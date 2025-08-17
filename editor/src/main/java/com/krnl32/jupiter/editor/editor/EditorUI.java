@@ -9,6 +9,7 @@ import com.krnl32.jupiter.engine.event.EventBus;
 import com.krnl32.jupiter.engine.renderer.texture.*;
 import com.krnl32.jupiter.engine.utility.FileIO;
 import imgui.ImGui;
+import imgui.ImGuiStyle;
 import imgui.ImVec2;
 import imgui.flag.*;
 import imgui.type.ImBoolean;
@@ -26,7 +27,8 @@ public class EditorUI {
 		this.imGuiWrapper = new ImGuiWrapper(window);
 		this.editorPanels = new ArrayList<>();
 		this.editorState = EditorState.STOP;
-		
+
+		setupDarkTheme();
 
 		EventBus.getInstance().register(EditorPlayEvent.class, event -> {
 			editorState = EditorState.PLAY;
@@ -63,6 +65,81 @@ public class EditorUI {
 
 	public void addEditorPanel(EditorPanel editorPanel) {
 		editorPanels.add(editorPanel);
+	}
+
+	public static void setupDarkTheme() {
+		// Clear Color: 0.06f, 0.07f, 0.09f, 1.0f
+		ImGuiStyle style = ImGui.getStyle();
+
+		// Color Palette
+		style.setColor(ImGuiCol.WindowBg,0.07f, 0.08f, 0.10f, 1.0f);
+		style.setColor(ImGuiCol.ChildBg,0.09f, 0.10f, 0.12f, 1.0f);
+
+		style.setColor(ImGuiCol.Text, 0.89f, 0.89f, 0.92f, 1.0f);
+		style.setColor(ImGuiCol.TextDisabled, 0.44f, 0.44f, 0.48f, 1.0f);
+
+		// Headers
+		style.setColor(ImGuiCol.Header, 0.18f, 0.22f, 0.30f, 1.0f);
+		style.setColor(ImGuiCol.HeaderHovered, 0.27f, 0.32f, 0.40f, 1.0f);
+		style.setColor(ImGuiCol.HeaderActive,0.23f, 0.37f, 0.50f, 1.0f);
+
+		// Buttons
+		style.setColor(ImGuiCol.Button, 0.15f, 0.18f, 0.22f, 1.0f);
+		style.setColor(ImGuiCol.ButtonHovered, 0.25f, 0.29f, 0.35f, 1.0f);
+		style.setColor(ImGuiCol.ButtonActive, 0.20f, 0.25f, 0.33f, 1.0f);
+
+		// Frames
+		style.setColor(ImGuiCol.FrameBg, 0.13f, 0.14f, 0.17f, 1.0f);
+		style.setColor(ImGuiCol.FrameBgHovered, 0.22f, 0.24f, 0.29f, 1.0f);
+		style.setColor(ImGuiCol.FrameBgActive, 0.25f, 0.28f, 0.34f, 1.0f);
+
+		// Tabs
+		style.setColor(ImGuiCol.Tab, 0.14f, 0.16f, 0.22f, 1.0f);
+		style.setColor(ImGuiCol.TabHovered, 0.26f, 0.30f, 0.38f, 1.0f);
+		style.setColor(ImGuiCol.TabActive, 0.20f, 0.24f, 0.32f, 1.0f);
+		style.setColor(ImGuiCol.TabUnfocused, 0.10f, 0.12f, 0.16f, 1.0f);
+		style.setColor(ImGuiCol.TabUnfocusedActive, 0.16f, 0.20f, 0.26f, 1.0f);
+
+		// Sliders, Grabs
+		style.setColor(ImGuiCol.SliderGrab, 0.40f, 0.60f, 0.95f, 1.0f);
+		style.setColor(ImGuiCol.SliderGrabActive, 0.50f, 0.70f, 1.00f, 1.0f);
+
+		// Checkmark, Radio, Resize
+		style.setColor(ImGuiCol.CheckMark, 0.45f, 0.70f, 1.00f, 1.0f);
+		style.setColor(ImGuiCol.ResizeGrip, 0.20f, 0.23f, 0.28f, 1.0f);
+		style.setColor(ImGuiCol.ResizeGripHovered, 0.35f, 0.45f, 0.55f, 1.0f);
+		style.setColor(ImGuiCol.ResizeGripActive, 0.50f, 0.60f, 0.70f, 1.0f);
+
+		// Scrollbars
+		style.setColor(ImGuiCol.ScrollbarBg, 0.09f, 0.10f, 0.12f, 1.0f);
+		style.setColor(ImGuiCol.ScrollbarGrab, 0.18f, 0.20f, 0.25f, 1.0f);
+		style.setColor(ImGuiCol.ScrollbarGrabHovered, 0.28f, 0.30f, 0.35f, 1.0f);
+		style.setColor(ImGuiCol.ScrollbarGrabActive, 0.34f, 0.36f, 0.42f, 1.0f);
+
+		// Separators
+		style.setColor(ImGuiCol.Separator, 0.20f, 0.22f, 0.26f, 1.0f);
+		style.setColor(ImGuiCol.SeparatorHovered, 0.40f, 0.50f, 0.60f, 1.0f);
+		style.setColor(ImGuiCol.SeparatorActive, 0.50f, 0.60f, 0.70f, 1.0f);
+
+		// Popup
+		style.setColor(ImGuiCol.PopupBg, 0.10f, 0.11f, 0.14f, 1.0f);
+		style.setColor(ImGuiCol.MenuBarBg, 0.12f, 0.13f, 0.16f, 1.0f);
+
+		// Style Vars
+		style.setWindowRounding(6.0f);
+		style.setChildRounding(6.0f);
+		style.setPopupRounding(6.0f);
+		style.setFrameRounding(4.0f);
+		style.setScrollbarRounding(4.0f);
+		style.setGrabRounding(4.0f);
+
+		style.setItemSpacing(10f, 6f);
+		style.setItemInnerSpacing(8f, 4f);
+		style.setFramePadding(6f, 4f);
+
+		style.setWindowBorderSize(1.0f);
+		style.setChildBorderSize(1.0f);
+		style.setPopupBorderSize(1.0f);
 	}
 
 	private void renderToolBar() {

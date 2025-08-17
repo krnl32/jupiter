@@ -175,7 +175,7 @@ public class Editor extends Engine {
 
 	@Override
 	public void onRender(float dt, Renderer renderer) {
-		renderer.setClearColor(new Vector4f(0.07f, 0.13f, 0.17f, 1.0f));
+		renderer.setClearColor(new Vector4f(0.06f, 0.07f, 0.09f, 1.0f));
 
 		if (editorState != EditorState.PLAY && renderer.getActiveCamera() != editorCamera.getCamera()) {
 			renderer.setActiveCamera(editorCamera.getCamera());
