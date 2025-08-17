@@ -1,4 +1,4 @@
-package com.krnl32.jupiter.editor.renderer;
+package com.krnl32.jupiter.editor.renderer.component;
 
 import com.krnl32.jupiter.engine.ecs.Component;
 

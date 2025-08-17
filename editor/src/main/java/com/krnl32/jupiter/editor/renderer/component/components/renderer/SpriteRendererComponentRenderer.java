@@ -1,6 +1,6 @@
-package com.krnl32.jupiter.editor.renderer.components.renderer;
+package com.krnl32.jupiter.editor.renderer.component.components.renderer;
 
-import com.krnl32.jupiter.editor.renderer.ComponentRenderer;
+import com.krnl32.jupiter.editor.renderer.component.ComponentRenderer;
 import com.krnl32.jupiter.editor.utility.GUIUtils;
 import com.krnl32.jupiter.engine.components.renderer.SpriteRendererComponent;
 import imgui.type.ImInt;

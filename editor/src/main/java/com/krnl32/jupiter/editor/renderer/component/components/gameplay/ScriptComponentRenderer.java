@@ -1,7 +1,7 @@
-package com.krnl32.jupiter.editor.renderer.components.gameplay;
+package com.krnl32.jupiter.editor.renderer.component.components.gameplay;
 
 import com.krnl32.jupiter.editor.asset.EditorAssetManager;
-import com.krnl32.jupiter.editor.renderer.ComponentRenderer;
+import com.krnl32.jupiter.editor.renderer.component.ComponentRenderer;
 import com.krnl32.jupiter.editor.utility.GUIUtils;
 import com.krnl32.jupiter.engine.asset.handle.AssetType;
 import com.krnl32.jupiter.engine.asset.types.ScriptAsset;

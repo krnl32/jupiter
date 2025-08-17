@@ -1,6 +1,6 @@
 <p align="center">
   <a href="#license">
-    <img src="Resources/Branding/JupiterBannerSmall.png" alt="Logo" width=300 height=180>
+    <img src="Resources/Branding/JupiterBannerSmall.png" alt="Logo" width=900 height=540>
   </a>
 
 <h3 align="center">Jupiter</h3>

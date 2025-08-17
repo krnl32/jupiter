@@ -3,8 +3,8 @@ package com.krnl32.jupiter.editor.panels;
 import com.krnl32.jupiter.editor.editor.EditorPanel;
 import com.krnl32.jupiter.editor.factory.ComponentFactory;
 import com.krnl32.jupiter.editor.factory.FactoryRegistry;
-import com.krnl32.jupiter.editor.renderer.ComponentRenderer;
-import com.krnl32.jupiter.editor.renderer.RendererRegistry;
+import com.krnl32.jupiter.editor.renderer.component.ComponentRenderer;
+import com.krnl32.jupiter.editor.renderer.EditorRendererRegistry;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.ecs.Component;
 import com.krnl32.jupiter.engine.ecs.Entity;
@@ -57,7 +57,7 @@ public class EntityInspectorPanel implements EditorPanel {
 			Component component = components.get(i);
 			Class<? extends Component> componentClass = component.getClass();
 			@SuppressWarnings("unchecked")
-			ComponentRenderer<Component> componentRenderer = (ComponentRenderer<Component>) RendererRegistry.getComponentRenderer(componentClass);
+			ComponentRenderer<Component> componentRenderer = (ComponentRenderer<Component>) EditorRendererRegistry.getComponentRenderer(componentClass);
 			if (componentRenderer == null) {
 				continue;
 			}
@@ -142,7 +142,7 @@ public class EntityInspectorPanel implements EditorPanel {
 
 		ImGui.spacing();
 
-		RendererRegistry.getComponentRenderers().keySet().stream()
+		EditorRendererRegistry.getComponentRenderers().keySet().stream()
 			.filter(type -> !entity.hasComponent(type))
 			.filter(type -> {
 				String name = type.getSimpleName().toLowerCase();

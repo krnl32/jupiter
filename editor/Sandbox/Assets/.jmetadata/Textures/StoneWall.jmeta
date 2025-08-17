@@ -7,7 +7,7 @@
     "assetType": "TEXTURE",
     "importSettings": {
         "colorSpace": "LINEAR",
-        "filterMode": "LINEAR",
+        "filterMode": "NEAREST",
         "channels": 4,
         "format": "RGBA8",
         "width": 1024,

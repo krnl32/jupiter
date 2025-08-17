@@ -25,17 +25,19 @@ import com.krnl32.jupiter.editor.factory.components.utility.LifetimeComponentFac
 import com.krnl32.jupiter.editor.factory.components.utility.TagComponentFactory;
 import com.krnl32.jupiter.editor.factory.components.utility.UUIDComponentFactory;
 import com.krnl32.jupiter.editor.panels.*;
-import com.krnl32.jupiter.editor.renderer.RendererRegistry;
-import com.krnl32.jupiter.editor.renderer.components.effects.BlinkComponentRenderer;
-import com.krnl32.jupiter.editor.renderer.components.effects.ParticleComponentRenderer;
-import com.krnl32.jupiter.editor.renderer.components.gameplay.*;
-import com.krnl32.jupiter.editor.renderer.components.physics.BoxCollider2DComponentRenderer;
-import com.krnl32.jupiter.editor.renderer.components.physics.CircleCollider2DComponentRenderer;
-import com.krnl32.jupiter.editor.renderer.components.physics.RigidBody2DComponentRenderer;
-import com.krnl32.jupiter.editor.renderer.components.renderer.SpriteRendererComponentRenderer;
-import com.krnl32.jupiter.editor.renderer.components.utility.LifetimeComponentRenderer;
-import com.krnl32.jupiter.editor.renderer.components.utility.TagComponentRenderer;
-import com.krnl32.jupiter.editor.renderer.components.utility.UUIDComponentRenderer;
+import com.krnl32.jupiter.editor.renderer.EditorRendererRegistry;
+import com.krnl32.jupiter.editor.renderer.asset.assets.SceneAssetRenderer;
+import com.krnl32.jupiter.editor.renderer.asset.assets.TextureAssetRenderer;
+import com.krnl32.jupiter.editor.renderer.component.components.effects.BlinkComponentRenderer;
+import com.krnl32.jupiter.editor.renderer.component.components.effects.ParticleComponentRenderer;
+import com.krnl32.jupiter.editor.renderer.component.components.gameplay.*;
+import com.krnl32.jupiter.editor.renderer.component.components.physics.BoxCollider2DComponentRenderer;
+import com.krnl32.jupiter.editor.renderer.component.components.physics.CircleCollider2DComponentRenderer;
+import com.krnl32.jupiter.editor.renderer.component.components.physics.RigidBody2DComponentRenderer;
+import com.krnl32.jupiter.editor.renderer.component.components.renderer.SpriteRendererComponentRenderer;
+import com.krnl32.jupiter.editor.renderer.component.components.utility.LifetimeComponentRenderer;
+import com.krnl32.jupiter.editor.renderer.component.components.utility.TagComponentRenderer;
+import com.krnl32.jupiter.editor.renderer.component.components.utility.UUIDComponentRenderer;
 import com.krnl32.jupiter.engine.asset.database.AssetPersistence;
 import com.krnl32.jupiter.engine.asset.database.AssetRepository;
 import com.krnl32.jupiter.engine.asset.handle.AssetType;
@@ -124,6 +126,7 @@ public class Editor extends Engine {
 		// Register Editor Components
 		registerComponentFactories();
 		registerComponentRenderers();
+		registerAssetRenderers();
 
 		// Setup Scene
 		sceneManager = new SceneManager();
@@ -281,32 +284,37 @@ public class Editor extends Engine {
 
 	private void registerComponentRenderers() {
 		// Effects
-		RendererRegistry.registerComponentRenderer(BlinkComponent.class, new BlinkComponentRenderer());
-		RendererRegistry.registerComponentRenderer(ParticleComponent.class, new ParticleComponentRenderer());
+		EditorRendererRegistry.registerComponentRenderer(BlinkComponent.class, new BlinkComponentRenderer());
+		EditorRendererRegistry.registerComponentRenderer(ParticleComponent.class, new ParticleComponentRenderer());
 
 		// Gameplay
-		RendererRegistry.registerComponentRenderer(TransformComponent.class, new TransformComponentRenderer());
-		RendererRegistry.registerComponentRenderer(TeamComponent.class, new TeamComponentRenderer());
-		RendererRegistry.registerComponentRenderer(HealthComponent.class, new HealthComponentRenderer());
-		RendererRegistry.registerComponentRenderer(MovementIntentComponent.class, new MovementIntentComponentRenderer());
-		RendererRegistry.registerComponentRenderer(ForceMovementComponent.class, new ForceMovementComponentRenderer());
-		RendererRegistry.registerComponentRenderer(ScriptComponent.class, new ScriptComponentRenderer());
+		EditorRendererRegistry.registerComponentRenderer(TransformComponent.class, new TransformComponentRenderer());
+		EditorRendererRegistry.registerComponentRenderer(TeamComponent.class, new TeamComponentRenderer());
+		EditorRendererRegistry.registerComponentRenderer(HealthComponent.class, new HealthComponentRenderer());
+		EditorRendererRegistry.registerComponentRenderer(MovementIntentComponent.class, new MovementIntentComponentRenderer());
+		EditorRendererRegistry.registerComponentRenderer(ForceMovementComponent.class, new ForceMovementComponentRenderer());
+		EditorRendererRegistry.registerComponentRenderer(ScriptComponent.class, new ScriptComponentRenderer());
 
 		// Input
 
 		// Physics
-		RendererRegistry.registerComponentRenderer(RigidBody2DComponent.class, new RigidBody2DComponentRenderer());
-		RendererRegistry.registerComponentRenderer(BoxCollider2DComponent.class, new BoxCollider2DComponentRenderer());
-		RendererRegistry.registerComponentRenderer(CircleCollider2DComponent.class, new CircleCollider2DComponentRenderer());
+		EditorRendererRegistry.registerComponentRenderer(RigidBody2DComponent.class, new RigidBody2DComponentRenderer());
+		EditorRendererRegistry.registerComponentRenderer(BoxCollider2DComponent.class, new BoxCollider2DComponentRenderer());
+		EditorRendererRegistry.registerComponentRenderer(CircleCollider2DComponent.class, new CircleCollider2DComponentRenderer());
 
 		// Projectile
 
 		// Renderer
-		RendererRegistry.registerComponentRenderer(SpriteRendererComponent.class, new SpriteRendererComponentRenderer());
+		EditorRendererRegistry.registerComponentRenderer(SpriteRendererComponent.class, new SpriteRendererComponentRenderer());
 
 		// Utility
-		RendererRegistry.registerComponentRenderer(UUIDComponent.class, new UUIDComponentRenderer());
-		RendererRegistry.registerComponentRenderer(TagComponent.class, new TagComponentRenderer());
-		RendererRegistry.registerComponentRenderer(LifetimeComponent.class, new LifetimeComponentRenderer());
+		EditorRendererRegistry.registerComponentRenderer(UUIDComponent.class, new UUIDComponentRenderer());
+		EditorRendererRegistry.registerComponentRenderer(TagComponent.class, new TagComponentRenderer());
+		EditorRendererRegistry.registerComponentRenderer(LifetimeComponent.class, new LifetimeComponentRenderer());
+	}
+
+	private void registerAssetRenderers() {
+		EditorRendererRegistry.registerAssetRenderer(AssetType.TEXTURE, new TextureAssetRenderer());
+		EditorRendererRegistry.registerAssetRenderer(AssetType.SCENE, new SceneAssetRenderer());
 	}
 }

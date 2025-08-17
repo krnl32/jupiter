@@ -1,6 +1,6 @@
-package com.krnl32.jupiter.editor.renderer.components.physics;
+package com.krnl32.jupiter.editor.renderer.component.components.physics;
 
-import com.krnl32.jupiter.editor.renderer.ComponentRenderer;
+import com.krnl32.jupiter.editor.renderer.component.ComponentRenderer;
 import com.krnl32.jupiter.editor.utility.GUIUtils;
 import com.krnl32.jupiter.engine.components.physics.RigidBody2DComponent;
 import com.krnl32.jupiter.engine.physics.BodyType;

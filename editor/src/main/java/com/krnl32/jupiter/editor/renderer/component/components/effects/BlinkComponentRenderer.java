@@ -1,6 +1,6 @@
-package com.krnl32.jupiter.editor.renderer.components.effects;
+package com.krnl32.jupiter.editor.renderer.component.components.effects;
 
-import com.krnl32.jupiter.editor.renderer.ComponentRenderer;
+import com.krnl32.jupiter.editor.renderer.component.ComponentRenderer;
 import com.krnl32.jupiter.editor.utility.GUIUtils;
 import com.krnl32.jupiter.engine.components.effects.BlinkComponent;
 import imgui.ImGui;
