@@ -5,7 +5,7 @@ import com.krnl32.jupiter.engine.components.utility.UUIDComponent;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.serializer.ComponentSerializer;
 import com.krnl32.jupiter.engine.serializer.resolvers.EntityResolver;
-import com.krnl32.jupiter.engine.serializer.utility.ComponentSerializerUtility;
+import com.krnl32.jupiter.engine.serializer.utility.SerializerUtility;
 
 import java.util.Map;
 import java.util.UUID;
@@ -30,7 +30,7 @@ public class ProjectileComponentSerializer implements ComponentSerializer<Projec
 	public ProjectileComponent deserialize(Map<String, Object> data, EntityResolver resolver) {
 		return new ProjectileComponent(
 			resolver.resolve(UUID.fromString(data.get("owner").toString())),
-			ComponentSerializerUtility.toFloat(data.get("damage")),
+			SerializerUtility.toFloat(data.get("damage")),
 			(boolean) data.get("canHitOwner")
 		);
 	}

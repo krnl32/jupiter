@@ -2,8 +2,8 @@ package com.krnl32.jupiter.engine.asset.importsettings.types;
 
 import com.krnl32.jupiter.engine.asset.importsettings.ImportSettings;
 import com.krnl32.jupiter.engine.scene.SceneSettings;
+import com.krnl32.jupiter.engine.serializer.SceneSerializerUtility;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class SceneAssetImportSettings implements ImportSettings {
@@ -15,15 +15,13 @@ public class SceneAssetImportSettings implements ImportSettings {
 
 	@Override
 	public Map<String, Object> toMap() {
-		Map<String, Object> data = new HashMap<>();
-		data.put("gravity", settings.getGravity());
-
-		return data;
+		return SceneSerializerUtility.serializerSceneSettings(settings);
 	}
 
 	@Override
 	public void fromMap(Map<String, Object> data) {
-		settings.setGravity((float) data.get("gravity"));
+		SceneSettings sceneSettings = SceneSerializerUtility.deserializeSceneSettings(data);
+		settings.setPhysicsSettings(sceneSettings.getPhysicsSettings());
 	}
 
 	public SceneSettings getSettings() {

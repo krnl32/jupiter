@@ -3,7 +3,7 @@ package com.krnl32.jupiter.engine.serializer.components.gameplay;
 import com.krnl32.jupiter.engine.components.gameplay.HealthComponent;
 import com.krnl32.jupiter.engine.serializer.ComponentSerializer;
 import com.krnl32.jupiter.engine.serializer.resolvers.EntityResolver;
-import com.krnl32.jupiter.engine.serializer.utility.ComponentSerializerUtility;
+import com.krnl32.jupiter.engine.serializer.utility.SerializerUtility;
 
 import java.util.Map;
 
@@ -19,8 +19,8 @@ public class HealthComponentSerializer implements ComponentSerializer<HealthComp
 	@Override
 	public HealthComponent deserialize(Map<String, Object> data, EntityResolver resolver) {
 		return new HealthComponent(
-			ComponentSerializerUtility.toFloat(data.get("maxHealth")),
-			ComponentSerializerUtility.toFloat(data.get("currentHealth"))
+			SerializerUtility.toFloat(data.get("maxHealth")),
+			SerializerUtility.toFloat(data.get("currentHealth"))
 		);
 	}
 }

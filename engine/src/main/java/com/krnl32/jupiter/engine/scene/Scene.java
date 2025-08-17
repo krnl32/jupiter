@@ -3,6 +3,7 @@ package com.krnl32.jupiter.engine.scene;
 import com.krnl32.jupiter.engine.ecs.Entity;
 import com.krnl32.jupiter.engine.ecs.Registry;
 import com.krnl32.jupiter.engine.ecs.System;
+import com.krnl32.jupiter.engine.physics.PhysicsSettings;
 import com.krnl32.jupiter.engine.renderer.Renderer;
 import com.krnl32.jupiter.engine.systems.effects.BlinkSystem;
 import com.krnl32.jupiter.engine.systems.effects.DeathEffectSystem;
@@ -19,16 +20,17 @@ import com.krnl32.jupiter.engine.systems.renderer.RenderSystem;
 import com.krnl32.jupiter.engine.systems.ui.*;
 import com.krnl32.jupiter.engine.systems.utility.DestroySystem;
 import com.krnl32.jupiter.engine.systems.utility.LifetimeSystem;
+import org.joml.Vector3f;
 
 public abstract class Scene {
-	private final String name;
+	private String name;
 	private final SceneSettings sceneSettings;
 	private final Registry registry;
 	private boolean initialized;
 
 	public Scene(String name) {
 		this.name = name;
-		this.sceneSettings = new SceneSettings();
+		this.sceneSettings = new SceneSettings(new PhysicsSettings(true, new Vector3f(0.0f, 9.8f, 0.0f)));
 		this.registry = new Registry();
 		this.initialized = false;
 	}
@@ -63,6 +65,10 @@ public abstract class Scene {
 
 	public String getName() {
 		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public SceneSettings getSceneSettings() {
@@ -100,10 +106,10 @@ public abstract class Scene {
 	protected void registerDefaultSystems() {
 		addSystem(new KeyboardControlSystem(getRegistry()), 1, true);
 		addSystem(new UIInputSystem(getRegistry()), 2, true);
-		addSystem(new ScriptSystem(getRegistry()));
-		addSystem(new UIButtonSystem(getRegistry()));
-		addSystem(new ForceMovementSystem(getRegistry()));
-		addSystem(new Physics2DSystem(getRegistry()));
+		addSystem(new ScriptSystem(getRegistry()), 3, true);
+		addSystem(new UIButtonSystem(getRegistry()), 4, true);
+		addSystem(new ForceMovementSystem(getRegistry()), 5, true);
+		addSystem(new Physics2DSystem(getRegistry(), sceneSettings.getPhysicsSettings()), 6, sceneSettings.getPhysicsSettings().isEnabled());
 		addSystem(new ProjectileEmitterSystem(getRegistry()));
 		addSystem(new DamageSystem(getRegistry()));
 		addSystem(new HealthSystem(getRegistry()));

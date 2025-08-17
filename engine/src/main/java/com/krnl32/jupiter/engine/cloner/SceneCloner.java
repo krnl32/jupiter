@@ -4,7 +4,10 @@ import com.krnl32.jupiter.engine.components.utility.UUIDComponent;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.ecs.Component;
 import com.krnl32.jupiter.engine.ecs.Entity;
+import com.krnl32.jupiter.engine.physics.PhysicsSettings;
 import com.krnl32.jupiter.engine.scene.Scene;
+import com.krnl32.jupiter.engine.scene.SceneSettings;
+import org.joml.Vector3f;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +15,14 @@ import java.util.UUID;
 
 public class SceneCloner {
 	public static Scene clone(Scene scene, boolean regenUUID) {
-		Scene clonedScene = new Scene(scene.getName() + "_clone", scene.getSceneSettings().clone()) {
+		String cloneSceneName = scene.getName() + "_clone";
+		PhysicsSettings cloneScenePhysicsSettings = new PhysicsSettings(
+			scene.getSceneSettings().getPhysicsSettings().isEnabled(),
+			new Vector3f(scene.getSceneSettings().getPhysicsSettings().getGravity())
+		);
+		SceneSettings cloneSceneSettings = new SceneSettings(cloneScenePhysicsSettings);
+
+		Scene clonedScene = new Scene(cloneSceneName, cloneSceneSettings) {
 			@Override
 			public void onCreate() {
 			}

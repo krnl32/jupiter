@@ -1,1148 +1,1041 @@
 {
-	"name": "Sandbox",
-	"settings": {
-		"gravity": 9.8
-	},
-	"entities": [
-		{
-			"components": {
-				"UUIDComponent": {
-					"uuid": "d511f6eb-407a-4af0-a5d9-437153d2ed3f"
-				},
-				"CameraComponent": {
-					"rollSpeed": 45,
-					"worldUp": {
-						"x": 0,
-						"y": 1,
-						"z": 0
-					},
-					"mouseEnabled": false,
-					"turnSpeed": 1,
-					"roll": 0,
-					"projectionType": "ORTHOGRAPHIC",
-					"projectionNear": 0.1,
-					"zoom": 50,
-					"aspectRatio": 1.778,
-					"projectionFar": 100,
-					"zoomSpeed": 10,
-					"yaw": -90,
-					"projectionSize": 10,
-					"position": {
-						"x": 0,
-						"y": 0,
-						"z": 3
-					},
-					"pitch": 0,
-					"projectionFOV": 45,
-					"primary": true
-				},
-				"TransformComponent": {
-					"rotation": {
-						"x": 0,
-						"y": 0,
-						"z": 0
-					},
-					"translation": {
-						"x": 0,
-						"y": 0,
-						"z": 3
-					},
-					"scale": {
-						"x": 1,
-						"y": 1,
-						"z": 1
-					}
-				},
-				"TagComponent": {
-					"tag": "Camera"
-				}
-			}
-		},
-		{
-			"components": {
-				"SpriteRendererComponent": {
-					"textureUV": [
-						0,
-						0,
-						1,
-						0,
-						1,
-						1,
-						0,
-						1
-					],
-					"color": {
-						"w": 1,
-						"x": 1,
-						"y": 1,
-						"z": 1
-					},
-					"index": -1,
-					"textureAssetId": "7d78d687-fc7b-4fe8-9a01-e12bdf3fdb16"
-				},
-				"UUIDComponent": {
-					"uuid": "724631ee-036a-44a2-9f89-f76313ce00da"
-				},
-				"ScriptComponent": {
-					"scripts": [
-						{
-							"scriptAssetId": "c5a19a6a-163d-4549-833b-b67222f9362f",
-							"disabled": false
-						},
-						{
-							"scriptAssetId": "90ec7451-82be-49fe-aacd-d9c2848ffddc",
-							"disabled": false
-						}
-					]
-				},
-				"TransformComponent": {
-					"rotation": {
-						"x": 0,
-						"y": 0,
-						"z": 0
-					},
-					"translation": {
-						"x": 0,
-						"y": 0,
-						"z": -1
-					},
-					"scale": {
-						"x": 3,
-						"y": 3,
-						"z": 1
-					}
-				},
-				"TagComponent": {
-					"tag": "TheBox"
-				},
-				"BoxCollider2DComponent": {
-					"size": {
-						"x": 3,
-						"y": 3
-					},
-					"offset": {
-						"x": 0,
-						"y": 0
-					},
-					"density": 1,
-					"sensor": false,
-					"friction": 0.5
-				},
-				"RigidBody2DComponent": {
-					"bodyType": "DYNAMIC",
-					"gravityScale": 1,
-					"continuousCollision": true,
-					"linearDamping": 0.9,
-					"angularDamping": 0.8,
-					"mass": 1,
-					"velocity": {
-						"x": 0,
-						"y": 0
-					},
-					"fixedRotation": false
-				}
-			}
-		},
-		{
-			"components": {
-				"SpriteRendererComponent": {
-					"textureUV": [
-						0,
-						0,
-						1,
-						0,
-						1,
-						1,
-						0,
-						1
-					],
-					"color": {
-						"w": 1,
-						"x": 0.8503146,
-						"y": 0.40873387,
-						"z": 0.3299888
-					},
-					"index": -1,
-					"textureAssetId": null
-				},
-				"UUIDComponent": {
-					"uuid": "a28ee4b6-2798-43ca-b44f-72fb21dfc6fb"
-				},
-				"CircleCollider2DComponent": {
-					"offset": {
-						"x": 0,
-						"y": 0
-					},
-					"density": 1,
-					"sensor": false,
-					"radius": 0.48248935,
-					"friction": 0.2
-				},
-				"TransformComponent": {
-					"rotation": {
-						"x": 0,
-						"y": 0,
-						"z": 0
-					},
-					"translation": {
-						"x": -2.630667,
-						"y": 4.497937,
-						"z": -1
-					},
-					"scale": {
-						"x": 0.9649787,
-						"y": 0.9649787,
-						"z": 1
-					}
-				},
-				"TagComponent": {
-					"tag": "box0"
-				},
-				"RigidBody2DComponent": {
-					"bodyType": "DYNAMIC",
-					"gravityScale": 1,
-					"continuousCollision": true,
-					"linearDamping": 0.1,
-					"angularDamping": 0.05,
-					"mass": 1,
-					"velocity": {
-						"x": -0.11422172,
-						"y": 0.9018067
-					},
-					"fixedRotation": false
-				}
-			}
-		},
-		{
-			"components": {
-				"SpriteRendererComponent": {
-					"textureUV": [
-						0,
-						0,
-						1,
-						0,
-						1,
-						1,
-						0,
-						1
-					],
-					"color": {
-						"w": 1,
-						"x": 1,
-						"y": 1,
-						"z": 1
-					},
-					"index": -1,
-					"textureAssetId": null
-				},
-				"UUIDComponent": {
-					"uuid": "188f9d4f-e765-46b8-93eb-0dd1ca93bb77"
-				},
-				"TransformComponent": {
-					"rotation": {
-						"x": 0,
-						"y": 0,
-						"z": 0
-					},
-					"translation": {
-						"x": -3,
-						"y": -3.5,
-						"z": -1
-					},
-					"scale": {
-						"x": 1,
-						"y": 1,
-						"z": 1
-					}
-				},
-				"TagComponent": {
-					"tag": "floor0"
-				},
-				"BoxCollider2DComponent": {
-					"size": {
-						"x": 1,
-						"y": 1
-					},
-					"offset": {
-						"x": 0,
-						"y": 0
-					},
-					"density": 1,
-					"sensor": false,
-					"friction": 0.8
-				},
-				"RigidBody2DComponent": {
-					"bodyType": "STATIC",
-					"gravityScale": 1,
-					"continuousCollision": true,
-					"linearDamping": 0.9,
-					"angularDamping": 0.8,
-					"mass": 1,
-					"velocity": {
-						"x": 0,
-						"y": 0
-					},
-					"fixedRotation": false
-				}
-			}
-		},
-		{
-			"components": {
-				"SpriteRendererComponent": {
-					"textureUV": [
-						0,
-						0,
-						1,
-						0,
-						1,
-						1,
-						0,
-						1
-					],
-					"color": {
-						"w": 1,
-						"x": 0.06633106,
-						"y": 0.5629741,
-						"z": 0.5110882
-					},
-					"index": -1,
-					"textureAssetId": null
-				},
-				"UUIDComponent": {
-					"uuid": "daa3ea06-e533-4c2e-ae63-879b8d8010de"
-				},
-				"CircleCollider2DComponent": {
-					"offset": {
-						"x": 0,
-						"y": 0
-					},
-					"density": 1,
-					"sensor": false,
-					"radius": 0.5082234,
-					"friction": 0.2
-				},
-				"TransformComponent": {
-					"rotation": {
-						"x": 0,
-						"y": 0,
-						"z": 0
-					},
-					"translation": {
-						"x": -1.399717,
-						"y": 4.6147504,
-						"z": -1
-					},
-					"scale": {
-						"x": 1.0164468,
-						"y": 1.0164468,
-						"z": 1
-					}
-				},
-				"TagComponent": {
-					"tag": "box1"
-				},
-				"RigidBody2DComponent": {
-					"bodyType": "DYNAMIC",
-					"gravityScale": 1,
-					"continuousCollision": true,
-					"linearDamping": 0.1,
-					"angularDamping": 0.05,
-					"mass": 1,
-					"velocity": {
-						"x": -0.7045479,
-						"y": 0.24358192
-					},
-					"fixedRotation": false
-				}
-			}
-		},
-		{
-			"components": {
-				"SpriteRendererComponent": {
-					"textureUV": [
-						0,
-						0,
-						1,
-						0,
-						1,
-						1,
-						0,
-						1
-					],
-					"color": {
-						"w": 1,
-						"x": 1,
-						"y": 1,
-						"z": 1
-					},
-					"index": -1,
-					"textureAssetId": null
-				},
-				"UUIDComponent": {
-					"uuid": "31751b8c-e15b-485b-9fef-180b56823c15"
-				},
-				"TransformComponent": {
-					"rotation": {
-						"x": 0,
-						"y": 0,
-						"z": 0
-					},
-					"translation": {
-						"x": -2,
-						"y": -3.5,
-						"z": -1
-					},
-					"scale": {
-						"x": 1,
-						"y": 1,
-						"z": 1
-					}
-				},
-				"TagComponent": {
-					"tag": "floor1"
-				},
-				"BoxCollider2DComponent": {
-					"size": {
-						"x": 1,
-						"y": 1
-					},
-					"offset": {
-						"x": 0,
-						"y": 0
-					},
-					"density": 1,
-					"sensor": false,
-					"friction": 0.8
-				},
-				"RigidBody2DComponent": {
-					"bodyType": "STATIC",
-					"gravityScale": 1,
-					"continuousCollision": true,
-					"linearDamping": 0.9,
-					"angularDamping": 0.8,
-					"mass": 1,
-					"velocity": {
-						"x": 0,
-						"y": 0
-					},
-					"fixedRotation": false
-				}
-			}
-		},
-		{
-			"components": {
-				"SpriteRendererComponent": {
-					"textureUV": [
-						0,
-						0,
-						1,
-						0,
-						1,
-						1,
-						0,
-						1
-					],
-					"color": {
-						"w": 1,
-						"x": 0.25480008,
-						"y": 0.52985674,
-						"z": 0.74623823
-					},
-					"index": -1,
-					"textureAssetId": null
-				},
-				"UUIDComponent": {
-					"uuid": "c3dbb628-e0e1-43c7-886a-ee5f2e61b87e"
-				},
-				"CircleCollider2DComponent": {
-					"offset": {
-						"x": 0,
-						"y": 0
-					},
-					"density": 1,
-					"sensor": false,
-					"radius": 0.51484764,
-					"friction": 0.2
-				},
-				"TransformComponent": {
-					"rotation": {
-						"x": 0,
-						"y": 0,
-						"z": 0
-					},
-					"translation": {
-						"x": 0.42105603,
-						"y": 4.636991,
-						"z": -1
-					},
-					"scale": {
-						"x": 1.0296953,
-						"y": 1.0296953,
-						"z": 1
-					}
-				},
-				"TagComponent": {
-					"tag": "box2"
-				},
-				"RigidBody2DComponent": {
-					"bodyType": "DYNAMIC",
-					"gravityScale": 1,
-					"continuousCollision": true,
-					"linearDamping": 0.1,
-					"angularDamping": 0.05,
-					"mass": 1,
-					"velocity": {
-						"x": 0.7000085,
-						"y": 1.9964628
-					},
-					"fixedRotation": false
-				}
-			}
-		},
-		{
-			"components": {
-				"SpriteRendererComponent": {
-					"textureUV": [
-						0,
-						0,
-						1,
-						0,
-						1,
-						1,
-						0,
-						1
-					],
-					"color": {
-						"w": 1,
-						"x": 1,
-						"y": 1,
-						"z": 1
-					},
-					"index": -1,
-					"textureAssetId": null
-				},
-				"UUIDComponent": {
-					"uuid": "df3d34cf-dd8c-4424-bb3a-fb3c121255cc"
-				},
-				"TransformComponent": {
-					"rotation": {
-						"x": 0,
-						"y": 0,
-						"z": 0
-					},
-					"translation": {
-						"x": -1,
-						"y": -3.5,
-						"z": -1
-					},
-					"scale": {
-						"x": 1,
-						"y": 1,
-						"z": 1
-					}
-				},
-				"TagComponent": {
-					"tag": "floor2"
-				},
-				"BoxCollider2DComponent": {
-					"size": {
-						"x": 1,
-						"y": 1
-					},
-					"offset": {
-						"x": 0,
-						"y": 0
-					},
-					"density": 1,
-					"sensor": false,
-					"friction": 0.8
-				},
-				"RigidBody2DComponent": {
-					"bodyType": "STATIC",
-					"gravityScale": 1,
-					"continuousCollision": true,
-					"linearDamping": 0.9,
-					"angularDamping": 0.8,
-					"mass": 1,
-					"velocity": {
-						"x": 0,
-						"y": 0
-					},
-					"fixedRotation": false
-				}
-			}
-		},
-		{
-			"components": {
-				"SpriteRendererComponent": {
-					"textureUV": [
-						0,
-						0,
-						1,
-						0,
-						1,
-						1,
-						0,
-						1
-					],
-					"color": {
-						"w": 1,
-						"x": 0.96733683,
-						"y": 0.7713694,
-						"z": 0.7926947
-					},
-					"index": -1,
-					"textureAssetId": null
-				},
-				"UUIDComponent": {
-					"uuid": "f2284272-fbd6-4e07-b386-728e3d06e9b2"
-				},
-				"CircleCollider2DComponent": {
-					"offset": {
-						"x": 0,
-						"y": 0
-					},
-					"density": 1,
-					"sensor": false,
-					"radius": 0.42282742,
-					"friction": 0.2
-				},
-				"TransformComponent": {
-					"rotation": {
-						"x": 0,
-						"y": 0,
-						"z": 0
-					},
-					"translation": {
-						"x": 1.8658812,
-						"y": 4.4954104,
-						"z": -1
-					},
-					"scale": {
-						"x": 0.84565485,
-						"y": 0.84565485,
-						"z": 1
-					}
-				},
-				"TagComponent": {
-					"tag": "box3"
-				},
-				"RigidBody2DComponent": {
-					"bodyType": "DYNAMIC",
-					"gravityScale": 1,
-					"continuousCollision": true,
-					"linearDamping": 0.1,
-					"angularDamping": 0.05,
-					"mass": 1,
-					"velocity": {
-						"x": -0.6152095,
-						"y": 1.8916239
-					},
-					"fixedRotation": false
-				}
-			}
-		},
-		{
-			"components": {
-				"SpriteRendererComponent": {
-					"textureUV": [
-						0,
-						0,
-						1,
-						0,
-						1,
-						1,
-						0,
-						1
-					],
-					"color": {
-						"w": 1,
-						"x": 1,
-						"y": 1,
-						"z": 1
-					},
-					"index": -1,
-					"textureAssetId": null
-				},
-				"UUIDComponent": {
-					"uuid": "cb3aa1e4-cb23-4567-bc04-788cef4343c3"
-				},
-				"TransformComponent": {
-					"rotation": {
-						"x": 0,
-						"y": 0,
-						"z": 0
-					},
-					"translation": {
-						"x": 0,
-						"y": -3.5,
-						"z": -1
-					},
-					"scale": {
-						"x": 1,
-						"y": 1,
-						"z": 1
-					}
-				},
-				"TagComponent": {
-					"tag": "floor3"
-				},
-				"BoxCollider2DComponent": {
-					"size": {
-						"x": 1,
-						"y": 1
-					},
-					"offset": {
-						"x": 0,
-						"y": 0
-					},
-					"density": 1,
-					"sensor": false,
-					"friction": 0.8
-				},
-				"RigidBody2DComponent": {
-					"bodyType": "STATIC",
-					"gravityScale": 1,
-					"continuousCollision": true,
-					"linearDamping": 0.9,
-					"angularDamping": 0.8,
-					"mass": 1,
-					"velocity": {
-						"x": 0,
-						"y": 0
-					},
-					"fixedRotation": false
-				}
-			}
-		},
-		{
-			"components": {
-				"SpriteRendererComponent": {
-					"textureUV": [
-						0,
-						0,
-						1,
-						0,
-						1,
-						1,
-						0,
-						1
-					],
-					"color": {
-						"w": 1,
-						"x": 0.024740238,
-						"y": 0.9679965,
-						"z": 0.2948382
-					},
-					"index": -1,
-					"textureAssetId": null
-				},
-				"UUIDComponent": {
-					"uuid": "6bd348f0-3cc8-4e13-b8c2-875f39ce0d5f"
-				},
-				"CircleCollider2DComponent": {
-					"offset": {
-						"x": 0,
-						"y": 0
-					},
-					"density": 1,
-					"sensor": false,
-					"radius": 0.58123434,
-					"friction": 0.2
-				},
-				"TransformComponent": {
-					"rotation": {
-						"x": 0,
-						"y": 0,
-						"z": 0
-					},
-					"translation": {
-						"x": 3.3696232,
-						"y": 4.093067,
-						"z": -1
-					},
-					"scale": {
-						"x": 1.1624687,
-						"y": 1.1624687,
-						"z": 1
-					}
-				},
-				"TagComponent": {
-					"tag": "box4"
-				},
-				"RigidBody2DComponent": {
-					"bodyType": "DYNAMIC",
-					"gravityScale": 1,
-					"continuousCollision": true,
-					"linearDamping": 0.1,
-					"angularDamping": 0.05,
-					"mass": 1,
-					"velocity": {
-						"x": -0.30158356,
-						"y": 1.476593
-					},
-					"fixedRotation": false
-				}
-			}
-		},
-		{
-			"components": {
-				"SpriteRendererComponent": {
-					"textureUV": [
-						0,
-						0,
-						1,
-						0,
-						1,
-						1,
-						0,
-						1
-					],
-					"color": {
-						"w": 1,
-						"x": 1,
-						"y": 1,
-						"z": 1
-					},
-					"index": -1,
-					"textureAssetId": null
-				},
-				"UUIDComponent": {
-					"uuid": "9847de3c-8736-4b89-a79b-7533e298d57d"
-				},
-				"TransformComponent": {
-					"rotation": {
-						"x": 0,
-						"y": 0,
-						"z": 0
-					},
-					"translation": {
-						"x": 1,
-						"y": -3.5,
-						"z": -1
-					},
-					"scale": {
-						"x": 1,
-						"y": 1,
-						"z": 1
-					}
-				},
-				"TagComponent": {
-					"tag": "floor4"
-				},
-				"BoxCollider2DComponent": {
-					"size": {
-						"x": 1,
-						"y": 1
-					},
-					"offset": {
-						"x": 0,
-						"y": 0
-					},
-					"density": 1,
-					"sensor": false,
-					"friction": 0.8
-				},
-				"RigidBody2DComponent": {
-					"bodyType": "STATIC",
-					"gravityScale": 1,
-					"continuousCollision": true,
-					"linearDamping": 0.9,
-					"angularDamping": 0.8,
-					"mass": 1,
-					"velocity": {
-						"x": 0,
-						"y": 0
-					},
-					"fixedRotation": false
-				}
-			}
-		},
-		{
-			"components": {
-				"SpriteRendererComponent": {
-					"textureUV": [
-						0,
-						0,
-						1,
-						0,
-						1,
-						1,
-						0,
-						1
-					],
-					"color": {
-						"w": 1,
-						"x": 0.9613756,
-						"y": 0.2985277,
-						"z": 0.47515428
-					},
-					"index": -1,
-					"textureAssetId": null
-				},
-				"UUIDComponent": {
-					"uuid": "39d30ce6-7224-490b-866f-ce8032f41d5b"
-				},
-				"CircleCollider2DComponent": {
-					"offset": {
-						"x": 0,
-						"y": 0
-					},
-					"density": 1,
-					"sensor": false,
-					"radius": 0.567479,
-					"friction": 0.2
-				},
-				"TransformComponent": {
-					"rotation": {
-						"x": 0,
-						"y": 0,
-						"z": 0
-					},
-					"translation": {
-						"x": 4.934283,
-						"y": 3.9773715,
-						"z": -1
-					},
-					"scale": {
-						"x": 1.134958,
-						"y": 1.134958,
-						"z": 1
-					}
-				},
-				"TagComponent": {
-					"tag": "box5"
-				},
-				"RigidBody2DComponent": {
-					"bodyType": "DYNAMIC",
-					"gravityScale": 1,
-					"continuousCollision": true,
-					"linearDamping": 0.1,
-					"angularDamping": 0.05,
-					"mass": 1,
-					"velocity": {
-						"x": -0.024045948,
-						"y": 0.3737062
-					},
-					"fixedRotation": false
-				}
-			}
-		},
-		{
-			"components": {
-				"SpriteRendererComponent": {
-					"textureUV": [
-						0,
-						0,
-						1,
-						0,
-						1,
-						1,
-						0,
-						1
-					],
-					"color": {
-						"w": 1,
-						"x": 1,
-						"y": 1,
-						"z": 1
-					},
-					"index": -1,
-					"textureAssetId": null
-				},
-				"UUIDComponent": {
-					"uuid": "73076c50-6bb8-4eaa-a9ef-5ef57da6bf5e"
-				},
-				"TransformComponent": {
-					"rotation": {
-						"x": 0,
-						"y": 0,
-						"z": 0
-					},
-					"translation": {
-						"x": 2,
-						"y": -3.5,
-						"z": -1
-					},
-					"scale": {
-						"x": 1,
-						"y": 1,
-						"z": 1
-					}
-				},
-				"TagComponent": {
-					"tag": "floor5"
-				},
-				"BoxCollider2DComponent": {
-					"size": {
-						"x": 1,
-						"y": 1
-					},
-					"offset": {
-						"x": 0,
-						"y": 0
-					},
-					"density": 1,
-					"sensor": false,
-					"friction": 0.8
-				},
-				"RigidBody2DComponent": {
-					"bodyType": "STATIC",
-					"gravityScale": 1,
-					"continuousCollision": true,
-					"linearDamping": 0.9,
-					"angularDamping": 0.8,
-					"mass": 1,
-					"velocity": {
-						"x": 0,
-						"y": 0
-					},
-					"fixedRotation": false
-				}
-			}
-		},
-		{
-			"components": {
-				"SpriteRendererComponent": {
-					"textureUV": [
-						0,
-						0,
-						1,
-						0,
-						1,
-						1,
-						0,
-						1
-					],
-					"color": {
-						"w": 1,
-						"x": 0.6839737,
-						"y": 0.13985045,
-						"z": 0.07966886
-					},
-					"index": -1,
-					"textureAssetId": null
-				},
-				"UUIDComponent": {
-					"uuid": "8878e1cd-f5bb-47ec-9918-1d44acc25203"
-				},
-				"CircleCollider2DComponent": {
-					"offset": {
-						"x": 0,
-						"y": 0
-					},
-					"density": 1,
-					"sensor": false,
-					"radius": 0.4833459,
-					"friction": 0.2
-				},
-				"TransformComponent": {
-					"rotation": {
-						"x": 0,
-						"y": 0,
-						"z": 0
-					},
-					"translation": {
-						"x": 6.3248243,
-						"y": 4.9846325,
-						"z": -1
-					},
-					"scale": {
-						"x": 0.9666918,
-						"y": 0.9666918,
-						"z": 1
-					}
-				},
-				"TagComponent": {
-					"tag": "box6"
-				},
-				"RigidBody2DComponent": {
-					"bodyType": "DYNAMIC",
-					"gravityScale": 1,
-					"continuousCollision": true,
-					"linearDamping": 0.1,
-					"angularDamping": 0.05,
-					"mass": 1,
-					"velocity": {
-						"x": -0.28973687,
-						"y": 1.9088024
-					},
-					"fixedRotation": false
-				}
-			}
-		},
-		{
-			"components": {
-				"SpriteRendererComponent": {
-					"textureUV": [
-						0,
-						0,
-						1,
-						0,
-						1,
-						1,
-						0,
-						1
-					],
-					"color": {
-						"w": 1,
-						"x": 1,
-						"y": 1,
-						"z": 1
-					},
-					"index": -1,
-					"textureAssetI": null
-				},
-				"UUIDComponent": {
-					"uuid": "5a2fbc95-780d-42d9-9f9d-c2941a9b87c6"
-				},
-				"TransformComponent": {
-					"rotation": {
-						"x": 0,
-						"y": 0,
-						"z": 0
-					},
-					"translation": {
-						"x": 3,
-						"y": -3.5,
-						"z": -1
-					},
-					"scale": {
-						"x": 1,
-						"y": 1,
-						"z": 1
-					}
-				},
-				"TagComponent": {
-					"tag": "floor6"
-				},
-				"BoxCollider2DComponent": {
-					"size": {
-						"x": 1,
-						"y": 1
-					},
-					"offset": {
-						"x": 0,
-						"y": 0
-					},
-					"density": 1,
-					"sensor": false,
-					"friction": 0.8
-				},
-				"RigidBody2DComponent": {
-					"bodyType": "STATIC",
-					"gravityScale": 1,
-					"continuousCollision": true,
-					"linearDamping": 0.9,
-					"angularDamping": 0.8,
-					"mass": 1,
-					"velocity": {
-						"x": 0,
-						"y": 0
-					},
-					"fixedRotation": false
-				}
-			}
-		}
-	]
+    "name": "Sandbox",
+    "entities": [
+        {"components": {
+            "CameraComponent": {
+                "rollSpeed": 45,
+                "worldUp": {
+                    "x": 0,
+                    "y": 1,
+                    "z": 0
+                },
+                "mouseEnabled": false,
+                "turnSpeed": 1,
+                "roll": 0,
+                "projectionType": "ORTHOGRAPHIC",
+                "projectionNear": 0.1,
+                "aspectRatio": 1.8175182,
+                "zoom": 50,
+                "projectionFar": 100,
+                "zoomSpeed": 10,
+                "yaw": -90,
+                "projectionSize": 10,
+                "pitch": 0,
+                "position": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 3
+                },
+                "projectionFOV": 45,
+                "primary": true
+            },
+            "TransformComponent": {
+                "translation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 3
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 1,
+                    "z": 1
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            },
+            "TagComponent": {"tag": "Camera"},
+            "UUIDComponent": {"uuid": "d511f6eb-407a-4af0-a5d9-437153d2ed3f"}
+        }},
+        {"components": {
+            "SpriteRendererComponent": {
+                "textureUV": [
+                    0,
+                    0,
+                    1,
+                    0,
+                    1,
+                    1,
+                    0,
+                    1
+                ],
+                "index": -1,
+                "color": {
+                    "x": 1,
+                    "y": 1,
+                    "z": 1,
+                    "w": 1
+                },
+                "textureAssetId": "7d78d687-fc7b-4fe8-9a01-e12bdf3fdb16"
+            },
+            "UUIDComponent": {"uuid": "724631ee-036a-44a2-9f89-f76313ce00da"},
+            "ScriptComponent": {"scripts": [
+                {
+                    "scriptAssetId": "c5a19a6a-163d-4549-833b-b67222f9362f",
+                    "disabled": false
+                },
+                {
+                    "scriptAssetId": "90ec7451-82be-49fe-aacd-d9c2848ffddc",
+                    "disabled": false
+                }
+            ]},
+            "TransformComponent": {
+                "translation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": -1
+                },
+                "scale": {
+                    "x": 3,
+                    "y": 3,
+                    "z": 1
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            },
+            "TagComponent": {"tag": "TheBox"},
+            "BoxCollider2DComponent": {
+                "sensor": false,
+                "size": {
+                    "x": 3,
+                    "y": 3
+                },
+                "density": 1,
+                "offset": {
+                    "x": 0,
+                    "y": 0
+                },
+                "friction": 0.5
+            },
+            "RigidBody2DComponent": {
+                "bodyType": "DYNAMIC",
+                "continuousCollision": true,
+                "gravityScale": 1,
+                "linearDamping": 0.9,
+                "mass": 1,
+                "angularDamping": 0.8,
+                "velocity": {
+                    "x": 0,
+                    "y": 0
+                },
+                "fixedRotation": false
+            }
+        }},
+        {"components": {
+            "SpriteRendererComponent": {
+                "color": {
+                    "x": 0.8503146,
+                    "y": 0.40873387,
+                    "z": 0.3299888,
+                    "w": 1
+                },
+                "textureUV": [
+                    0,
+                    0,
+                    1,
+                    0,
+                    1,
+                    1,
+                    0,
+                    1
+                ],
+                "index": -1
+            },
+            "CircleCollider2DComponent": {
+                "sensor": false,
+                "density": 1,
+                "radius": 0.48248935,
+                "offset": {
+                    "x": 0,
+                    "y": 0
+                },
+                "friction": 0.2
+            },
+            "TransformComponent": {
+                "translation": {
+                    "x": -2.630667,
+                    "y": 4.497937,
+                    "z": -1
+                },
+                "scale": {
+                    "x": 0.9649787,
+                    "y": 0.9649787,
+                    "z": 1
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            },
+            "TagComponent": {"tag": "box0"},
+            "UUIDComponent": {"uuid": "a28ee4b6-2798-43ca-b44f-72fb21dfc6fb"},
+            "RigidBody2DComponent": {
+                "bodyType": "DYNAMIC",
+                "continuousCollision": true,
+                "gravityScale": 1,
+                "linearDamping": 0.1,
+                "mass": 1,
+                "angularDamping": 0.05,
+                "velocity": {
+                    "x": -0.11422172,
+                    "y": 0.9018067
+                },
+                "fixedRotation": false
+            }
+        }},
+        {"components": {
+            "SpriteRendererComponent": {
+                "color": {
+                    "x": 1,
+                    "y": 1,
+                    "z": 1,
+                    "w": 1
+                },
+                "textureUV": [
+                    0,
+                    0,
+                    1,
+                    0,
+                    1,
+                    1,
+                    0,
+                    1
+                ],
+                "index": -1
+            },
+            "TransformComponent": {
+                "translation": {
+                    "x": -3,
+                    "y": -3.5,
+                    "z": -1
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 1,
+                    "z": 1
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            },
+            "TagComponent": {"tag": "floor0"},
+            "UUIDComponent": {"uuid": "188f9d4f-e765-46b8-93eb-0dd1ca93bb77"},
+            "BoxCollider2DComponent": {
+                "sensor": false,
+                "size": {
+                    "x": 1,
+                    "y": 1
+                },
+                "density": 1,
+                "offset": {
+                    "x": 0,
+                    "y": 0
+                },
+                "friction": 0.8
+            },
+            "RigidBody2DComponent": {
+                "bodyType": "STATIC",
+                "continuousCollision": true,
+                "gravityScale": 1,
+                "linearDamping": 0.9,
+                "mass": 1,
+                "angularDamping": 0.8,
+                "velocity": {
+                    "x": 0,
+                    "y": 0
+                },
+                "fixedRotation": false
+            }
+        }},
+        {"components": {
+            "SpriteRendererComponent": {
+                "color": {
+                    "x": 0.06633106,
+                    "y": 0.5629741,
+                    "z": 0.5110882,
+                    "w": 1
+                },
+                "textureUV": [
+                    0,
+                    0,
+                    1,
+                    0,
+                    1,
+                    1,
+                    0,
+                    1
+                ],
+                "index": -1
+            },
+            "CircleCollider2DComponent": {
+                "sensor": false,
+                "density": 1,
+                "radius": 0.5082234,
+                "offset": {
+                    "x": 0,
+                    "y": 0
+                },
+                "friction": 0.2
+            },
+            "TransformComponent": {
+                "translation": {
+                    "x": -1.399717,
+                    "y": 4.6147504,
+                    "z": -1
+                },
+                "scale": {
+                    "x": 1.0164468,
+                    "y": 1.0164468,
+                    "z": 1
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            },
+            "TagComponent": {"tag": "box1"},
+            "UUIDComponent": {"uuid": "daa3ea06-e533-4c2e-ae63-879b8d8010de"},
+            "RigidBody2DComponent": {
+                "bodyType": "DYNAMIC",
+                "continuousCollision": true,
+                "gravityScale": 1,
+                "linearDamping": 0.1,
+                "mass": 1,
+                "angularDamping": 0.05,
+                "velocity": {
+                    "x": -0.7045479,
+                    "y": 0.24358192
+                },
+                "fixedRotation": false
+            }
+        }},
+        {"components": {
+            "SpriteRendererComponent": {
+                "color": {
+                    "x": 1,
+                    "y": 1,
+                    "z": 1,
+                    "w": 1
+                },
+                "textureUV": [
+                    0,
+                    0,
+                    1,
+                    0,
+                    1,
+                    1,
+                    0,
+                    1
+                ],
+                "index": -1
+            },
+            "TransformComponent": {
+                "translation": {
+                    "x": -2,
+                    "y": -3.5,
+                    "z": -1
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 1,
+                    "z": 1
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            },
+            "TagComponent": {"tag": "floor1"},
+            "UUIDComponent": {"uuid": "31751b8c-e15b-485b-9fef-180b56823c15"},
+            "BoxCollider2DComponent": {
+                "sensor": false,
+                "size": {
+                    "x": 1,
+                    "y": 1
+                },
+                "density": 1,
+                "offset": {
+                    "x": 0,
+                    "y": 0
+                },
+                "friction": 0.8
+            },
+            "RigidBody2DComponent": {
+                "bodyType": "STATIC",
+                "continuousCollision": true,
+                "gravityScale": 1,
+                "linearDamping": 0.9,
+                "mass": 1,
+                "angularDamping": 0.8,
+                "velocity": {
+                    "x": 0,
+                    "y": 0
+                },
+                "fixedRotation": false
+            }
+        }},
+        {"components": {
+            "SpriteRendererComponent": {
+                "color": {
+                    "x": 0.25480008,
+                    "y": 0.52985674,
+                    "z": 0.74623823,
+                    "w": 1
+                },
+                "textureUV": [
+                    0,
+                    0,
+                    1,
+                    0,
+                    1,
+                    1,
+                    0,
+                    1
+                ],
+                "index": -1
+            },
+            "CircleCollider2DComponent": {
+                "sensor": false,
+                "density": 1,
+                "radius": 0.51484764,
+                "offset": {
+                    "x": 0,
+                    "y": 0
+                },
+                "friction": 0.2
+            },
+            "TransformComponent": {
+                "translation": {
+                    "x": 0.42105603,
+                    "y": 4.636991,
+                    "z": -1
+                },
+                "scale": {
+                    "x": 1.0296953,
+                    "y": 1.0296953,
+                    "z": 1
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            },
+            "TagComponent": {"tag": "box2"},
+            "UUIDComponent": {"uuid": "c3dbb628-e0e1-43c7-886a-ee5f2e61b87e"},
+            "RigidBody2DComponent": {
+                "bodyType": "DYNAMIC",
+                "continuousCollision": true,
+                "gravityScale": 1,
+                "linearDamping": 0.1,
+                "mass": 1,
+                "angularDamping": 0.05,
+                "velocity": {
+                    "x": 0.7000085,
+                    "y": 1.9964628
+                },
+                "fixedRotation": false
+            }
+        }},
+        {"components": {
+            "SpriteRendererComponent": {
+                "color": {
+                    "x": 1,
+                    "y": 1,
+                    "z": 1,
+                    "w": 1
+                },
+                "textureUV": [
+                    0,
+                    0,
+                    1,
+                    0,
+                    1,
+                    1,
+                    0,
+                    1
+                ],
+                "index": -1
+            },
+            "TransformComponent": {
+                "translation": {
+                    "x": -1,
+                    "y": -3.5,
+                    "z": -1
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 1,
+                    "z": 1
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            },
+            "TagComponent": {"tag": "floor2"},
+            "UUIDComponent": {"uuid": "df3d34cf-dd8c-4424-bb3a-fb3c121255cc"},
+            "BoxCollider2DComponent": {
+                "sensor": false,
+                "size": {
+                    "x": 1,
+                    "y": 1
+                },
+                "density": 1,
+                "offset": {
+                    "x": 0,
+                    "y": 0
+                },
+                "friction": 0.8
+            },
+            "RigidBody2DComponent": {
+                "bodyType": "STATIC",
+                "continuousCollision": true,
+                "gravityScale": 1,
+                "linearDamping": 0.9,
+                "mass": 1,
+                "angularDamping": 0.8,
+                "velocity": {
+                    "x": 0,
+                    "y": 0
+                },
+                "fixedRotation": false
+            }
+        }},
+        {"components": {
+            "SpriteRendererComponent": {
+                "color": {
+                    "x": 0.96733683,
+                    "y": 0.7713694,
+                    "z": 0.7926947,
+                    "w": 1
+                },
+                "textureUV": [
+                    0,
+                    0,
+                    1,
+                    0,
+                    1,
+                    1,
+                    0,
+                    1
+                ],
+                "index": -1
+            },
+            "CircleCollider2DComponent": {
+                "sensor": false,
+                "density": 1,
+                "radius": 0.42282742,
+                "offset": {
+                    "x": 0,
+                    "y": 0
+                },
+                "friction": 0.2
+            },
+            "TransformComponent": {
+                "translation": {
+                    "x": 1.8658812,
+                    "y": 4.4954104,
+                    "z": -1
+                },
+                "scale": {
+                    "x": 0.84565485,
+                    "y": 0.84565485,
+                    "z": 1
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            },
+            "TagComponent": {"tag": "box3"},
+            "UUIDComponent": {"uuid": "f2284272-fbd6-4e07-b386-728e3d06e9b2"},
+            "RigidBody2DComponent": {
+                "bodyType": "DYNAMIC",
+                "continuousCollision": true,
+                "gravityScale": 1,
+                "linearDamping": 0.1,
+                "mass": 1,
+                "angularDamping": 0.05,
+                "velocity": {
+                    "x": -0.6152095,
+                    "y": 1.8916239
+                },
+                "fixedRotation": false
+            }
+        }},
+        {"components": {
+            "SpriteRendererComponent": {
+                "color": {
+                    "x": 1,
+                    "y": 1,
+                    "z": 1,
+                    "w": 1
+                },
+                "textureUV": [
+                    0,
+                    0,
+                    1,
+                    0,
+                    1,
+                    1,
+                    0,
+                    1
+                ],
+                "index": -1
+            },
+            "TransformComponent": {
+                "translation": {
+                    "x": 0,
+                    "y": -3.5,
+                    "z": -1
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 1,
+                    "z": 1
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            },
+            "TagComponent": {"tag": "floor3"},
+            "UUIDComponent": {"uuid": "cb3aa1e4-cb23-4567-bc04-788cef4343c3"},
+            "BoxCollider2DComponent": {
+                "sensor": false,
+                "size": {
+                    "x": 1,
+                    "y": 1
+                },
+                "density": 1,
+                "offset": {
+                    "x": 0,
+                    "y": 0
+                },
+                "friction": 0.8
+            },
+            "RigidBody2DComponent": {
+                "bodyType": "STATIC",
+                "continuousCollision": true,
+                "gravityScale": 1,
+                "linearDamping": 0.9,
+                "mass": 1,
+                "angularDamping": 0.8,
+                "velocity": {
+                    "x": 0,
+                    "y": 0
+                },
+                "fixedRotation": false
+            }
+        }},
+        {"components": {
+            "SpriteRendererComponent": {
+                "color": {
+                    "x": 0.024740238,
+                    "y": 0.9679965,
+                    "z": 0.2948382,
+                    "w": 1
+                },
+                "textureUV": [
+                    0,
+                    0,
+                    1,
+                    0,
+                    1,
+                    1,
+                    0,
+                    1
+                ],
+                "index": -1
+            },
+            "CircleCollider2DComponent": {
+                "sensor": false,
+                "density": 1,
+                "radius": 0.58123434,
+                "offset": {
+                    "x": 0,
+                    "y": 0
+                },
+                "friction": 0.2
+            },
+            "TransformComponent": {
+                "translation": {
+                    "x": 3.3696232,
+                    "y": 4.093067,
+                    "z": -1
+                },
+                "scale": {
+                    "x": 1.1624687,
+                    "y": 1.1624687,
+                    "z": 1
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            },
+            "TagComponent": {"tag": "box4"},
+            "UUIDComponent": {"uuid": "6bd348f0-3cc8-4e13-b8c2-875f39ce0d5f"},
+            "RigidBody2DComponent": {
+                "bodyType": "DYNAMIC",
+                "continuousCollision": true,
+                "gravityScale": 1,
+                "linearDamping": 0.1,
+                "mass": 1,
+                "angularDamping": 0.05,
+                "velocity": {
+                    "x": -0.30158356,
+                    "y": 1.476593
+                },
+                "fixedRotation": false
+            }
+        }},
+        {"components": {
+            "SpriteRendererComponent": {
+                "color": {
+                    "x": 1,
+                    "y": 1,
+                    "z": 1,
+                    "w": 1
+                },
+                "textureUV": [
+                    0,
+                    0,
+                    1,
+                    0,
+                    1,
+                    1,
+                    0,
+                    1
+                ],
+                "index": -1
+            },
+            "TransformComponent": {
+                "translation": {
+                    "x": 1,
+                    "y": -3.5,
+                    "z": -1
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 1,
+                    "z": 1
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            },
+            "TagComponent": {"tag": "floor4"},
+            "UUIDComponent": {"uuid": "9847de3c-8736-4b89-a79b-7533e298d57d"},
+            "BoxCollider2DComponent": {
+                "sensor": false,
+                "size": {
+                    "x": 1,
+                    "y": 1
+                },
+                "density": 1,
+                "offset": {
+                    "x": 0,
+                    "y": 0
+                },
+                "friction": 0.8
+            },
+            "RigidBody2DComponent": {
+                "bodyType": "STATIC",
+                "continuousCollision": true,
+                "gravityScale": 1,
+                "linearDamping": 0.9,
+                "mass": 1,
+                "angularDamping": 0.8,
+                "velocity": {
+                    "x": 0,
+                    "y": 0
+                },
+                "fixedRotation": false
+            }
+        }},
+        {"components": {
+            "SpriteRendererComponent": {
+                "color": {
+                    "x": 0.9613756,
+                    "y": 0.2985277,
+                    "z": 0.47515428,
+                    "w": 1
+                },
+                "textureUV": [
+                    0,
+                    0,
+                    1,
+                    0,
+                    1,
+                    1,
+                    0,
+                    1
+                ],
+                "index": -1
+            },
+            "CircleCollider2DComponent": {
+                "sensor": false,
+                "density": 1,
+                "radius": 0.567479,
+                "offset": {
+                    "x": 0,
+                    "y": 0
+                },
+                "friction": 0.2
+            },
+            "TransformComponent": {
+                "translation": {
+                    "x": 4.934283,
+                    "y": 3.9773715,
+                    "z": -1
+                },
+                "scale": {
+                    "x": 1.134958,
+                    "y": 1.134958,
+                    "z": 1
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            },
+            "TagComponent": {"tag": "box5"},
+            "UUIDComponent": {"uuid": "39d30ce6-7224-490b-866f-ce8032f41d5b"},
+            "RigidBody2DComponent": {
+                "bodyType": "DYNAMIC",
+                "continuousCollision": true,
+                "gravityScale": 1,
+                "linearDamping": 0.1,
+                "mass": 1,
+                "angularDamping": 0.05,
+                "velocity": {
+                    "x": -0.024045948,
+                    "y": 0.3737062
+                },
+                "fixedRotation": false
+            }
+        }},
+        {"components": {
+            "SpriteRendererComponent": {
+                "color": {
+                    "x": 1,
+                    "y": 1,
+                    "z": 1,
+                    "w": 1
+                },
+                "textureUV": [
+                    0,
+                    0,
+                    1,
+                    0,
+                    1,
+                    1,
+                    0,
+                    1
+                ],
+                "index": -1
+            },
+            "TransformComponent": {
+                "translation": {
+                    "x": 2,
+                    "y": -3.5,
+                    "z": -1
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 1,
+                    "z": 1
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            },
+            "TagComponent": {"tag": "floor5"},
+            "UUIDComponent": {"uuid": "73076c50-6bb8-4eaa-a9ef-5ef57da6bf5e"},
+            "BoxCollider2DComponent": {
+                "sensor": false,
+                "size": {
+                    "x": 1,
+                    "y": 1
+                },
+                "density": 1,
+                "offset": {
+                    "x": 0,
+                    "y": 0
+                },
+                "friction": 0.8
+            },
+            "RigidBody2DComponent": {
+                "bodyType": "STATIC",
+                "continuousCollision": true,
+                "gravityScale": 1,
+                "linearDamping": 0.9,
+                "mass": 1,
+                "angularDamping": 0.8,
+                "velocity": {
+                    "x": 0,
+                    "y": 0
+                },
+                "fixedRotation": false
+            }
+        }},
+        {"components": {
+            "SpriteRendererComponent": {
+                "color": {
+                    "x": 0.6839737,
+                    "y": 0.13985045,
+                    "z": 0.07966886,
+                    "w": 1
+                },
+                "textureUV": [
+                    0,
+                    0,
+                    1,
+                    0,
+                    1,
+                    1,
+                    0,
+                    1
+                ],
+                "index": -1
+            },
+            "CircleCollider2DComponent": {
+                "sensor": false,
+                "density": 1,
+                "radius": 0.4833459,
+                "offset": {
+                    "x": 0,
+                    "y": 0
+                },
+                "friction": 0.2
+            },
+            "TransformComponent": {
+                "translation": {
+                    "x": 6.3248243,
+                    "y": 4.9846325,
+                    "z": -1
+                },
+                "scale": {
+                    "x": 0.9666918,
+                    "y": 0.9666918,
+                    "z": 1
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            },
+            "TagComponent": {"tag": "box6"},
+            "UUIDComponent": {"uuid": "8878e1cd-f5bb-47ec-9918-1d44acc25203"},
+            "RigidBody2DComponent": {
+                "bodyType": "DYNAMIC",
+                "continuousCollision": true,
+                "gravityScale": 1,
+                "linearDamping": 0.1,
+                "mass": 1,
+                "angularDamping": 0.05,
+                "velocity": {
+                    "x": -0.28973687,
+                    "y": 1.9088024
+                },
+                "fixedRotation": false
+            }
+        }},
+        {"components": {
+            "SpriteRendererComponent": {
+                "color": {
+                    "x": 1,
+                    "y": 1,
+                    "z": 1,
+                    "w": 1
+                },
+                "textureUV": [
+                    0,
+                    0,
+                    1,
+                    0,
+                    1,
+                    1,
+                    0,
+                    1
+                ],
+                "index": -1
+            },
+            "TransformComponent": {
+                "translation": {
+                    "x": 3,
+                    "y": -3.5,
+                    "z": -1
+                },
+                "scale": {
+                    "x": 1,
+                    "y": 1,
+                    "z": 1
+                },
+                "rotation": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            },
+            "TagComponent": {"tag": "floor6"},
+            "UUIDComponent": {"uuid": "5a2fbc95-780d-42d9-9f9d-c2941a9b87c6"},
+            "BoxCollider2DComponent": {
+                "sensor": false,
+                "size": {
+                    "x": 1,
+                    "y": 1
+                },
+                "density": 1,
+                "offset": {
+                    "x": 0,
+                    "y": 0
+                },
+                "friction": 0.8
+            },
+            "RigidBody2DComponent": {
+                "bodyType": "STATIC",
+                "continuousCollision": true,
+                "gravityScale": 1,
+                "linearDamping": 0.9,
+                "mass": 1,
+                "angularDamping": 0.8,
+                "velocity": {
+                    "x": 0,
+                    "y": 0
+                },
+                "fixedRotation": false
+            }
+        }}
+    ],
+    "settings": {"physicsSettings": {
+        "enabled": true,
+        "gravity": {
+            "x": 0,
+            "y": -9.8,
+            "z": 0
+        }
+    }}
 }

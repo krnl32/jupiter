@@ -3,7 +3,7 @@ package com.krnl32.jupiter.engine.serializer.components.gameplay;
 import com.krnl32.jupiter.engine.components.gameplay.ForceMovementComponent;
 import com.krnl32.jupiter.engine.serializer.ComponentSerializer;
 import com.krnl32.jupiter.engine.serializer.resolvers.EntityResolver;
-import com.krnl32.jupiter.engine.serializer.utility.ComponentSerializerUtility;
+import com.krnl32.jupiter.engine.serializer.utility.SerializerUtility;
 
 import java.util.Map;
 
@@ -22,11 +22,11 @@ public class ForceMovementComponentSerializer implements ComponentSerializer<For
 	@Override
 	public ForceMovementComponent deserialize(Map<String, Object> data, EntityResolver resolver) {
 		return new ForceMovementComponent(
-			ComponentSerializerUtility.toFloat(data.get("moveForce")),
-			ComponentSerializerUtility.toFloat(data.get("sprintMultiplier")),
-			ComponentSerializerUtility.toFloat(data.get("maxSpeed")),
-			ComponentSerializerUtility.toFloat(data.get("rotationTorque")),
-			ComponentSerializerUtility.toFloat(data.get("jumpImpulse"))
+			SerializerUtility.toFloat(data.get("moveForce")),
+			SerializerUtility.toFloat(data.get("sprintMultiplier")),
+			SerializerUtility.toFloat(data.get("maxSpeed")),
+			SerializerUtility.toFloat(data.get("rotationTorque")),
+			SerializerUtility.toFloat(data.get("jumpImpulse"))
 		);
 	}
 }

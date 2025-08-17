@@ -5,17 +5,25 @@ import com.krnl32.jupiter.editor.editor.EditorPanel;
 import com.krnl32.jupiter.editor.utility.GUIUtils;
 import com.krnl32.jupiter.engine.asset.handle.Asset;
 import com.krnl32.jupiter.engine.asset.handle.AssetMetadata;
-import com.krnl32.jupiter.engine.asset.handle.AssetType;
 import com.krnl32.jupiter.engine.asset.importsettings.types.TextureAssetImportSettings;
+import com.krnl32.jupiter.engine.asset.types.SceneAsset;
 import com.krnl32.jupiter.engine.asset.types.TextureAsset;
+import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.project.ProjectContext;
 import com.krnl32.jupiter.engine.renderer.texture.*;
+import com.krnl32.jupiter.engine.scene.SceneSettings;
+import com.krnl32.jupiter.engine.serializer.SceneSerializer;
+import com.krnl32.jupiter.engine.utility.FileIO;
 import imgui.ImGui;
 import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiStyleVar;
 import imgui.flag.ImGuiTreeNodeFlags;
 import imgui.type.ImBoolean;
 import imgui.type.ImInt;
+import imgui.type.ImString;
+import org.json.JSONObject;
+
+import java.nio.file.Path;
 
 public class AssetInspectorPanel implements EditorPanel {
 	private Asset selectedAsset;
@@ -45,8 +53,9 @@ public class AssetInspectorPanel implements EditorPanel {
 
 			ImGui.spacing();
 
-			if (selectedAsset.getType() == AssetType.TEXTURE) {
-				renderTextureAsset((TextureAsset) selectedAsset);
+			switch (selectedAsset.getType()) {
+				case TEXTURE -> renderTextureAsset((TextureAsset) selectedAsset);
+				case SCENE -> renderSceneAsset((SceneAsset) selectedAsset);
 			}
 		}
 
@@ -218,6 +227,60 @@ public class AssetInspectorPanel implements EditorPanel {
 
 				editorAssetManager.saveAssetMetadata(asset.getId(), updatedMetadata);
 				editorAssetManager.reloadAsset(asset.getId());
+			}
+		}
+
+		ImGui.popStyleVar();
+		ImGui.popStyleColor(3);
+	}
+
+	private void renderSceneAsset(SceneAsset asset) {
+		ImGui.spacing();
+		ImGui.text("Scene Settings");
+		ImGui.separator();
+
+		SceneSettings settings = asset.getSettings();
+
+		// General
+		if (ImGui.collapsingHeader("General", ImGuiTreeNodeFlags.DefaultOpen)) {
+			ImString name = new ImString(asset.getScene().getName() == null ? "" : asset.getScene().getName(), 256);
+			if (GUIUtils.renderStringInputWithClearButton("Name", name)) {
+				asset.getScene().setName(name.get());
+			}
+		}
+
+		// Physics
+		if (ImGui.collapsingHeader("Physics", ImGuiTreeNodeFlags.DefaultOpen)) {
+			ImBoolean enabled = new ImBoolean(settings.getPhysicsSettings().isEnabled());
+			if (ImGui.checkbox("Enabled", enabled)) {
+				settings.getPhysicsSettings().setEnabled(enabled.get());
+			}
+
+			GUIUtils.renderVector3f("Gravity", settings.getPhysicsSettings().getGravity()); // refactor later
+		}
+
+		ImGui.spacing();
+		ImGui.separator();
+
+		float buttonWidth = ImGui.getContentRegionAvailX();
+		float buttonHeight = 45.0f;
+
+		ImGui.pushStyleColor(ImGuiCol.Button, 0.227f, 0.427f, 0.941f, 1f);
+		ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0.290f, 0.490f, 1.0f, 1f);
+		ImGui.pushStyleColor(ImGuiCol.ButtonActive, 0.180f, 0.349f, 0.851f, 1f);
+		ImGui.pushStyleVar(ImGuiStyleVar.FrameRounding, 6.0f);
+
+		ImGui.setCursorPosX((ImGui.getWindowWidth() - buttonWidth) * 0.5f);
+		if (ImGui.button("Apply Changes & Reload", buttonWidth, buttonHeight)) {
+			EditorAssetManager editorAssetManager = ((EditorAssetManager) ProjectContext.getInstance().getAssetManager());
+
+			var jsonScene = new JSONObject(SceneSerializer.serialize(asset.getScene()));
+			try {
+				Path scenePath = ProjectContext.getInstance().getAssetDirectory().resolve(editorAssetManager.getAssetPath(asset.getId()));
+				FileIO.writeFileContent(scenePath, jsonScene.toString(4));
+				editorAssetManager.reloadAsset(asset.getId());
+			} catch (Exception e) {
+				Logger.error("AssetInspectorPanel Failed to Save Scene({})", asset.getScene().getName());
 			}
 		}
 

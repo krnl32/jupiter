@@ -7,7 +7,6 @@ import com.krnl32.jupiter.engine.ecs.Entity;
 import com.krnl32.jupiter.engine.scene.Scene;
 import com.krnl32.jupiter.engine.scene.SceneSettings;
 import com.krnl32.jupiter.engine.serializer.resolvers.EntityResolver;
-import com.krnl32.jupiter.engine.serializer.utility.ComponentSerializerUtility;
 
 import java.util.*;
 
@@ -21,17 +20,24 @@ public class SceneSerializer {
 
 		return Map.of(
 			"name", scene.getName(),
-			"settings", serializeSceneSettings(scene.getSceneSettings()),
+			"settings", SceneSerializerUtility.serializerSceneSettings(scene.getSceneSettings()),
 			"entities", entities
 		);
 	}
 
 	@SuppressWarnings("unchecked")
 	public static Scene deserialize(Map<String, Object> data) {
-		Scene scene = new Scene((String) data.get("name"), new SceneSettings(ComponentSerializerUtility.toFloat(((Map<String, Object>) data.get("settings")).get("gravity")))) {
-			@Override public void onCreate() {}
-			@Override public void onActivate() {}
-			@Override public void onUnload() {}
+		String sceneName = (String) data.get("name");
+		Map<String, Object> sceneSettingsSerialized = (Map<String, Object>) data.get("settings");
+		SceneSettings sceneSettings = SceneSerializerUtility.deserializeSceneSettings(sceneSettingsSerialized);
+
+		Scene scene = new Scene(sceneName, sceneSettings) {
+			@Override
+			public void onCreate() {}
+			@Override
+			public void onActivate() {}
+			@Override
+			public void onUnload() {}
 		};
 
 		// Create Entities with UUIDComponent
@@ -108,12 +114,6 @@ public class SceneSerializer {
 			Map<String, Object> entityMap = entities.get(i);
 			deserializeEntity(entityMap, resolver, uuidToEntity);
 		}
-	}
-
-	private static Map<String, Object> serializeSceneSettings(SceneSettings settings) {
-		return Map.of(
-			"gravity", settings.getGravity()
-		);
 	}
 
 	private static Map<String, Object> serializeEntity(Entity entity) {

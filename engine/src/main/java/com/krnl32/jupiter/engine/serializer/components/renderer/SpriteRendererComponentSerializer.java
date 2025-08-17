@@ -6,7 +6,7 @@ import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.project.ProjectContext;
 import com.krnl32.jupiter.engine.serializer.ComponentSerializer;
 import com.krnl32.jupiter.engine.serializer.resolvers.EntityResolver;
-import com.krnl32.jupiter.engine.serializer.utility.ComponentSerializerUtility;
+import com.krnl32.jupiter.engine.serializer.utility.SerializerUtility;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +17,7 @@ public class SpriteRendererComponentSerializer implements ComponentSerializer<Sp
 	public Map<String, Object> serialize(SpriteRendererComponent component) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("index", component.index);
-		map.put("color", ComponentSerializerUtility.serializeVector4f(component.color));
+		map.put("color", SerializerUtility.serializeVector4f(component.color));
 		map.put("textureAssetId", (component.textureAssetId != null ? component.textureAssetId.getId() : null));
 		map.put("textureUV", component.textureUV);
 		return map;
@@ -36,9 +36,9 @@ public class SpriteRendererComponentSerializer implements ComponentSerializer<Sp
 
 		return new SpriteRendererComponent(
 			(int) data.get("index"),
-			ComponentSerializerUtility.deserializeVector4f((Map<String, Object>) data.get("color")),
+			SerializerUtility.deserializeVector4f((Map<String, Object>) data.get("color")),
 			textureAssetId,
-			ComponentSerializerUtility.toFloatArray(data.get("textureUV"))
+			SerializerUtility.toFloatArray(data.get("textureUV"))
 		);
 	}
 }

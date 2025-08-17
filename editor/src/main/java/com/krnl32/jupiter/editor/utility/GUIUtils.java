@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class GUIUtils {
-	public static void renderVector2f(String label, Vector2f vec) {
+	public static boolean renderVector2f(String label, Vector2f vec) {
 		int uniqueID = System.identityHashCode(vec);
 		ImGui.pushID(label + "_" + uniqueID);
 
@@ -38,12 +38,15 @@ public class GUIUtils {
 		float[] xVal = {vec.x};
 		float[] yVal = {vec.y};
 
+		boolean changed = false;
+
 		// X Button + DragFloat
 		ImGui.pushStyleColor(ImGuiCol.Button, 0.8f, 0.1f, 0.1f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 1f, 0.3f, 0.3f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonActive, 1f, 0.2f, 0.2f, 1f);
 		if (ImGui.button("X", buttonSize, buttonSize)) {
 			xVal[0] = 0f;
+			changed = true;
 		}
 		ImGui.popStyleColor(3);
 		ImGui.sameLine(0, 2);
@@ -51,6 +54,7 @@ public class GUIUtils {
 		ImGui.pushItemWidth(dragWidth);
 		if (ImGui.dragFloat("##X_" + label + "_" + uniqueID, xVal, dragSpeed, -Float.MAX_VALUE, Float.MAX_VALUE, "%.3f")) {
 			vec.x = xVal[0];
+			changed = true;
 		}
 		ImGui.popItemWidth();
 
@@ -62,6 +66,7 @@ public class GUIUtils {
 		ImGui.pushStyleColor(ImGuiCol.ButtonActive, 0.2f, 1f, 0.2f, 1f);
 		if (ImGui.button("Y", buttonSize, buttonSize)) {
 			yVal[0] = 0f;
+			changed = true;
 		}
 		ImGui.popStyleColor(3);
 		ImGui.sameLine(0, 2);
@@ -69,6 +74,7 @@ public class GUIUtils {
 		ImGui.pushItemWidth(dragWidth);
 		if (ImGui.dragFloat("##Y_" + label + "_" + uniqueID, yVal, dragSpeed, -Float.MAX_VALUE, Float.MAX_VALUE, "%.3f")) {
 			vec.y = yVal[0];
+			changed = true;
 		}
 		ImGui.popItemWidth();
 
@@ -77,9 +83,11 @@ public class GUIUtils {
 		ImGui.popStyleVar(2);
 		ImGui.columns(1);
 		ImGui.popID();
+
+		return changed;
 	}
 
-	public static void renderVector3f(String label, Vector3f vec) {
+	public static boolean renderVector3f(String label, Vector3f vec) {
 		int uniqueID = System.identityHashCode(vec);
 		ImGui.pushID(label + "_" + uniqueID);
 
@@ -99,12 +107,15 @@ public class GUIUtils {
 		float[] yVal = {vec.y};
 		float[] zVal = {vec.z};
 
+		boolean changed = false;
+
 		// X Button + DragFloat
 		ImGui.pushStyleColor(ImGuiCol.Button, 0.8f, 0.1f, 0.1f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 1f, 0.3f, 0.3f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonActive, 1f, 0.2f, 0.2f, 1f);
 		if (ImGui.button("X", buttonSize, buttonSize)) {
 			xVal[0] = 0f;
+			changed = true;
 		}
 		ImGui.popStyleColor(3);
 		ImGui.sameLine(0, 2);
@@ -112,6 +123,7 @@ public class GUIUtils {
 		ImGui.pushItemWidth(dragWidth);
 		if (ImGui.dragFloat("##X_" + label + "_" + uniqueID, xVal, dragSpeed, -Float.MAX_VALUE, Float.MAX_VALUE, "%.3f")) {
 			vec.x = xVal[0];
+			changed = true;
 		}
 		ImGui.popItemWidth();
 
@@ -123,6 +135,7 @@ public class GUIUtils {
 		ImGui.pushStyleColor(ImGuiCol.ButtonActive, 0.2f, 1f, 0.2f, 1f);
 		if (ImGui.button("Y", buttonSize, buttonSize)) {
 			yVal[0] = 0f;
+			changed = true;
 		}
 		ImGui.popStyleColor(3);
 		ImGui.sameLine(0, 2);
@@ -130,6 +143,7 @@ public class GUIUtils {
 		ImGui.pushItemWidth(dragWidth);
 		if (ImGui.dragFloat("##Y_" + label + "_" + uniqueID, yVal, dragSpeed, -Float.MAX_VALUE, Float.MAX_VALUE, "%.3f")) {
 			vec.y = yVal[0];
+			changed = true;
 		}
 		ImGui.popItemWidth();
 
@@ -141,6 +155,7 @@ public class GUIUtils {
 		ImGui.pushStyleColor(ImGuiCol.ButtonActive, 0.2f, 0.2f, 1f, 1f);
 		if (ImGui.button("Z", buttonSize, buttonSize)) {
 			zVal[0] = 0f;
+			changed = true;
 		}
 		ImGui.popStyleColor(3);
 		ImGui.sameLine(0, 2);
@@ -148,6 +163,7 @@ public class GUIUtils {
 		ImGui.pushItemWidth(dragWidth);
 		if (ImGui.dragFloat("##Z_" + label + "_" + uniqueID, zVal, dragSpeed, -Float.MAX_VALUE, Float.MAX_VALUE, "%.3f")) {
 			vec.z = zVal[0];
+			changed = true;
 		}
 		ImGui.popItemWidth();
 
@@ -156,6 +172,8 @@ public class GUIUtils {
 		ImGui.popStyleVar(2);
 		ImGui.columns(1);
 		ImGui.popID();
+
+		return changed;
 	}
 
 	public static void renderStringReadOnly(String label, String value) {

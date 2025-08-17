@@ -11,8 +11,8 @@ public class Physics2D {
 	private int velocityIterations;
 	private int positionIterations;
 
-	public Physics2D() {
-		this.gravity = new Vec2(0.0f, -10.0f);
+	public Physics2D(PhysicsSettings settings) {
+		this.gravity = new Vec2(settings.getGravity().x, settings.getGravity().y);
 		this.world = new World(gravity);
 		this.physicsTime = 0.0f;
 		this.physicsTimeStep = 1.0f / 60.0f;

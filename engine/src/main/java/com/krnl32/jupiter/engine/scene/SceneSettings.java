@@ -1,54 +1,40 @@
 package com.krnl32.jupiter.engine.scene;
 
-import com.krnl32.jupiter.engine.core.Logger;
+import com.krnl32.jupiter.engine.physics.PhysicsSettings;
 
 import java.util.Objects;
 
-public class SceneSettings implements Cloneable {
-	private float gravity;
+public class SceneSettings {
+	private PhysicsSettings physicsSettings;
 
-	public SceneSettings() {
-		this.gravity = 9.8f;
+	public SceneSettings(PhysicsSettings physicsSettings) {
+		this.physicsSettings = physicsSettings;
 	}
 
-	public SceneSettings(float gravity) {
-		this.gravity = gravity;
+	public PhysicsSettings getPhysicsSettings() {
+		return physicsSettings;
 	}
 
-	public float getGravity() {
-		return gravity;
-	}
-
-	public void setGravity(float gravity) {
-		this.gravity = gravity;
+	public void setPhysicsSettings(PhysicsSettings physicsSettings) {
+		this.physicsSettings = physicsSettings;
 	}
 
 	@Override
 	public boolean equals(Object o) {
 		if (o == null || getClass() != o.getClass()) return false;
 		SceneSettings settings = (SceneSettings) o;
-		return Float.compare(gravity, settings.gravity) == 0;
+		return Objects.equals(physicsSettings, settings.physicsSettings);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hashCode(gravity);
+		return Objects.hashCode(physicsSettings);
 	}
 
 	@Override
 	public String toString() {
 		return "SceneSettings{" +
-			"gravity=" + gravity +
+			"physicsSettings=" + physicsSettings +
 			'}';
-	}
-
-	@Override
-	public SceneSettings clone() {
-		try {
-			return (SceneSettings) super.clone();
-		} catch (CloneNotSupportedException e) {
-			Logger.error("SceneSettings Clone Failed");
-			return new SceneSettings(gravity);
-		}
 	}
 }

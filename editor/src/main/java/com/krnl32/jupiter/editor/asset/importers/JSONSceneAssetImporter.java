@@ -8,10 +8,12 @@ import com.krnl32.jupiter.engine.asset.importsettings.ImportSettings;
 import com.krnl32.jupiter.engine.asset.importsettings.types.SceneAssetImportSettings;
 import com.krnl32.jupiter.engine.asset.types.SceneAsset;
 import com.krnl32.jupiter.engine.core.Logger;
+import com.krnl32.jupiter.engine.physics.PhysicsSettings;
 import com.krnl32.jupiter.engine.scene.Scene;
 import com.krnl32.jupiter.engine.scene.SceneSettings;
 import com.krnl32.jupiter.engine.serializer.SceneSerializer;
 import com.krnl32.jupiter.engine.utility.FileIO;
+import org.joml.Vector3f;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -21,6 +23,7 @@ public class JSONSceneAssetImporter implements AssetImporter<SceneAsset> {
 	@Override
 	public boolean supports(ImportRequest request) {
 		String fileExtension = FileIO.getFileExtension(Path.of(request.getSource()));
+
 		if (!fileExtension.equals("jscene")) {
 			return false;
 		}
@@ -41,14 +44,15 @@ public class JSONSceneAssetImporter implements AssetImporter<SceneAsset> {
 			Map<String, Object> sceneData = mapper.readValue(request.getData(), Map.class);
 
 			Scene scene = SceneSerializer.deserialize(sceneData);
+
 			if (scene == null) {
 				Logger.error("JSONSceneAssetImporter Failed to Deserialize Scene({})", request.getSource());
 				return null;
 			}
 
-			SceneAssetImportSettings importSettings = new SceneAssetImportSettings(scene.getSceneSettings());
-			SceneAsset sceneAsset = new SceneAsset(importSettings.getSettings(), scene);
-			return new ImportResult<>(sceneAsset, importSettings.toMap(), getClass().getSimpleName());
+			SceneAsset sceneAsset = new SceneAsset(scene.getSceneSettings(), scene);
+
+			return new ImportResult<>(sceneAsset, getClass().getSimpleName());
 		} catch (IOException e) {
 			Logger.error("JSONSceneAssetImporter Failed to Parse({})", request.getSource());
 			return null;
@@ -57,9 +61,11 @@ public class JSONSceneAssetImporter implements AssetImporter<SceneAsset> {
 
 	@Override
 	public ImportSettings getDefaultSettings() {
-		SceneSettings settings = new SceneSettings(
-			9.8f
-		);
+		boolean physicsEnabled = true;
+		Vector3f physicsGravity = new Vector3f(0.0f, 9.8f, 0.0f);
+		PhysicsSettings physicsSettings = new PhysicsSettings(physicsEnabled, physicsGravity);
+
+		SceneSettings settings = new SceneSettings(physicsSettings);
 		return new SceneAssetImportSettings(settings);
 	}
 }

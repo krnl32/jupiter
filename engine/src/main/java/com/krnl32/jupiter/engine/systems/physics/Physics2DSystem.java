@@ -12,6 +12,7 @@ import com.krnl32.jupiter.engine.events.entity.EntityDestroyedEvent;
 import com.krnl32.jupiter.engine.physics.CollisionRule;
 import com.krnl32.jupiter.engine.physics.DelegatingContactFilter;
 import com.krnl32.jupiter.engine.physics.Physics2D;
+import com.krnl32.jupiter.engine.physics.PhysicsSettings;
 import com.krnl32.jupiter.engine.renderer.Renderer;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
@@ -30,9 +31,9 @@ public class Physics2DSystem implements System {
 	private final Physics2D physics2D;
 	private final Set<Body> bodiesToDestroy;
 
-	public Physics2DSystem(Registry registry) {
+	public Physics2DSystem(Registry registry, PhysicsSettings settings) {
 		this.registry = registry;
-		this.physics2D = new Physics2D();
+		this.physics2D = new Physics2D(settings);
 		this.physics2D.getWorld().setContactFilter(new DelegatingContactFilter(((entityA, entityB) -> true)));
 		this.bodiesToDestroy = new HashSet<>();
 
