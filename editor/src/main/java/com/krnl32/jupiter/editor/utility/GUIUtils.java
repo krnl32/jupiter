@@ -169,6 +169,17 @@ public class GUIUtils {
 		ImGui.popID();
 	}
 
+	public static void renderStringTextDisabled(String label, String value) {
+		ImGui.pushID(label);
+		ImGui.columns(2, "Columns_" + label, false);
+		ImGui.setColumnWidth(0, 100);
+		ImGui.textDisabled(label);
+		ImGui.nextColumn();
+		ImGui.text(value);
+		ImGui.columns(1);
+		ImGui.popID();
+	}
+
 	public static boolean renderStringInputWithClearButton(String label, ImString value) {
 		ImGui.pushID(label);
 

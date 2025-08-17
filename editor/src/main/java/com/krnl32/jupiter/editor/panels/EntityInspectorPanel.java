@@ -39,13 +39,9 @@ public class EntityInspectorPanel implements EditorPanel {
 
 	@Override
 	public void onRender(float dt) {
-		ImGui.begin("Inspector");
-
 		if (selectedEntity != null) {
 			renderComponents(selectedEntity, dt);
 		}
-
-		ImGui.end();
 	}
 
 	public void setSelectedEntity(Entity selectedEntity) {
