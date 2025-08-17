@@ -91,7 +91,7 @@ public class Editor extends Engine {
 	private EditorState editorState;
 	private EditorCamera editorCamera;
 	private final Path projectDirectory;
-	private String currentSceneName;
+	private Scene previousScene;
 
 	public Editor(EngineSettings engineSettings, Path projectDirectory) {
 		super(engineSettings);
@@ -139,13 +139,11 @@ public class Editor extends Engine {
 				return false;
 			}
 
-			currentSceneName = sceneAsset.getScene().getName();
-			sceneManager.addScene(currentSceneName, sceneAsset.getScene());
-			sceneManager.switchScene(currentSceneName);
+			sceneManager.addScene(sceneAsset.getScene().getName(), sceneAsset.getScene());
+			sceneManager.switchScene(sceneAsset.getScene().getName());
 		} else {
-			currentSceneName = "Sandbox";
-			sceneManager.addScene(currentSceneName, new EditorScene(currentSceneName));
-			sceneManager.switchScene(currentSceneName);
+			sceneManager.addScene("Sandbox", new EditorScene("Sandbox"));
+			sceneManager.switchScene("Sandbox");
 		}
 
 		// FrameBuffer
@@ -188,6 +186,7 @@ public class Editor extends Engine {
 	}
 
 	private void play() {
+		previousScene = sceneManager.getScene();
 		Scene clone = SceneCloner.clone(sceneManager.getScene(), false);
 		sceneManager.setScene(clone);
 		editorState = EditorState.PLAY;
@@ -198,7 +197,7 @@ public class Editor extends Engine {
 	}
 
 	private void stop() {
-		sceneManager.switchScene(currentSceneName);
+		sceneManager.setScene(previousScene);
 		editorState = EditorState.STOP;
 	}
 

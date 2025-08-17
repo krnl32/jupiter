@@ -18,7 +18,7 @@ public class SceneManager {
 		this.currentScene = null;
 
 		EventBus.getInstance().register(SwitchSceneEvent.class, event -> {
-			switchScene(event.getSceneName());
+			setScene(event.getScene());
 		});
 	}
 

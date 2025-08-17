@@ -4,11 +4,14 @@ import com.krnl32.jupiter.editor.asset.EditorAssetManager;
 import com.krnl32.jupiter.editor.editor.EditorPanel;
 import com.krnl32.jupiter.editor.events.asset.AssetSelectedEvent;
 import com.krnl32.jupiter.engine.asset.handle.Asset;
+import com.krnl32.jupiter.engine.asset.handle.AssetType;
 import com.krnl32.jupiter.engine.asset.importer.ImportRequest;
 import com.krnl32.jupiter.engine.asset.importer.ImportResult;
+import com.krnl32.jupiter.engine.asset.types.SceneAsset;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.event.EventBus;
 import com.krnl32.jupiter.engine.events.filesystem.FileDragDropEvent;
+import com.krnl32.jupiter.engine.events.scene.SwitchSceneEvent;
 import com.krnl32.jupiter.engine.project.ProjectContext;
 import com.krnl32.jupiter.engine.utility.FileIO;
 import imgui.ImGui;
@@ -267,6 +270,12 @@ public class ContentBrowserPanel implements EditorPanel {
 
 		// Open in Inspector
 		EventBus.getInstance().emit(new AssetSelectedEvent(asset));
+
+		// Launch Scene
+		if (asset.getType() == AssetType.SCENE) {
+			SceneAsset sceneAsset = (SceneAsset) asset;
+			EventBus.getInstance().emit(new SwitchSceneEvent(sceneAsset.getScene()));
+		}
 	}
 
 	private void removeAsset(Path absoluteAssetPath) {

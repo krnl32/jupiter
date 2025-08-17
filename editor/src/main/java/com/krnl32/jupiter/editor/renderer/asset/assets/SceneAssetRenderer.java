@@ -19,6 +19,7 @@ import org.joml.Vector3f;
 import org.json.JSONObject;
 
 import java.nio.file.Path;
+import java.util.Map;
 
 public class SceneAssetRenderer implements AssetRenderer<SceneAsset> {
 	private final Vector3f physicsGravity = new Vector3f();
@@ -68,10 +69,15 @@ public class SceneAssetRenderer implements AssetRenderer<SceneAsset> {
 		if (ImGui.button("Apply Changes & Reload", buttonWidth, buttonHeight)) {
 			EditorAssetManager editorAssetManager = ((EditorAssetManager) ProjectContext.getInstance().getAssetManager());
 
-			var jsonScene = new JSONObject(SceneSerializer.serialize(asset.getScene()));
 			try {
-				Path scenePath = ProjectContext.getInstance().getAssetDirectory().resolve(editorAssetManager.getAssetPath(asset.getId()));
-				FileIO.writeFileContent(scenePath, jsonScene.toString(4));
+				Path assetDirectory = ProjectContext.getInstance().getAssetDirectory();
+				Path assetPath = editorAssetManager.getAssetPath(asset.getId());
+				Path sceneFilePath = assetDirectory.resolve(assetPath);
+
+				Map<String, Object> sceneSerialized = SceneSerializer.serialize(asset.getScene());
+				JSONObject jsonScene = new JSONObject(sceneSerialized);
+				FileIO.writeFileContent(sceneFilePath, jsonScene.toString(4));
+
 				editorAssetManager.reloadAsset(asset.getId());
 			} catch (Exception e) {
 				Logger.error("AssetInspectorPanel Failed to Save Scene({})", asset.getScene().getName());

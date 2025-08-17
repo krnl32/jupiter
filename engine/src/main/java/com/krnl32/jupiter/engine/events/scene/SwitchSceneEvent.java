@@ -1,15 +1,16 @@
 package com.krnl32.jupiter.engine.events.scene;
 
 import com.krnl32.jupiter.engine.event.Event;
+import com.krnl32.jupiter.engine.scene.Scene;
 
 public class SwitchSceneEvent implements Event {
-	private final String sceneName;
+	private final Scene scene;
 
-	public SwitchSceneEvent(String sceneName) {
-		this.sceneName = sceneName;
+	public SwitchSceneEvent(Scene scene) {
+		this.scene = scene;
 	}
 
-	public String getSceneName() {
-		return sceneName;
+	public Scene getScene() {
+		return scene;
 	}
 }

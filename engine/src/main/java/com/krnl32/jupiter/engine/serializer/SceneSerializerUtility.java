@@ -4,6 +4,7 @@ import com.krnl32.jupiter.engine.physics.PhysicsSettings;
 import com.krnl32.jupiter.engine.scene.SceneSettings;
 import com.krnl32.jupiter.engine.serializer.utility.SerializerUtility;
 import org.joml.Vector3f;
+import org.joml.Vector3fc;
 
 import java.util.Map;
 
@@ -25,7 +26,7 @@ public class SceneSerializerUtility {
 
 	public static Map<String, Object> serializePhysicsSettings(PhysicsSettings settings) {
 		boolean physicsEnabled = settings.isEnabled();
-		Vector3f physicsGravity = settings.getGravity();
+		Vector3fc physicsGravity = settings.getGravity();
 		Map<String, Object> physicsGravitySerialized = SerializerUtility.serializeVector3f(physicsGravity);
 
 		return Map.of(

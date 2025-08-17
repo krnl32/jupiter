@@ -1,6 +1,7 @@
 package com.krnl32.jupiter.engine.physics;
 
 import org.joml.Vector3f;
+import org.joml.Vector3fc;
 
 import java.util.Objects;
 
@@ -21,7 +22,7 @@ public class PhysicsSettings {
 		this.enabled = enabled;
 	}
 
-	public Vector3f getGravity() {
+	public Vector3fc getGravity() {
 		return gravity;
 	}
 
