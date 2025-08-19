@@ -186,9 +186,11 @@ public class Editor extends Engine {
 	}
 
 	private void play() {
-		previousScene = sceneManager.getScene();
-		Scene clone = SceneCloner.clone(sceneManager.getScene(), false);
-		sceneManager.setScene(clone);
+		if (editorState == EditorState.STOP) {
+			previousScene = sceneManager.getScene();
+			Scene clone = SceneCloner.clone(sceneManager.getScene(), false);
+			sceneManager.setScene(clone);
+		}
 		editorState = EditorState.PLAY;
 	}
 
@@ -197,7 +199,9 @@ public class Editor extends Engine {
 	}
 
 	private void stop() {
-		sceneManager.setScene(previousScene);
+		if (previousScene != null) {
+			sceneManager.setScene(previousScene);
+		}
 		editorState = EditorState.STOP;
 	}
 
