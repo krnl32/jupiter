@@ -27,6 +27,7 @@ import com.krnl32.jupiter.editor.factory.components.utility.UUIDComponentFactory
 import com.krnl32.jupiter.editor.panels.*;
 import com.krnl32.jupiter.editor.renderer.EditorRendererRegistry;
 import com.krnl32.jupiter.editor.renderer.asset.assets.SceneAssetRenderer;
+import com.krnl32.jupiter.editor.renderer.asset.assets.ScriptAssetRenderer;
 import com.krnl32.jupiter.editor.renderer.asset.assets.TextureAssetRenderer;
 import com.krnl32.jupiter.editor.renderer.component.components.effects.BlinkComponentRenderer;
 import com.krnl32.jupiter.editor.renderer.component.components.effects.ParticleComponentRenderer;
@@ -319,5 +320,6 @@ public class Editor extends Engine {
 	private void registerAssetRenderers() {
 		EditorRendererRegistry.registerAssetRenderer(AssetType.TEXTURE, new TextureAssetRenderer());
 		EditorRendererRegistry.registerAssetRenderer(AssetType.SCENE, new SceneAssetRenderer());
+		EditorRendererRegistry.registerAssetRenderer(AssetType.SCRIPT, new ScriptAssetRenderer());
 	}
 }
