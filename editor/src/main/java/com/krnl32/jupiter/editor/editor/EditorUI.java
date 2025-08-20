@@ -1,8 +1,6 @@
 package com.krnl32.jupiter.editor.editor;
 
-import com.krnl32.jupiter.editor.events.editor.EditorPauseEvent;
-import com.krnl32.jupiter.editor.events.editor.EditorPlayEvent;
-import com.krnl32.jupiter.editor.events.editor.EditorStopEvent;
+import com.krnl32.jupiter.editor.events.editor.*;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.core.Window;
 import com.krnl32.jupiter.engine.event.EventBus;
@@ -161,11 +159,13 @@ public class EditorUI {
 		ImGui.setCursorPosX(startX);
 
 		// Icons
-		int playIconId = -1, pauseIconId = -1, stopIconId = -1;
+		int playIconId = -1, pauseIconId = -1, stopIconId = -1, buildIconId = -1, launchIconId = -1;
 		try {
 			playIconId = new Texture2D(new TextureSettings(TextureType.TEXTURE_2D, TextureWrapMode.REPEAT, TextureFilterMode.NEAREST, true), FileIO.readResourceFileContentBytes("textures/ui/buttons/play.png")).getTextureID();
 			pauseIconId = new Texture2D(new TextureSettings(TextureType.TEXTURE_2D, TextureWrapMode.REPEAT, TextureFilterMode.NEAREST, true), FileIO.readResourceFileContentBytes("textures/ui/buttons/pause.png")).getTextureID();
 			stopIconId = new Texture2D(new TextureSettings(TextureType.TEXTURE_2D, TextureWrapMode.REPEAT, TextureFilterMode.NEAREST, true), FileIO.readResourceFileContentBytes("textures/ui/buttons/stop.png")).getTextureID();
+			buildIconId = new Texture2D(new TextureSettings(TextureType.TEXTURE_2D, TextureWrapMode.REPEAT, TextureFilterMode.NEAREST, true), FileIO.readResourceFileContentBytes("textures/ui/buttons/build.png")).getTextureID();
+			launchIconId = new Texture2D(new TextureSettings(TextureType.TEXTURE_2D, TextureWrapMode.REPEAT, TextureFilterMode.NEAREST, true), FileIO.readResourceFileContentBytes("textures/ui/buttons/launch.png")).getTextureID();
 		} catch (IOException e) {
 			Logger.error("EditorUI Failed to Initialize Editor Icons({}, {}, {})", playIconId, pauseIconId, stopIconId);
 			return;
@@ -182,7 +182,7 @@ public class EditorUI {
 			}
 		}
 		if (ImGui.isItemHovered())
-			ImGui.setTooltip("Play");
+			ImGui.setTooltip("Play in Editor");
 
 		ImGui.sameLine();
 
@@ -213,6 +213,36 @@ public class EditorUI {
 		}
 		if (ImGui.isItemHovered())
 			ImGui.setTooltip("Stop");
+
+		ImGui.sameLine();
+
+		// Build
+		if (editorState == EditorState.STOP) {
+			if (ImGui.imageButton("##build", buildIconId, iconSize, iconSize)) {
+				EventBus.getInstance().emit(new EditorBuildEvent());
+			}
+		} else {
+			ImGui.beginDisabled();
+			ImGui.imageButton("##build", buildIconId, iconSize, iconSize);
+			ImGui.endDisabled();
+		}
+		if (ImGui.isItemHovered())
+			ImGui.setTooltip("Build Project");
+
+		ImGui.sameLine();
+
+		// Launch
+		if (editorState == EditorState.STOP) {
+			if (ImGui.imageButton("##launch", launchIconId, iconSize, iconSize)) {
+				EventBus.getInstance().emit(new EditorLaunchEvent());
+			}
+		} else {
+			ImGui.beginDisabled();
+			ImGui.imageButton("##launch", launchIconId, iconSize, iconSize);
+			ImGui.endDisabled();
+		}
+		if (ImGui.isItemHovered())
+			ImGui.setTooltip("Launch Project in Runtime");
 
 		ImGui.endChild();
 		ImGui.popStyleColor(3);

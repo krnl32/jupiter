@@ -5,6 +5,12 @@ import com.krnl32.jupiter.editor.asset.importers.JSONSceneAssetImporter;
 import com.krnl32.jupiter.editor.asset.loaders.EditorLuaScriptAssetLoader;
 import com.krnl32.jupiter.editor.asset.loaders.EditorRasterTextureAssetLoader;
 import com.krnl32.jupiter.editor.asset.loaders.EditorSceneAssetLoader;
+import com.krnl32.jupiter.editor.build.BuildContext;
+import com.krnl32.jupiter.editor.build.BuildPipeline;
+import com.krnl32.jupiter.editor.build.steps.AssetRegistryGenerationStep;
+import com.krnl32.jupiter.editor.build.steps.AssetSerializationStep;
+import com.krnl32.jupiter.editor.build.steps.AssetValidationStep;
+import com.krnl32.jupiter.editor.events.editor.EditorBuildEvent;
 import com.krnl32.jupiter.editor.events.editor.EditorPauseEvent;
 import com.krnl32.jupiter.editor.events.editor.EditorPlayEvent;
 import com.krnl32.jupiter.editor.events.editor.EditorStopEvent;
@@ -128,6 +134,9 @@ public class Editor extends Engine {
 		registerComponentFactories();
 		registerComponentRenderers();
 		registerAssetRenderers();
+
+		// Register Editor Build Pipeline
+		registerBuildPipelines();
 
 		// Setup Scene
 		sceneManager = new SceneManager();
@@ -321,5 +330,19 @@ public class Editor extends Engine {
 		EditorRendererRegistry.registerAssetRenderer(AssetType.TEXTURE, new TextureAssetRenderer());
 		EditorRendererRegistry.registerAssetRenderer(AssetType.SCENE, new SceneAssetRenderer());
 		EditorRendererRegistry.registerAssetRenderer(AssetType.SCRIPT, new ScriptAssetRenderer());
+	}
+
+	private void registerBuildPipelines() {
+		EditorAssetManager editorAssetManager = (EditorAssetManager) ProjectContext.getInstance().getAssetManager();
+
+		BuildPipeline buildPipeline = new BuildPipeline();
+		buildPipeline.addStep(new AssetValidationStep(editorAssetManager));
+		buildPipeline.addStep(new AssetSerializationStep());
+		buildPipeline.addStep(new AssetRegistryGenerationStep());
+
+		EventBus.getInstance().register(EditorBuildEvent.class, event -> {
+			BuildContext ctx = new BuildContext();
+			buildPipeline.execute(ctx);
+		});
 	}
 }
