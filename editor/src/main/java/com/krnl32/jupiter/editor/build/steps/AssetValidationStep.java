@@ -20,13 +20,14 @@ public class AssetValidationStep implements BuildStep {
 
 	@Override
 	public boolean execute(BuildContext context) throws BuildException {
-		Logger.info("[AssetValidationStep] Validating Assets...");
-		if (assetManager.getAssets().isEmpty()) {
-			Logger.error("[AssetValidationStep] No Assets Found");
+		Logger.info("[{}] Validating Assets...", getName());
+
+		if (assetManager.getAssetIds().isEmpty()) {
+			Logger.error("[{}] No Assets Found", getName());
 			return false;
 		}
 
-		Logger.info("[AssetValidationStep] Validation Successful");
+		Logger.info("[{}] Validation Successful", getName());
 		return true;
 	}
 }

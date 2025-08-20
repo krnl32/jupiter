@@ -3,7 +3,7 @@ package com.krnl32.jupiter.runtime.asset.loaders;
 import com.krnl32.jupiter.engine.asset.handle.AssetDescriptor;
 import com.krnl32.jupiter.engine.asset.loader.AssetLoader;
 import com.krnl32.jupiter.engine.asset.serializer.AssetSerializer;
-import com.krnl32.jupiter.engine.asset.serializer.AssetSerializerRegistry;
+import com.krnl32.jupiter.engine.asset.serializer.GlobalAssetSerializerRegistry;
 import com.krnl32.jupiter.engine.asset.types.TextureAsset;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.project.ProjectContext;
@@ -18,7 +18,7 @@ public class JTextureAssetLoader implements AssetLoader<TextureAsset> {
 	@Override
 	public TextureAsset load(AssetDescriptor assetDescriptor) {
 		try {
-			AssetSerializer<TextureAsset, JTexture> assetSerializer = AssetSerializerRegistry.getSerializer(assetDescriptor.getAssetType());
+			AssetSerializer<TextureAsset, JTexture> assetSerializer = GlobalAssetSerializerRegistry.getSerializer(assetDescriptor.getAssetType());
 			if (assetSerializer == null) {
 				Logger.error("JTextureAssetLoader Failed to Load Asset({}): No Serializer for Type({})", assetDescriptor.getAssetId(), assetDescriptor.getAssetType());
 				return null;

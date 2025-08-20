@@ -4,7 +4,7 @@ import com.krnl32.jupiter.engine.asset.handle.AssetType;
 import com.krnl32.jupiter.engine.asset.loader.AssetLoaderRegistry;
 import com.krnl32.jupiter.engine.asset.registry.AssetRegistry;
 import com.krnl32.jupiter.engine.asset.registry.AssetRegistrySerializer;
-import com.krnl32.jupiter.engine.asset.serializer.AssetSerializerRegistry;
+import com.krnl32.jupiter.engine.asset.serializer.GlobalAssetSerializerRegistry;
 import com.krnl32.jupiter.engine.asset.types.TextureAsset;
 import com.krnl32.jupiter.engine.core.Engine;
 import com.krnl32.jupiter.engine.core.EngineSettings;
@@ -113,7 +113,7 @@ public class Runtime extends Engine {
 	}
 
 	private void registerAssetSerializers() {
-		AssetSerializerRegistry.register(AssetType.TEXTURE, TextureAsset.class, new JTextureAssetSerializer());
+		GlobalAssetSerializerRegistry.register(AssetType.TEXTURE, TextureAsset.class, new JTextureAssetSerializer());
 	}
 
 	private void registerAssetLoaders() {

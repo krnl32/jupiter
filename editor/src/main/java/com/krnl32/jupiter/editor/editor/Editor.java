@@ -51,6 +51,8 @@ import com.krnl32.jupiter.engine.asset.handle.AssetType;
 import com.krnl32.jupiter.editor.asset.importers.LuaScriptAssetImporter;
 import com.krnl32.jupiter.editor.asset.importers.RasterTextureAssetImporter;
 import com.krnl32.jupiter.engine.asset.loader.AssetLoaderRegistry;
+import com.krnl32.jupiter.engine.asset.serializer.AssetSerializerRegistry;
+import com.krnl32.jupiter.engine.asset.serializers.JTextureAssetSerializer;
 import com.krnl32.jupiter.engine.asset.types.SceneAsset;
 import com.krnl32.jupiter.engine.asset.types.ScriptAsset;
 import com.krnl32.jupiter.engine.asset.types.TextureAsset;
@@ -334,15 +336,25 @@ public class Editor extends Engine {
 
 	private void registerBuildPipelines() {
 		EditorAssetManager editorAssetManager = (EditorAssetManager) ProjectContext.getInstance().getAssetManager();
+		Path assetBuildOutputDirectory = ProjectContext.getInstance().getAssetDirectory().resolve("Build");
 
+		// Step Asset Serializers
+		AssetSerializerRegistry assetSerializerRegistry = new AssetSerializerRegistry();
+		assetSerializerRegistry.register(AssetType.TEXTURE, new JTextureAssetSerializer());
+
+		// Setup Build Pipeline
 		BuildPipeline buildPipeline = new BuildPipeline();
 		buildPipeline.addStep(new AssetValidationStep(editorAssetManager));
-		buildPipeline.addStep(new AssetSerializationStep());
-		buildPipeline.addStep(new AssetRegistryGenerationStep());
+		buildPipeline.addStep(new AssetSerializationStep(editorAssetManager, assetSerializerRegistry));
+		buildPipeline.addStep(new AssetRegistryGenerationStep(ProjectContext.getInstance().getAssetRegistryPath()));
 
+		// Setup Build Context
+		BuildContext buildContext = new BuildContext();
+		buildContext.setOutputDirectory(assetBuildOutputDirectory);
+
+		// Register Editor Build Event
 		EventBus.getInstance().register(EditorBuildEvent.class, event -> {
-			BuildContext ctx = new BuildContext();
-			buildPipeline.execute(ctx);
+			buildPipeline.execute(buildContext);
 		});
 	}
 }

@@ -156,9 +156,15 @@ public class EditorAssetManager implements AssetManager {
 		return (assetMetadata != null ? assetMetadata.getAssetType() : null);
 	}
 
-	public List<AssetId> getAssets() {
-		return assetRepository.getAllAssetMetadata()
-			.stream().map(AssetMetadata::getAssetId)
+	public List<AssetId> getAssetIds() {
+		return assetRepository.getAllAssetMetadata().stream()
+			.map(AssetMetadata::getAssetId)
+			.toList();
+	}
+
+	public List<Asset> getAssets() {
+		return assetRepository.getAllAssetMetadata().stream()
+			.map(assetMetadata -> (Asset) getAsset(assetMetadata.getAssetId()))
 			.toList();
 	}
 
