@@ -7,7 +7,7 @@ import com.krnl32.jupiter.engine.asset.types.SceneAsset;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.project.ProjectContext;
 import com.krnl32.jupiter.engine.scene.SceneSettings;
-import com.krnl32.jupiter.engine.serializer.SceneSerializer;
+import com.krnl32.jupiter.engine.sceneserializer.SceneSerializer;
 import com.krnl32.jupiter.engine.utility.FileIO;
 import imgui.ImGui;
 import imgui.flag.ImGuiCol;
@@ -22,7 +22,12 @@ import java.nio.file.Path;
 import java.util.Map;
 
 public class SceneAssetRenderer implements AssetRenderer<SceneAsset> {
+	private final SceneSerializer<Map<String, Object>> sceneSerializer;
 	private final Vector3f physicsGravity = new Vector3f();
+
+	public SceneAssetRenderer(SceneSerializer<Map<String, Object>> sceneSerializer) {
+		this.sceneSerializer = sceneSerializer;
+	}
 
 	@Override
 	public void render(SceneAsset asset) {
@@ -74,7 +79,7 @@ public class SceneAssetRenderer implements AssetRenderer<SceneAsset> {
 				Path assetPath = editorAssetManager.getAssetPath(asset.getId());
 				Path sceneFilePath = assetDirectory.resolve(assetPath);
 
-				Map<String, Object> sceneSerialized = SceneSerializer.serialize(asset.getScene());
+				Map<String, Object> sceneSerialized = sceneSerializer.serialize(asset.getScene());
 				JSONObject jsonScene = new JSONObject(sceneSerialized);
 				FileIO.writeFileContent(sceneFilePath, jsonScene.toString(4));
 

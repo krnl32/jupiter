@@ -2,7 +2,7 @@ package com.krnl32.jupiter.engine.asset.importsettings.types;
 
 import com.krnl32.jupiter.engine.asset.importsettings.ImportSettings;
 import com.krnl32.jupiter.engine.scene.SceneSettings;
-import com.krnl32.jupiter.engine.serializer.SceneSerializerUtility;
+import com.krnl32.jupiter.engine.sceneserializer.data.utility.DataSceneSerializerUtility;
 
 import java.util.Map;
 
@@ -15,12 +15,12 @@ public class SceneAssetImportSettings implements ImportSettings {
 
 	@Override
 	public Map<String, Object> toMap() {
-		return SceneSerializerUtility.serializerSceneSettings(settings);
+		return DataSceneSerializerUtility.serializerSceneSettings(settings);
 	}
 
 	@Override
 	public void fromMap(Map<String, Object> data) {
-		SceneSettings sceneSettings = SceneSerializerUtility.deserializeSceneSettings(data);
+		SceneSettings sceneSettings = DataSceneSerializerUtility.deserializeSceneSettings(data);
 		settings.setPhysicsSettings(sceneSettings.getPhysicsSettings());
 	}
 

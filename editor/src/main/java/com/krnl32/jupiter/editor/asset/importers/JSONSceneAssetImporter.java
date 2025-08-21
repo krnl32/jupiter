@@ -11,7 +11,7 @@ import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.physics.PhysicsSettings;
 import com.krnl32.jupiter.engine.scene.Scene;
 import com.krnl32.jupiter.engine.scene.SceneSettings;
-import com.krnl32.jupiter.engine.serializer.SceneSerializer;
+import com.krnl32.jupiter.engine.sceneserializer.SceneSerializer;
 import com.krnl32.jupiter.engine.utility.FileIO;
 import org.joml.Vector3f;
 
@@ -20,6 +20,12 @@ import java.nio.file.Path;
 import java.util.Map;
 
 public class JSONSceneAssetImporter implements AssetImporter<SceneAsset> {
+	private final SceneSerializer<Map<String, Object>> sceneSerializer;
+
+	public JSONSceneAssetImporter(SceneSerializer<Map<String, Object>> sceneSerializer) {
+		this.sceneSerializer = sceneSerializer;
+	}
+
 	@Override
 	public boolean supports(ImportRequest request) {
 		String fileExtension = FileIO.getFileExtension(Path.of(request.getSource()));
@@ -43,7 +49,7 @@ public class JSONSceneAssetImporter implements AssetImporter<SceneAsset> {
 			ObjectMapper mapper = new ObjectMapper();
 			Map<String, Object> sceneData = mapper.readValue(request.getData(), Map.class);
 
-			Scene scene = SceneSerializer.deserialize(sceneData);
+			Scene scene = sceneSerializer.deserialize(sceneData);
 
 			if (scene == null) {
 				Logger.error("JSONSceneAssetImporter Failed to Deserialize Scene({})", request.getSource());

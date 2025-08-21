@@ -19,7 +19,7 @@
             "generateMipmaps": true,
             "sRGB": false
         },
-        "wrapMode": "CLAMP_TO_EDGE",
+        "wrapMode": "REPEAT",
         "compressionType": "NONE",
         "anisotropicLevel": 4,
         "type": "TEXTURE_2D",
