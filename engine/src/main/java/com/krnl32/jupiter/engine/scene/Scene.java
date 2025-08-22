@@ -30,7 +30,7 @@ public abstract class Scene {
 
 	public Scene(String name) {
 		this.name = name;
-		this.sceneSettings = new SceneSettings(new PhysicsSettings(true, new Vector3f(0.0f, 9.8f, 0.0f)));
+		this.sceneSettings = new SceneSettings(new PhysicsSettings(true, new Vector3f(0.0f, -9.8f, 0.0f)));
 		this.registry = new Registry();
 		this.initialized = false;
 	}

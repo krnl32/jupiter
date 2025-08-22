@@ -58,6 +58,7 @@ public class AssetSerializationStep implements BuildStep {
 
 				if (serializedData == null) {
 					Logger.error("[{}] Skipping Asset({}), Serialization Failed for Type({})", getName(), asset.getId(), assetType);
+					continue;
 				}
 
 				FileIO.writeFileContentBytes(serializedFileOutput, serializedData);
@@ -67,7 +68,7 @@ public class AssetSerializationStep implements BuildStep {
 
 				Logger.info("[{}] Serialized Asset({}, {}) -> {}", getName(), asset.getId(), assetType, relativeNativeAssetPath);
 			} catch (Exception e) {
-				Logger.error("[{}] Skipping Asset({}), Failed to Save Serialized Data for Type({})", getName(), asset.getId(), assetType);
+				Logger.error("[{}] Skipping Asset({}), Failed to Save Serialized Data for Type({}): {}", getName(), asset.getId(), assetType, e.getMessage());
 			}
 		}
 

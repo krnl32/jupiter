@@ -26,7 +26,7 @@ public class EditorSceneAssetLoader implements AssetLoader<SceneAsset> {
 			Path assetPath = ProjectContext.getInstance().getAssetDirectory().resolve(assetDescriptor.getAssetPath());
 			String sceneData = FileIO.readFileContent(assetPath);
 
-			Scene scene = sceneSerializer.deserialize(new JSONObject(sceneData).toMap());
+			Scene scene = sceneSerializer.deserialize(new JSONObject(sceneData).toMap(), null);
 			if (scene == null) {
 				Logger.error("EditorSceneAssetLoader Failed to Deserialize SceneAsset({})", assetDescriptor.getAssetId());
 				return null;

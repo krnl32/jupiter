@@ -18,6 +18,7 @@ import com.krnl32.jupiter.engine.asset.database.AssetPersistence;
 import com.krnl32.jupiter.engine.asset.database.AssetRepository;
 import com.krnl32.jupiter.engine.asset.handle.AssetType;
 import com.krnl32.jupiter.engine.asset.serializer.AssetSerializerRegistry;
+import com.krnl32.jupiter.engine.asset.serializers.JSceneAssetSerializer;
 import com.krnl32.jupiter.engine.asset.serializers.JTextureAssetSerializer;
 import com.krnl32.jupiter.engine.asset.types.SceneAsset;
 import com.krnl32.jupiter.engine.cloner.SceneCloner;
@@ -38,6 +39,7 @@ import com.krnl32.jupiter.engine.sceneserializer.ComponentSerializerRegistry;
 import com.krnl32.jupiter.engine.sceneserializer.ComponentSerializerRegistryFactory;
 import com.krnl32.jupiter.engine.sceneserializer.SceneSerializer;
 import com.krnl32.jupiter.engine.sceneserializer.data.scene.DataSceneSerializer;
+import com.krnl32.jupiter.engine.sceneserializer.jnative.scene.JSceneSerializer;
 import org.joml.Vector4f;
 
 import java.nio.file.Path;
@@ -197,8 +199,12 @@ public class Editor extends Engine {
 		Path assetBuildOutputDirectory = ProjectContext.getInstance().getAssetDirectory().resolve("Build");
 
 		// Step Asset Serializers
+		ComponentSerializerRegistry componentSerializerRegistry = ComponentSerializerRegistryFactory.createJComponentSerializerRegistry();
+		SceneSerializer<byte[]> sceneSerializer = new JSceneSerializer(componentSerializerRegistry);
+
 		AssetSerializerRegistry assetSerializerRegistry = new AssetSerializerRegistry();
 		assetSerializerRegistry.register(AssetType.TEXTURE, new JTextureAssetSerializer());
+		assetSerializerRegistry.register(AssetType.SCENE, new JSceneAssetSerializer(sceneSerializer));
 
 		// Setup Build Pipeline
 		BuildPipeline buildPipeline = new BuildPipeline();

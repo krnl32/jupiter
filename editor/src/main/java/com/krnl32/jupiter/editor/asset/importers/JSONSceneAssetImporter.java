@@ -49,7 +49,7 @@ public class JSONSceneAssetImporter implements AssetImporter<SceneAsset> {
 			ObjectMapper mapper = new ObjectMapper();
 			Map<String, Object> sceneData = mapper.readValue(request.getData(), Map.class);
 
-			Scene scene = sceneSerializer.deserialize(sceneData);
+			Scene scene = sceneSerializer.deserialize(sceneData, null);
 
 			if (scene == null) {
 				Logger.error("JSONSceneAssetImporter Failed to Deserialize Scene({})", request.getSource());
