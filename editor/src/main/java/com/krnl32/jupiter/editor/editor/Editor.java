@@ -11,7 +11,7 @@ import com.krnl32.jupiter.editor.events.editor.EditorPauseEvent;
 import com.krnl32.jupiter.editor.events.editor.EditorPlayEvent;
 import com.krnl32.jupiter.editor.events.editor.EditorStopEvent;
 import com.krnl32.jupiter.editor.panels.ContentBrowserPanel;
-import com.krnl32.jupiter.editor.panels.InspectorPanel;
+import com.krnl32.jupiter.editor.panels.inspector.InspectorPanel;
 import com.krnl32.jupiter.editor.panels.SceneHierarchyPanel;
 import com.krnl32.jupiter.editor.panels.ViewportPanel;
 import com.krnl32.jupiter.engine.asset.database.AssetPersistence;

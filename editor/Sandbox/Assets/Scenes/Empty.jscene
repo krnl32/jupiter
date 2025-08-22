@@ -55,7 +55,7 @@
                 }
             },
             "TagComponent": {"tag": "Camera"},
-            "UUIDComponent": {"uuid": "d511f6eb-407a-4af0-a5d9-437153d2ed3f"}
+            "UUIDComponent": {"uuid": "3ff1179c-7087-42d6-9f4c-08b5dcfe14fb"}
         }},
         {"components": {
             "SpriteRendererComponent": {
@@ -77,7 +77,7 @@
                 ],
                 "index": -1
             },
-            "UUIDComponent": {"uuid": "724631ee-036a-44a2-9f89-f76313ce00da"},
+            "UUIDComponent": {"uuid": "1fd11048-969e-40d7-97c2-a0cb89ec6ed2"},
             "ScriptComponent": {"scripts": [
                 {
                     "scriptAssetId": "c5a19a6a-163d-4549-833b-b67222f9362f",
@@ -171,7 +171,7 @@
                 }
             },
             "TagComponent": {"tag": "floor0"},
-            "UUIDComponent": {"uuid": "188f9d4f-e765-46b8-93eb-0dd1ca93bb77"},
+            "UUIDComponent": {"uuid": "e79edd5d-d706-4061-9258-c7e0ef693736"},
             "BoxCollider2DComponent": {
                 "sensor": false,
                 "offset": {
@@ -247,7 +247,7 @@
                 }
             },
             "TagComponent": {"tag": "box1"},
-            "UUIDComponent": {"uuid": "daa3ea06-e533-4c2e-ae63-879b8d8010de"},
+            "UUIDComponent": {"uuid": "4fcfa023-9d23-4fdb-a5c5-bf8b6c62b48b"},
             "RigidBody2DComponent": {
                 "bodyType": "DYNAMIC",
                 "continuousCollision": true,

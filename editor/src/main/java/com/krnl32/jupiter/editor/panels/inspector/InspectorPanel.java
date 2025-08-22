@@ -1,4 +1,4 @@
-package com.krnl32.jupiter.editor.panels;
+package com.krnl32.jupiter.editor.panels.inspector;
 
 import com.krnl32.jupiter.editor.editor.EditorPanel;
 import com.krnl32.jupiter.editor.events.asset.AssetSelectedEvent;

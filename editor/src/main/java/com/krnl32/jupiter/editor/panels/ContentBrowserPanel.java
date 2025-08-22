@@ -268,14 +268,14 @@ public class ContentBrowserPanel implements EditorPanel {
 			return;
 		}
 
-		// Open in Inspector
-		EventBus.getInstance().emit(new AssetSelectedEvent(asset));
-
 		// Launch Scene
 		if (asset.getType() == AssetType.SCENE) {
 			SceneAsset sceneAsset = (SceneAsset) asset;
 			EventBus.getInstance().emit(new SwitchSceneEvent(sceneAsset.getScene()));
 		}
+
+		// Open in Inspector
+		EventBus.getInstance().emit(new AssetSelectedEvent(asset));
 	}
 
 	private void removeAsset(Path absoluteAssetPath) {

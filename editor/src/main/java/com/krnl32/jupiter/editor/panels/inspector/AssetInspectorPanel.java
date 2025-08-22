@@ -1,4 +1,4 @@
-package com.krnl32.jupiter.editor.panels;
+package com.krnl32.jupiter.editor.panels.inspector;
 
 import com.krnl32.jupiter.editor.asset.EditorAssetManager;
 import com.krnl32.jupiter.editor.editor.EditorPanel;
@@ -43,6 +43,8 @@ public class AssetInspectorPanel implements EditorPanel {
 			if (assetRenderer != null) {
 				assetRenderer.render(selectedAsset);
 			}
+		} else {
+			ImGui.textDisabled("No Asset Selected");
 		}
 
 		ImGui.popStyleVar(2);

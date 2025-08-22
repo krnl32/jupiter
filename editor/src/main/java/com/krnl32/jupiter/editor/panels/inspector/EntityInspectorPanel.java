@@ -1,4 +1,4 @@
-package com.krnl32.jupiter.editor.panels;
+package com.krnl32.jupiter.editor.panels.inspector;
 
 import com.krnl32.jupiter.editor.editor.EditorPanel;
 import com.krnl32.jupiter.editor.factory.ComponentFactory;
@@ -41,6 +41,8 @@ public class EntityInspectorPanel implements EditorPanel {
 	public void onRender(float dt) {
 		if (selectedEntity != null) {
 			renderComponents(selectedEntity, dt);
+		} else {
+			ImGui.textDisabled("No Entity Selected");
 		}
 	}
 
