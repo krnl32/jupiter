@@ -1,8 +1,6 @@
 package com.krnl32.jupiter.engine.physics;
 
 public enum BodyType {
-	INVALID((byte) 0x00),
-
 	STATIC((byte) 0x01),
 	DYNAMIC((byte) 0x02),
 	KINEMATIC((byte) 0x03);
@@ -23,6 +21,6 @@ public enum BodyType {
 				return type;
 			}
 		}
-		return INVALID;
+		return null;
 	}
 }

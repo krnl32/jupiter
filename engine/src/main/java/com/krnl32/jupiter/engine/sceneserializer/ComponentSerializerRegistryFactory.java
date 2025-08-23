@@ -40,6 +40,8 @@ import com.krnl32.jupiter.engine.sceneserializer.jnative.components.physics.JCir
 import com.krnl32.jupiter.engine.sceneserializer.jnative.components.physics.JRigidBody2DComponentSerializer;
 import com.krnl32.jupiter.engine.sceneserializer.jnative.components.projectile.JProjectileComponentSerializer;
 import com.krnl32.jupiter.engine.sceneserializer.jnative.components.projectile.JProjectileEmitterComponentSerializer;
+import com.krnl32.jupiter.engine.sceneserializer.jnative.components.renderer.JCameraComponentSerializer;
+import com.krnl32.jupiter.engine.sceneserializer.jnative.components.renderer.JSpriteRendererComponentSerializer;
 import com.krnl32.jupiter.engine.sceneserializer.jnative.components.utility.JLifetimeComponentSerializer;
 import com.krnl32.jupiter.engine.sceneserializer.jnative.components.utility.JTagComponentSerializer;
 import com.krnl32.jupiter.engine.sceneserializer.jnative.components.utility.JUUIDComponentSerializer;
@@ -112,8 +114,8 @@ public class ComponentSerializerRegistryFactory {
 		serializerRegistry.register(CircleCollider2DComponent.class, new JCircleCollider2DComponentSerializer());
 
 		// Renderer
-//		serializerRegistry.register(CameraComponent.class, new DataCameraComponentSerializer());
-//		serializerRegistry.register(SpriteRendererComponent.class, new DataSpriteRendererComponentSerializer());
+		serializerRegistry.register(CameraComponent.class, new JCameraComponentSerializer());
+		serializerRegistry.register(SpriteRendererComponent.class, new JSpriteRendererComponentSerializer());
 
 		// Input
 		serializerRegistry.register(KeyboardControlComponent.class, new JKeyboardControlComponentSerializer());
