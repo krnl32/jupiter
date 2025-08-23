@@ -30,10 +30,16 @@ import com.krnl32.jupiter.engine.sceneserializer.data.components.renderer.DataSp
 import com.krnl32.jupiter.engine.sceneserializer.data.components.utility.DataLifetimeComponentSerializer;
 import com.krnl32.jupiter.engine.sceneserializer.data.components.utility.DataTagComponentSerializer;
 import com.krnl32.jupiter.engine.sceneserializer.data.components.utility.DataUUIDComponentSerializer;
+import com.krnl32.jupiter.engine.sceneserializer.jnative.components.effects.JBlinkComponentSerializer;
+import com.krnl32.jupiter.engine.sceneserializer.jnative.components.effects.JDeathEffectComponentSerializer;
+import com.krnl32.jupiter.engine.sceneserializer.jnative.components.effects.JParticleComponentSerializer;
 import com.krnl32.jupiter.engine.sceneserializer.jnative.components.gameplay.*;
+import com.krnl32.jupiter.engine.sceneserializer.jnative.components.input.JKeyboardControlComponentSerializer;
 import com.krnl32.jupiter.engine.sceneserializer.jnative.components.physics.JBoxCollider2DComponentSerializer;
 import com.krnl32.jupiter.engine.sceneserializer.jnative.components.physics.JCircleCollider2DComponentSerializer;
 import com.krnl32.jupiter.engine.sceneserializer.jnative.components.physics.JRigidBody2DComponentSerializer;
+import com.krnl32.jupiter.engine.sceneserializer.jnative.components.projectile.JProjectileComponentSerializer;
+import com.krnl32.jupiter.engine.sceneserializer.jnative.components.projectile.JProjectileEmitterComponentSerializer;
 import com.krnl32.jupiter.engine.sceneserializer.jnative.components.utility.JLifetimeComponentSerializer;
 import com.krnl32.jupiter.engine.sceneserializer.jnative.components.utility.JTagComponentSerializer;
 import com.krnl32.jupiter.engine.sceneserializer.jnative.components.utility.JUUIDComponentSerializer;
@@ -88,9 +94,9 @@ public class ComponentSerializerRegistryFactory {
 		serializerRegistry.register(LifetimeComponent.class, new JLifetimeComponentSerializer());
 
 		// Effects
-//		serializerRegistry.register(BlinkComponent.class, new DataBlinkComponentSerializer());
-//		serializerRegistry.register(DeathEffectComponent.class, new DataDeathEffectComponentSerializer());
-//		serializerRegistry.register(ParticleComponent.class, new DataParticleComponentSerializer());
+		serializerRegistry.register(BlinkComponent.class, new JBlinkComponentSerializer());
+		serializerRegistry.register(DeathEffectComponent.class, new JDeathEffectComponentSerializer());
+		serializerRegistry.register(ParticleComponent.class, new JParticleComponentSerializer());
 
 		// Gameplay
 		serializerRegistry.register(TransformComponent.class, new JTransformComponentSerializer());
@@ -110,11 +116,11 @@ public class ComponentSerializerRegistryFactory {
 //		serializerRegistry.register(SpriteRendererComponent.class, new DataSpriteRendererComponentSerializer());
 
 		// Input
-//		serializerRegistry.register(KeyboardControlComponent.class, new DataKeyboardControlComponentSerializer());
+		serializerRegistry.register(KeyboardControlComponent.class, new JKeyboardControlComponentSerializer());
 
 		// Projectile
-//		serializerRegistry.register(ProjectileComponent.class, new DataProjectileComponentSerializer());
-//		serializerRegistry.register(ProjectileEmitterComponent.class, new DataProjectileEmitterComponentSerializer());
+		serializerRegistry.register(ProjectileComponent.class, new JProjectileComponentSerializer());
+		serializerRegistry.register(ProjectileEmitterComponent.class, new JProjectileEmitterComponentSerializer());
 
 		return serializerRegistry;
 	}
