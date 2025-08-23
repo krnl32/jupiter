@@ -39,6 +39,7 @@ public class JTagComponentSerializer implements ComponentSerializer<TagComponent
 		}
 
 		String tag = new String(data, 1, length, StandardCharsets.UTF_8);
+
 		return new TagComponent(tag);
 	}
 }

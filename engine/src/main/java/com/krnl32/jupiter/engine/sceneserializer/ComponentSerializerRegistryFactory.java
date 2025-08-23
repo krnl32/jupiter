@@ -30,7 +30,8 @@ import com.krnl32.jupiter.engine.sceneserializer.data.components.renderer.DataSp
 import com.krnl32.jupiter.engine.sceneserializer.data.components.utility.DataLifetimeComponentSerializer;
 import com.krnl32.jupiter.engine.sceneserializer.data.components.utility.DataTagComponentSerializer;
 import com.krnl32.jupiter.engine.sceneserializer.data.components.utility.DataUUIDComponentSerializer;
-import com.krnl32.jupiter.engine.sceneserializer.jnative.components.gameplay.JTransformComponentSerializer;
+import com.krnl32.jupiter.engine.sceneserializer.jnative.components.gameplay.*;
+import com.krnl32.jupiter.engine.sceneserializer.jnative.components.utility.JLifetimeComponentSerializer;
 import com.krnl32.jupiter.engine.sceneserializer.jnative.components.utility.JTagComponentSerializer;
 import com.krnl32.jupiter.engine.sceneserializer.jnative.components.utility.JUUIDComponentSerializer;
 
@@ -81,7 +82,7 @@ public class ComponentSerializerRegistryFactory {
 		// Utility
 		serializerRegistry.register(UUIDComponent.class, new JUUIDComponentSerializer());
 		serializerRegistry.register(TagComponent.class, new JTagComponentSerializer());
-//		serializerRegistry.register(LifetimeComponent.class, new DataLifetimeComponentSerializer());
+		serializerRegistry.register(LifetimeComponent.class, new JLifetimeComponentSerializer());
 
 		// Effects
 //		serializerRegistry.register(BlinkComponent.class, new DataBlinkComponentSerializer());
@@ -90,11 +91,11 @@ public class ComponentSerializerRegistryFactory {
 
 		// Gameplay
 		serializerRegistry.register(TransformComponent.class, new JTransformComponentSerializer());
-//		serializerRegistry.register(HealthComponent.class, new DataHealthComponentSerializer());
-//		serializerRegistry.register(TeamComponent.class, new DataTeamComponentSerializer());
-//		serializerRegistry.register(MovementIntentComponent.class, new DataMovementIntentComponentSerializer());
-//		serializerRegistry.register(ForceMovementComponent.class, new DataForceMovementComponentSerializer());
-//		serializerRegistry.register(ScriptComponent.class, new DataScriptComponentSerializer());
+		serializerRegistry.register(HealthComponent.class, new JHealthComponentSerializer());
+		serializerRegistry.register(TeamComponent.class, new JTeamComponentSerializer());
+		serializerRegistry.register(MovementIntentComponent.class, new JMovementIntentComponentSerializer());
+		serializerRegistry.register(ForceMovementComponent.class, new JForceMovementComponentSerializer());
+		serializerRegistry.register(ScriptComponent.class, new JScriptComponentSerializer());
 
 		// Physics
 //		serializerRegistry.register(RigidBody2DComponent.class, new DataRigidBody2DComponentSerializer());

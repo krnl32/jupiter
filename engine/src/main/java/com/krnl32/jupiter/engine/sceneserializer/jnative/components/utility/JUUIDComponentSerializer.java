@@ -13,6 +13,8 @@ import java.util.UUID;
  * 16 Bytes	UUID
  */
 public class JUUIDComponentSerializer implements ComponentSerializer<UUIDComponent, byte[]> {
+	private static final int SIZE = 16;
+
 	@Override
 	public byte[] serialize(UUIDComponent component) {
 		return JSerializerUtility.serializeUUID(component.uuid);
@@ -20,12 +22,13 @@ public class JUUIDComponentSerializer implements ComponentSerializer<UUIDCompone
 
 	@Override
 	public UUIDComponent deserialize(byte[] data, EntityResolver resolver) {
-		if (data.length != 16) {
+		if (data.length != SIZE) {
 			Logger.error("JUUIDComponentSerializer Deserialize failed, Corrupted Data, Size({})", data.length);
 			return null;
 		}
 
 		UUID uuid = JSerializerUtility.deserializeUUID(data);
+
 		return new UUIDComponent(uuid);
 	}
 }

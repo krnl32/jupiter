@@ -7,6 +7,108 @@ import java.nio.ByteOrder;
 import java.util.UUID;
 
 public class JSerializerUtility {
+	// Primitive
+
+	// Byte
+	public static byte[] serializeByte(byte value) {
+		ByteBuffer buffer = ByteBuffer.allocate(1).order(ByteOrder.LITTLE_ENDIAN);
+		buffer.put(value);
+		return buffer.array();
+	}
+
+	public static byte deserializeByte(byte[] data) {
+		ByteBuffer buffer = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
+		return buffer.get();
+	}
+
+	public static void serializeByte(ByteBuffer buffer, byte value) {
+		buffer.put(value);
+	}
+
+	public static byte deserializeByte(ByteBuffer buffer) {
+		return buffer.get();
+	}
+
+	// Bool
+	public static byte[] serializeBool(boolean value) {
+		ByteBuffer buffer = ByteBuffer.allocate(1).order(ByteOrder.LITTLE_ENDIAN);
+		buffer.put((byte) (value ? 1 : 0));
+		return buffer.array();
+	}
+
+	public static boolean deserializeBool(byte[] data) {
+		ByteBuffer buffer = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
+		return buffer.get() != 0;
+	}
+
+	public static void serializeBool(ByteBuffer buffer, boolean value) {
+		buffer.put((byte) (value ? 1 : 0));
+	}
+
+	public static boolean deserializeBool(ByteBuffer buffer) {
+		return buffer.get() != 0;
+	}
+
+	// Int
+	public static byte[] serializeInt(int value) {
+		ByteBuffer buffer = ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN);
+		buffer.putInt(value);
+		return buffer.array();
+	}
+
+	public static int deserializeInt(byte[] data) {
+		ByteBuffer buffer = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
+		return buffer.getInt();
+	}
+
+	public static void serializeInt(ByteBuffer buffer, int value) {
+		buffer.putInt(value);
+	}
+
+	public static int deserializeInt(ByteBuffer buffer) {
+		return buffer.getInt();
+	}
+
+	// Long
+	public static byte[] serializeLong(long value) {
+		ByteBuffer buffer = ByteBuffer.allocate(8).order(ByteOrder.LITTLE_ENDIAN);
+		buffer.putLong(value);
+		return buffer.array();
+	}
+
+	public static long deserializeLong(byte[] data) {
+		ByteBuffer buffer = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
+		return buffer.getLong();
+	}
+
+	public static void serializeLong(ByteBuffer buffer, long value) {
+		buffer.putLong(value);
+	}
+
+	public static long deserializeLong(ByteBuffer buffer) {
+		return buffer.getLong();
+	}
+
+	// Float
+	public static byte[] serializeFloat(float value) {
+		ByteBuffer buffer = ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN);
+		buffer.putFloat(value);
+		return buffer.array();
+	}
+
+	public static float deserializeFloat(byte[] data) {
+		ByteBuffer buffer = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
+		return buffer.getFloat();
+	}
+
+	public static void serializeFloat(ByteBuffer buffer, float value) {
+		buffer.putFloat(value);
+	}
+
+	public static float deserializeFloat(ByteBuffer buffer) {
+		return buffer.getFloat();
+	}
+
 	// JOML Math Types
 	public static byte[] serializeVector2f(Vector2fc vec) {
 		ByteBuffer buffer = ByteBuffer.allocate(8).order(ByteOrder.LITTLE_ENDIAN);
@@ -15,16 +117,16 @@ public class JSerializerUtility {
 		return buffer.array();
 	}
 
-	public static void serializeVector2f(ByteBuffer buffer, Vector2fc vec) {
-		buffer.putFloat(vec.x());
-		buffer.putFloat(vec.y());
-	}
-
 	public static Vector2f deserializeVector2f(byte[] data) {
 		ByteBuffer buffer = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
 		float x = buffer.getFloat();
 		float y = buffer.getFloat();
 		return new Vector2f(x, y);
+	}
+
+	public static void serializeVector2f(ByteBuffer buffer, Vector2fc vec) {
+		buffer.putFloat(vec.x());
+		buffer.putFloat(vec.y());
 	}
 
 	public static Vector2f deserializeVector2f(ByteBuffer buffer) {
@@ -41,18 +143,18 @@ public class JSerializerUtility {
 		return buffer.array();
 	}
 
-	public static void serializeVector3f(ByteBuffer buffer, Vector3fc vec) {
-		buffer.putFloat(vec.x());
-		buffer.putFloat(vec.y());
-		buffer.putFloat(vec.z());
-	}
-
 	public static Vector3f deserializeVector3f(byte[] data) {
 		ByteBuffer buffer = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
 		float x = buffer.getFloat();
 		float y = buffer.getFloat();
 		float z = buffer.getFloat();
 		return new Vector3f(x, y, z);
+	}
+
+	public static void serializeVector3f(ByteBuffer buffer, Vector3fc vec) {
+		buffer.putFloat(vec.x());
+		buffer.putFloat(vec.y());
+		buffer.putFloat(vec.z());
 	}
 
 	public static Vector3f deserializeVector3f(ByteBuffer buffer) {
@@ -71,13 +173,6 @@ public class JSerializerUtility {
 		return buffer.array();
 	}
 
-	public static void serializeVector4f(ByteBuffer buffer, Vector4fc vec) {
-		buffer.putFloat(vec.x());
-		buffer.putFloat(vec.y());
-		buffer.putFloat(vec.z());
-		buffer.putFloat(vec.w());
-	}
-
 	public static Vector4f deserializeVector4f(byte[] data) {
 		ByteBuffer buffer = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
 		float x = buffer.getFloat();
@@ -85,6 +180,13 @@ public class JSerializerUtility {
 		float z = buffer.getFloat();
 		float w = buffer.getFloat();
 		return new Vector4f(x, y, z, w);
+	}
+
+	public static void serializeVector4f(ByteBuffer buffer, Vector4fc vec) {
+		buffer.putFloat(vec.x());
+		buffer.putFloat(vec.y());
+		buffer.putFloat(vec.z());
+		buffer.putFloat(vec.w());
 	}
 
 	public static Vector4f deserializeVector4f(ByteBuffer buffer) {
@@ -103,16 +205,16 @@ public class JSerializerUtility {
 		return buffer.array();
 	}
 
-	public static void serializeUUID(ByteBuffer buffer, UUID uuid) {
-		buffer.putLong(uuid.getMostSignificantBits());
-		buffer.putLong(uuid.getLeastSignificantBits());
-	}
-
 	public static UUID deserializeUUID(byte[] data) {
 		ByteBuffer buffer = ByteBuffer.wrap(data);
 		long mostSignificantBits = buffer.getLong();
 		long leastSignificantBits = buffer.getLong();
 		return new UUID(mostSignificantBits, leastSignificantBits);
+	}
+
+	public static void serializeUUID(ByteBuffer buffer, UUID uuid) {
+		buffer.putLong(uuid.getMostSignificantBits());
+		buffer.putLong(uuid.getLeastSignificantBits());
 	}
 
 	public static UUID deserializeUUID(ByteBuffer buffer) {
