@@ -16,10 +16,11 @@ import java.nio.ByteOrder;
  */
 public class JHealthComponentSerializer implements ComponentSerializer<HealthComponent, byte[]> {
 	private static final int SIZE = 8;
+	private static final ByteOrder ENDIANNESS = ByteOrder.LITTLE_ENDIAN;
 
 	@Override
 	public byte[] serialize(HealthComponent component) {
-		ByteBuffer buffer = ByteBuffer.allocate(SIZE).order(ByteOrder.LITTLE_ENDIAN);
+		ByteBuffer buffer = ByteBuffer.allocate(SIZE).order(ENDIANNESS);
 		JSerializerUtility.serializeFloat(buffer, component.maxHealth);
 		JSerializerUtility.serializeFloat(buffer, component.currentHealth);
 
@@ -33,7 +34,7 @@ public class JHealthComponentSerializer implements ComponentSerializer<HealthCom
 			return null;
 		}
 
-		ByteBuffer buffer = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
+		ByteBuffer buffer = ByteBuffer.wrap(data).order(ENDIANNESS);
 		float maxHealth = JSerializerUtility.deserializeFloat(buffer);
 		float currentHealth = JSerializerUtility.deserializeFloat(buffer);
 

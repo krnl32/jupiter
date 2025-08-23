@@ -6,12 +6,15 @@ import com.krnl32.jupiter.engine.sceneserializer.ComponentSerializer;
 import com.krnl32.jupiter.engine.sceneserializer.jnative.utility.JSerializerUtility;
 import com.krnl32.jupiter.engine.sceneserializer.resolvers.EntityResolver;
 
+import java.nio.ByteOrder;
+
 /*
  * == LifetimeComponent (size: 4 Bytes) ==
  * 4 Bytes	RemainingTime	float32
  */
 public class JLifetimeComponentSerializer implements ComponentSerializer<LifetimeComponent, byte[]> {
 	private static final int SIZE = 4;
+	private static final ByteOrder ENDIANNESS = ByteOrder.LITTLE_ENDIAN;
 
 	@Override
 	public byte[] serialize(LifetimeComponent component) {

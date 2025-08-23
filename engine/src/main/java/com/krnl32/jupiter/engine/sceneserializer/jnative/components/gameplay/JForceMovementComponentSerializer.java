@@ -19,10 +19,11 @@ import java.nio.ByteOrder;
  */
 public class JForceMovementComponentSerializer implements ComponentSerializer<ForceMovementComponent, byte[]> {
 	private static final int SIZE = 20;
+	private static final ByteOrder ENDIANNESS = ByteOrder.LITTLE_ENDIAN;
 
 	@Override
 	public byte[] serialize(ForceMovementComponent component) {
-		ByteBuffer buffer = ByteBuffer.allocate(SIZE).order(ByteOrder.LITTLE_ENDIAN);
+		ByteBuffer buffer = ByteBuffer.allocate(SIZE).order(ENDIANNESS);
 		JSerializerUtility.serializeFloat(buffer, component.moveForce);
 		JSerializerUtility.serializeFloat(buffer, component.sprintMultiplier);
 		JSerializerUtility.serializeFloat(buffer, component.maxSpeed);
@@ -39,7 +40,7 @@ public class JForceMovementComponentSerializer implements ComponentSerializer<Fo
 			return null;
 		}
 
-		ByteBuffer buffer = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
+		ByteBuffer buffer = ByteBuffer.wrap(data).order(ENDIANNESS);
 		float moveForce = JSerializerUtility.deserializeFloat(buffer);
 		float sprintMultiplier = JSerializerUtility.deserializeFloat(buffer);
 		float maxSpeed = JSerializerUtility.deserializeFloat(buffer);

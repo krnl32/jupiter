@@ -18,10 +18,11 @@ import java.nio.ByteOrder;
  */
 public class JTransformComponentSerializer implements ComponentSerializer<TransformComponent, byte[]> {
 	private static final int SIZE = 36;
+	private static final ByteOrder ENDIANNESS = ByteOrder.LITTLE_ENDIAN;
 
 	@Override
 	public byte[] serialize(TransformComponent component) {
-		ByteBuffer buffer = ByteBuffer.allocate(SIZE).order(ByteOrder.LITTLE_ENDIAN);
+		ByteBuffer buffer = ByteBuffer.allocate(SIZE).order(ENDIANNESS);
 		JSerializerUtility.serializeVector3f(buffer, component.translation);
 		JSerializerUtility.serializeVector3f(buffer, component.rotation);
 		JSerializerUtility.serializeVector3f(buffer, component.scale);
@@ -36,7 +37,7 @@ public class JTransformComponentSerializer implements ComponentSerializer<Transf
 			return null;
 		}
 
-		ByteBuffer buffer = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
+		ByteBuffer buffer = ByteBuffer.wrap(data).order(ENDIANNESS);
 		Vector3f translation = JSerializerUtility.deserializeVector3f(buffer);
 		Vector3f rotation = JSerializerUtility.deserializeVector3f(buffer);
 		Vector3f scale = JSerializerUtility.deserializeVector3f(buffer);

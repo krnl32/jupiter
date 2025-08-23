@@ -6,6 +6,7 @@ import com.krnl32.jupiter.engine.sceneserializer.ComponentSerializer;
 import com.krnl32.jupiter.engine.sceneserializer.jnative.utility.JSerializerUtility;
 import com.krnl32.jupiter.engine.sceneserializer.resolvers.EntityResolver;
 
+import java.nio.ByteOrder;
 import java.util.UUID;
 
 /*
@@ -14,6 +15,7 @@ import java.util.UUID;
  */
 public class JUUIDComponentSerializer implements ComponentSerializer<UUIDComponent, byte[]> {
 	private static final int SIZE = 16;
+	private static final ByteOrder ENDIANNESS = ByteOrder.LITTLE_ENDIAN;
 
 	@Override
 	public byte[] serialize(UUIDComponent component) {

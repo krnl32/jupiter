@@ -6,12 +6,15 @@ import com.krnl32.jupiter.engine.sceneserializer.ComponentSerializer;
 import com.krnl32.jupiter.engine.sceneserializer.jnative.utility.JSerializerUtility;
 import com.krnl32.jupiter.engine.sceneserializer.resolvers.EntityResolver;
 
+import java.nio.ByteOrder;
+
 /*
  * == TeamComponent (size: 4 Bytes) ==
  * 4 Bytes	TeamID	uint32
  */
 public class JTeamComponentSerializer implements ComponentSerializer<TeamComponent, byte[]> {
 	private static final int SIZE = 4;
+	private static final ByteOrder ENDIANNESS = ByteOrder.LITTLE_ENDIAN;
 
 	@Override
 	public byte[] serialize(TeamComponent component) {

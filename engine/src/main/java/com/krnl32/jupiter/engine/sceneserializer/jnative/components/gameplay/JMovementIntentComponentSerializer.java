@@ -19,10 +19,11 @@ import java.nio.ByteOrder;
  */
 public class JMovementIntentComponentSerializer implements ComponentSerializer<MovementIntentComponent, byte[]> {
 	private static final int SIZE = 26;
+	private static final ByteOrder ENDIANNESS = ByteOrder.LITTLE_ENDIAN;
 
 	@Override
 	public byte[] serialize(MovementIntentComponent component) {
-		ByteBuffer buffer = ByteBuffer.allocate(SIZE).order(ByteOrder.LITTLE_ENDIAN);
+		ByteBuffer buffer = ByteBuffer.allocate(SIZE).order(ENDIANNESS);
 		JSerializerUtility.serializeVector3f(buffer, component.translation);
 		JSerializerUtility.serializeVector3f(buffer, component.rotation);
 		JSerializerUtility.serializeBool(buffer, component.jump);
@@ -38,7 +39,7 @@ public class JMovementIntentComponentSerializer implements ComponentSerializer<M
 			return null;
 		}
 
-		ByteBuffer buffer = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
+		ByteBuffer buffer = ByteBuffer.wrap(data).order(ENDIANNESS);
 		Vector3f translation = JSerializerUtility.deserializeVector3f(buffer);
 		Vector3f rotation = JSerializerUtility.deserializeVector3f(buffer);
 		boolean jump = JSerializerUtility.deserializeBool(buffer);

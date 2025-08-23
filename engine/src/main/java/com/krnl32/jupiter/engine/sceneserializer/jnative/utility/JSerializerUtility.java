@@ -109,6 +109,81 @@ public class JSerializerUtility {
 		return buffer.getFloat();
 	}
 
+	// Byte Array
+	public static void serializeByteArray(ByteBuffer buffer, byte[] values) {
+		buffer.put(values);
+	}
+
+	public static byte[] deserializeByteArray(ByteBuffer buffer, int length) {
+		byte[] values = new byte[length];
+		buffer.get(values);
+		return values;
+	}
+
+	// Int Array
+	public static byte[] serializeIntArray(int[] values) {
+		ByteBuffer buffer = ByteBuffer.allocate(4 * values.length).order(ByteOrder.LITTLE_ENDIAN);
+		for (int value : values) {
+			buffer.putInt(value);
+		}
+		return buffer.array();
+	}
+
+	public static int[] deserializeIntArray(byte[] data) {
+		ByteBuffer buffer = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
+		int[] values = new int[data.length / 4];
+		for (int i = 0; i < values.length; i++) {
+			values[i] = buffer.getInt();
+		}
+		return values;
+	}
+
+	public static void serializeIntArray(ByteBuffer buffer, int[] values) {
+		for (int value : values) {
+			buffer.putInt(value);
+		}
+	}
+
+	public static int[] deserializeIntArray(ByteBuffer buffer, int length) {
+		int[] values = new int[length];
+		for (int i = 0; i < length; i++) {
+			values[i] = buffer.getInt();
+		}
+		return values;
+	}
+
+	// Float Array
+	public static byte[] serializeFloatArray(float[] values) {
+		ByteBuffer buffer = ByteBuffer.allocate(4 * values.length).order(ByteOrder.LITTLE_ENDIAN);
+		for (float value : values) {
+			buffer.putFloat(value);
+		}
+		return buffer.array();
+	}
+
+	public static float[] deserializeFloatArray(byte[] data) {
+		ByteBuffer buffer = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
+		float[] values = new float[data.length / 4];
+		for (int i = 0; i < values.length; i++) {
+			values[i] = buffer.getFloat();
+		}
+		return values;
+	}
+
+	public static void serializeFloatArray(ByteBuffer buffer, float[] values) {
+		for (float value : values) {
+			buffer.putFloat(value);
+		}
+	}
+
+	public static float[] deserializeFloatArray(ByteBuffer buffer, int length) {
+		float[] values = new float[length];
+		for (int i = 0; i < length; i++) {
+			values[i] = buffer.getFloat();
+		}
+		return values;
+	}
+
 	// JOML Math Types
 	public static byte[] serializeVector2f(Vector2fc vec) {
 		ByteBuffer buffer = ByteBuffer.allocate(8).order(ByteOrder.LITTLE_ENDIAN);

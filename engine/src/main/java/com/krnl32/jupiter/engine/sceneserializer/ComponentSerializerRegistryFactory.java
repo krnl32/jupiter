@@ -31,6 +31,9 @@ import com.krnl32.jupiter.engine.sceneserializer.data.components.utility.DataLif
 import com.krnl32.jupiter.engine.sceneserializer.data.components.utility.DataTagComponentSerializer;
 import com.krnl32.jupiter.engine.sceneserializer.data.components.utility.DataUUIDComponentSerializer;
 import com.krnl32.jupiter.engine.sceneserializer.jnative.components.gameplay.*;
+import com.krnl32.jupiter.engine.sceneserializer.jnative.components.physics.JBoxCollider2DComponentSerializer;
+import com.krnl32.jupiter.engine.sceneserializer.jnative.components.physics.JCircleCollider2DComponentSerializer;
+import com.krnl32.jupiter.engine.sceneserializer.jnative.components.physics.JRigidBody2DComponentSerializer;
 import com.krnl32.jupiter.engine.sceneserializer.jnative.components.utility.JLifetimeComponentSerializer;
 import com.krnl32.jupiter.engine.sceneserializer.jnative.components.utility.JTagComponentSerializer;
 import com.krnl32.jupiter.engine.sceneserializer.jnative.components.utility.JUUIDComponentSerializer;
@@ -98,9 +101,9 @@ public class ComponentSerializerRegistryFactory {
 		serializerRegistry.register(ScriptComponent.class, new JScriptComponentSerializer());
 
 		// Physics
-//		serializerRegistry.register(RigidBody2DComponent.class, new DataRigidBody2DComponentSerializer());
-//		serializerRegistry.register(BoxCollider2DComponent.class, new DataBoxCollider2DComponentSerializer());
-//		serializerRegistry.register(CircleCollider2DComponent.class, new DataCircleCollider2DComponentSerializer());
+		serializerRegistry.register(RigidBody2DComponent.class, new JRigidBody2DComponentSerializer());
+		serializerRegistry.register(BoxCollider2DComponent.class, new JBoxCollider2DComponentSerializer());
+		serializerRegistry.register(CircleCollider2DComponent.class, new JCircleCollider2DComponentSerializer());
 
 		// Renderer
 //		serializerRegistry.register(CameraComponent.class, new DataCameraComponentSerializer());
