@@ -6,7 +6,9 @@ import com.krnl32.jupiter.engine.asset.types.SceneAsset;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.project.ProjectContext;
 import com.krnl32.jupiter.engine.scene.Scene;
+import com.krnl32.jupiter.engine.scene.SceneSettings;
 import com.krnl32.jupiter.engine.sceneserializer.SceneSerializer;
+import com.krnl32.jupiter.engine.sceneserializer.data.utility.DataSceneSerializerUtility;
 import com.krnl32.jupiter.engine.utility.FileIO;
 import org.json.JSONObject;
 
@@ -24,9 +26,16 @@ public class EditorSceneAssetLoader implements AssetLoader<SceneAsset> {
 	public SceneAsset load(AssetDescriptor assetDescriptor) {
 		try {
 			Path assetPath = ProjectContext.getInstance().getAssetDirectory().resolve(assetDescriptor.getAssetPath());
-			String sceneData = FileIO.readFileContent(assetPath);
 
-			Scene scene = sceneSerializer.deserialize(new JSONObject(sceneData).toMap(), null);
+			String sceneFileData = FileIO.readFileContent(assetPath);
+			Map<String, Object> sceneData = new JSONObject(sceneFileData).toMap();
+
+			// Deserialize Scene Settings
+			Map<String, Object> sceneSettingsData = (Map<String, Object>) sceneData.get("settings");
+			SceneSettings sceneSettings = DataSceneSerializerUtility.deserializeSceneSettings(sceneSettingsData);
+
+			// Deserialize Scene
+			Scene scene = sceneSerializer.deserialize(sceneData, sceneSettings);
 			if (scene == null) {
 				Logger.error("EditorSceneAssetLoader Failed to Deserialize SceneAsset({})", assetDescriptor.getAssetId());
 				return null;

@@ -40,10 +40,8 @@ public class DataSceneSerializer implements SceneSerializer<Map<String, Object>>
 	@SuppressWarnings("unchecked")
 	public Scene deserialize(Map<String, Object> data, SceneSettings settings) {
 		String sceneName = (String) data.get("name");
-		Map<String, Object> sceneSettingsSerialized = (Map<String, Object>) data.get("settings");
-		SceneSettings sceneSettings = DataSceneSerializerUtility.deserializeSceneSettings(sceneSettingsSerialized);
 
-		Scene scene = new Scene(sceneName, sceneSettings) {
+		Scene scene = new Scene(sceneName, settings) {
 			@Override
 			public void onCreate() {}
 			@Override

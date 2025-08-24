@@ -23,7 +23,7 @@ public class DataSceneSerializerUtility {
 		return new SceneSettings(physicsSettings);
 	}
 
-	public static Map<String, Object> serializePhysicsSettings(PhysicsSettings settings) {
+	private static Map<String, Object> serializePhysicsSettings(PhysicsSettings settings) {
 		boolean physicsEnabled = settings.isEnabled();
 		Vector3fc physicsGravity = settings.getGravity();
 		Map<String, Object> physicsGravitySerialized = DataSerializerUtility.serializeVector3f(physicsGravity);
@@ -34,7 +34,7 @@ public class DataSceneSerializerUtility {
 		);
 	}
 
-	public static PhysicsSettings deserializePhysicsSettings(Map<String, Object> settings) {
+	private static PhysicsSettings deserializePhysicsSettings(Map<String, Object> settings) {
 		boolean physicsEnabled = (boolean) settings.get("enabled");
 		Map<String, Object> physicsGravitySerialized = (Map<String, Object>) settings.get("gravity");
 		Vector3f physicsGravity = DataSerializerUtility.deserializeVector3f(physicsGravitySerialized);

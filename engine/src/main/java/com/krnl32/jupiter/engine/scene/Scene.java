@@ -72,7 +72,7 @@ public abstract class Scene {
 	}
 
 	public SceneSettings getSceneSettings() {
-		return sceneSettings;
+		return sceneSettings; // READ ONLY
 	}
 
 	public Registry getRegistry() {
