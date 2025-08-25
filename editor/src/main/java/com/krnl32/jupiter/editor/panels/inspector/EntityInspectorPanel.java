@@ -1,6 +1,6 @@
 package com.krnl32.jupiter.editor.panels.inspector;
 
-import com.krnl32.jupiter.editor.editor.EditorPanel;
+import com.krnl32.jupiter.editor.ui.EditorPanel;
 import com.krnl32.jupiter.editor.factory.ComponentFactory;
 import com.krnl32.jupiter.editor.factory.FactoryRegistry;
 import com.krnl32.jupiter.editor.renderer.component.ComponentRenderer;

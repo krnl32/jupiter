@@ -4,6 +4,7 @@ import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.core.Window;
 import com.krnl32.jupiter.engine.utility.FileIO;
 import imgui.*;
+import imgui.extension.imguizmo.ImGuizmo;
 import imgui.flag.ImGuiConfigFlags;
 import imgui.gl3.ImGuiImplGl3;
 import imgui.glfw.ImGuiImplGlfw;
@@ -66,6 +67,7 @@ public class ImGuiWrapper {
 		imGuiImplGlfw.newFrame();
 		imGuiImplGl3.newFrame();
 		ImGui.newFrame();
+		ImGuizmo.beginFrame();
 	}
 
 	public void endFrame() {

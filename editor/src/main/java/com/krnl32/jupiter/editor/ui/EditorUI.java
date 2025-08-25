@@ -1,5 +1,7 @@
-package com.krnl32.jupiter.editor.editor;
+package com.krnl32.jupiter.editor.ui;
 
+import com.krnl32.jupiter.editor.editor.EditorState;
+import com.krnl32.jupiter.editor.editor.ImGuiWrapper;
 import com.krnl32.jupiter.editor.events.editor.*;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.core.Window;
@@ -218,31 +220,35 @@ public class EditorUI {
 
 		// Build
 		if (editorState == EditorState.STOP) {
+			ImGui.beginDisabled();
 			if (ImGui.imageButton("##build", buildIconId, iconSize, iconSize)) {
 				EventBus.getInstance().emit(new EditorBuildEvent());
 			}
+			ImGui.endDisabled();
 		} else {
 			ImGui.beginDisabled();
 			ImGui.imageButton("##build", buildIconId, iconSize, iconSize);
 			ImGui.endDisabled();
 		}
 		if (ImGui.isItemHovered())
-			ImGui.setTooltip("Build Project");
+			ImGui.setTooltip("Build Project - UNDER DEVELOPMENT");
 
 		ImGui.sameLine();
 
 		// Launch
 		if (editorState == EditorState.STOP) {
+			ImGui.beginDisabled();
 			if (ImGui.imageButton("##launch", launchIconId, iconSize, iconSize)) {
 				EventBus.getInstance().emit(new EditorLaunchEvent());
 			}
+			ImGui.endDisabled();
 		} else {
 			ImGui.beginDisabled();
 			ImGui.imageButton("##launch", launchIconId, iconSize, iconSize);
 			ImGui.endDisabled();
 		}
 		if (ImGui.isItemHovered())
-			ImGui.setTooltip("Launch Project in Runtime");
+			ImGui.setTooltip("Launch Project in Runtime - UNDER DEVELOPMENT");
 
 		ImGui.endChild();
 		ImGui.popStyleColor(3);

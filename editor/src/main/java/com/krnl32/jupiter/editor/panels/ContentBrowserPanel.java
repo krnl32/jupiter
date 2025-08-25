@@ -1,7 +1,7 @@
 package com.krnl32.jupiter.editor.panels;
 
 import com.krnl32.jupiter.editor.asset.EditorAssetManager;
-import com.krnl32.jupiter.editor.editor.EditorPanel;
+import com.krnl32.jupiter.editor.ui.EditorPanel;
 import com.krnl32.jupiter.editor.events.asset.AssetSelectedEvent;
 import com.krnl32.jupiter.engine.asset.handle.Asset;
 import com.krnl32.jupiter.engine.asset.handle.AssetType;

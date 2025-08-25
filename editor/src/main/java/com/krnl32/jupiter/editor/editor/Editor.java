@@ -14,6 +14,7 @@ import com.krnl32.jupiter.editor.panels.ContentBrowserPanel;
 import com.krnl32.jupiter.editor.panels.inspector.InspectorPanel;
 import com.krnl32.jupiter.editor.panels.SceneHierarchyPanel;
 import com.krnl32.jupiter.editor.panels.ViewportPanel;
+import com.krnl32.jupiter.editor.ui.EditorUI;
 import com.krnl32.jupiter.engine.asset.database.AssetPersistence;
 import com.krnl32.jupiter.engine.asset.database.AssetRepository;
 import com.krnl32.jupiter.engine.asset.handle.AssetType;
@@ -123,7 +124,7 @@ public class Editor extends Engine {
 
 		// Editor
 		editorUI = new EditorUI(getWindow());
-		editorUI.addEditorPanel(new ViewportPanel(framebuffer));
+		editorUI.addEditorPanel(new ViewportPanel(framebuffer, editorCamera));
 		editorUI.addEditorPanel(new SceneHierarchyPanel(sceneManager.getScene()));
 		editorUI.addEditorPanel(new InspectorPanel());
 		editorUI.addEditorPanel(new ContentBrowserPanel());

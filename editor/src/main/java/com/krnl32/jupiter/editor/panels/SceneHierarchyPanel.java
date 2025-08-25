@@ -1,6 +1,6 @@
 package com.krnl32.jupiter.editor.panels;
 
-import com.krnl32.jupiter.editor.editor.EditorPanel;
+import com.krnl32.jupiter.editor.ui.EditorPanel;
 import com.krnl32.jupiter.editor.events.scene.EntitySelectedEvent;
 import com.krnl32.jupiter.engine.components.utility.UUIDComponent;
 import com.krnl32.jupiter.engine.ecs.Entity;
