@@ -23,12 +23,23 @@ public class EditorUI {
 	private final List<EditorPanel> editorPanels;
 	private EditorState editorState;
 
+	// Editor Icons
+	int playIconTextureId;
+	int pauseIconTextureId;
+	int stopIconTextureId;
+	int buildIconTextureId;
+	int launchIconTextureId;
+
 	public EditorUI(Window window) {
 		this.imGuiWrapper = new ImGuiWrapper(window);
 		this.editorPanels = new ArrayList<>();
 		this.editorState = EditorState.STOP;
 
 		setupDarkTheme();
+
+		if (!setupEditorIcons()) {
+			return;
+		}
 
 		EventBus.getInstance().register(EditorPlayEvent.class, event -> {
 			editorState = EditorState.PLAY;
@@ -142,6 +153,21 @@ public class EditorUI {
 		style.setPopupBorderSize(1.0f);
 	}
 
+	private boolean setupEditorIcons() {
+		// Icons
+		try {
+			playIconTextureId = new Texture2D(new TextureSettings(TextureType.TEXTURE_2D, TextureWrapMode.REPEAT, TextureFilterMode.NEAREST, true), FileIO.readResourceFileContentBytes("textures/ui/buttons/play.png")).getTextureID();
+			pauseIconTextureId = new Texture2D(new TextureSettings(TextureType.TEXTURE_2D, TextureWrapMode.REPEAT, TextureFilterMode.NEAREST, true), FileIO.readResourceFileContentBytes("textures/ui/buttons/pause.png")).getTextureID();
+			stopIconTextureId = new Texture2D(new TextureSettings(TextureType.TEXTURE_2D, TextureWrapMode.REPEAT, TextureFilterMode.NEAREST, true), FileIO.readResourceFileContentBytes("textures/ui/buttons/stop.png")).getTextureID();
+			buildIconTextureId = new Texture2D(new TextureSettings(TextureType.TEXTURE_2D, TextureWrapMode.REPEAT, TextureFilterMode.NEAREST, true), FileIO.readResourceFileContentBytes("textures/ui/buttons/build.png")).getTextureID();
+			launchIconTextureId = new Texture2D(new TextureSettings(TextureType.TEXTURE_2D, TextureWrapMode.REPEAT, TextureFilterMode.NEAREST, true), FileIO.readResourceFileContentBytes("textures/ui/buttons/launch.png")).getTextureID();
+			return true;
+		} catch (IOException e) {
+			Logger.error("EditorUI Failed to Initialize Editor Icons({}, {}, {}, {}, {}): {}", playIconTextureId, pauseIconTextureId, stopIconTextureId, buildIconTextureId, launchIconTextureId, e.getMessage());
+			return false;
+		}
+	}
+
 	private void renderToolBar() {
 		float toolbarHeight = 48.0f;
 		float iconSize = 32.0f;
@@ -160,26 +186,13 @@ public class EditorUI {
 		float startX = (ImGui.getContentRegionAvailX() - totalWidth) * 0.5f;
 		ImGui.setCursorPosX(startX);
 
-		// Icons
-		int playIconId = -1, pauseIconId = -1, stopIconId = -1, buildIconId = -1, launchIconId = -1;
-		try {
-			playIconId = new Texture2D(new TextureSettings(TextureType.TEXTURE_2D, TextureWrapMode.REPEAT, TextureFilterMode.NEAREST, true), FileIO.readResourceFileContentBytes("textures/ui/buttons/play.png")).getTextureID();
-			pauseIconId = new Texture2D(new TextureSettings(TextureType.TEXTURE_2D, TextureWrapMode.REPEAT, TextureFilterMode.NEAREST, true), FileIO.readResourceFileContentBytes("textures/ui/buttons/pause.png")).getTextureID();
-			stopIconId = new Texture2D(new TextureSettings(TextureType.TEXTURE_2D, TextureWrapMode.REPEAT, TextureFilterMode.NEAREST, true), FileIO.readResourceFileContentBytes("textures/ui/buttons/stop.png")).getTextureID();
-			buildIconId = new Texture2D(new TextureSettings(TextureType.TEXTURE_2D, TextureWrapMode.REPEAT, TextureFilterMode.NEAREST, true), FileIO.readResourceFileContentBytes("textures/ui/buttons/build.png")).getTextureID();
-			launchIconId = new Texture2D(new TextureSettings(TextureType.TEXTURE_2D, TextureWrapMode.REPEAT, TextureFilterMode.NEAREST, true), FileIO.readResourceFileContentBytes("textures/ui/buttons/launch.png")).getTextureID();
-		} catch (IOException e) {
-			Logger.error("EditorUI Failed to Initialize Editor Icons({}, {}, {})", playIconId, pauseIconId, stopIconId);
-			return;
-		}
-
 		// Play
 		if (editorState == EditorState.PLAY) {
 			ImGui.beginDisabled();
-			ImGui.imageButton("##play", playIconId, iconSize, iconSize);
+			ImGui.imageButton("##play", playIconTextureId, iconSize, iconSize);
 			ImGui.endDisabled();
 		} else {
-			if (ImGui.imageButton("##play", playIconId, iconSize, iconSize)) {
+			if (ImGui.imageButton("##play", playIconTextureId, iconSize, iconSize)) {
 				EventBus.getInstance().emit(new EditorPlayEvent());
 			}
 		}
@@ -190,12 +203,12 @@ public class EditorUI {
 
 		// Pause
 		if (editorState == EditorState.PLAY) {
-			if (ImGui.imageButton("##pause", pauseIconId, iconSize, iconSize)) {
+			if (ImGui.imageButton("##pause", pauseIconTextureId, iconSize, iconSize)) {
 				EventBus.getInstance().emit(new EditorPauseEvent());
 			}
 		} else {
 			ImGui.beginDisabled();
-			ImGui.imageButton("##pause", pauseIconId, iconSize, iconSize);
+			ImGui.imageButton("##pause", pauseIconTextureId, iconSize, iconSize);
 			ImGui.endDisabled();
 		}
 		if (ImGui.isItemHovered())
@@ -205,12 +218,12 @@ public class EditorUI {
 
 		// Stop
 		if (editorState == EditorState.PLAY || editorState == EditorState.PAUSE) {
-			if (ImGui.imageButton("##stop", stopIconId, iconSize, iconSize)) {
+			if (ImGui.imageButton("##stop", stopIconTextureId, iconSize, iconSize)) {
 				EventBus.getInstance().emit(new EditorStopEvent());
 			}
 		} else {
 			ImGui.beginDisabled();
-			ImGui.imageButton("##stop", stopIconId, iconSize, iconSize);
+			ImGui.imageButton("##stop", stopIconTextureId, iconSize, iconSize);
 			ImGui.endDisabled();
 		}
 		if (ImGui.isItemHovered())
@@ -221,13 +234,13 @@ public class EditorUI {
 		// Build
 		if (editorState == EditorState.STOP) {
 			ImGui.beginDisabled();
-			if (ImGui.imageButton("##build", buildIconId, iconSize, iconSize)) {
+			if (ImGui.imageButton("##build", buildIconTextureId, iconSize, iconSize)) {
 				EventBus.getInstance().emit(new EditorBuildEvent());
 			}
 			ImGui.endDisabled();
 		} else {
 			ImGui.beginDisabled();
-			ImGui.imageButton("##build", buildIconId, iconSize, iconSize);
+			ImGui.imageButton("##build", buildIconTextureId, iconSize, iconSize);
 			ImGui.endDisabled();
 		}
 		if (ImGui.isItemHovered())
@@ -238,13 +251,13 @@ public class EditorUI {
 		// Launch
 		if (editorState == EditorState.STOP) {
 			ImGui.beginDisabled();
-			if (ImGui.imageButton("##launch", launchIconId, iconSize, iconSize)) {
+			if (ImGui.imageButton("##launch", launchIconTextureId, iconSize, iconSize)) {
 				EventBus.getInstance().emit(new EditorLaunchEvent());
 			}
 			ImGui.endDisabled();
 		} else {
 			ImGui.beginDisabled();
-			ImGui.imageButton("##launch", launchIconId, iconSize, iconSize);
+			ImGui.imageButton("##launch", launchIconTextureId, iconSize, iconSize);
 			ImGui.endDisabled();
 		}
 		if (ImGui.isItemHovered())
@@ -254,7 +267,6 @@ public class EditorUI {
 		ImGui.popStyleColor(3);
 		ImGui.popStyleVar(3);
 	}
-
 
 	private void dockspaceBegin() {
 		boolean dockspaceOpen = true;
