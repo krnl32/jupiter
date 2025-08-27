@@ -16,7 +16,6 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class EditorAssetManager implements AssetManager {
 	private final Map<AssetId, Asset> loadedAssets;
@@ -175,11 +174,11 @@ public class EditorAssetManager implements AssetManager {
 			.toList();
 	}
 
-	public List<Asset> getAssetsByType(AssetType type) {
-		return assetRepository.getAllAssetMetadata().stream()
+	public <T extends Asset> List<T> getAssetsByType(AssetType type) {
+		return (List<T>) assetRepository.getAllAssetMetadata().stream()
 			.filter(assetMetadata -> assetMetadata.getAssetType() == type)
 			.map(assetMetadata -> (Asset) getAsset(assetMetadata.getAssetId()))
-			.collect(Collectors.toList());
+			.toList();
 	}
 
 	public AssetMetadata getAssetMetadata(AssetId assetId) {
