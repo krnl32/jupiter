@@ -43,12 +43,15 @@ public class InputAction {
 
 		for (InputBinding binding : bindings) {
 			boolean down = binding.isDown();
+
 			if (down && !active) {
 				active = true;
 			}
+
 			if (binding.isPressed()) {
 				pressed = true;
 			}
+
 			if (binding.isReleased()) {
 				released = true;
 			}

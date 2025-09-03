@@ -15,8 +15,11 @@ public class DelegatingContactFilter extends ContactFilter {
 	public boolean shouldCollide(Fixture fixtureA, Fixture fixtureB) {
 		Object aData = fixtureA.getUserData();
 		Object bData = fixtureB.getUserData();
-		if (!(aData instanceof Entity a) || !(bData instanceof Entity b))
+
+		if (!(aData instanceof Entity a) || !(bData instanceof Entity b)) {
 			return true;
+		}
+
 		return collisionRule.shouldCollide(a, b);
 	}
 }

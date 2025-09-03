@@ -28,6 +28,7 @@ public class Entity {
 
 	public void setTag(String tag) {
 		TagComponent tagComponent = getComponent(TagComponent.class);
+
 		if (tagComponent == null) {
 			addComponent(new TagComponent(tag));
 		} else {

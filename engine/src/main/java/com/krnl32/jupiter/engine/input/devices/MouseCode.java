@@ -34,6 +34,7 @@ public enum MouseCode {
 				return mouseCode;
 			}
 		}
+
 		Logger.critical("Invalid MouseCode({})", code);
 		return null;
 	}

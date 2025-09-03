@@ -4,10 +4,8 @@ import com.krnl32.jupiter.engine.components.utility.UUIDComponent;
 import com.krnl32.jupiter.engine.core.Logger;
 import com.krnl32.jupiter.engine.ecs.Component;
 import com.krnl32.jupiter.engine.ecs.Entity;
-import com.krnl32.jupiter.engine.physics.PhysicsSettings;
 import com.krnl32.jupiter.engine.scene.Scene;
 import com.krnl32.jupiter.engine.scene.SceneSettings;
-import org.joml.Vector3f;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,11 +14,7 @@ import java.util.UUID;
 public class SceneCloner {
 	public static Scene clone(Scene scene, boolean regenUUID) {
 		String cloneSceneName = scene.getName() + "_clone";
-		PhysicsSettings cloneScenePhysicsSettings = new PhysicsSettings(
-			scene.getSceneSettings().getPhysicsSettings().isEnabled(),
-			new Vector3f(scene.getSceneSettings().getPhysicsSettings().getGravity())
-		);
-		SceneSettings cloneSceneSettings = new SceneSettings(cloneScenePhysicsSettings);
+		SceneSettings cloneSceneSettings = SceneClonerUtility.cloneSceneSettings(scene.getSceneSettings());
 
 		Scene clonedScene = new Scene(cloneSceneName, cloneSceneSettings) {
 			@Override
@@ -42,6 +36,7 @@ public class SceneCloner {
 		// Create Entities
 		for (Entity entity : scene.getRegistry().getEntities()) {
 			UUIDComponent uuidComp = entity.getComponent(UUIDComponent.class);
+
 			if (uuidComp == null) {
 				Logger.warn("SceneCloner Skipping Entity({}) without UUIDComponent", entity.getTagOrId());
 				continue;
@@ -60,18 +55,22 @@ public class SceneCloner {
 		// Clone Components
 		for (Entity entity : scene.getRegistry().getEntities()) {
 			UUIDComponent uuidComp = entity.getComponent(UUIDComponent.class);
-			if (uuidComp == null)
+
+			if (uuidComp == null) {
 				continue;
+			}
 
 			UUID originalUUID = uuidComp.uuid;
 			UUID cloneUUID = originalToCloneUUID.get(originalUUID);
 			Entity clonedEntity = cloneUUIDToEntity.get(cloneUUID);
 
 			for (Component component : entity.getComponents()) {
-				if (component instanceof UUIDComponent)
+				if (component instanceof UUIDComponent) {
 					continue;
+				}
 
 				ComponentCloner componentCloner = ComponentClonerRegistry.getCloner(component.getClass());
+
 				if (componentCloner != null) {
 					Component clonedComponent = componentCloner.clone(component);
 					clonedEntity.addComponent(clonedComponent);

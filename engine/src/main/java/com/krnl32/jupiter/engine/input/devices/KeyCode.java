@@ -74,6 +74,7 @@ public enum KeyCode {
 				return keyCode;
 			}
 		}
+
 		return UNKNOWN;
 	}
 }

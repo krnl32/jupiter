@@ -8,6 +8,7 @@ public class FileDialog {
 	public static Path openFile() {
 		JFileChooser chooser = new JFileChooser();
 		chooser.setDialogTitle("Select a File");
+
 		return (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
 			? chooser.getSelectedFile().toPath()
 			: null;
@@ -18,6 +19,7 @@ public class FileDialog {
 		chooser.setDialogTitle("Select a File");
 		String ext = extensionFilter.startsWith(".") ? extensionFilter.substring(1) : extensionFilter;
 		chooser.setFileFilter(new FileNameExtensionFilter("*" + extensionFilter + " files", ext));
+
 		return (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
 			? chooser.getSelectedFile().toPath()
 			: null;
@@ -28,6 +30,7 @@ public class FileDialog {
 		chooser.setDialogTitle("Select a Folder");
 		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		chooser.setAcceptAllFileFilterUsed(false);
+
 		return (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
 			? chooser.getSelectedFile().toPath()
 			: null;

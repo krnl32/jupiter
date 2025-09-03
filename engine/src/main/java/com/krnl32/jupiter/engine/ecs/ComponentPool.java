@@ -7,7 +7,7 @@ public class ComponentPool<T extends Component> {
 
 	@SuppressWarnings("unchecked")
 	public ComponentPool(Class<T> component, int maxEntities) {
-		this.components = (T[])Array.newInstance(component, maxEntities);
+		this.components = (T[]) Array.newInstance(component, maxEntities);
 	}
 
 	public void set(Entity entity, T component) {

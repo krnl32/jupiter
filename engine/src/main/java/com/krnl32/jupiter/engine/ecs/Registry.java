@@ -29,14 +29,18 @@ public class Registry {
 			//Logger.info("Registry Remove Entity({}) from ComponentPool({}): ", entity.getId(), pool.getComponents().getClass().getSimpleName());
 			pool.remove(entity);
 		}
+
 		entityManager.remove(entity);
 		//Logger.info("Registry Destroy Entity({})", entity.getId());
 	}
 
 	public Set<Entity> getEntities() {
 		Set<Entity> entities = new HashSet<>();
-		for (var entityId : entityManager.getAllEntityIds())
+
+		for (var entityId : entityManager.getAllEntityIds()) {
 			entities.add(new Entity(entityId, this));
+		}
+
 		return entities;
 	}
 
@@ -51,31 +55,41 @@ public class Registry {
 
 		for (var component : components) {
 			var pool = componentPools.get(component);
-			if (pool == null)
+
+			if (pool == null) {
 				return Set.of();
+			}
 
 			Component[] componentData = pool.getComponents();
 			Set<Integer> idsWithComp = new HashSet<>();
+
 			for (int i = 0; i < componentData.length; i++) {
-				if (componentData[i] != null)
+				if (componentData[i] != null) {
 					idsWithComp.add(i);
+				}
 			}
+
 			result.retainAll(idsWithComp);
 		}
 
 		Set<Entity> entities = new HashSet<>();
-		for (int id : result)
+
+		for (int id : result) {
 			entities.add(new Entity(id, this));
+		}
+
 		return entities;
 	}
 
 	public Entity getEntityByUUID(UUID uuid) {
 		for (Entity entity : getEntities()) {
 			UUIDComponent uuidComponent = entity.getComponent(UUIDComponent.class);
+
 			if (uuidComponent != null && uuidComponent.uuid.equals(uuid)) {
 				return entity;
 			}
 		}
+
 		return null;
 	}
 
@@ -96,13 +110,17 @@ public class Registry {
 
 	public Set<Component> getComponents(Entity entity) {
 		Set<Component> components = new HashSet<>();
+
 		for (var pool : componentPools.values()) {
 			if (pool.has(entity)) {
 				Component component = pool.get(entity);
-				if (component != null)
+
+				if (component != null) {
 					components.add(component);
+				}
 			}
 		}
+
 		return components;
 	}
 

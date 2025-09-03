@@ -15,8 +15,10 @@ public class EventBus {
 	}
 
 	public static EventBus getInstance() {
-		if(instance == null)
+		if(instance == null) {
 			instance = new EventBus();
+		}
+
 		return instance;
 	}
 
@@ -27,8 +29,10 @@ public class EventBus {
 
 	public <T extends Event> void unregister(Class<T> eventType, EventListener<T> listener) {
 		var eventListeners = listeners.get(eventType);
+
 		if (eventListeners != null) {
 			eventListeners.remove(listener);
+
 			if (eventListeners.isEmpty()) {
 				listeners.remove(eventType);
 			}
@@ -38,6 +42,7 @@ public class EventBus {
 	@SuppressWarnings("unchecked")
 	public <T extends Event> void emit(T event) {
 		var eventListeners = listeners.get((event.getClass()));
+
 		if(eventListeners != null) {
 			for(var listener: eventListeners) {
 				((EventListener<T>)listener).onEvent(event);

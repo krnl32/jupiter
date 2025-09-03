@@ -25,10 +25,12 @@ public class Window {
 
 	public Window(WindowSettings settings) {
 		this.settings = settings;
+
 		if (!init()) {
 			Logger.critical("Window Failed to init");
 			return;
 		}
+
 		setupEvents();
 	}
 
@@ -81,6 +83,7 @@ public class Window {
 		glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
 
 		window = glfwCreateWindow(settings.getWidth(), settings.getHeight(), settings.getName(), NULL, NULL);
+
 		if (window == NULL) {
 			Logger.critical("Failed to create the GLFW window");
 			return false;
@@ -91,6 +94,7 @@ public class Window {
 
 		glfwShowWindow(window);
 		GL.createCapabilities();
+
 		return true;
 	}
 
@@ -106,19 +110,24 @@ public class Window {
 		});
 
 		glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
-			if (action == GLFW_PRESS)
+			if (action == GLFW_PRESS) {
 				EventBus.getInstance().emit(new KeyPressEvent(KeyCode.fromCode(key)));
-			else if(action == GLFW_RELEASE)
+			}
+			else if(action == GLFW_RELEASE) {
 				EventBus.getInstance().emit(new KeyReleaseEvent(KeyCode.fromCode(key)));
-			else if(action == GLFW_REPEAT)
+			}
+			else if(action == GLFW_REPEAT) {
 				EventBus.getInstance().emit(new KeyDownEvent(KeyCode.fromCode(key)));
+			}
 		});
 
 		glfwSetMouseButtonCallback(window, (window, button, action, mods) -> {
-			if (action == GLFW_PRESS)
+			if (action == GLFW_PRESS) {
 				EventBus.getInstance().emit(new MouseButtonPressEvent(MouseCode.fromCode(button)));
-			else if(action == GLFW_RELEASE)
+			}
+			else if(action == GLFW_RELEASE) {
 				EventBus.getInstance().emit(new MouseButtonReleaseEvent(MouseCode.fromCode(button)));
+			}
 		});
 
 		glfwSetCursorPosCallback(window, (window, xpos, ypos) -> {

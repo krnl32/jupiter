@@ -14,8 +14,10 @@ public class InputActionSystem {
 	}
 
 	public static InputActionSystem getInstance() {
-		if (instance == null)
+		if (instance == null) {
 			instance = new InputActionSystem();
+		}
+
 		return instance;
 	}
 
@@ -41,11 +43,13 @@ public class InputActionSystem {
 				return inputActionMap;
 			}
 		}
+
 		return null;
 	}
 
 	public void setMapEnabled(String name, boolean enabled) {
 		InputActionMap inputActionMap = getInputActionMap(name);
+
 		if (inputActionMap != null) {
 			inputActionMap.setEnabled(enabled);
 		}

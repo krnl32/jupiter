@@ -23,6 +23,7 @@ public class Physics2D {
 
 	public void onUpdate(float dt) {
 		physicsTime += dt;
+
 		while (physicsTime >= physicsTimeStep) {
 			world.step(physicsTimeStep, velocityIterations, positionIterations);
 			physicsTime -= physicsTimeStep;

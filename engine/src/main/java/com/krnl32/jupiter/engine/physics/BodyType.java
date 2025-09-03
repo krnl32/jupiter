@@ -21,6 +21,7 @@ public enum BodyType {
 				return type;
 			}
 		}
+
 		return null;
 	}
 }

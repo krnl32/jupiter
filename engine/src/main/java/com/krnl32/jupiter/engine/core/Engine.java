@@ -47,6 +47,7 @@ public abstract class Engine {
 		running = true;
 
 		float lastTime = 0.0f;
+
 		while (running) {
 			float time = Timer.getTimeSeconds();
 			float dt = time - lastTime;
@@ -84,8 +85,10 @@ public abstract class Engine {
 
 	private boolean initDefaultRenderPass(Renderer renderer) {
 		int[] shaderSamplers = new int[32];
-		for (int i = 0; i < 32; i++)
+
+		for (int i = 0; i < 32; i++) {
 			shaderSamplers[i] = i;
+		}
 
 		try {
 			// Setup World Shader & WorldRenderPass

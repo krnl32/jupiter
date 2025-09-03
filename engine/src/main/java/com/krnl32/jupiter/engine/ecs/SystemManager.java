@@ -11,15 +11,17 @@ public class SystemManager {
 
 	public void onUpdate(float dt) {
 		for (var sys: sortedSystems) {
-			if (sys.isEnabled())
+			if (sys.isEnabled()) {
 				sys.getSystem().onUpdate(dt);
+			}
 		}
 	}
 
 	public void onRender(float dt, Renderer renderer) {
 		for (var sys: sortedSystems) {
-			if (sys.isEnabled())
+			if (sys.isEnabled()) {
 				sys.getSystem().onRender(dt, renderer);
+			}
 		}
 	}
 
@@ -41,8 +43,10 @@ public class SystemManager {
 
 	public void remove(Class<? extends System> system) {
 		ManagedSystem sys = systems.remove(system);
-		if (sys != null)
+
+		if (sys != null) {
 			sortedSystems.remove(sys);
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -53,8 +57,10 @@ public class SystemManager {
 
 	public void setEnabled(Class<? extends System> system, boolean enabled) {
 		ManagedSystem sys = systems.get(system);
-		if (sys != null)
+
+		if (sys != null) {
 			sys.setEnabled(enabled);
+		}
 	}
 }
 

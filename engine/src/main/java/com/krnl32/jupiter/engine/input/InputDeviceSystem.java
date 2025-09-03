@@ -15,8 +15,10 @@ public class InputDeviceSystem {
 	}
 
 	public static InputDeviceSystem getInstance() {
-		if (instance == null)
+		if (instance == null) {
 			instance = new InputDeviceSystem();
+		}
+
 		return instance;
 	}
 

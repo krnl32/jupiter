@@ -22,38 +22,10 @@ public class Mouse {
 	private Vector2f scrollOffset = new Vector2f();
 
 	public Mouse() {
-		EventBus.getInstance().register(MouseButtonPressEvent.class, event -> {
-			int mouseCode = event.getMouseCode().getCode();
-			if (mouseCode < 0 || mouseCode > MAX_MOUSE_BUTTONS)
-				Logger.error("MouseButtonPress mouseCode out of Bounds!", mouseCode);
-
-			if(!buttonState[mouseCode])
-				buttonPressed[mouseCode] = true;
-			buttonState[mouseCode] = true;
-		});
-
-		EventBus.getInstance().register(MouseButtonReleaseEvent.class, event -> {
-			int mouseCode = event.getMouseCode().getCode();
-			if (mouseCode < 0 || mouseCode > MAX_MOUSE_BUTTONS)
-				Logger.error("MouseButtonRelease mouseCode out of Bounds!", mouseCode);
-
-			buttonReleased[mouseCode] = true;
-			buttonState[mouseCode] = false;
-		});
-
-		EventBus.getInstance().register(MouseCursorEvent.class, event -> {
-			if (cursorFirstMove) {
-				cursorPosition.set(event.getPosition());
-				cursorFirstMove = false;
-				return;
-			}
-			cursorDelta.set((event.getPosition().x - cursorPosition.x), (cursorPosition.y - event.getPosition().y));
-			cursorPosition.set(event.getPosition());
-		});
-
-		EventBus.getInstance().register(MouseScrollEvent.class, event -> {
-			scrollOffset.set(event.getOffset());
-		});
+		EventBus.getInstance().register(MouseButtonPressEvent.class, this::onMouseButtonPressEvent);
+		EventBus.getInstance().register(MouseButtonReleaseEvent.class, this::onMouseButtonReleaseEvent);
+		EventBus.getInstance().register(MouseCursorEvent.class, this::onMouseCursorEvent);
+		EventBus.getInstance().register(MouseScrollEvent.class, this::onMouseScrollEvent);
 	}
 
 	public void reset() {
@@ -64,26 +36,34 @@ public class Mouse {
 	}
 
 	public boolean isButtonPressed(MouseCode mouseCode) {
-		if (mouseCode.getCode() < 0 || mouseCode.getCode() > MAX_MOUSE_BUTTONS)
+		if (mouseCode.getCode() < 0 || mouseCode.getCode() > MAX_MOUSE_BUTTONS) {
 			Logger.error("isButtonPressed({}) mouseCode out of Bounds!", mouseCode.getCode());
+		}
+
 		return buttonPressed[mouseCode.getCode()];
 	}
 
 	public boolean isButtonReleased(MouseCode mouseCode) {
-		if (mouseCode.getCode() < 0 || mouseCode.getCode() > MAX_MOUSE_BUTTONS)
+		if (mouseCode.getCode() < 0 || mouseCode.getCode() > MAX_MOUSE_BUTTONS) {
 			Logger.error("isButtonReleased({}) mouseCode out of Bounds!", mouseCode.getCode());
+		}
+
 		return buttonReleased[mouseCode.getCode()];
 	}
 
 	public boolean isButtonUp(MouseCode mouseCode) {
-		if (mouseCode.getCode() < 0 || mouseCode.getCode() > MAX_MOUSE_BUTTONS)
+		if (mouseCode.getCode() < 0 || mouseCode.getCode() > MAX_MOUSE_BUTTONS) {
 			Logger.error("isButtonUp({}) mouseCode out of Bounds!", mouseCode.getCode());
+		}
+
 		return !buttonState[mouseCode.getCode()];
 	}
 
 	public boolean isButtonDown(MouseCode mouseCode) {
-		if (mouseCode.getCode() < 0 || mouseCode.getCode() > MAX_MOUSE_BUTTONS)
+		if (mouseCode.getCode() < 0 || mouseCode.getCode() > MAX_MOUSE_BUTTONS) {
 			Logger.error("isButtonDown({}) mouseCode out of Bounds!", mouseCode.getCode());
+		}
+
 		return buttonState[mouseCode.getCode()];
 	}
 
@@ -107,5 +87,45 @@ public class Mouse {
 
 	public boolean isScrollingDown() {
 		return scrollOffset.y < 0;
+	}
+
+	private void onMouseButtonPressEvent(MouseButtonPressEvent event) {
+		int mouseCode = event.getMouseCode().getCode();
+
+		if (mouseCode < 0 || mouseCode > MAX_MOUSE_BUTTONS) {
+			Logger.error("MouseButtonPress mouseCode out of Bounds!", mouseCode);
+		}
+
+		if(!buttonState[mouseCode]) {
+			buttonPressed[mouseCode] = true;
+		}
+
+		buttonState[mouseCode] = true;
+	}
+
+	private void onMouseButtonReleaseEvent(MouseButtonReleaseEvent event) {
+		int mouseCode = event.getMouseCode().getCode();
+
+		if (mouseCode < 0 || mouseCode > MAX_MOUSE_BUTTONS) {
+			Logger.error("MouseButtonRelease mouseCode out of Bounds!", mouseCode);
+		}
+
+		buttonReleased[mouseCode] = true;
+		buttonState[mouseCode] = false;
+	}
+
+	private void onMouseCursorEvent(MouseCursorEvent event) {
+		if (cursorFirstMove) {
+			cursorPosition.set(event.getPosition());
+			cursorFirstMove = false;
+			return;
+		}
+
+		cursorDelta.set((event.getPosition().x - cursorPosition.x), (cursorPosition.y - event.getPosition().y));
+		cursorPosition.set(event.getPosition());
+	}
+
+	private void onMouseScrollEvent(MouseScrollEvent event) {
+		scrollOffset.set(event.getOffset());
 	}
 }
