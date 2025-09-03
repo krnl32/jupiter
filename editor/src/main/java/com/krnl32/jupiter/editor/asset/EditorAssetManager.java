@@ -38,12 +38,14 @@ public class EditorAssetManager implements AssetManager {
 		}
 
 		AssetMetadata assetMetadata = assetRepository.getAssetMetadata(assetId);
+
 		if (assetMetadata == null) {
 			Logger.error("EditorAssetManager Failed to Get Asset({}): No AssetMetadata Found", assetId);
 			return null;
 		}
 
 		AssetLoader assetLoader = AssetLoaderRegistry.getLoader(assetMetadata.getAssetType());
+
 		if (assetLoader == null) {
 			Logger.error("EditorAssetManager Get Asset({}) Failed: No AssetLoader Found For Type({})", assetMetadata.getAssetId(), assetMetadata.getAssetType());
 			return null;
@@ -51,6 +53,7 @@ public class EditorAssetManager implements AssetManager {
 
 		AssetDescriptor assetDescriptor = new AssetDescriptor(assetMetadata.getAssetId(), assetMetadata.getAssetType(), Path.of(assetMetadata.getAssetPath()), assetMetadata.getImportSettings());
 		Asset asset = assetLoader.load(assetDescriptor);
+
 		if (asset == null) {
 			Logger.error("EditorAssetManager Get Asset({}) Failed: AssetLoader({}) Failed", assetMetadata.getAssetId(), assetMetadata.getAssetType());
 			return null;
@@ -74,11 +77,13 @@ public class EditorAssetManager implements AssetManager {
 	@Override
 	public void unloadAsset(AssetId assetId) {
 		Asset asset = loadedAssets.get(assetId);
+
 		if (asset == null) {
 			return;
 		}
 
 		AssetLoader assetLoader = AssetLoaderRegistry.getLoader(asset.getType());
+
 		if (assetLoader == null) {
 			Logger.error("EditorAssetManager Unload({}) Failed: No AssetLoader Found For Type({})", assetId, asset.getType());
 			return;
@@ -100,6 +105,7 @@ public class EditorAssetManager implements AssetManager {
 
 	public ImportResult<Asset> importAsset(ImportRequest request) {
 			ImportResult<Asset> result = assetImportPipeline.importAsset(request);
+
 			if (result == null) {
 				Logger.error("EditorAssetManager Failed to ImportAsset({})", request.getSource());
 				return null;
@@ -126,6 +132,7 @@ public class EditorAssetManager implements AssetManager {
 
 	public void removeAsset(String assetPath) {
 		AssetMetadata assetMetadata = assetRepository.getAssetMetadata(assetPath);
+
 		if (assetMetadata != null) {
 			unloadAsset(assetMetadata.getAssetId());
 			assetRepository.removeAssetMetadata(assetPath);
@@ -134,19 +141,23 @@ public class EditorAssetManager implements AssetManager {
 
 	public <T extends Asset> T getAsset(String assetPath) {
 		AssetMetadata assetMetadata = assetRepository.getAssetMetadata(assetPath);
+
 		if (assetMetadata == null) {
 			Logger.error("EditorAssetManager Failed to Get Asset({}): No AssetMetadata Found", assetPath);
 			return null;
 		}
+
 		return getAsset(assetMetadata.getAssetId());
 	}
 
 	public Path getAssetPath(AssetId assetId) {
 		AssetMetadata assetMetadata = assetRepository.getAssetMetadata(assetId);
+
 		if (assetMetadata == null) {
 			Logger.error("EditorAssetManager Failed to Get AssetPath({}): No AssetMetadata Found", assetId);
 			return null;
 		}
+
 		return Path.of(assetMetadata.getAssetPath());
 	}
 

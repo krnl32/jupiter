@@ -15,6 +15,7 @@ public class Main {
 		options.addOption(null, "launch", true, "Path to the Project Directory Path to Launch");
 
 		CommandLine cmd = null;
+
 		try {
 			CommandLineParser parser = new DefaultParser();
 			cmd = parser.parse(options, args);
@@ -26,7 +27,9 @@ public class Main {
 		if (cmd.hasOption("launch")) {
 			String projectDirectoryPath = cmd.getOptionValue("launch");
 			Logger.info("Jupiter Editor Launching({})...", projectDirectoryPath);
-			Editor editor = new Editor(new EngineSettings(new WindowSettings("JupiterEditor", 1920, 1080, true)), Path.of(projectDirectoryPath));
+
+			EngineSettings engineSettings = new EngineSettings(new WindowSettings("JupiterEditor", 1920, 1080, true));
+			Editor editor = new Editor(engineSettings, Path.of(projectDirectoryPath));
 			editor.run();
 		} else {
 			new HelpFormatter().printHelp("editor", options);

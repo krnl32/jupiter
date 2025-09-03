@@ -102,8 +102,10 @@ public class Editor extends Engine {
 		sceneManager = new SceneManager();
 
 		String startupScenePath = ProjectContext.getInstance().getProject().getStartup().getScenePath();
+
 		if (startupScenePath != null && !startupScenePath.isEmpty()) {
 			SceneAsset sceneAsset = ((EditorAssetManager) ProjectContext.getInstance().getAssetManager()).getAsset(startupScenePath);
+
 			if (sceneAsset == null) {
 				Logger.critical("Editor Failed to Load Startup Scene({})", startupScenePath);
 				return false;
@@ -161,6 +163,7 @@ public class Editor extends Engine {
 			Scene clone = SceneCloner.clone(sceneManager.getScene(), false);
 			sceneManager.setScene(clone);
 		}
+
 		editorState = EditorState.PLAY;
 	}
 
@@ -172,11 +175,13 @@ public class Editor extends Engine {
 		if (previousScene != null) {
 			sceneManager.setScene(previousScene);
 		}
+
 		editorState = EditorState.STOP;
 	}
 
 	private boolean initProjectContext(Path projectDirectory) {
 		Project project = ProjectLoader.load(projectDirectory);
+
 		if (project == null) {
 			Logger.error("Editor Failed to Load Project({})", projectDirectory);
 			return false;

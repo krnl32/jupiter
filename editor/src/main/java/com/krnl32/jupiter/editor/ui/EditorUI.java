@@ -275,6 +275,7 @@ public class EditorUI {
 		int dockspaceFlags = ImGuiDockNodeFlags.None;
 
 		int windowFlags = ImGuiWindowFlags.MenuBar | ImGuiWindowFlags.NoDocking;
+
 		if (optFullscreen) {
 			var viewport = ImGui.getMainViewport();
 			ImGui.setNextWindowPos(viewport.getWorkPos());

@@ -44,18 +44,22 @@ public class GUIUtils {
 		ImGui.pushStyleColor(ImGuiCol.Button, 0.8f, 0.1f, 0.1f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 1f, 0.3f, 0.3f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonActive, 1f, 0.2f, 0.2f, 1f);
+
 		if (ImGui.button("X", buttonSize, buttonSize)) {
 			xVal[0] = 0f;
 			changed = true;
 		}
+
 		ImGui.popStyleColor(3);
 		ImGui.sameLine(0, 2);
 
 		ImGui.pushItemWidth(dragWidth);
+
 		if (ImGui.dragFloat("##X_" + label + "_" + uniqueID, xVal, dragSpeed, -Float.MAX_VALUE, Float.MAX_VALUE, "%.3f")) {
 			vec.x = xVal[0];
 			changed = true;
 		}
+
 		ImGui.popItemWidth();
 
 		ImGui.sameLine(0, 8);
@@ -64,18 +68,22 @@ public class GUIUtils {
 		ImGui.pushStyleColor(ImGuiCol.Button, 0.1f, 0.8f, 0.1f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0.3f, 1f, 0.3f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonActive, 0.2f, 1f, 0.2f, 1f);
+
 		if (ImGui.button("Y", buttonSize, buttonSize)) {
 			yVal[0] = 0f;
 			changed = true;
 		}
+
 		ImGui.popStyleColor(3);
 		ImGui.sameLine(0, 2);
 
 		ImGui.pushItemWidth(dragWidth);
+
 		if (ImGui.dragFloat("##Y_" + label + "_" + uniqueID, yVal, dragSpeed, -Float.MAX_VALUE, Float.MAX_VALUE, "%.3f")) {
 			vec.y = yVal[0];
 			changed = true;
 		}
+
 		ImGui.popItemWidth();
 
 		vec.set(xVal[0], yVal[0]);
@@ -113,18 +121,22 @@ public class GUIUtils {
 		ImGui.pushStyleColor(ImGuiCol.Button, 0.8f, 0.1f, 0.1f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 1f, 0.3f, 0.3f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonActive, 1f, 0.2f, 0.2f, 1f);
+
 		if (ImGui.button("X", buttonSize, buttonSize)) {
 			xVal[0] = 0f;
 			changed = true;
 		}
+
 		ImGui.popStyleColor(3);
 		ImGui.sameLine(0, 2);
 
 		ImGui.pushItemWidth(dragWidth);
+
 		if (ImGui.dragFloat("##X_" + label + "_" + uniqueID, xVal, dragSpeed, -Float.MAX_VALUE, Float.MAX_VALUE, "%.3f")) {
 			vec.x = xVal[0];
 			changed = true;
 		}
+
 		ImGui.popItemWidth();
 
 		ImGui.sameLine(0, 8);
@@ -133,18 +145,22 @@ public class GUIUtils {
 		ImGui.pushStyleColor(ImGuiCol.Button, 0.1f, 0.8f, 0.1f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0.3f, 1f, 0.3f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonActive, 0.2f, 1f, 0.2f, 1f);
+
 		if (ImGui.button("Y", buttonSize, buttonSize)) {
 			yVal[0] = 0f;
 			changed = true;
 		}
+
 		ImGui.popStyleColor(3);
 		ImGui.sameLine(0, 2);
 
 		ImGui.pushItemWidth(dragWidth);
+
 		if (ImGui.dragFloat("##Y_" + label + "_" + uniqueID, yVal, dragSpeed, -Float.MAX_VALUE, Float.MAX_VALUE, "%.3f")) {
 			vec.y = yVal[0];
 			changed = true;
 		}
+
 		ImGui.popItemWidth();
 
 		ImGui.sameLine(0, 8);
@@ -153,18 +169,22 @@ public class GUIUtils {
 		ImGui.pushStyleColor(ImGuiCol.Button, 0.1f, 0.1f, 0.8f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0.3f, 0.3f, 1f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonActive, 0.2f, 0.2f, 1f, 1f);
+
 		if (ImGui.button("Z", buttonSize, buttonSize)) {
 			zVal[0] = 0f;
 			changed = true;
 		}
+
 		ImGui.popStyleColor(3);
 		ImGui.sameLine(0, 2);
 
 		ImGui.pushItemWidth(dragWidth);
+
 		if (ImGui.dragFloat("##Z_" + label + "_" + uniqueID, zVal, dragSpeed, -Float.MAX_VALUE, Float.MAX_VALUE, "%.3f")) {
 			vec.z = zVal[0];
 			changed = true;
 		}
+
 		ImGui.popItemWidth();
 
 		vec.set(xVal[0], yVal[0], zVal[0]);
@@ -214,6 +234,7 @@ public class GUIUtils {
 		ImGui.popItemWidth();
 
 		ImGui.sameLine();
+
 		if (ImGui.button("Clear", 50, 0)) {
 			value.set("");
 			changed = true;
@@ -399,6 +420,7 @@ public class GUIUtils {
 		float currentX = ImGui.getCursorPosX();
 		ImGui.setCursorPosX(currentX - 8);
 		ImGui.pushItemWidth(25);
+
 		if (ImGui.colorEdit4("##ColorPreview_" + label + "_" + uniqueID, rgba, ImGuiColorEditFlags.NoInputs | ImGuiColorEditFlags.Float)) {
 			changed = true;
 			r[0] = rgba[0];
@@ -406,6 +428,7 @@ public class GUIUtils {
 			b[0] = rgba[2];
 			a[0] = rgba[3];
 		}
+
 		ImGui.popItemWidth();
 		ImGui.setCursorPosX(currentX + 28 + 6);
 		ImGui.sameLine();
@@ -416,16 +439,20 @@ public class GUIUtils {
 		ImGui.pushStyleColor(ImGuiCol.Button, 0.8f, 0.1f, 0.1f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 1f, 0.3f, 0.3f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonActive, 1f, 0.2f, 0.2f, 1f);
+
 		if (ImGui.button("R", buttonSize, buttonSize)) {
 			r[0] = 0f;
 			changed = true;
 		}
+
 		ImGui.popStyleColor(3);
 		ImGui.sameLine();
 		ImGui.pushItemWidth(dragWidth);
+
 		if (ImGui.dragFloat("##R_" + label + "_" + uniqueID, r, dragSpeed, 0f, 1f, "%.2f")) {
 			changed = true;
 		}
+
 		ImGui.popItemWidth();
 		ImGui.sameLine();
 
@@ -433,16 +460,20 @@ public class GUIUtils {
 		ImGui.pushStyleColor(ImGuiCol.Button, 0.1f, 0.8f, 0.1f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0.3f, 1f, 0.3f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonActive, 0.2f, 1f, 0.2f, 1f);
+
 		if (ImGui.button("G", buttonSize, buttonSize)) {
 			g[0] = 0f;
 			changed = true;
 		}
+
 		ImGui.popStyleColor(3);
 		ImGui.sameLine();
 		ImGui.pushItemWidth(dragWidth);
+
 		if (ImGui.dragFloat("##G_" + label + "_" + uniqueID, g, dragSpeed, 0f, 1f, "%.2f")) {
 			changed = true;
 		}
+
 		ImGui.popItemWidth();
 		ImGui.sameLine();
 
@@ -450,16 +481,20 @@ public class GUIUtils {
 		ImGui.pushStyleColor(ImGuiCol.Button, 0.1f, 0.1f, 0.8f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0.3f, 0.3f, 1f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonActive, 0.2f, 0.2f, 1f, 1f);
+
 		if (ImGui.button("B", buttonSize, buttonSize)) {
 			b[0] = 0f;
 			changed = true;
 		}
+
 		ImGui.popStyleColor(3);
 		ImGui.sameLine();
 		ImGui.pushItemWidth(dragWidth);
+
 		if (ImGui.dragFloat("##B_" + label + "_" + uniqueID, b, dragSpeed, 0f, 1f, "%.2f")) {
 			changed = true;
 		}
+
 		ImGui.popItemWidth();
 		ImGui.sameLine();
 
@@ -467,16 +502,20 @@ public class GUIUtils {
 		ImGui.pushStyleColor(ImGuiCol.Button, 0.6f, 0.6f, 0.6f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0.8f, 0.8f, 0.8f, 1f);
 		ImGui.pushStyleColor(ImGuiCol.ButtonActive, 0.7f, 0.7f, 0.7f, 1f);
+
 		if (ImGui.button("A", buttonSize, buttonSize)) {
 			a[0] = 1f;
 			changed = true;
 		}
+
 		ImGui.popStyleColor(3);
 		ImGui.sameLine();
 		ImGui.pushItemWidth(dragWidth);
+
 		if (ImGui.dragFloat("##A_" + label + "_" + uniqueID, a, dragSpeed, 0f, 1f, "%.2f")) {
 			changed = true;
 		}
+
 		ImGui.popItemWidth();
 
 		ImGui.endGroup();
@@ -499,14 +538,17 @@ public class GUIUtils {
 
 		boolean changed = false;
 		String[] items = new String[values.length];
+
 		for (int i = 0; i < values.length; i++) {
 			items[i] = values[i].name();
 		}
 
 		ImGui.pushItemWidth(ImGui.getContentRegionAvailX());
+
 		if (ImGui.combo("##" + label, selectedIndex, items)) {
 			changed = true;
 		}
+
 		ImGui.popItemWidth();
 
 		ImGui.columns(1);
@@ -536,6 +578,7 @@ public class GUIUtils {
 		ImGui.pushStyleColor(ImGuiCol.ButtonActive, 1f, 0.2f, 0.2f, 1f);
 		boolean clicked = ImGui.button(label);
 		ImGui.popStyleColor(3);
+
 		return clicked;
 	}
 
@@ -549,11 +592,13 @@ public class GUIUtils {
 
 		boolean changed = false;
 		ImGui.pushItemWidth(ImGui.getContentRegionAvailX());
+
 		if (ImGui.beginCombo("##" + label, currentAssetLabel)) {
 			for (T asset : assets) {
 				String selectableLabel = (asset instanceof ScriptAsset) ? ((ScriptAsset) asset).getAssetPath() : asset.getId().toString();
 
 				boolean selected = asset.getId().equals(currentAssetID);
+
 				if (ImGui.selectable(selectableLabel, selected)) {
 					onSelect.accept(asset.getId());
 					changed = true;
