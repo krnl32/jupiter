@@ -24,8 +24,9 @@ public class DeathEffectSystem implements System {
 			TransformComponent transform = entity.getComponent(TransformComponent.class);
 			DeathEffectComponent deathEffect = entity.getComponent(DeathEffectComponent.class);
 
-			if (transform != null && deathEffect != null)
+			if (transform != null && deathEffect != null) {
 				spawnParticles(transform.translation, deathEffect.particleCount, deathEffect.particleSprite);
+			}
 		});
 	}
 

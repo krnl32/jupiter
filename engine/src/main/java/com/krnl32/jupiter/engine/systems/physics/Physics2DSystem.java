@@ -39,6 +39,7 @@ public class Physics2DSystem implements System {
 
 		EventBus.getInstance().register(EntityDestroyedEvent.class, event -> {
 			RigidBody2DComponent rigidBody2D = event.getEntity().getComponent(RigidBody2DComponent.class);
+
 			if (rigidBody2D != null && rigidBody2D.rawBody != null) {
 				bodiesToDestroy.add(rigidBody2D.rawBody);
 				rigidBody2D.rawBody = null;
@@ -79,6 +80,7 @@ public class Physics2DSystem implements System {
 				physics2D.getWorld().destroyBody(body);
 			}
 		}
+
 		bodiesToDestroy.clear();
 	}
 
@@ -154,6 +156,7 @@ public class Physics2DSystem implements System {
 			case DYNAMIC -> BodyType.DYNAMIC;
 			case KINEMATIC -> BodyType.KINEMATIC;
 		};
+
 		if (body.getType() != newBodyType) {
 			body.setType(newBodyType);
 		}
@@ -167,6 +170,7 @@ public class Physics2DSystem implements System {
 		for (var fixture = body.getFixtureList(); fixture != null; fixture = fixture.getNext()) {
 			fixture.setDensity(rigidBody2D.mass);
 		}
+
 		body.resetMassData();
 	}
 }

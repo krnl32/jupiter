@@ -27,10 +27,12 @@ public class WorldRenderPass implements RenderPass {
 		spriteRenderBatch.begin();
 
 		shader.bind();
+
 		if (camera != null) {
 			shader.setMat4("u_View", camera.getViewMatrix());
 			shader.setMat4("u_Projection", camera.getProjectionMatrix());
 		}
+
 		shader.unbind();
 	}
 

@@ -22,6 +22,7 @@ public class LuaScriptBindings implements ScriptBindings {
 			onInit.call();
 			return true;
 		}
+
 		return false;
 	}
 

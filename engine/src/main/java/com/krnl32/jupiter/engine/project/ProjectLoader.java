@@ -14,14 +14,18 @@ public class ProjectLoader {
 
 	public static Project load(Path projectDirectory) {
 		File projectFile = getProjectFile(projectDirectory);
+
 		if (projectFile == null) {
 			Logger.error("ProjectLoader failed to GetProject({})", projectDirectory);
 			return null;
 		}
 
 		Project project;
+
 		try {
-			project = ProjectSerializer.deserialize(new JSONObject(FileIO.readFileContent(Path.of(projectFile.getAbsolutePath()))));
+			String projectFileContent = FileIO.readFileContent(projectFile.toPath());
+			JSONObject projectJSON = new JSONObject(projectFileContent);
+			project = ProjectSerializer.deserialize(projectJSON);
 		} catch (IOException e) {
 			Logger.error(e.getMessage());
 			return null;
@@ -32,12 +36,14 @@ public class ProjectLoader {
 
 	private static File getProjectFile(Path projectDirectory) {
 		File folder = new File(projectDirectory.toString());
+
 		if (!folder.exists() || !folder.isDirectory()) {
 			Logger.error("ProjectLoader failed to GetProject({}) Invalid", projectDirectory);
 			return null;
 		}
 
 		File[] files = folder.listFiles((dir, name) -> name.endsWith(PROJECT_EXTENSION));
+
 		if (files == null || files.length == 0) {
 			Logger.error("ProjectLoader failed to GetProject({}) Project({}) File Not Found", projectDirectory, PROJECT_EXTENSION);
 			return null;

@@ -20,6 +20,7 @@ public enum ProjectionType {
 				return type;
 			}
 		}
+
 		return null;
 	}
 };

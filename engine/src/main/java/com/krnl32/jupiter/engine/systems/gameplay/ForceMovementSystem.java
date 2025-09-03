@@ -23,8 +23,9 @@ public class ForceMovementSystem implements System {
 			RigidBody2DComponent rigidBody2D = entity.getComponent(RigidBody2DComponent.class);
 			MovementIntentComponent movementIntent = entity.getComponent(MovementIntentComponent.class);
 
-			if (rigidBody2D.rawBody == null)
+			if (rigidBody2D.rawBody == null) {
 				continue;
+			}
 
 			float forceScale = movementIntent.sprint ? forceMovement.sprintMultiplier : 1.0f;
 
@@ -41,6 +42,7 @@ public class ForceMovementSystem implements System {
 			Vec2 velocity = rigidBody2D.rawBody.getLinearVelocity();
 			float speed = velocity.length();
 			float maxSpeed = forceMovement.maxSpeed * forceScale;
+
 			if (speed > maxSpeed) {
 				velocity.mulLocal(maxSpeed / speed);
 				rigidBody2D.rawBody.setLinearVelocity(velocity);

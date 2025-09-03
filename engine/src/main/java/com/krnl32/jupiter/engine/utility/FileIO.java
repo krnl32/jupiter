@@ -33,6 +33,7 @@ public class FileIO {
 			if (inputStream == null) {
 				throw new FileNotFoundException("ResourcePath: " + resourcePath);
 			}
+
 			return new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
 		}
 	}
@@ -42,6 +43,7 @@ public class FileIO {
 			if (inputStream == null) {
 				throw new FileNotFoundException("ResourcePath: " + resourcePath);
 			}
+
 			return inputStream.readAllBytes();
 		}
 	}
@@ -63,9 +65,11 @@ public class FileIO {
 	public static String getFileExtension(Path path) {
 		String fileName = path.getFileName().toString();
 		int dot = fileName.lastIndexOf('.');
+
 		if (dot == -1 || dot == 0 || dot == fileName.length() - 1) {
 			return null;
 		}
+
 		return fileName.substring(dot + 1).toLowerCase();
 	}
 }

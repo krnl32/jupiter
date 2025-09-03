@@ -31,16 +31,20 @@ public class RenderSystem implements System {
 
 			if (entity.hasComponent(BlinkComponent.class)) {
 				BlinkComponent blink = entity.getComponent(BlinkComponent.class);
-				if (!blink.visible)
+
+				if (!blink.visible) {
 					continue;
+				}
 			}
 
 			TransformComponent transform = entity.getComponent(TransformComponent.class);
 			SpriteRendererComponent spriteRenderer = entity.getComponent(SpriteRendererComponent.class);
 
 			Texture2D texture = null;
+
 			if (spriteRenderer.textureAssetId != null) {
 				TextureAsset textureAsset = ProjectContext.getInstance().getAssetManager().getAsset(spriteRenderer.textureAssetId);
+
 				if (spriteRenderer.textureAssetId != null && (textureAsset == null || !textureAsset.isValid())) {
 					Logger.error("RenderSystem Failed to get Texture Asset({})\n", spriteRenderer.textureAssetId);
 				}

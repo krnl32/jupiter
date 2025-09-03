@@ -36,12 +36,14 @@ public class ProjectileEmitterSystem implements System {
 			boolean fire = false;
 
 			if (emitter.shootKey == null) {
-				if (currentTime - emitter.lastEmissionTime >= 1.0f / emitter.fireRate)
+				if (currentTime - emitter.lastEmissionTime >= 1.0f / emitter.fireRate) {
 					fire = true;
+				}
 			}
 
-			if (emitter.shootKey != null && InputDeviceSystem.getInstance().isKeyDown(emitter.shootKey))
+			if (emitter.shootKey != null && InputDeviceSystem.getInstance().isKeyDown(emitter.shootKey)) {
 				fire = true;
+			}
 
 			if (fire && currentTime - emitter.lastEmissionTime >= 1.0f / emitter.fireRate) {
 				emitter.lastEmissionTime = currentTime;

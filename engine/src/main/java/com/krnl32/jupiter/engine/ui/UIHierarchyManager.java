@@ -21,10 +21,12 @@ public class UIHierarchyManager {
 	}
 
 	public static void detach(Entity child) {
-		if (!child.hasComponent(UIHierarchyComponent.class))
+		if (!child.hasComponent(UIHierarchyComponent.class)) {
 			return;
+		}
 
 		UIHierarchyComponent childHierarchy = child.getComponent(UIHierarchyComponent.class);
+
 		if (childHierarchy.parent != null && childHierarchy.parent.hasComponent(UIHierarchyComponent.class)) {
 			UIHierarchyComponent parentHierarchy = childHierarchy.parent.getComponent(UIHierarchyComponent.class);
 			parentHierarchy.removeChild(child);
@@ -34,15 +36,20 @@ public class UIHierarchyManager {
 	}
 
 	public static void clear(Entity parent) {
-		if (!parent.hasComponent(UIHierarchyComponent.class))
+		if (!parent.hasComponent(UIHierarchyComponent.class)) {
 			return;
+		}
 
 		UIHierarchyComponent parentHierarchy = parent.getComponent(UIHierarchyComponent.class);
+
 		for (Entity child : parentHierarchy.children) {
 			UIHierarchyComponent childHierarchy = child.getComponent(UIHierarchyComponent.class);
-			if (childHierarchy != null)
+
+			if (childHierarchy != null) {
 				childHierarchy.parent = null;
+			}
 		}
+
 		parentHierarchy.children.clear();
 	}
 }

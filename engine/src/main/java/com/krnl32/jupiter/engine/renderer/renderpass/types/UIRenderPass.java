@@ -43,9 +43,11 @@ public class UIRenderPass implements RenderPass {
 		uiRenderBatch.begin();
 
 		shader.bind();
+
 		if (camera != null) {
 			shader.setMat4("u_View", camera.getViewMatrix());
 		}
+
 		shader.setMat4("u_Projection", projectionMatrix);
 		shader.unbind();
 	}
@@ -54,8 +56,11 @@ public class UIRenderPass implements RenderPass {
 	public void endFrame() {
 		renderUICommands.sort((a, b) -> {
 			int cmp = ClipRect.compareClipRect(a.getClipRect(), b.getClipRect());
-			if (cmp != 0)
+
+			if (cmp != 0) {
 				return cmp;
+			}
+
 			int aZ = a.getRenderPacket().getIndex();
 			int bZ = b.getRenderPacket().getIndex();
 			return Integer.compare(aZ, bZ);

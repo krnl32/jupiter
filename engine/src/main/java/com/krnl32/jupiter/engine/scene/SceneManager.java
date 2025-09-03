@@ -23,13 +23,15 @@ public class SceneManager {
 	}
 
 	public void onUpdate(float dt) {
-		if (currentScene != null)
+		if (currentScene != null) {
 			currentScene.onUpdate(dt);
+		}
 	}
 
 	public void onRender(float dt, Renderer renderer) {
-		if (currentScene != null)
+		if (currentScene != null) {
 			currentScene.onRender(dt, renderer);
+		}
 	}
 
 	public void addScene(String name, Scene scene) {
@@ -37,14 +39,17 @@ public class SceneManager {
 	}
 
 	public void switchScene(String name) {
-		if (currentScene != null)
+		if (currentScene != null) {
 			currentScene.onUnload();
+		}
 
 		currentScene = scenes.get(name);
+
 		if(currentScene == null) {
 			Logger.error("Scene {} doesn't exist", name);
 			return;
 		}
+
 		currentScene.load();
 
 		EventBus.getInstance().emit(new SceneSwitchedEvent(currentScene));
@@ -55,8 +60,10 @@ public class SceneManager {
 	}
 
 	public void setScene(Scene scene) {
-		if (currentScene != null)
+		if (currentScene != null) {
 			currentScene.onUnload();
+		}
+
 		currentScene = scene;
 		currentScene.load();
 

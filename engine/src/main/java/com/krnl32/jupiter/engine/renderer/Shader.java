@@ -19,6 +19,7 @@ public class Shader {
 
 	public Shader(String vertexSource, String fragmentSource) {
 		programID = createShader(vertexSource, fragmentSource);
+
 		if (programID == 0) {
 			Logger.critical("Failed to Create Shader for({}, {})", vertexSource, fragmentSource);
 		}
@@ -76,6 +77,7 @@ public class Shader {
 		glValidateProgram(program);
 		glDeleteShader(vs);
 		glDeleteShader(fs);
+
 		return program;
 	}
 
@@ -84,11 +86,13 @@ public class Shader {
 		glShaderSource(id, src);
 		glCompileShader(id);
 		validateCompileStatus(id);
+
 		return id;
 	}
 
 	private void validateCompileStatus(int id) {
 		int res = glGetShaderi(id, GL_COMPILE_STATUS);
+
 		if(res == 0) {
 			int len = glGetShaderi(id, GL_INFO_LOG_LENGTH);
 			String msg = glGetShaderInfoLog(id, len);
@@ -98,11 +102,13 @@ public class Shader {
 	}
 
 	private int getUniformLocation(String name) {
-		if (uniformLocationCache.containsKey(name))
+		if (uniformLocationCache.containsKey(name)) {
 			return uniformLocationCache.get(name);
+		}
 
 		int location = glGetUniformLocation(programID, name);
 		uniformLocationCache.put(name, location);
+
 		return location;
 	}
 }

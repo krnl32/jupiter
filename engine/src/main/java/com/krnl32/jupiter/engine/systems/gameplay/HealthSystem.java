@@ -21,6 +21,7 @@ public class HealthSystem implements System {
 	public void onUpdate(float dt) {
 		for (Entity entity: registry.getEntitiesWith(HealthComponent.class)) {
 			HealthComponent health = entity.getComponent(HealthComponent.class);
+
 			if (health.currentHealth <= 0 && !entity.hasComponent(DestroyComponent.class)) {
 				EventBus.getInstance().emit(new EntityDeathEvent(entity));
 				entity.addComponent(new DestroyComponent());

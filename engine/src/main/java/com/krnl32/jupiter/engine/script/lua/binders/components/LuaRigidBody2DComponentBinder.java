@@ -31,6 +31,7 @@ public class LuaRigidBody2DComponentBinder implements ComponentBinder<RigidBody2
 	@Override
 	public RigidBody2DComponent from(LuaValue table) {
 		BodyType bodyType = BodyType.STATIC;
+
 		try {
 			String bodyTypeStr = table.get("bodyType").checkjstring().toUpperCase();
 			bodyType = BodyType.valueOf(bodyTypeStr);
@@ -78,23 +79,29 @@ public class LuaRigidBody2DComponentBinder implements ComponentBinder<RigidBody2
 			component.velocity.set(velocityTable.get("x").tofloat(), velocityTable.get("y").tofloat());
 		}
 
-		if (!table.get("linearDamping").isnil())
+		if (!table.get("linearDamping").isnil()) {
 			component.linearDamping = table.get("linearDamping").tofloat();
+		}
 
-		if (!table.get("angularDamping").isnil())
+		if (!table.get("angularDamping").isnil()) {
 			component.angularDamping = table.get("angularDamping").tofloat();
+		}
 
-		if (!table.get("mass").isnil())
+		if (!table.get("mass").isnil()) {
 			component.mass = table.get("mass").tofloat();
+		}
 
-		if (!table.get("gravityScale").isnil())
+		if (!table.get("gravityScale").isnil()) {
 			component.gravityScale = table.get("gravityScale").tofloat();
+		}
 
-		if (!table.get("fixedRotation").isnil())
+		if (!table.get("fixedRotation").isnil()) {
 			component.fixedRotation = table.get("fixedRotation").toboolean();
+		}
 
-		if (!table.get("continuousCollision").isnil())
+		if (!table.get("continuousCollision").isnil()) {
 			component.continuousCollision = table.get("continuousCollision").toboolean();
+		}
 
 		component.resync = true;
 	}

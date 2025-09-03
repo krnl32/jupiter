@@ -25,8 +25,9 @@ public class CameraSystem implements System {
 			camera.camera.setPosition(transform.translation);
 			camera.camera.onUpdate(dt);
 
-			if (camera.primary)
+			if (camera.primary) {
 				EventBus.getInstance().emit(new SwitchRendererCameraEvent(camera.camera));
+			}
 		}
 	}
 

@@ -61,10 +61,13 @@ public abstract class RenderBatch {
 	}
 
 	public void end() {
-		if (quadCount == 0) return;
+		if (quadCount == 0) {
+			return;
+		}
 
-		for (int i = 0; i < textures.size(); i++)
+		for (int i = 0; i < textures.size(); i++) {
 			textures.get(i).bind(i);
+		}
 
 		vertexArray.bind();
 		vertexArray.getVertexBuffers().get(0).setBuffer(vertices, 0, quadCount * VERTICES_PER_QUAD * VERTEX_SIZE);
@@ -78,10 +81,12 @@ public abstract class RenderBatch {
 				return i;
 			}
 		}
+
 		if (textures.size() >= MAX_TEXTURE_SLOTS) {
 			end();
 			begin();
 		}
+
 		textures.add(texture);
 		return textures.size() - 1;
 	}
@@ -89,6 +94,7 @@ public abstract class RenderBatch {
 	private int[] generateIndices() {
 		int[] indices = new int[MAX_QUADS * INDICES_PER_QUAD];
 		int offset = 0;
+
 		for (int i = 0; i < indices.length; i += 6) {
 			indices[i + 0] = offset + 0;
 			indices[i + 1] = offset + 1;
@@ -98,6 +104,7 @@ public abstract class RenderBatch {
 			indices[i + 5] = offset + 0;
 			offset += 4;
 		}
+
 		return indices;
 	}
 }

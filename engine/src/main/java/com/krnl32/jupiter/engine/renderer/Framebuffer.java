@@ -24,11 +24,13 @@ public class Framebuffer {
 		this.height = height;
 		this.attachments = attachments;
 		this.colorAttachments = new ArrayList<>();
+
 		reset();
 	}
 
 	public void destroy() {
 		glDeleteFramebuffers(framebufferID);
+
 		for (int colorAttachment : colorAttachments) {
 			glDeleteTextures(colorAttachment);
 		}
@@ -60,10 +62,13 @@ public class Framebuffer {
 	}
 
 	public void resize(int width, int height) {
-		if (this.width == width && this.height == height)
+		if (this.width == width && this.height == height) {
 			return;
+		}
+
 		this.width = width;
 		this.height = height;
+
 		reset();
 	}
 
@@ -83,9 +88,11 @@ public class Framebuffer {
 				int g = rgba.get(1) & 0xFF;
 				int b = rgba.get(2) & 0xFF;
 				int a = rgba.get(3) & 0xFF;
+
 				return (r << 24) | (g << 16) | (b << 8) | a;
 			}
 		}
+
 		return -1;
 	}
 
@@ -109,9 +116,11 @@ public class Framebuffer {
 	private void reset() {
 		if (framebufferID != 0) {
 			glDeleteFramebuffers(framebufferID);
+
 			for (int colorAttachment : colorAttachments) {
 				glDeleteTextures(colorAttachment);
 			}
+
 			colorAttachments.clear();
 		}
 
@@ -139,12 +148,15 @@ public class Framebuffer {
 		}
 
 		int[] drawBuffers = new int[attachments.size()];
+
 		for (int i = 0; i < attachments.size(); i++) {
 			drawBuffers[i] = GL_COLOR_ATTACHMENT0 + i;
 		}
+
 		glNamedFramebufferDrawBuffers(framebufferID, drawBuffers);
 
 		int status = glCheckNamedFramebufferStatus(framebufferID, GL_FRAMEBUFFER);
+
 		if (status != GL_FRAMEBUFFER_COMPLETE) {
 			Logger.error("Framebuffer({}) Incomplete({})", framebufferID, status);
 		}

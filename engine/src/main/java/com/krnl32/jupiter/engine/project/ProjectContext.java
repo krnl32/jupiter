@@ -27,6 +27,7 @@ public class ProjectContext {
 			Logger.critical("ProjectContext Not Initialized");
 			return null;
 		}
+
 		return instance;
 	}
 

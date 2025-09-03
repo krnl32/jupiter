@@ -56,6 +56,7 @@ public abstract class Scene {
 			onCreate();
 			initialized = true;
 		}
+
 		onActivate();
 	}
 

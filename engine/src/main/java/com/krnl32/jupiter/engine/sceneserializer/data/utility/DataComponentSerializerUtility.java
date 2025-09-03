@@ -22,8 +22,10 @@ public class DataComponentSerializerUtility {
 
 	public static Sprite deserializeSprite(Map<String, Object> data) {
 		AssetId textureAssetId = null;
+
 		if (data.get("textureAssetId") != null) {
 			textureAssetId = new AssetId(UUID.fromString(data.get("textureAssetId").toString()));
+
 			if (!ProjectContext.getInstance().getAssetManager().isAssetRegistered(textureAssetId)) {
 				Logger.error("DTOComponentSerializerUtility deserializeSprite Failed to Load Texture({}) Not Registered", textureAssetId);
 				return null;
@@ -57,6 +59,7 @@ public class DataComponentSerializerUtility {
 		}
 
 		AssetId scriptAssetId = new AssetId(UUID.fromString(data.get("scriptAssetId").toString()));
+
 		if (!ProjectContext.getInstance().getAssetManager().isAssetRegistered(scriptAssetId)) {
 			Logger.error("DTOComponentSerializerUtility serializeScriptInstance Failed, Script AssetId({}) Not Registered", scriptAssetId);
 			return null;

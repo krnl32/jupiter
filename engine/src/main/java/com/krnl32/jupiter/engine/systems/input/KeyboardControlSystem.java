@@ -26,32 +26,41 @@ public class KeyboardControlSystem implements System {
 			movementIntent.jump = false;
 			movementIntent.sprint = false;
 
-			if (InputDeviceSystem.getInstance().isKeyDown(keyboardControl.upKey))
+			if (InputDeviceSystem.getInstance().isKeyDown(keyboardControl.upKey)) {
 				movementIntent.translation.y += 1;
+			}
 
-			if (InputDeviceSystem.getInstance().isKeyDown(keyboardControl.downKey))
+			if (InputDeviceSystem.getInstance().isKeyDown(keyboardControl.downKey)) {
 				movementIntent.translation.y -= 1;
+			}
 
-			if (InputDeviceSystem.getInstance().isKeyDown(keyboardControl.leftKey))
+			if (InputDeviceSystem.getInstance().isKeyDown(keyboardControl.leftKey)) {
 				movementIntent.translation.x -= 1;
+			}
 
-			if (InputDeviceSystem.getInstance().isKeyDown(keyboardControl.rightKey))
+			if (InputDeviceSystem.getInstance().isKeyDown(keyboardControl.rightKey)) {
 				movementIntent.translation.x += 1;
+			}
 
-			if (movementIntent.translation.lengthSquared() > 0.001f)
+			if (movementIntent.translation.lengthSquared() > 0.001f) {
 				movementIntent.translation.normalize();
+			}
 
-			if (InputDeviceSystem.getInstance().isKeyDown(keyboardControl.rotateLeftKey))
+			if (InputDeviceSystem.getInstance().isKeyDown(keyboardControl.rotateLeftKey)) {
 				movementIntent.rotation.z += 1;
+			}
 
-			if (InputDeviceSystem.getInstance().isKeyDown(keyboardControl.rotateRightKey))
+			if (InputDeviceSystem.getInstance().isKeyDown(keyboardControl.rotateRightKey)) {
 				movementIntent.rotation.z -= 1;
+			}
 
-			if (InputDeviceSystem.getInstance().isKeyDown(keyboardControl.jumpKey))
+			if (InputDeviceSystem.getInstance().isKeyDown(keyboardControl.jumpKey)) {
 				movementIntent.jump = true;
+			}
 
-			if (InputDeviceSystem.getInstance().isKeyDown(keyboardControl.sprintKey))
+			if (InputDeviceSystem.getInstance().isKeyDown(keyboardControl.sprintKey)) {
 				movementIntent.sprint = true;
+			}
 		}
 	}
 

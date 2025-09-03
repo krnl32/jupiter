@@ -9,6 +9,7 @@ import org.joml.Vector3f;
 public class UIUtils {
 	public static Vector3f getWorldPosition(Entity entity) {
 		Vector3f worldPosition = new Vector3f();
+
 		while (entity != null && entity.hasComponent(UITransformComponent.class)) {
 			UITransformComponent transform = entity.getComponent(UITransformComponent.class);
 			worldPosition.add(transform.translation);
@@ -20,6 +21,7 @@ public class UIUtils {
 				entity = null;
 			}
 		}
+
 		return worldPosition;
 	}
 

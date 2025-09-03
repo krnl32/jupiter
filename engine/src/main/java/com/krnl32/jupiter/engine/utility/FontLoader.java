@@ -31,6 +31,7 @@ public class FontLoader {
 			ttf.flip();
 
 			STBTTFontinfo fontInfo = STBTTFontinfo.create();
+
 			if (!stbtt_InitFont(fontInfo, ttf)) {
 				Logger.info("FontLoader Failed to stbtt_InitFont Font File({})", fontPath);
 				return null;

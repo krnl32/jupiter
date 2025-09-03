@@ -20,8 +20,9 @@ public class LifetimeSystem implements System {
 			LifetimeComponent lifetime = entity.getComponent(LifetimeComponent.class);
 			lifetime.remainingTime -= dt;
 
-			if (lifetime.remainingTime <= 0)
+			if (lifetime.remainingTime <= 0) {
 				entity.addComponent(new DestroyComponent());
+			}
 		}
 	}
 

@@ -34,6 +34,7 @@ public class LuaEntity extends LuaValue {
 					ComponentBinder<? extends Component, LuaValue> binder = ComponentBinderRegistry.getBinder(componentClass);
 					Component component = binder.from(componentData);
 					scriptContext.getEntity().addComponent(component);
+
 					return LuaValue.NIL;
 				}
 			};
@@ -53,6 +54,7 @@ public class LuaEntity extends LuaValue {
 					ComponentBinder binder = ComponentBinderRegistry.getBinder(componentClass);
 					binder.update(component, componentData);
 					scriptContext.getEntity().addComponent(component);
+
 					return LuaValue.NIL;
 				}
 			};
@@ -62,6 +64,7 @@ public class LuaEntity extends LuaValue {
 					LuaValue componentName = args.arg(2);
 					var componentClass = ComponentBinderRegistry.getComponentClass(componentName.checkjstring());
 					scriptContext.getEntity().removeComponent(componentClass);
+
 					return LuaValue.NIL;
 				}
 			};
@@ -72,6 +75,7 @@ public class LuaEntity extends LuaValue {
 					var componentClass = ComponentBinderRegistry.getComponentClass(componentName.checkjstring());
 					Component component = scriptContext.getEntity().getComponent(componentClass);
 					ComponentBinder binder = ComponentBinderRegistry.getBinder(componentClass);
+
 					return component != null ? (Varargs) binder.to(component) : LuaValue.NIL;
 				}
 			};
@@ -80,6 +84,7 @@ public class LuaEntity extends LuaValue {
 				public Varargs invoke(Varargs args) {
 					LuaValue componentName = args.arg(2);
 					var componentClass = ComponentBinderRegistry.getComponentClass(componentName.checkjstring());
+
 					return scriptContext.getEntity().hasComponent(componentClass) ? LuaValue.TRUE : LuaValue.FALSE;
 				}
 			};

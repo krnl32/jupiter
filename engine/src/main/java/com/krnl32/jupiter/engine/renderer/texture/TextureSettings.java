@@ -19,6 +19,7 @@ public class TextureSettings {
 		this.type = type;
 		this.wrapMode = wrapMode;
 		this.filterMode = filterMode;
+
 		setGenerateMipmaps(generateMipmaps);
 	}
 
@@ -30,6 +31,7 @@ public class TextureSettings {
 		this.channels = channels;
 		this.wrapMode = wrapMode;
 		this.filterMode = filterMode;
+
 		setGenerateMipmaps(generateMipmaps);
 	}
 
@@ -277,6 +279,7 @@ public class TextureSettings {
 			} else {
 				flags &= ~flag.getMask();
 			}
+
 			return this;
 		}
 

@@ -54,11 +54,13 @@ public class DataSceneSerializer implements SceneSerializer<Map<String, Object>>
 		Map<UUID, Entity> uuidToEntity = new HashMap<>();
 
 		List<Map<String, Object>> entities = (List<Map<String, Object>>) data.get("entities");
+
 		for (int i = 0; i < entities.size(); i++) {
 			Map<String, Object> entityMap = entities.get(i);
 			Map<String, Map<String, Object>> components = (Map<String, Map<String, Object>>) entityMap.get("components");
 
 			Map<String, Object> uuidComponent = components.get("UUIDComponent");
+
 			if (uuidComponent == null) {
 				Logger.error("SceneSerializer Deserialize Failed, UUIDComponent not Found for Entity({})", i);
 				return null;
@@ -73,9 +75,11 @@ public class DataSceneSerializer implements SceneSerializer<Map<String, Object>>
 		// Resolve UUIDs
 		EntityResolver resolver = uuid -> {
 			Entity entity = uuidToEntity.get(uuid);
+
 			if (entity == null) {
 				Logger.error("SceneSerializer Deserialize Failed, Entity Not Found for UUID({})", uuid);
 			}
+
 			return entity;
 		};
 
@@ -94,11 +98,13 @@ public class DataSceneSerializer implements SceneSerializer<Map<String, Object>>
 		Map<UUID, Entity> uuidToEntity = new HashMap<>();
 
 		List<Map<String, Object>> entities = (List<Map<String, Object>>) data.get("entities");
+
 		for (int i = 0; i < entities.size(); i++) {
 			Map<String, Object> entityMap = entities.get(i);
 			Map<String, Map<String, Object>> components = (Map<String, Map<String, Object>>) entityMap.get("components");
 
 			Map<String, Object> uuidComponent = components.get("UUIDComponent");
+
 			if (uuidComponent == null) {
 				Logger.error("SceneSerializer Deserialize Failed, UUIDComponent not Found for Entity({})", i);
 				return;
@@ -113,9 +119,11 @@ public class DataSceneSerializer implements SceneSerializer<Map<String, Object>>
 		// Resolve UUIDs
 		EntityResolver resolver = uuid -> {
 			Entity entity = uuidToEntity.get(uuid);
+
 			if (entity == null) {
 				Logger.error("SceneSerializer Deserialize Failed, Entity Not Found for UUID({})", uuid);
 			}
+
 			return entity;
 		};
 
@@ -128,8 +136,10 @@ public class DataSceneSerializer implements SceneSerializer<Map<String, Object>>
 
 	private Map<String, Object> serializeEntity(Entity entity) {
 		Map<String, Map<String, Object>> components = new HashMap<>();
+
 		for (Component component : entity.getComponents()) {
 			ComponentSerializer<Component, Map<String, Object>> serializer = componentSerializerRegistry.getSerializer(component.getClass());
+
 			if (serializer != null) {
 				components.put(component.getClass().getSimpleName(), serializer.serialize(component));
 			}
@@ -142,6 +152,7 @@ public class DataSceneSerializer implements SceneSerializer<Map<String, Object>>
 		Map<String, Map<String, Object>> components = (Map<String, Map<String, Object>>) data.get("components");
 
 		Map<String, Object> uuidComponent = components.get("UUIDComponent");
+
 		if (uuidComponent == null) {
 			Logger.error("SceneSerializer deserializeEntity Failed, UUIDComponent Not Found");
 			return;

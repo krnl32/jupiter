@@ -10,6 +10,7 @@ public class VertexBufferLayout {
 
 	public VertexBufferLayout(VertexBufferAttribute... attributes) {
 		this.attributes = new ArrayList<>(Arrays.asList(attributes));
+
 		calculate();
 	}
 
@@ -23,6 +24,7 @@ public class VertexBufferLayout {
 
 	private void calculate() {
 		int offset = 0;
+
 		for(var attrib: attributes) {
 			attrib.setOffset(offset);
 			offset += attrib.getSize() * attrib.getType().getSize();

@@ -29,11 +29,14 @@ public class ScriptSystem implements System {
 		// Handle onDestroy
 		EventBus.getInstance().register(EntityDestroyedEvent.class, event -> {
 			ScriptComponent scriptComponent = event.getEntity().getComponent(ScriptComponent.class);
-			if (scriptComponent == null)
+
+			if (scriptComponent == null) {
 				return;
+			}
 
 			for (ScriptInstance script : scriptComponent.scripts) {
 				ScriptBindings bindings = scriptBindings.get(new ScriptContext(event.getEntity(), script));
+
 				if (bindings != null) {
 					try {
 						bindings.onDestroy();
@@ -52,20 +55,26 @@ public class ScriptSystem implements System {
 
 			for (ScriptInstance script : scriptComponent.scripts) {
 				ScriptAsset scriptAsset = ProjectContext.getInstance().getAssetManager().getAsset(script.getScriptAssetId());
-				if (scriptAsset == null)
+
+				if (scriptAsset == null) {
 					continue;
+				}
 
 				File scriptFile = new File(scriptAsset.getDefinition().getScriptPath().toString());
-				if (!scriptFile.exists())
+
+				if (!scriptFile.exists()) {
 					continue;
+				}
 
 				// Hot Reloadable Scripts
 				ScriptContext scriptContext = new ScriptContext(entity, script);
 				ScriptBindings bindings = scriptBindings.get(scriptContext);
+
 				if (bindings == null || script.getLastModified() != scriptFile.lastModified()) {
 					Logger.info("ScriptSystem Hot Reloading Script({}) for Entity({})", scriptAsset.getAssetPath(), entity.getTagOrId());
 
 					bindings = scriptAsset.getDefinition().createBindings(scriptContext);
+
 					if (bindings == null) {
 						Logger.error("ScriptSystem Script({}) Loading Error for Entity({}): Failed to Create Bindings, disabling script...", scriptAsset.getAssetPath(), entity.getTagOrId());
 						script.setDisabled(true);

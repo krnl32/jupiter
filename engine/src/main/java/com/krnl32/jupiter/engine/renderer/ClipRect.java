@@ -38,21 +38,36 @@ public class ClipRect {
 	}
 
 	public static int compareClipRect(ClipRect a, ClipRect b) {
-		if (a == b)
+		if (a == b) {
 			return 0;
-		if (a == null)
+		}
+
+		if (a == null) {
 			return -1;
-		if (b == null)
+		}
+
+		if (b == null) {
 			return 1;
+		}
+
 		int cmp = Integer.compare(a.x, b.x);
-		if (cmp != 0)
+
+		if (cmp != 0) {
 			return cmp;
+		}
+
 		cmp = Integer.compare(a.y, b.y);
-		if (cmp != 0)
+
+		if (cmp != 0) {
 			return cmp;
+		}
+
 		cmp = Integer.compare(a.width, b.width);
-		if (cmp != 0)
+
+		if (cmp != 0) {
 			return cmp;
+		}
+
 		return Integer.compare(a.height, b.height);
 	}
 

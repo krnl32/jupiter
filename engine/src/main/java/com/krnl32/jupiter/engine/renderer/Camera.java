@@ -41,6 +41,7 @@ public class Camera {
 		this.turnSpeed = turnSpeed;
 		this.rollSpeed = rollSpeed;
 		this.zoomSpeed = zoomSpeed;
+
 		calculateCamera();
 
 		this.projectionMatrix = new Matrix4f().identity();
@@ -50,6 +51,7 @@ public class Camera {
 		this.projectionFar = 1000.0f;
 		this.projectionSize = 10.0f;
 		this.aspectRatio = 1.778f;
+
 		calculateProjection();
 
 		this.mouseEnabled = mouseEnabled;
@@ -67,20 +69,27 @@ public class Camera {
 			pitch += (mouseCursorDelta.y * turnSpeed);
 			pitch = clamp(pitch, -89.0f, 89.0f);
 
-			if (InputDeviceSystem.getInstance().isKeyDown(KeyCode.Q))
+			if (InputDeviceSystem.getInstance().isKeyDown(KeyCode.Q)) {
 				roll += rollSpeed * dt;
-			if (InputDeviceSystem.getInstance().isKeyDown(KeyCode.E))
+			}
+
+			if (InputDeviceSystem.getInstance().isKeyDown(KeyCode.E)) {
 				roll -= rollSpeed * dt;
+			}
 
-			if (roll > 180.0f)
+			if (roll > 180.0f) {
 				roll -= 360.0f;
-			else if (roll < -180.0f)
+			} else if (roll < -180.0f) {
 				roll += 360.0f;
+			}
 
-			if (InputDeviceSystem.getInstance().isMouseScrollingUp())
+			if (InputDeviceSystem.getInstance().isMouseScrollingUp()) {
 				zoom(zoom * zoomSpeed * dt);
-			if (InputDeviceSystem.getInstance().isMouseScrollingDown())
+			}
+
+			if (InputDeviceSystem.getInstance().isMouseScrollingDown()) {
 				zoom(-zoom * zoomSpeed * dt);
+			}
 		}
 
 		calculateCamera();
@@ -219,10 +228,12 @@ public class Camera {
 	}
 
 	private void zoom(float size) {
-		if (projectionType == ProjectionType.ORTHOGRAPHIC)
+		if (projectionType == ProjectionType.ORTHOGRAPHIC) {
 			projectionSize = max(0.1f, projectionSize - size * 0.1f);
-		else if (projectionType == ProjectionType.PERSPECTIVE)
+		} else if (projectionType == ProjectionType.PERSPECTIVE) {
 			projectionFOV = clamp(projectionFOV - size, 1.0f, 90.0f);
+		}
+
 		calculateProjection();
 	}
 
@@ -241,9 +252,10 @@ public class Camera {
 	}
 
 	private void calculateProjection() {
-		if (projectionType == ProjectionType.ORTHOGRAPHIC)
+		if (projectionType == ProjectionType.ORTHOGRAPHIC) {
 			projectionMatrix.identity().ortho(-aspectRatio * projectionSize * 0.5f, aspectRatio * projectionSize * 0.5f, -projectionSize * 0.5f, projectionSize * 0.5f, projectionNear, projectionFar);
-		else if(projectionType == ProjectionType.PERSPECTIVE)
-			projectionMatrix.identity().perspective((float)toRadians(projectionFOV), aspectRatio, projectionNear, projectionFar);
+		} else if(projectionType == ProjectionType.PERSPECTIVE) {
+			projectionMatrix.identity().perspective((float) toRadians(projectionFOV), aspectRatio, projectionNear, projectionFar);
+		}
 	}
 }

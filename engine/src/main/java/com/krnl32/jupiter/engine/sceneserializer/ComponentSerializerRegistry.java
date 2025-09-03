@@ -18,9 +18,11 @@ public class ComponentSerializerRegistry {
 
 	public <T extends Component> void unregister(Class<T> componentType) {
 		String name = classToName.get(componentType);
+
 		if (name != null) {
 			nameToClass.remove(name);
 		}
+
 		serializers.remove(componentType);
 	}
 

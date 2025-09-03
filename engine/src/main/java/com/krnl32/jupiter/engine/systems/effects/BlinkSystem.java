@@ -17,6 +17,7 @@ public class BlinkSystem implements System {
 	public void onUpdate(float dt) {
 		for (Entity entity : registry.getEntitiesWith(BlinkComponent.class)) {
 			BlinkComponent blink = entity.getComponent(BlinkComponent.class);
+
 			blink.elapsedTime += dt;
 			blink.blinkTime += dt;
 
@@ -25,8 +26,9 @@ public class BlinkSystem implements System {
 				blink.blinkTime = 0.0f;
 			}
 
-			if (blink.elapsedTime >= blink.duration)
+			if (blink.elapsedTime >= blink.duration) {
 				entity.removeComponent(BlinkComponent.class);
+			}
 		}
 	}
 

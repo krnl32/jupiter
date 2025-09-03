@@ -27,8 +27,10 @@ public class ParticleSystem implements System {
 			transform.translation.add(new Vector3f(particle.velocity).mul(dt));
 
 			particle.remainingTime -= dt;
-			if (particle.remainingTime <= 0)
+
+			if (particle.remainingTime <= 0) {
 				entity.addComponent(new DestroyComponent());
+			}
 
 			spriteRenderer.color.w = (spriteRenderer.color.w * (particle.remainingTime / particle.duration));
 		}

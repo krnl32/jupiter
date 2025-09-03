@@ -43,9 +43,11 @@ public class TextRenderPass implements RenderPass {
 		textRenderBatch.begin();
 
 		shader.bind();
+
 		if (camera != null) {
 			shader.setMat4("u_View", camera.getViewMatrix());
 		}
+
 		shader.setMat4("u_Projection", projectionMatrix);
 		shader.unbind();
 	}
@@ -54,14 +56,18 @@ public class TextRenderPass implements RenderPass {
 	public void endFrame() {
 		renderTextCommands.sort((a, b) -> {
 			int cmp = ClipRect.compareClipRect(a.getClipRect(), b.getClipRect());
-			if (cmp != 0)
+
+			if (cmp != 0) {
 				return cmp;
+			}
+
 			int aZ = a.getRenderPacket().getIndex();
 			int bZ = b.getRenderPacket().getIndex();
 			return Integer.compare(aZ, bZ);
 		});
 
 		ClipRect currentClip = null;
+
 		for (RenderTextCommand cmd : renderTextCommands) {
 			ClipRect clipRect = cmd.getClipRect();
 

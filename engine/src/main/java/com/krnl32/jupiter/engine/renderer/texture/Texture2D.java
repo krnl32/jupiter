@@ -46,8 +46,10 @@ public class Texture2D {
 
 	public Texture2D(TextureSettings settings, Path filepath) {
 		ByteBuffer buffer = loadImage(filepath);
-		if (buffer == null)
+
+		if (buffer == null) {
 			return;
+		}
 
 		textureID = glGenTextures();
 		glBindTexture(GL_TEXTURE_2D, textureID);
@@ -57,17 +59,21 @@ public class Texture2D {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, TextureUtility.TextureWrapModeToGL(settings.getWrapMode()));
 
 		glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, buffer);
+
 		if (settings.isGenerateMipmaps()) {
 			glGenerateMipmap(GL_TEXTURE_2D);
 		}
+
 		glBindTexture(GL_TEXTURE_2D, 0);
 		stbi_image_free(buffer);
 	}
 
 	public Texture2D(TextureSettings settings, byte[] data) {
 		ByteBuffer buffer = loadImage(data);
-		if (buffer == null)
+
+		if (buffer == null) {
 			return;
+		}
 
 		textureID = glGenTextures();
 		glBindTexture(GL_TEXTURE_2D, textureID);
@@ -77,9 +83,11 @@ public class Texture2D {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, TextureUtility.TextureWrapModeToGL(settings.getWrapMode()));
 
 		glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, buffer);
+
 		if (settings.isGenerateMipmaps()) {
 			glGenerateMipmap(GL_TEXTURE_2D);
 		}
+
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		stbi_image_free(buffer);
@@ -138,6 +146,7 @@ public class Texture2D {
 		IntBuffer imgChannels = BufferUtils.createIntBuffer(1);
 
 		ByteBuffer buffer = stbi_load(filepath.toString(), imgWidth, imgHeight, imgChannels, 0);
+
 		if (buffer == null) {
 			Logger.error("STBI_Load Failed For({}), Reason: ", filepath, stbi_failure_reason());
 			return null;
@@ -170,6 +179,7 @@ public class Texture2D {
 		IntBuffer imgChannels = BufferUtils.createIntBuffer(1);
 
 		ByteBuffer buffer = stbi_load_from_memory(BufferUtils.createByteBuffer(data.length).put(data).flip(), imgWidth, imgHeight, imgChannels, 0);
+
 		if (buffer == null) {
 			Logger.error("stbi_load_from_memory Failed, Reason: ", stbi_failure_reason());
 			return null;
