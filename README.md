@@ -1,17 +1,19 @@
+<h3 align="center">📽️ Demo</h3>
+
 <p align="center">
-  <a href="#license">
-    <img src="Resources/Branding/JupiterBannerSmall.png" alt="Logo" width=900 height=540>
+  <a href="https://youtu.be/e2iOMEuWeVU">
+    <img src="Resources/Branding/JupiterBannerSmall.png" alt="Watch the Demo" width="960">
   </a>
+</p>
 
 <h3 align="center">Jupiter</h3>
 
-  <p align="center">
-    Jupiter Game Engine
-    <br>
-    <a href="https://github.com/krnl32/Jupiter/issues/new?labels=bug">Report bug</a>
-    ·
-    <a href="https://github.com/krnl32/Jupiter/issues/new?labels=feature">Request feature</a>
-  </p>
+<p align="center">
+  Jupiter Game Engine
+  <br>
+  <a href="https://github.com/krnl32/Jupiter/issues/new?labels=bug">Report bug</a>
+  ·
+  <a href="https://github.com/krnl32/Jupiter/issues/new?labels=feature">Request feature</a>
 </p>
 
 ## About
