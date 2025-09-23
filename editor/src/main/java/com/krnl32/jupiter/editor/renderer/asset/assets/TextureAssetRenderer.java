@@ -86,7 +86,7 @@ public class TextureAssetRenderer implements AssetRenderer<TextureAsset> {
 			}
 
 			TextureCompressionType[] compressionTypes = TextureCompressionType.values();
-			ImInt compression = new ImInt(settings.getColorSpace().ordinal());
+			ImInt compression = new ImInt(settings.getCompressionType().ordinal());
 
 			if (GUIUtils.renderEnumCombo("Compression", compressionTypes, compression)) {
 				settings.setCompressionType(compressionTypes[compression.get()]);

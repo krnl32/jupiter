@@ -95,6 +95,82 @@ public class GUIUtils {
 		return changed;
 	}
 
+	public static boolean renderVector2fClamped(String label, Vector2f vec, float min, float max) {
+		int uniqueID = System.identityHashCode(vec);
+		ImGui.pushID(label + "_" + uniqueID);
+
+		ImGui.columns(2, "vec2columns" + label + "_" + uniqueID, false);
+		ImGui.setColumnWidth(0, 100);
+		ImGui.text(label);
+		ImGui.nextColumn();
+
+		ImGui.pushStyleVar(ImGuiStyleVar.FramePadding, 6, 6);
+		ImGui.pushStyleVar(ImGuiStyleVar.ItemSpacing, 4, 4);
+
+		float dragSpeed = 0.1f;
+		float buttonSize = 27f;
+		float dragWidth = 64f;
+
+		float[] xVal = {vec.x};
+		float[] yVal = {vec.y};
+
+		boolean changed = false;
+
+		// X Button + DragFloat
+		ImGui.pushStyleColor(ImGuiCol.Button, 0.8f, 0.1f, 0.1f, 1f);
+		ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 1f, 0.3f, 0.3f, 1f);
+		ImGui.pushStyleColor(ImGuiCol.ButtonActive, 1f, 0.2f, 0.2f, 1f);
+
+		if (ImGui.button("X", buttonSize, buttonSize)) {
+			xVal[0] = 0f;
+			changed = true;
+		}
+
+		ImGui.popStyleColor(3);
+		ImGui.sameLine(0, 2);
+
+		ImGui.pushItemWidth(dragWidth);
+
+		if (ImGui.dragFloat("##X_" + label + "_" + uniqueID, xVal, dragSpeed, min, max, "%.3f")) {
+			vec.x = xVal[0];
+			changed = true;
+		}
+
+		ImGui.popItemWidth();
+
+		ImGui.sameLine(0, 8);
+
+		// Y Button + DragFloat
+		ImGui.pushStyleColor(ImGuiCol.Button, 0.1f, 0.8f, 0.1f, 1f);
+		ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0.3f, 1f, 0.3f, 1f);
+		ImGui.pushStyleColor(ImGuiCol.ButtonActive, 0.2f, 1f, 0.2f, 1f);
+
+		if (ImGui.button("Y", buttonSize, buttonSize)) {
+			yVal[0] = 0f;
+			changed = true;
+		}
+
+		ImGui.popStyleColor(3);
+		ImGui.sameLine(0, 2);
+
+		ImGui.pushItemWidth(dragWidth);
+
+		if (ImGui.dragFloat("##Y_" + label + "_" + uniqueID, yVal, dragSpeed, min, max, "%.3f")) {
+			vec.y = yVal[0];
+			changed = true;
+		}
+
+		ImGui.popItemWidth();
+
+		vec.set(xVal[0], yVal[0]);
+
+		ImGui.popStyleVar(2);
+		ImGui.columns(1);
+		ImGui.popID();
+
+		return changed;
+	}
+
 	public static boolean renderVector3f(String label, Vector3f vec) {
 		int uniqueID = System.identityHashCode(vec);
 		ImGui.pushID(label + "_" + uniqueID);

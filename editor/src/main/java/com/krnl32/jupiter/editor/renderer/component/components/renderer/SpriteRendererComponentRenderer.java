@@ -104,7 +104,7 @@ public class SpriteRendererComponentRenderer implements ComponentRenderer<Sprite
 			for (int i = 0; i < 4; i++) {
 				textureUVs[i].set(component.textureUV[i * 2], component.textureUV[i * 2 + 1]);
 
-				if (GUIUtils.renderVector2f(textureUVLabels[i], textureUVs[i])) {
+				if (GUIUtils.renderVector2fClamped(textureUVLabels[i], textureUVs[i], 0.0f, 1.0f)) {
 					component.textureUV[i * 2] = textureUVs[i].x;
 					component.textureUV[i * 2 + 1] = textureUVs[i].y;
 				}
