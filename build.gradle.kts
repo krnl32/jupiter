@@ -15,8 +15,8 @@ subprojects {
 	version = rootProject.version
 
 	the<JavaPluginExtension>().apply {
-		sourceCompatibility = JavaVersion.VERSION_21
-		targetCompatibility = JavaVersion.VERSION_21
+		sourceCompatibility = JavaVersion.VERSION_25
+		targetCompatibility = JavaVersion.VERSION_25
 	}
 
 	repositories {
